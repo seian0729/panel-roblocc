@@ -1,24 +1,30 @@
-import React from 'react';
-import logo from '../../logo.svg';
+import React, { useState } from 'react';
+import { Col, Row, Menu } from 'antd';
+import { HashRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
+
+import Header from "../Header/header";
 import './App.css';
+
+import Home from "../Pages/Home/home";
+import Login from "../Pages/Login/login";
+import View from "../Pages/View/view";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Row>
+        <Col span={24}>
+            <Header />
+        </Col>
+      </Row>
+
+        <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/account" element={<Login />} />
+            <Route path="/data" element={<View />} />
+            <Route path="*" element={<h1>404</h1>} />
+        </Routes>
+
     </div>
   );
 }

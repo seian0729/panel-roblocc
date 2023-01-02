@@ -1,9 +1,9 @@
 import { Col, Row } from 'antd';
 
-const loginCompoment: React.FC = () => (
+const homeCompoment: React.FC = () => (
     <>
         <Row>
-            <Col span={24}>col</Col>
+            <Col span={24}>Home</Col>
         </Row>
         <Row>
             <Col span={12}>col-12</Col>
@@ -23,4 +23,4 @@ const loginCompoment: React.FC = () => (
     </>
 );
 
-export default  loginCompoment
+export default  homeCompoment
