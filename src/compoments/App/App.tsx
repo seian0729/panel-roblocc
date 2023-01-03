@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Row, Menu } from 'antd';
+import { Col, Row, ConfigProvider } from 'antd';
 import { HashRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
 
 import Header from "../Header/header";
@@ -12,12 +12,11 @@ import View from "../Pages/View/view";
 function App() {
   return (
     <div className="App">
-      <Row>
-        <Col span={24}>
-            <Header />
-        </Col>
-      </Row>
-
+        <Row>
+            <Col span={24}>
+                <Header />
+            </Col>
+        </Row>
         <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/account" element={<Login />} />
