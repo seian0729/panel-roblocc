@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/dark-theme": "^2.0.2",
     "@ant-design/icons": "4.0.0",
+    "@hqoss/monads": "^0.5.0",
     "@reduxjs/toolkit": "^1.9.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

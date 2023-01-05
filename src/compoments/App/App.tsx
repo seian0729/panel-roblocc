@@ -6,7 +6,7 @@ import Header from "../Header/header";
 import './App.css';
 
 import Home from "../Pages/Home/home";
-import Login from "../Pages/Login/login";
+import Login from "../Pages/Login/Login";
 import View from "../Pages/View/view";
 
 function App() {

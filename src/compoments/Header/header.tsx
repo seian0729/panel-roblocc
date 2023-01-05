@@ -6,7 +6,7 @@ import {Link, Route, Routes, useLocation } from 'react-router-dom';
 
 //pages
 
-import Login from "../Pages/Login/login";
+import Login from "../Pages/Login/Login";
 
 const menu: MenuProps = {
     defaultSelectedKeys: ['1'],
