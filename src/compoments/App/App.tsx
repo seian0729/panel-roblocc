@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Col, Row, ConfigProvider } from 'antd';
-import { HashRouter, Link, Route, Routes, useLocation } from 'react-router-dom';
+import {HashRouter, Link, Navigate , Route, RouteProps, Routes, useLocation} from 'react-router-dom';
 
 import Header from "../Header/header";
 import './App.css';
@@ -12,6 +12,7 @@ import {useStoreWithInitializer} from "../../state/storeHooks";
 import { endLoad, loadUser } from './App.slice';
 import { store } from '../../state/store';
 import axios from "axios";
+import {getUser} from "../../services/data";
 
 function App() {
     const { loading, user } = useStoreWithInitializer(({ app }) => app, load);
@@ -42,11 +43,38 @@ async function load() {
     }
     axios.defaults.headers.Authorization = `Token ${token}`;
 
-    try {
 
+    try {
+        store.dispatch(loadUser(await getUser()));
     } catch {
         store.dispatch(endLoad());
     }
 }
 
+function GuestOnlyRoute({
+                            children,
+                            userIsLogged,
+                            ...rest
+                        }: { children: JSX.Element | JSX.Element[]; userIsLogged: boolean } & RouteProps) {
+    return (
+        <Route {...rest}>
+            {children}
+            {userIsLogged && <Navigate  to='/' />}
+        </Route>
+    );
+}
+
+/* istanbul ignore next */
+function UserOnlyRoute({
+                           children,
+                           userIsLogged,
+                           ...rest
+                       }: { children: JSX.Element | JSX.Element[]; userIsLogged: boolean } & RouteProps) {
+    return (
+        <Route {...rest}>
+            {children}
+            {!userIsLogged && <Navigate  to='/' />}
+        </Route>
+    );
+}
 export default App;
