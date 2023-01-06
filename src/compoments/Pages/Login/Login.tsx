@@ -1,8 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Row, Col, Button, Checkbox, Form, Input, Divider} from 'antd';
+import {useStoreWithInitializer} from "../../../state/storeHooks";
+import {dispatchOnCall, store} from "../../../state/store";
+import {initializeLogin, LoginState, updateErrors, updateField} from "./Login.slice";
+import {login} from "../../../services/data";
+import {loadUserIntoApp} from "../../../types/user";
 
-const loginCompoment: React.FC = () => {
+export function Login() {
 
+    const { errors, loginIn, user } = useStoreWithInitializer(({ login }) => login, dispatchOnCall(initializeLogin()));
     const onFinish = (values: any) => {
         console.log('Success:', values);
     };
@@ -10,6 +16,15 @@ const loginCompoment: React.FC = () => {
     const onFinishFailed = (errorInfo: any) => {
         console.log('Failed:', errorInfo);
     };
+
+
+
+
+    // state username and password
+
+
+
+
 
     return (
         <div>
@@ -19,7 +34,7 @@ const loginCompoment: React.FC = () => {
                     <Form
                         name="basic"
                         initialValues={{remember: false}}
-                        onFinish={onFinish}
+                        onFinish={signIn}
                         onFinishFailed={onFinishFailed}
                         autoComplete="off"
                         layout="vertical"
@@ -28,8 +43,9 @@ const loginCompoment: React.FC = () => {
                             label="Tên đăng nhập"
                             name="username"
                             rules={[{required: true, message: 'Vui lòng nhập tên đăng nhập!'}]}
+
                         >
-                            <Input/>
+                            <Input onChange={e => onUpdateField('username', e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item
@@ -37,7 +53,7 @@ const loginCompoment: React.FC = () => {
                             name="password"
                             rules={[{required: true, message: 'Vui lòng nhập mật khẩu!'}]}
                         >
-                            <Input.Password/>
+                            <Input.Password onChange={e => onUpdateField('password', e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item name="remember" valuePropName="checked">
@@ -45,7 +61,7 @@ const loginCompoment: React.FC = () => {
                         </Form.Item>
 
                         <Form.Item>
-                            <Button type="primary" htmlType="submit" >
+                            <Button type="primary" htmlType="submit"  >
                                 Đăng nhập
                             </Button>
                         </Form.Item>
@@ -55,5 +71,26 @@ const loginCompoment: React.FC = () => {
         </div>
     )
 };
+function onUpdateField(name: string, value: string) {
+    store.dispatch(updateField({ name: name as keyof LoginState['user'], value }));
+}
 
-export default  loginCompoment
+async function signIn(ev: React.FormEvent) {
+    if (store.getState().login.loginIn) return;
+
+    const { username, password } = store.getState().login.user;
+
+    const result = await login(username, password);
+
+    console.log(result);
+    result.match({
+        ok: (user) => {
+            window.location.hash = '#/';
+            loadUserIntoApp(user);
+        },
+        err: (err) => {
+            store.dispatch(updateErrors(err));
+        }
+    },
+    );
+}

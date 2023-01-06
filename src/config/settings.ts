@@ -1,5 +1,5 @@
 export default {
-    baseApiUrl: 'https://ailaichim.com/api',
+    baseApiUrl: 'https://api.chimovo.com/v1/',
 };
 
 

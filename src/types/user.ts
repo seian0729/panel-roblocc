@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { Decoder, nullable, object, string } from 'decoders';
+import {loadUser} from "../compoments/App/App.slice";
+import {store} from "../state/store";
 
 export interface PublicUser {
     username: string;
@@ -17,4 +19,12 @@ export const userDecoder: Decoder<User> = object({
 export interface UserSettings extends PublicUser {
     username: string;
     password: string | null;
+}
+
+export function loadUserIntoApp(user: User) {
+    localStorage.setItem('token', user.token);
+    console.log('token', user.token);
+    axios.defaults.headers.Authorization = `Token ${user.token}`;
+    store.dispatch(loadUser(user));
+    console.log('user', user);
 }
