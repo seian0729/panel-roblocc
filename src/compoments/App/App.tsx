@@ -14,6 +14,7 @@ import {store} from '../../state/store';
 import axios from "axios";
 import {getUser} from "../../services/data";
 import {userDecoder} from "../../types/user";
+import Choida from "../Pages/Choida/app";
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
@@ -36,7 +37,7 @@ function App() {
                     <Route path="/data" element={<View/>}/>
                 </Route>
 
-
+                <Route path="/choida" element={<Choida />}/>
                 <Route path="*" element={<h1>404</h1>}/>
             </Routes>
 

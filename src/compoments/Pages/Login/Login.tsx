@@ -1,36 +1,40 @@
 import React, {useState} from 'react';
-import {Row, Col, Button, Checkbox, Form, Input, Divider} from 'antd';
+import {Row, Col, Button, message, notification , Form, Input, Divider} from 'antd';
+import {CloseCircleOutlined, CheckCircleOutlined} from '@ant-design/icons';
 import {useStoreWithInitializer} from "../../../state/storeHooks";
 import {dispatchOnCall, store} from "../../../state/store";
 import {initializeLogin, LoginState, updateErrors, updateField} from "./Login.slice";
 import {login} from "../../../services/data";
 import {loadUserIntoApp} from "../../../types/user";
 
+
 export function Login() {
+    const [apiNotification, contextHolder] = notification.useNotification();
+    const [messageApi, messcontextHolder] = message.useMessage();
 
     const { errors, loginIn, user } = useStoreWithInitializer(({ login }) => login, dispatchOnCall(initializeLogin()));
-    const onFinish = (values: any) => {
-        console.log('Success:', values);
+
+    // finish failed
+
+    const onFinishFailed = () => {
+        messageApi.open({
+            type: 'error',
+            content: 'Vui lòng nhập đầy đủ thông tin',
+        });
     };
-
-    const onFinishFailed = (errorInfo: any) => {
-        console.log('Failed:', errorInfo);
-    };
-
-
 
 
     // state username and password
 
 
-
-
-
     return (
         <div>
-            <Row justify="center">
-                <Col span={8}>
+            {contextHolder}
+            {messcontextHolder}
+            <Row justify="center" >
+                <Col span={8} >
                     <Divider orientation="left">Đăng nhập</Divider>
+
                     <Form
                         name="basic"
                         initialValues={{remember: false}}
@@ -56,10 +60,6 @@ export function Login() {
                             <Input.Password onChange={e => onUpdateField('password', e.target.value)}/>
                         </Form.Item>
 
-                        <Form.Item name="remember" valuePropName="checked">
-                            <Checkbox>Lưu mật khẩu</Checkbox>
-                        </Form.Item>
-
                         <Form.Item>
                             <Button type="primary" htmlType="submit"  >
                                 Đăng nhập
@@ -70,27 +70,41 @@ export function Login() {
             </Row>
         </div>
     )
+    async function signIn(ev: React.FormEvent) {
+        if (store.getState().login.loginIn) return;
+
+        const { username, password } = store.getState().login.user;
+
+        const result = await login(username, password);
+
+        console.log(result);
+        result.match({
+                ok: (user) => {
+                    console.log(user);
+
+                    apiNotification.open({
+                        message: 'Đăng nhập',
+                        description: 'Đăng nhập thành công',
+                        duration: 2,
+                        icon: <CheckCircleOutlined style={{ color: '#63d465' }} />,
+                        onClose: () => {
+                            setTimeout(() => {
+                                window.location.hash = '#/';
+                                loadUserIntoApp(user);
+                            },500)
+                        }
+                    });
+
+
+                },
+                err: (err) => {
+                    store.dispatch(updateErrors(err));
+                }
+            },
+        );
+    }
 };
 function onUpdateField(name: string, value: string) {
     store.dispatch(updateField({ name: name as keyof LoginState['user'], value }));
 }
 
-async function signIn(ev: React.FormEvent) {
-    if (store.getState().login.loginIn) return;
-
-    const { username, password } = store.getState().login.user;
-
-    const result = await login(username, password);
-
-    console.log(result);
-    result.match({
-        ok: (user) => {
-            window.location.hash = '#/';
-            loadUserIntoApp(user);
-        },
-        err: (err) => {
-            store.dispatch(updateErrors(err));
-        }
-    },
-    );
-}
