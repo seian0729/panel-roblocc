@@ -89,7 +89,7 @@ export function Login() {
                         icon: <CheckCircleOutlined style={{ color: '#63d465' }} />,
                         onClose: () => {
                             setTimeout(() => {
-                                window.location.hash = '#/';
+                                window.location.hash = '#/data';
                                 loadUserIntoApp(user);
                             },500)
                         }
@@ -98,6 +98,12 @@ export function Login() {
 
                 },
                 err: (err) => {
+                    apiNotification.open({
+                        message: 'Đăng nhập',
+                        description: 'Tên đăng nhập hoặc mật khẩu không đúng',
+                        duration: 2,
+                        icon: <CloseCircleOutlined style={{ color: '#ff4d4f' }} />,
+                    });
                     store.dispatch(updateErrors(err));
                 }
             },
