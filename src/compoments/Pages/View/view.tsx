@@ -1,20 +1,54 @@
-import { Col, Row, Divider, Empty,Table } from 'antd';
+import { Col, Row, Divider, Empty,Table, Tag } from 'antd';
 import React from "react";
+import type { ColumnsType } from 'antd/es/table';
+import {array} from "decoders";
+import {count, countBy, forEach} from "ramda";
 
 
-function loginCompoment()
+function DataCompoment()
 {
 
-    const columns = [
+    interface DataType {
+        key: string;
+        username: string;
+        level: number;
+        df: string;
+        awaken: object
+        fightingStyle: string[];
+    }
+
+    let fstext = '';
+    let fscolor = '';
+
+    const columns: ColumnsType<DataType> = [
         {
             title: 'RUsername',
             dataIndex: 'username',
             key: 'username',
+            width: 200,
         },
         {
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
             key: 'fightingStyle',
+            width: 200,
+            render: (_, { fightingStyle }  ) => (
+                <>
+                    {fightingStyle.map((fs) => {
+                        if (fightingStyle.length == 6) {
+                            fstext = 'God Human';
+                            fscolor = 'blue';
+                        }
+                        else if (fightingStyle.length > 2){
+                            fstext = '3-5 Melee';
+                            fscolor = 'volcano';
+                        }
+
+                    })}
+                    <Tag color={fscolor}>{fstext}</Tag>
+                </>
+            ),
+
         },
         {
             title: 'Level',
@@ -27,6 +61,28 @@ function loginCompoment()
             title: 'DF',
             dataIndex: 'df',
             key: 'df',
+            width: 200,
+        },
+        {
+            title: 'Awaken',
+            dataIndex: 'awaken',
+            key: 'awaken',
+            render: (_, { awaken }  ) => (
+                <>
+                    {Object.values(awaken).map((key) => {
+                        console.log(key);
+                        if (key.length >= 4) {
+                            fstext = 'Fully Awaken';
+                            fscolor = 'green';
+                        } else {
+                            fstext = 'Not Fully Awaken';
+                            fscolor = 'red';
+                        }
+                    })}
+                    <Tag color={fscolor}>{fstext}</Tag>
+                </>
+            )
+
         }
         ];
 
@@ -34,17 +90,25 @@ function loginCompoment()
         {
             key: '1',
             username: 'John Brown',
-            fightingStyle: 'MMA',
+            fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon'],
             level: 32,
             df: "Chưa có",
+            awaken: {
+                ['Awakened']: ['Z','X'],
+            },
+
         },
         {
             key: '2',
-            username: 'Jim Green',
-            fightingStyle: 'MMA',
-            level: 42,
+            username: 'John Brown',
+            fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon','godhuman'],
+            level: 32,
             df: "Chưa có",
-        }];
+            awaken: {
+                ['Awakened']: ['Z','X','C','V'],
+            },
+        },
+        ]
 
     return (
         <>
@@ -60,4 +124,4 @@ function loginCompoment()
 
 }
 
-export default  loginCompoment
+export default  DataCompoment
