@@ -13,7 +13,7 @@ function DataCompoment()
         username: string;
         level: number;
         df: string;
-        awaken: object
+        awaken: string[];
         fightingStyle: string[];
     }
 
@@ -69,9 +69,8 @@ function DataCompoment()
             key: 'awaken',
             render: (_, { awaken }  ) => (
                 <>
-                    {Object.values(awaken).map((key) => {
-                        console.log(key);
-                        if (key.length >= 4) {
+                    {awaken.map((key) => {
+                        if (awaken.length >= 4) {
                             fstext = 'Fully Awaken';
                             fscolor = 'green';
                         } else {
@@ -93,9 +92,7 @@ function DataCompoment()
             fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon'],
             level: 32,
             df: "Chưa có",
-            awaken: {
-                ['Awakened']: ['Z','X'],
-            },
+            awaken: ['Z','X'],
 
         },
         {
@@ -104,9 +101,7 @@ function DataCompoment()
             fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon','godhuman'],
             level: 32,
             df: "Chưa có",
-            awaken: {
-                ['Awakened']: ['Z','X','C','V'],
-            },
+            awaken:  ['Z','X','C','V'],
         },
         ]
 
