@@ -1,4 +1,4 @@
-import { Col, Row, Divider, Empty,Table, Tag } from 'antd';
+import { Col, Row, Divider, Button, Empty, message, Table, Tag } from 'antd';
 import React, { useState } from "react";
 import type { ColumnsType } from 'antd/es/table';
 import {array} from "decoders";
@@ -7,7 +7,22 @@ import {count, countBy, forEach} from "ramda";
 
 function DataCompoment()
 {
+
+    const [messageApi, contextHolder] = message.useMessage();
+
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+    const [loading, setLoading] = useState(false);
+
+    const start = () => {
+        setLoading(true);
+        // ajax request after empty completing
+        setTimeout(() => {
+            messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
+            setSelectedRowKeys([]);
+            setLoading(false);
+        }, 1000);
+    };
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -38,13 +53,11 @@ function DataCompoment()
         {
             title: 'RUsername',
             dataIndex: 'username',
-            key: 'username',
             width: 200,
         },
         {
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
-            key: 'fightingStyle',
             width: 200,
             render: (_, { fightingStyle }  ) => (
                 <>
@@ -67,20 +80,17 @@ function DataCompoment()
         {
             title: 'Level',
             dataIndex: 'level',
-            key: 'level',
             width: '5%',
             sorter: (a: { level: number; }, b: { level: number; }) => a.level - b.level,
         },
         {
             title: 'DF',
             dataIndex: 'df',
-            key: 'df',
             width: '5%',
         },
         {
             title: 'Awakened Abilities ',
             dataIndex: 'awaken',
-            key: 'awaken',
             width: '7%',
             render: (_, { awaken }  ) => (
                 <>
@@ -98,7 +108,6 @@ function DataCompoment()
         {
             title: 'Special',
             dataIndex: 'special',
-            key: 'special',
             render: (_, { special }  ) => (
                 <>
                     {special.map((key) => {
@@ -114,14 +123,13 @@ function DataCompoment()
         {
             title: 'Note',
             dataIndex: 'note',
-            key: 'note',
             width: '10%',
         }
         ];
 
     const data = [
         {
-            key: '1',
+            key: 1,
             username: 'John Brown',
             fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon'],
             level: 32,
@@ -131,7 +139,7 @@ function DataCompoment()
             note: 'Chưa có',
         },
         {
-            key: '2',
+            key: 2,
             username: 'John Brown',
             fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon','godhuman'],
             level: 2450,
@@ -140,13 +148,22 @@ function DataCompoment()
             special: ['Dough','Leopard','Cursed Dual Katana'],
             note: 'Chưa có',
         },
-        ]
+    ]
 
     return (
         <>
-            <Row>
+            {contextHolder}
+            <Row justify="start">
                 <Col span={24}>
                     <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
+                    <div style={{ marginBottom: 16 }}>
+                        <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading} danger>
+                            Xóa tài khoản đã chọn
+                        </Button>
+                        <span style={{ marginLeft: 8 }}>
+                          {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
+                        </span>
+                    </div>
                     <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
                 </Col>
             </Row>
