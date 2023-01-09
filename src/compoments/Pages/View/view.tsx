@@ -1,5 +1,5 @@
 import { Col, Row, Divider, Empty,Table, Tag } from 'antd';
-import React from "react";
+import React, { useState } from "react";
 import type { ColumnsType } from 'antd/es/table';
 import {array} from "decoders";
 import {count, countBy, forEach} from "ramda";
@@ -7,14 +7,28 @@ import {count, countBy, forEach} from "ramda";
 
 function DataCompoment()
 {
+    const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+
+    const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
+        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        setSelectedRowKeys(newSelectedRowKeys);
+    };
+
+    const rowSelection = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    };
+    const hasSelected = selectedRowKeys.length > 0;
 
     interface DataType {
-        key: string;
+        key: React.Key;
         username: string;
         level: number;
         df: string;
         awaken: string[];
+        special: string[];
         fightingStyle: string[];
+        note: string;
     }
 
     let fstext = '';
@@ -61,27 +75,47 @@ function DataCompoment()
             title: 'DF',
             dataIndex: 'df',
             key: 'df',
-            width: 200,
+            width: '5%',
         },
         {
-            title: 'Awaken',
+            title: 'Awakened Abilities ',
             dataIndex: 'awaken',
             key: 'awaken',
+            width: '7%',
             render: (_, { awaken }  ) => (
                 <>
                     {awaken.map((key) => {
-                        if (awaken.length >= 4) {
-                            fstext = 'Fully Awaken';
-                            fscolor = 'green';
-                        } else {
-                            fstext = 'Not Fully Awaken';
-                            fscolor = 'red';
-                        }
+                        return (
+                            <Tag color="green" key={key}>
+                                {key}
+                            </Tag>
+                        );
                     })}
-                    <Tag color={fscolor}>{fstext}</Tag>
                 </>
             )
 
+        },
+        {
+            title: 'Special',
+            dataIndex: 'special',
+            key: 'special',
+            render: (_, { special }  ) => (
+                <>
+                    {special.map((key) => {
+                        return (
+                            <Tag color="red">
+                                {key}
+                            </Tag>
+                        );
+                    })}
+                </>
+            )
+        },
+        {
+            title: 'Note',
+            dataIndex: 'note',
+            key: 'note',
+            width: '10%',
         }
         ];
 
@@ -93,15 +127,18 @@ function DataCompoment()
             level: 32,
             df: "Chưa có",
             awaken: ['Z','X'],
-
+            special: [],
+            note: 'Chưa có',
         },
         {
             key: '2',
             username: 'John Brown',
             fightingStyle: ['superhuman','death step','sharkman karate','electric claw','dragontalon','godhuman'],
-            level: 32,
+            level: 2450,
             df: "Chưa có",
             awaken:  ['Z','X','C','V'],
+            special: ['Dough','Leopard','Cursed Dual Katana'],
+            note: 'Chưa có',
         },
         ]
 
@@ -110,7 +147,7 @@ function DataCompoment()
             <Row>
                 <Col span={24}>
                     <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
-                    <Table columns={columns} dataSource={data} />
+                    <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
                 </Col>
             </Row>
 
