@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, message } from 'antd';
+import { Button, message, QRCode  } from 'antd';
 
 const Choida: React.FC = () => {
     const [messageApi, contextHolder] = message.useMessage();
@@ -16,6 +16,13 @@ const Choida: React.FC = () => {
         <>
             {contextHolder}
             <Button onClick={success}>Customized display duration</Button>
+
+            <QRCode
+                style={{ marginBottom: 16 }}
+                size={300}
+                errorLevel={'H'}
+                value="https://discord.gg/seahub"
+            />
         </>
     );
 };
