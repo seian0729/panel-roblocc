@@ -17,6 +17,7 @@ function DataCompoment()
 
     const [dataApi, setDataApi] = useState([]);
 
+
     const start = () => {
         setLoading(true);
         // ajax request after empty completing
@@ -39,7 +40,7 @@ function DataCompoment()
     const hasSelected = selectedRowKeys.length > 0;
 
     interface DataType {
-        key: React.Key;
+        UID: number;
         username: string;
         level: number;
         df: string;
@@ -55,10 +56,10 @@ function DataCompoment()
     const columns: ColumnsType<DataType> = [
         {
             title: 'RUsername',
-            dataIndex: 'username',
+            dataIndex: 'UsernameRoblocc',
             width: 200,
         },
-        {
+        /*{
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
             width: 200,
@@ -186,7 +187,7 @@ function DataCompoment()
                 } // Example
             ],
             onFilter: (value: any, record: { note: string; }) => record.note.includes(value),
-        }
+        }*/
         ];
 
     const data = [
@@ -215,11 +216,14 @@ function DataCompoment()
     useEffect(() => {
         getData().then((res) => {
             setDataApi(res.data);
-            console.log(dataApi);
+
         })
 
     }, [])
 
+    useEffect(() => {
+        console.log(dataApi);
+    }, [dataApi])
     return (
         <div>
             {contextHolder}
@@ -234,7 +238,7 @@ function DataCompoment()
                           {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
                         </span>
                     </div>
-                    <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+                    <Table rowSelection={rowSelection} columns={columns} dataSource={dataApi} rowKey={(record) => record.UID} />
                 </Col>
             </Row>
 
