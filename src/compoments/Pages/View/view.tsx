@@ -48,6 +48,7 @@ function DataCompoment()
         special: string[];
         fightingStyle: string[];
         note: string;
+        Description: string;
     }
 
     let fstext = '';
@@ -59,7 +60,18 @@ function DataCompoment()
             dataIndex: 'UsernameRoblocc',
             width: 200,
         },
-        /*{
+        {
+            title: 'Level',
+            render: (_, record) => {
+                let description = JSON.parse(record.Description);
+
+                return (
+                    <div>{description.Data.Level}</div>
+                )
+            }
+        },
+
+        {
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
             width: 200,
@@ -91,55 +103,67 @@ function DataCompoment()
 
                 },
                 ],
-            onFilter: (value: any, record: { fightingStyle: string[]; }) => record.fightingStyle.includes(value),
             sorter: (a: { fightingStyle: string[]; }, b: { fightingStyle: string[]; }) => a.fightingStyle.length - b.fightingStyle.length,
-            render: (_, { fightingStyle }  ) => (
-                <>
-                    {fightingStyle.map((fs) => {
-                        if (fightingStyle.length == 6) {
-                            fstext = 'Godhuman';
-                            fscolor = 'blue';
-                        }
-                        else if (fightingStyle.length > 2){
-                            fstext = '3-5 Melee';
-                            fscolor = 'volcano';
-                        }
+            render: (_, record ) =>{
+                let description = JSON.parse(record.Description);
+                let fightingStyle = description['Fighting Style'];
+                return (
+                    <>
+                        {fightingStyle.map(() => {
+                            if (fightingStyle.length == 6) {
+                                fstext = 'Godhuman';
+                                fscolor = 'blue';
+                            }
+                            else if (fightingStyle.length > 2){
+                                fstext = '3-5 Melee';
+                                fscolor = 'volcano';
+                            }
 
-                    })}
-                    <Tag color={fscolor}>{fstext}</Tag>
-                </>
-            ),
+                        })}
+                        <Tag color={fscolor}>{fstext}</Tag>
+                    </>
+             )
+            },
 
         },
-        {
-            title: 'Level',
-            dataIndex: 'level',
-            width: '5%',
-            sorter: (a: { level: number; }, b: { level: number; }) => a.level - b.level,
-        },
+
         {
             title: 'DF',
             dataIndex: 'df',
             width: '5%',
+            render: (_, record) => {
+                let description = JSON.parse(record.Description);
+
+                return (
+                    <div>{description.Data.DevilFruit}</div>
+                )
+
+            }
         },
         {
             title: 'Awakened Abilities ',
             dataIndex: 'awakened',
             width: '7%',
             sorter: (a: { awakened: string[]; }, b: { awakened: string[]; }) => a.awakened.length - b.awakened.length,
-            render: (_, { awakened }  ) => (
-                <>
-                    {awakened.map((key) => {
-                        return (
-                            <Tag color="green" key={key}>
-                                {key}
-                            </Tag>
-                        );
-                    })}
-                </>
-            )
+            render: (_, record   ) => {
+                let description = JSON.parse(record.Description);
+                let awakened = description['Awakened Abilities'];
+                return (
+                    <>
+                        {awakened.map((key : any) => {
+                            return (
+                                <Tag color="green" key={key}>
+                                    {key}
+                                </Tag>
+                            );
+                        })}
+                    </>
+
+                )
+            }
 
         },
+        /*
         {
             title: 'Special',
             dataIndex: 'special',
@@ -220,10 +244,6 @@ function DataCompoment()
         })
 
     }, [])
-
-    useEffect(() => {
-        console.log(dataApi);
-    }, [dataApi])
     return (
         <div>
             {contextHolder}
