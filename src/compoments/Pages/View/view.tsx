@@ -40,7 +40,7 @@ function DataCompoment()
         username: string;
         level: number;
         df: string;
-        awaken: string[];
+        awakened: string[];
         special: string[];
         fightingStyle: string[];
         note: string;
@@ -120,12 +120,12 @@ function DataCompoment()
         },
         {
             title: 'Awakened Abilities ',
-            dataIndex: 'awaken',
+            dataIndex: 'awakened',
             width: '7%',
-            sorter: (a: { awaken: string[]; }, b: { awaken: string[]; }) => a.awaken.length - b.awaken.length,
-            render: (_, { awaken }  ) => (
+            sorter: (a: { awakened: string[]; }, b: { awakened: string[]; }) => a.awakened.length - b.awakened.length,
+            render: (_, { awakened }  ) => (
                 <>
-                    {awaken.map((key) => {
+                    {awakened.map((key) => {
                         return (
                             <Tag color="green" key={key}>
                                 {key}
@@ -193,7 +193,7 @@ function DataCompoment()
             fightingStyle: ['Superhuman','DeathStep','SharkmanKarate','ElectricClaw','DragonTalon'],
             level: 32,
             df: "Chưa có",
-            awaken: ['Z','X'],
+            awakened: ['Z','X'],
             special: [],
             note: 'Chưa có',
         },
@@ -203,7 +203,7 @@ function DataCompoment()
             fightingStyle: ['Superhuman','DeathStep','SharkmanKarate','ElectricClaw','DragonTalon','Godhuman'],
             level: 2450,
             df: "Chưa có",
-            awaken:  ['Z','X','C','V'],
+            awakened:  ['Z','X','C','V'],
             special: ['Dough','Leopard','Cursed Dual Katana'],
             note: 'cac',
         },
