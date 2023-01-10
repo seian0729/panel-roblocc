@@ -1,10 +1,9 @@
-import { Col, Row, Divider, Button, Empty, message, Table, Tag } from 'antd';
+import { Col, Row, Divider, Button, Empty, message, Table, Tag, Space } from 'antd';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType } from 'antd/es/table';
 import {getData} from "../../../services/data";
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
-
 
 function DataCompoment()
 {
@@ -245,19 +244,22 @@ function DataCompoment()
 
     }, [])
     return (
+
         <div>
             {contextHolder}
-            <Row>
-                <Col span={24}>
-                    <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
-                    <div style={{ marginBottom: 16 }}>
+            <Row justify={'start'}>
+                <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
+                <div style={{ marginBottom: 16, marginLeft: 16 }}>
+                    <Space wrap>
                         <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading} danger>
                             Xóa tài khoản đã chọn
                         </Button>
-                        <span style={{ marginLeft: 8 }}>
-                          {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
+                        <span>
+                              {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
                         </span>
-                    </div>
+                    </Space>
+                </div>
+                <Col span={24}>
                     <Table rowSelection={rowSelection} columns={columns} dataSource={dataApi} rowKey={(record) => record.UID} />
                 </Col>
             </Row>
