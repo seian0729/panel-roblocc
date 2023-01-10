@@ -1,9 +1,10 @@
-import { Col, Row, Divider, Button, Empty, message, Table, Tag, Space } from 'antd';
+import { Col, Row, Divider, Button, Empty, message, Table, Tag, Space, Input } from 'antd';
 import React, {useEffect, useState} from "react";
-import type { ColumnsType } from 'antd/es/table';
+import type { ColumnsType  } from 'antd/es/table';
 import {getData} from "../../../services/data";
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
+import type { FilterConfirmProps } from 'antd/es/table/interface';
 
 function DataCompoment()
 {
@@ -17,7 +18,8 @@ function DataCompoment()
     const [dataApi, setDataApi] = useState([]);
 
 
-    const start = () => {
+
+    const deleteAccount = () => {
         setLoading(true);
         // ajax request after empty completing
         setTimeout(() => {
@@ -40,13 +42,13 @@ function DataCompoment()
 
     interface DataType {
         UID: number;
-        username: string;
+        UsernameRoblocc: string;
         level: number;
         df: string;
         awakened: string[];
         special: string[];
         fightingStyle: string[];
-        note: string;
+        Note: string;
         Description: string;
     }
 
@@ -57,23 +59,32 @@ function DataCompoment()
         {
             title: 'RUsername',
             dataIndex: 'UsernameRoblocc',
-            width: 200,
+            width: '10%',
         },
         {
-            title: 'Level',
+            title: 'Data',
+            width: '15%',
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
-
-                return (
-                    <div>{description.Data.Level}</div>
-                )
+                let dataList = description.Data
+                return(<>
+                        <Tag color='green'>
+                            Level: {new Intl.NumberFormat().format(dataList.Level)}
+                        </Tag>
+                        <Tag color='purple'>
+                            Fragments: {new Intl.NumberFormat().format(dataList.Fragments)}
+                        </Tag>
+                        <Tag color='green'>
+                            Beli: {new Intl.NumberFormat().format(dataList.Beli)}
+                        </Tag>
+                    </>)
             }
         },
 
         {
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
-            width: 200,
+            width: '10%',
             filters: [
                 {
                     text: 'Superhuman',
@@ -142,7 +153,7 @@ function DataCompoment()
         {
             title: 'Awakened Abilities ',
             dataIndex: 'awakened',
-            width: '7%',
+            width: '10%',
             sorter: (a: { awakened: string[]; }, b: { awakened: string[]; }) => a.awakened.length - b.awakened.length,
             render: (_, record   ) => {
                 let description = JSON.parse(record.Description);
@@ -162,7 +173,6 @@ function DataCompoment()
             }
 
         },
-        /*
         {
             title: 'Special',
             dataIndex: 'special',
@@ -186,31 +196,61 @@ function DataCompoment()
             ],
             onFilter: (value: any, record: { special: string[]; }) => record.special.includes(value),
             sorter: (a: { special: string[]; }, b: { special: string[]; }) => a.special.length - b.special.length,
-            render: (_, { special }  ) => (
-                <>
-                    {special.map((key) => {
-                        return (
-                            <Tag color="red" style={{marginBottom:5, marginTop:5}}>
-                                {key}
-                            </Tag>
-                        );
-                    })}
-                </>
-            )
+            render: (_, record   ) => {
+                let description = JSON.parse(record.Description);
+                let bfData = description['Inventory']['Blox Fruit']
+                let sData = description['Inventory']['Sword']
+                let GData = description['Inventory']['Gun']
+
+                const specialList: any[] = [];
+                console.log(record)
+
+
+                return (
+                    <>
+
+                        {bfData.map((key : any) => {
+                            if (key == 'Dough' || key == 'Leopard'){
+                                specialList.push(key)
+                            }
+                        })}
+
+                        {sData.map((key : any) => {
+                            if (key == 'Cursed Dual Katana'){
+                                specialList.push(key)
+                            }
+                        })}
+
+                        {GData.map((key : any) => {
+                            if (key == 'Soul Guitar'){
+                                specialList.push(key)
+                            }
+                        })}
+
+                        {specialList.map((key: any) =>{
+                            return (
+                                <Tag color="red" key={key}>
+                                    {key}
+                                </Tag>
+                            );
+                        })
+
+                        }
+
+                    </>
+
+                )
+
+            }
+
+
         },
         {
             title: 'Note',
-            dataIndex: 'note',
+            dataIndex: 'Note',
             width: '10%',
-            filters: [
-                // Render note từ database B)
-                {
-                    text: 'cac',
-                    value: 'cac',
-                } // Example
-            ],
-            onFilter: (value: any, record: { note: string; }) => record.note.includes(value),
-        }*/
+
+        }
         ];
 
     const data = [
@@ -239,7 +279,6 @@ function DataCompoment()
     useEffect(() => {
         getData().then((res) => {
             setDataApi(res.data);
-
         })
 
     }, [])
@@ -251,7 +290,7 @@ function DataCompoment()
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Space wrap>
-                        <Button type="primary" onClick={start} disabled={!hasSelected} loading={loading} danger>
+                        <Button type="primary" onClick={deleteAccount} disabled={!hasSelected} loading={loading} danger>
                             Xóa tài khoản đã chọn
                         </Button>
                         <span>
@@ -260,10 +299,9 @@ function DataCompoment()
                     </Space>
                 </div>
                 <Col span={24}>
-                    <Table rowSelection={rowSelection} columns={columns} dataSource={dataApi} rowKey={(record) => record.UID} />
+                    <Table rowSelection={rowSelection} columns={columns} dataSource={dataApi} rowKey={(record) => record.UsernameRoblocc} />
                 </Col>
             </Row>
-
         </div>
     )
 
