@@ -23,3 +23,7 @@ export async function getUser(): Promise<User> {
     return guard(object({ user: userDecoder }))(data).user;
 }
 
+export async function getData(){
+    const { data } = await axios.get('data/getData')
+    return data
+}

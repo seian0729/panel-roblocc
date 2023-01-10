@@ -1,6 +1,7 @@
 import { Col, Row, Divider, Button, Empty, message, Table, Tag } from 'antd';
 import React, { useState } from "react";
 import type { ColumnsType } from 'antd/es/table';
+import {getData} from "../../../services/data";
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 
@@ -208,6 +209,10 @@ function DataCompoment()
             note: 'cac',
         },
     ]
+
+    getData().then((res) => {
+        console.log(res.data)
+    })
 
     return (
         <div>
