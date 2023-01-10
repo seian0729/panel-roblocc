@@ -1,5 +1,5 @@
 import { Col, Row, Divider, Button, Empty, message, Table, Tag } from 'antd';
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import type { ColumnsType } from 'antd/es/table';
 import {getData} from "../../../services/data";
 import {array, string} from "decoders";
@@ -14,6 +14,8 @@ function DataCompoment()
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     const [loading, setLoading] = useState(false);
+
+    const [dataApi, setDataApi] = useState([]);
 
     const start = () => {
         setLoading(true);
@@ -210,9 +212,13 @@ function DataCompoment()
         },
     ]
 
-    getData().then((res) => {
-        console.log(res.data)
-    })
+    useEffect(() => {
+        getData().then((res) => {
+            setDataApi(res.data);
+            console.log(dataApi);
+        })
+
+    }, [])
 
     return (
         <div>
