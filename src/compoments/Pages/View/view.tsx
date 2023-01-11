@@ -14,6 +14,7 @@ function DataCompoment()
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     const [loading, setLoading] = useState(false);
+    const [loadingR, setLoadingR] = useState(false);
 
     const [dataApi, setDataApi] = useState([]);
 
@@ -26,6 +27,16 @@ function DataCompoment()
             setLoading(false);
         }, 1000);
     };
+
+    const refreshData = () =>{
+        setLoadingR(true);
+        // ajax request after empty completing
+        setTimeout(() => {
+            messageApi.success('Đã làm mới lại tất cả dữ liệu <3');
+            setSelectedRowKeys([]);
+            setLoadingR(false);
+        }, 1000);
+    }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -301,6 +312,7 @@ function DataCompoment()
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Space wrap>
+                        <Button type="primary" onClick={refreshData} loading={loadingR}>Làm mới</Button>
                         <Button type="primary" onClick={deleteAccount} disabled={!hasSelected} loading={loading} danger>
                             Xóa tài khoản đã chọn
                         </Button>
