@@ -132,6 +132,10 @@ function DataCompoment()
                                 fstext = '3-5 Melee';
                                 fscolor = 'volcano';
                             }
+                            else {
+                                fstext = 'Starter / Superhuman / < 2 Melee';
+                                fscolor = 'red';
+                            }
 
                         })}
                         <Tag color={fscolor}>{fstext}</Tag>
@@ -255,7 +259,7 @@ function DataCompoment()
         {
             title: 'Note',
             dataIndex: 'Note',
-            width: '10%',
+            width: '15%',
             render: (_, record   ) => {
                 {
                     filtersNoteT.push({
@@ -301,8 +305,8 @@ function DataCompoment()
                             Xóa tài khoản đã chọn
                         </Button>
                         <span>
-                              {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
-                        </span>
+                          {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
+                    </span>
                     </Space>
                 </div>
                 <Col span={24}>
