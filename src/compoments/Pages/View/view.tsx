@@ -17,8 +17,6 @@ function DataCompoment()
 
     const [dataApi, setDataApi] = useState([]);
 
-
-
     const deleteAccount = () => {
         setLoading(true);
         // ajax request after empty completing
@@ -55,6 +53,10 @@ function DataCompoment()
     let fstext = '';
     let fscolor = '';
 
+    const filtersNote: any [] = [];
+    const filtersNoteT: any [] = [];
+
+    // @ts-ignore
     const columns: ColumnsType<DataType> = [
         {
             title: 'RUsername',
@@ -85,6 +87,7 @@ function DataCompoment()
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
             width: '10%',
+            /*
             filters: [
                 {
                     text: 'Superhuman',
@@ -114,6 +117,7 @@ function DataCompoment()
                 },
                 ],
             sorter: (a: { fightingStyle: string[]; }, b: { fightingStyle: string[]; }) => a.fightingStyle.length - b.fightingStyle.length,
+             */
             render: (_, record ) =>{
                 let description = JSON.parse(record.Description);
                 let fightingStyle = description['Fighting Style'];
@@ -154,7 +158,9 @@ function DataCompoment()
             title: 'Awakened Abilities ',
             dataIndex: 'awakened',
             width: '10%',
+            /*
             sorter: (a: { awakened: string[]; }, b: { awakened: string[]; }) => a.awakened.length - b.awakened.length,
+             */
             render: (_, record   ) => {
                 let description = JSON.parse(record.Description);
                 let awakened = description['Awakened Abilities'];
@@ -176,6 +182,7 @@ function DataCompoment()
         {
             title: 'Special',
             dataIndex: 'special',
+            /*
             filters: [
                 {
                     text: 'Dough',
@@ -196,6 +203,7 @@ function DataCompoment()
             ],
             onFilter: (value: any, record: { special: string[]; }) => record.special.includes(value),
             sorter: (a: { special: string[]; }, b: { special: string[]; }) => a.special.length - b.special.length,
+             */
             render: (_, record   ) => {
                 let description = JSON.parse(record.Description);
                 let bfData = description['Inventory']['Blox Fruit']
@@ -203,7 +211,6 @@ function DataCompoment()
                 let GData = description['Inventory']['Gun']
 
                 const specialList: any[] = [];
-                console.log(record)
 
 
                 return (
@@ -241,40 +248,40 @@ function DataCompoment()
 
                 )
 
-            }
 
+            },
 
         },
         {
             title: 'Note',
             dataIndex: 'Note',
             width: '10%',
+            render: (_, record   ) => {
+                {
+                    filtersNoteT.push({
+                        text: record.Note,
+                        value: record.Note,
+                    })
 
+                    for ( var index=0; index< filtersNoteT.length; index++ ) {
+                        if (!filtersNote.find(a => a.text === filtersNoteT[index].text)){
+                            filtersNote.push(filtersNoteT[index])
+                        }
+                    }
+                }
+
+                return(
+                    <>
+                        {record.Note}
+                    </>
+                )
+            },
+
+            filters: filtersNote,
+            onFilter: (value: any, record: { Note: string; }) => record.Note.indexOf(value) === 0,
+            filterSearch: true,
         }
         ];
-
-    const data = [
-        {
-            key: 1,
-            username: 'John Brown',
-            fightingStyle: ['Superhuman','DeathStep','SharkmanKarate','ElectricClaw','DragonTalon'],
-            level: 32,
-            df: "Chưa có",
-            awakened: ['Z','X'],
-            special: [],
-            note: 'Chưa có',
-        },
-        {
-            key: 2,
-            username: 'John Brown',
-            fightingStyle: ['Superhuman','DeathStep','SharkmanKarate','ElectricClaw','DragonTalon','Godhuman'],
-            level: 2450,
-            df: "Chưa có",
-            awakened:  ['Z','X','C','V'],
-            special: ['Dough','Leopard','Cursed Dual Katana'],
-            note: 'cac',
-        },
-    ]
 
     useEffect(() => {
         getData().then((res) => {
