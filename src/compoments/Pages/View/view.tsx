@@ -18,6 +18,10 @@ function DataCompoment()
 
     const [dataApi, setDataApi] = useState([]);
 
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(20);
+
+
     const deleteAccount = () => {
         setLoading(true);
         // ajax request after empty completing
@@ -322,7 +326,22 @@ function DataCompoment()
                     </Space>
                 </div>
                 <Col span={24}>
-                    <Table rowSelection={rowSelection} columns={columns} dataSource={dataApi} rowKey={(record) => record.UsernameRoblocc} />
+                    <Table
+                        rowSelection={rowSelection}
+                        columns={columns}
+                        dataSource={dataApi}
+                        rowKey={(record) => record.UsernameRoblocc}
+                        pagination={{
+                            total: dataApi.length,
+                            showTotal: (total,range) => `${range[0]}-${range[1]} of ${total} items`,
+                            current: page,
+                            pageSize: pageSize,
+                            onChange: (page,pageSize) => {
+                                setPage(page);
+                                setPageSize(pageSize);
+                            }
+                        }}
+                    />
                 </Col>
             </Row>
         </div>
