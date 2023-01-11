@@ -85,7 +85,7 @@ function DataCompoment()
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
                 return(<>
-                        <Tag color='green'>
+                        <Tag color='orange'>
                             Level: {new Intl.NumberFormat().format(dataList.Level)}
                         </Tag>
                         <Tag color='purple'>
