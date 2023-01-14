@@ -269,6 +269,42 @@ function DataCompoment()
 
 
             },
+            filters:[
+                {
+                    text: 'Dough',
+                    value: 'Dough',
+                }
+                // add thêm ở đây nha lai chum
+            ],
+            onFilter: (value: any, record) => {
+                let description = JSON.parse(record.Description);
+                let bfData = description['Inventory']['Blox Fruit']
+                let sData = description['Inventory']['Sword']
+                let GData = description['Inventory']['Gun']
+
+                const specialList: any[] = [];
+
+                bfData.map((key : any) => {
+                    if (key == 'Dough' || key == 'Leopard'){
+                        specialList.push(key)
+                    }
+                })
+
+                sData.map((key : any) => {
+                    if (key == 'Cursed Dual Katana'){
+                        specialList.push(key)
+                    }
+                })
+
+                GData.map((key : any) => {
+                    if (key == 'Soul Guitar'){
+                        specialList.push(key)
+                    }
+                })
+
+                return specialList.includes(value)
+
+            }
 
         },
         {
