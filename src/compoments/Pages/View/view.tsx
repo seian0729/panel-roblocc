@@ -13,14 +13,16 @@ function DataCompoment()
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
+    // loading
     const [loading, setLoading] = useState(false);
     const [loadingR, setLoadingR] = useState(false);
 
+    // data
     const [dataApi, setDataApi] = useState([]);
 
+    // page pagination
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(20);
-
 
     const deleteAccount = () => {
         setLoading(true);
@@ -157,6 +159,8 @@ function DataCompoment()
                     </>
              )
             },
+            onFilter: (value: any, record: { special: string[]; }) => record.special.includes(value),
+            sorter: (a: { special: string[]; }, b: { special: string[]; }) => a.special.length - b.special.length,
 
         },
 
@@ -201,28 +205,6 @@ function DataCompoment()
         {
             title: 'Special',
             dataIndex: 'special',
-            /*
-            filters: [
-                {
-                    text: 'Dough',
-                    value: 'Dough',
-                },
-                {
-                    text: 'Leopard',
-                    value: 'Leopard',
-                },
-                {
-                    text: 'Cursed Dual Katana',
-                    value: 'Cursed Dual Katana',
-                },
-                {
-                    text: 'Soul Guitar',
-                    value: 'Soul Guitar',
-                }
-            ],
-            onFilter: (value: any, record: { special: string[]; }) => record.special.includes(value),
-            sorter: (a: { special: string[]; }, b: { special: string[]; }) => a.special.length - b.special.length,
-             */
             render: (_, record   ) => {
                 let description = JSON.parse(record.Description);
                 let bfData = description['Inventory']['Blox Fruit']
@@ -266,15 +248,24 @@ function DataCompoment()
                     </>
 
                 )
-
-
             },
-            filters:[
+            filters: [
                 {
                     text: 'Dough',
                     value: 'Dough',
+                },
+                {
+                    text: 'Leopard',
+                    value: 'Leopard',
+                },
+                {
+                    text: 'Cursed Dual Katana',
+                    value: 'Cursed Dual Katana',
+                },
+                {
+                    text: 'Soul Guitar',
+                    value: 'Soul Guitar',
                 }
-                // add thêm ở đây nha lai chum
             ],
             onFilter: (value: any, record) => {
                 let description = JSON.parse(record.Description);
@@ -345,7 +336,6 @@ function DataCompoment()
 
     }, [])
     return (
-
         <div>
             {contextHolder}
             <Row justify={'start'}>
