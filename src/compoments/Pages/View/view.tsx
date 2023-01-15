@@ -1,4 +1,4 @@
-import { Col, Row, Divider, Button, message, Table, Tag, Space, Tooltip  } from 'antd';
+import { Col, Row, Divider, Button, message, Table, Tag, Space, Tooltip, ConfigProvider  } from 'antd';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType  } from 'antd/es/table';
 import {getData} from "../../../services/data";
@@ -172,9 +172,10 @@ function DataCompoment()
                     </>
              )
             },
+            /*
             onFilter: (value: any, record: { special: string[]; }) => record.special.includes(value),
             sorter: (a: { special: string[]; }, b: { special: string[]; }) => a.special.length - b.special.length,
-
+            */
         },
 
         {
