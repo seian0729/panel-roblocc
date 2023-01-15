@@ -1,4 +1,4 @@
-import { Col, Row, Divider, Button, Empty, message, Table, Tag, Space, Input } from 'antd';
+import { Col, Row, Divider, Button, message, Table, Tag, Space, Tooltip  } from 'antd';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType  } from 'antd/es/table';
 import {getData} from "../../../services/data";
@@ -16,6 +16,7 @@ function DataCompoment()
     // loading
     const [loading, setLoading] = useState(false);
     const [loadingR, setLoadingR] = useState(false);
+    const [loadingC, setLoadingC] = useState(false);
 
     // data
     const [dataApi, setDataApi] = useState([]);
@@ -44,12 +45,23 @@ function DataCompoment()
         }, 1000);
     }
 
+    const copyData = () => {
+        setLoadingC(true);
+        // ajax request after empty completing
+        setTimeout(() => {
+            messageApi.success(`Đã sao chép ${selectedRowKeys.length} dữ liệu vào khay nhớ tạm <3`);
+            setSelectedRowKeys([]);
+            setLoadingC(false);
+        },1000)
+    }
+
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
     const rowSelection = {
+        disable: true,
         selectedRowKeys,
         onChange: onSelectChange,
     };
@@ -339,10 +351,17 @@ function DataCompoment()
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Space wrap>
+                        <Tooltip placement="topLeft" title={'Tính năng chưa xài được :keka:'}>
+                            <Button type="primary" onClick={copyData} loading={loadingC}>Sao chép dữ liệu</Button>
+                        </Tooltip>
+                        <Tooltip placement="top" title={'Tính năng chưa xài được :keka:'}>
                         <Button type="primary" onClick={refreshData} loading={loadingR}>Làm mới</Button>
+                        </Tooltip>
+                        <Tooltip placement="top" title={'Tính năng chưa xài được :keka:'}>
                         <Button type="primary" onClick={deleteAccount} disabled={!hasSelected} loading={loading} danger>
                             Xóa tài khoản đã chọn
                         </Button>
+                        </Tooltip>
                         <span>
                           {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
                     </span>
