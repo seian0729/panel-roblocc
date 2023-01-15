@@ -22,7 +22,7 @@ function DataCompoment()
 
     // page pagination
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(20);
+    const [pageSize, setPageSize] = useState(10);
 
     const deleteAccount = () => {
         setLoading(true);
@@ -72,6 +72,7 @@ function DataCompoment()
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
+
 
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
@@ -210,8 +211,7 @@ function DataCompoment()
                 let bfData = description['Inventory']['Blox Fruit']
                 let sData = description['Inventory']['Sword']
                 let GData = description['Inventory']['Gun']
-
-                const specialList: any[] = [];
+                let cac = '';
 
 
                 return (
@@ -219,31 +219,27 @@ function DataCompoment()
 
                         {bfData.map((key : any) => {
                             if (key == 'Dough' || key == 'Leopard'){
-                                specialList.push(key)
+                                cac += key+' / '
                             }
                         })}
 
                         {sData.map((key : any) => {
                             if (key == 'Cursed Dual Katana'){
-                                specialList.push(key)
+                                cac += key+' / '
                             }
                         })}
 
                         {GData.map((key : any) => {
                             if (key == 'Soul Guitar'){
-                                specialList.push(key)
+                                cac += key+' / '
                             }
+
                         })}
 
-                        {specialList.map((key: any) =>{
-                            return (
-                                <Tag color="red" key={key}>
-                                    {key}
-                                </Tag>
-                            );
-                        })
+                        <Tag color={'red'}>
+                            {cac.substring(0,cac.length-2)}
+                        </Tag>
 
-                        }
 
                     </>
 
@@ -268,6 +264,7 @@ function DataCompoment()
                 }
             ],
             onFilter: (value: any, record) => {
+                console.log(value);
                 let description = JSON.parse(record.Description);
                 let bfData = description['Inventory']['Blox Fruit']
                 let sData = description['Inventory']['Sword']
