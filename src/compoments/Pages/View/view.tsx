@@ -49,6 +49,11 @@ function DataCompoment()
         setLoadingC(true);
         // ajax request after empty completing
         setTimeout(() => {
+            let text = '';
+            selectedRowKeys.forEach((item) => {
+                text += item + '\n'
+            })
+            navigator.clipboard.writeText(text);
             messageApi.success(`Đã sao chép ${selectedRowKeys.length} dữ liệu vào khay nhớ tạm <3`);
             setSelectedRowKeys([]);
             setLoadingC(false);
@@ -339,12 +344,15 @@ function DataCompoment()
         }
         ];
 
+    // copy all value in the array
+
     useEffect(() => {
         getData().then((res) => {
             setDataApi(res.data);
         })
 
     }, [])
+
     return (
         <div>
             {contextHolder}
