@@ -38,6 +38,7 @@ function App() {
                 </Route>
 
                 <Route path="/choida" element={<Choida />}/>
+
                 <Route path="*" element={<h1>404</h1>}/>
             </Routes>
 

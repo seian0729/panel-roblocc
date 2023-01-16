@@ -1,8 +1,9 @@
-import { AppstoreOutlined, UserOutlined, HomeOutlined, TableOutlined, SettingOutlined } from '@ant-design/icons';
+import { AppstoreOutlined, UserOutlined, HomeOutlined,LogoutOutlined, TableOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import React, {useState} from "react";
 import {Link, Route, Routes, useLocation } from 'react-router-dom';
+import {logoutFromApp} from "../../types/user";
 
 //pages
 
@@ -55,7 +56,35 @@ const Header: React.FC = () => {
 
             }
         })
+
     ];
+    // logout button
+    function logout() {
+        logoutFromApp();
+    }
+
+    if (user.isSome()) {
+        items.push({
+            label: (
+                <Link to="/settings">
+                    <span>Cài đặt</span>
+                </Link>
+            ),
+            key: 'settings',
+            icon: <SettingOutlined />,
+        });
+        // đăng xuất
+        items.push({
+            label: (
+
+                    <span onClick={logout}>Đăng xuất</span>
+
+            ),
+            key: 'logout',
+            icon: <LogoutOutlined />,
+        });
+
+    }
 
 
 
