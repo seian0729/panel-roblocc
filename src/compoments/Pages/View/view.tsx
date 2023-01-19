@@ -1,11 +1,25 @@
-import { Col, Row, Divider, Button, message, Table, Tag, Space, Tooltip, ConfigProvider  } from 'antd';
+import {
+    Col,
+    Row,
+    Divider,
+    Button,
+    message,
+    Table,
+    Tag,
+    Space,
+    Tooltip,
+    ConfigProvider,
+    Select,
+    Input,
+    Grid, Form
+} from 'antd';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType  } from 'antd/es/table';
 import {getData} from "../../../services/data";
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 import type { FilterConfirmProps } from 'antd/es/table/interface';
-
+const { Option } = Select
 function DataCompoment()
 {
 
@@ -168,7 +182,7 @@ function DataCompoment()
                                 fscolor = 'volcano';
                             }
                             else {
-                                fstext = 'Starter / Superhuman / < 2 Melee';
+                                fstext = '0-2 Melee';
                                 fscolor = 'red';
                             }
 
@@ -358,6 +372,7 @@ function DataCompoment()
             {contextHolder}
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
+                <Col span={24}>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Space wrap>
                         <Tooltip placement="topLeft" title={'Tính năng chưa xài được :keka:'}>
@@ -373,9 +388,76 @@ function DataCompoment()
                         </Tooltip>
                         <span>
                           {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
-                    </span>
+                        </span>
+
+
+
+
+
+
                     </Space>
                 </div>
+                </Col>
+                <Col span={12}>
+                    <div style={{ marginBottom: 16, marginLeft: 16 }}>
+                        <Form>
+                            <Form.Item label="Fighting Style">
+                                <Select
+                                    mode="multiple"
+                                    placeholder="Chọn Fighting Style"
+                                    defaultValue={['3-5 Melee']}
+                                    optionLabelProp="label"
+                                >
+                                    <Option value="3-5 Melee" label="3-5 Melee">
+
+                                        3-5 Melee
+
+                                    </Option>
+                                    <Option value="0-2 Melee" label="0-2 Melee">
+                                        0-2 Melee
+                                    </Option>
+                                    <Option value="Godhuman" label="Godhuman">
+                                        Godhuman
+                                    </Option>
+                                </Select>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </Col>
+
+
+
+                <Col span={12}>
+                <div style={{ marginBottom: 16, marginLeft: 16 }}>
+                    <Form>
+                        <Form.Item label="Special">
+                    <Select
+                        mode="multiple"
+                        placeholder="Chọn Special"
+                        defaultValue={['Dough']}
+                        optionLabelProp="label"
+                    >
+                        <Option value="Dough" label="Dough">
+
+                            Dough
+
+                        </Option>
+                        <Option value="Leopard" label="Leopard">
+                            Leopard
+                        </Option>
+                        <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
+                            Cursed Dual Katana
+                        </Option>
+                        <Option value="Soul Guitar" label="Soul Guitar">
+                            Soul Guitar
+                        </Option>
+
+                    </Select>
+
+                        </Form.Item>
+                    </Form>
+                </div>
+                </Col>
                 <Col span={24}>
                     <Table
                         rowSelection={rowSelection}
