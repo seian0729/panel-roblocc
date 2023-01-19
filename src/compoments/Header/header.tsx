@@ -1,6 +1,6 @@
 import { AppstoreOutlined, UserOutlined, HomeOutlined,LogoutOutlined, TableOutlined, SettingOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
-import { Menu } from 'antd';
+import { Menu, message } from 'antd';
 import React, {useState} from "react";
 import {Link, Route, Routes, useLocation } from 'react-router-dom';
 import {logoutFromApp} from "../../types/user";
@@ -60,7 +60,11 @@ const Header: React.FC = () => {
     ];
     // logout button
     function logout() {
-        logoutFromApp();
+
+        message.success('Đăng xuất thành công')
+        setTimeout(() => {
+           logoutFromApp()
+        }, 3000);
     }
 
     if (user.isSome()) {
