@@ -426,25 +426,14 @@ function DataCompoment()
                 <Col span={24}>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Space wrap>
-                        <Tooltip placement="topLeft" title={'Tính năng chưa xài được :keka:'}>
-                            <Button type="primary" onClick={copyData} loading={loadingC}>Sao chép dữ liệu</Button>
-                        </Tooltip>
-                        <Tooltip placement="top" title={'Tính năng chưa xài được :keka:'}>
+                        <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Sao chép dữ liệu</Button>
                         <Button type="primary" onClick={refreshData} loading={loadingR}>Làm mới</Button>
-                        </Tooltip>
-                        <Tooltip placement="top" title={'Tính năng chưa xài được :keka:'}>
                         <Button type="primary" onClick={deleteAccount} disabled={!hasSelected} loading={loading} danger>
                             Xóa tài khoản đã chọn
                         </Button>
-                        </Tooltip>
                         <span>
                           {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
                         </span>
-
-
-
-
-
 
                     </Space>
                 </div>
@@ -460,9 +449,7 @@ function DataCompoment()
                                     optionLabelProp="label"
                                 >
                                     <Option value="3-5 Melee" label="3-5 Melee">
-
                                         3-5 Melee
-
                                     </Option>
                                     <Option value="0-2 Melee" label="0-2 Melee">
                                         0-2 Melee
@@ -487,12 +474,9 @@ function DataCompoment()
                         placeholder="Chọn Special"
                         defaultValue={['Dough']}
                         optionLabelProp="label"
-
                     >
                         <Option value="Dough" label="Dough">
-
                             Dough
-
                         </Option>
                         <Option value="Leopard" label="Leopard">
                             Leopard
@@ -525,7 +509,9 @@ function DataCompoment()
                                 100,
                                 200,
                                 500,
-                                1000
+                                1000,
+                                2000,
+                                5000
                             ],
                             showTotal: (total,range) => `${range[0]}-${range[1]} of ${total} items`,
                             current: page,
