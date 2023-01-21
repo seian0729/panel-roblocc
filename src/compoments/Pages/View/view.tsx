@@ -184,37 +184,38 @@ function DataCompoment()
             title: 'Fighting Style',
             dataIndex: 'fightingStyle',
             width: '10%',
-            /*
             filters: [
                 {
-                    text: 'Superhuman',
-                    value: 'Superhuman',
+                    text: '0-2 Melee',
+                    value: '<2'
                 },
                 {
-                    text: 'Death Step',
-                    value: 'DeathStep',
-                },
-                {
-                    text: 'Sharkman Karate',
-                    value: 'SharkmanKarate',
-
-                },
-                {
-                    text: 'Electric Claw',
-                    value: 'ElectricClaw',
-                },
-                {
-                    text: 'Dragon Talon',
-                    value: 'DragonTalon',
+                    text: '3-5 Melee',
+                    value: '3-5'
                 },
                 {
                     text: 'Godhuman',
-                    value: 'Godhuman',
-
-                },
+                    value: 'God'
+                }
                 ],
-            sorter: (a: { fightingStyle: string[]; }, b: { fightingStyle: string[]; }) => a.fightingStyle.length - b.fightingStyle.length,
-             */
+            onFilter: (value: any, record) => {
+                let description = JSON.parse(record.Description);
+                let fsList = description['Fighting Style']
+
+                if (value === 'God'){
+                    return fsList.length == 6
+                }
+                else if (value === '3-5'){
+                    return fsList.length < 6 && fsList.length > 2
+                }
+                else if (value === '<2'){
+                    return fsList.length < 2
+                }
+                else{
+                    return false
+                }
+
+            },
             render: (_, record ) =>{
                 let description = JSON.parse(record.Description);
                 let fightingStyle = description['Fighting Style'];
