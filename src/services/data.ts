@@ -27,3 +27,9 @@ export async function getData(){
     const { data } = await axios.get('data/getData')
     return data
 }
+
+// deleteData
+export async function deleteData(username: string){
+    const { data } = await axios.post('data/deleteData', {Username: username})
+    return data
+}

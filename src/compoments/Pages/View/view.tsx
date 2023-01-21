@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType  } from 'antd/es/table';
-import {getData} from "../../../services/data";
+import {deleteData, getData} from "../../../services/data";
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 import type { FilterConfirmProps } from 'antd/es/table/interface';
@@ -34,6 +34,10 @@ function DataCompoment()
 
     // data
     const [dataApi, setDataApi] = useState([]);
+    //dataSpecialFilter
+    const [dataApiSpecialFilter, setDataApiSpecialFilter] = useState([]);
+
+
 
     // page pagination
     const [page, setPage] = useState(1);
@@ -43,6 +47,10 @@ function DataCompoment()
         setLoading(true);
         // ajax request after empty completing
         setTimeout(() => {
+            selectedRowKeys.forEach((item) => {
+                console.log(item as string)
+                deleteData(item as string)
+            })
             messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
             setSelectedRowKeys([]);
             setLoading(false);
@@ -53,6 +61,10 @@ function DataCompoment()
         setLoadingR(true);
         // ajax request after empty completing
         setTimeout(() => {
+            getData().then((res) => {
+                setDataApi(res.data);
+            })
+
             messageApi.success('Đã làm mới lại tất cả dữ liệu <3');
             setSelectedRowKeys([]);
             setLoadingR(false);
@@ -115,6 +127,40 @@ function DataCompoment()
         {
             title: 'Data',
             width: '15%',
+            filters: [
+                {
+                    text: 'Level 2450',
+                    value: '2450',
+
+                },
+                {
+                    text: '1000-1500',
+                    value: '1000-1500',
+                },
+                {
+                    text: '1500-2450',
+                    value: '1500-2450',
+                }
+            ],
+            onFilter: (value: any, record) => {
+                let description = JSON.parse(record.Description);
+                let dataList = description.Data
+                if(value === '2450'){
+                    return dataList.Level === 2450
+                }
+                else if(value === '1000-1500'){
+                    return dataList.Level >= 1000 && dataList.Level <= 1500
+                }
+                else if(value === '1500-2450'){
+                    return dataList.Level >= 1500 && dataList.Level <= 2450
+                }
+
+                else{
+                    return false
+                }
+
+            },
+
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
@@ -130,6 +176,7 @@ function DataCompoment()
                         </Tag>
                     </>)
             }
+
         },
 
         {
@@ -304,6 +351,7 @@ function DataCompoment()
 
                 const specialList: any[] = [];
 
+
                 bfData.map((key : any) => {
                     if (key == 'Dough' || key == 'Leopard'){
                         specialList.push(key)
@@ -366,6 +414,9 @@ function DataCompoment()
         })
 
     }, [])
+    useEffect(() => {
+        setDataApiSpecialFilter(dataApi)
+    }, [dataApi])
 
     return (
         <div>
@@ -436,6 +487,7 @@ function DataCompoment()
                         placeholder="Chọn Special"
                         defaultValue={['Dough']}
                         optionLabelProp="label"
+
                     >
                         <Option value="Dough" label="Dough">
 
@@ -462,10 +514,10 @@ function DataCompoment()
                     <Table
                         rowSelection={rowSelection}
                         columns={columns}
-                        dataSource={dataApi}
+                        dataSource={dataApiSpecialFilter}
                         rowKey={(record) => record.UsernameRoblocc}
                         pagination={{
-                            total: dataApi.length,
+                            total: dataApiSpecialFilter.length,
                             pageSizeOptions:[
                                 10,
                                 20,
