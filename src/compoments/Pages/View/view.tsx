@@ -43,20 +43,6 @@ function DataCompoment()
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
-    const deleteAccount = () => {
-        setLoading(true);
-        // ajax request after empty completing
-        setTimeout(() => {
-            selectedRowKeys.forEach((item) => {
-                console.log(item as string)
-                deleteData(item as string)
-            })
-            messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
-            setSelectedRowKeys([]);
-            setLoading(false);
-        }, 1000);
-    };
-
     const refreshData = () =>{
         setLoadingR(true);
         // ajax request after empty completing
@@ -70,6 +56,21 @@ function DataCompoment()
             setLoadingR(false);
         }, 1000);
     }
+
+    const deleteAccount = () => {
+        setLoading(true);
+        setTimeout(() => {
+            selectedRowKeys.forEach((item) => {
+                console.log(item as string)
+                deleteData(item as string)
+            })
+            messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
+            setSelectedRowKeys([]);
+            setLoading(false);
+            refreshData()
+        }, 1000);
+    };
+
 
     const copyData = () => {
         setLoadingC(true);
