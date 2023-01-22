@@ -403,7 +403,7 @@ function DataCompoment()
             },
 
             filters: filtersNote,
-            onFilter: (value: any, record: { Note: string; }) => record.Note.indexOf(value) === 0,
+            onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
             filterSearch: true,
         }
         ];

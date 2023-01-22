@@ -80,7 +80,6 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
                 <Divider orientation="left">Password</Divider>
                 <Form
                     name="basic"
-                    initialValues={{remember: false}}
                     onFinish={changePass}
                     autoComplete="off"
                     layout="vertical"
