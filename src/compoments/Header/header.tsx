@@ -1,4 +1,12 @@
-import { AppstoreOutlined, UserOutlined, HomeOutlined,LogoutOutlined, TableOutlined, SettingOutlined } from '@ant-design/icons';
+import {
+    AppstoreOutlined,
+    UserOutlined,
+    HomeOutlined,
+    LogoutOutlined,
+    TableOutlined,
+    SettingOutlined,
+    ProfileOutlined
+} from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu, message } from 'antd';
 import React, {useState} from "react";
@@ -21,6 +29,8 @@ const menu: MenuProps = {
 
 const Header: React.FC = () => {
     const { user } = useStore(({ app }) => app);
+    // console user in user
+    const {username} = user.unwrap()
     const items: MenuProps['items'] = [
         {
             label: (
@@ -70,13 +80,14 @@ const Header: React.FC = () => {
     if (user.isSome()) {
         items.push({
             label: (
-                <Link to="/settings">
-                    <span>Cài đặt</span>
+                <Link to="/profile">
+                    <span>{username == 'TungStrong' ? 'TungBede' : username}</span>
                 </Link>
             ),
             key: 'settings',
-            icon: <SettingOutlined />,
+            icon: <ProfileOutlined /> ,
         });
+        // user
         // đăng xuất
         items.push({
             label: (
