@@ -385,8 +385,6 @@ function DataCompoment()
           title: 'Ngày Update (co the bug)',
           dataIndex: 'updateDate',
             render: (_, record   ) => {
-              var zone = new Date(record.updatedAt);
-                console.log(zone.getTimezoneOffset());
                 return(
                     <>
                         {
