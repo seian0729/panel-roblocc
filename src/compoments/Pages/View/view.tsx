@@ -197,7 +197,7 @@ function DataCompoment()
                     text: 'Godhuman',
                     value: 'God'
                 }
-                ],
+            ],
             onFilter: (value: any, record) => {
                 let description = JSON.parse(record.Description);
                 let fsList = description['Fighting Style']

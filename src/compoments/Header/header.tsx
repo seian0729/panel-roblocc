@@ -32,15 +32,6 @@ const Header: React.FC = () => {
     // console user in user
 
     const items: MenuProps['items'] = [
-        {
-            label: (
-                <Link to="">
-                    <span>Trang chủ</span>
-                </Link>
-            ),
-            key: '',
-            icon: <HomeOutlined />,
-        },
         user.match({
             none: () => {
                 return {
@@ -56,11 +47,11 @@ const Header: React.FC = () => {
             some: (user) => {
                 return {
                     label: (
-                        <Link to="/data">
+                        <Link to="/">
                             <span>Dữ liệu</span>
                         </Link>
                     ),
-                    key: 'data',
+                    key: '',
                     icon: <TableOutlined />,
                 };
 
@@ -70,7 +61,6 @@ const Header: React.FC = () => {
     ];
     // logout button
     function logout() {
-
         message.success('Đăng xuất thành công')
         setTimeout(() => {
            logoutFromApp()
@@ -101,7 +91,6 @@ const Header: React.FC = () => {
         });
 
     }
-
 
 
     let myPath = useLocation().pathname.replace('/','');

@@ -1,7 +1,117 @@
+import React,  { useState } from 'react';
+import {Row, Col, Typography, Divider, Form, Input, Button,} from 'antd';
+const { Paragraph } = Typography;
+
+interface FieldData {
+    name: string | number | (string | number)[];
+    value?: any;
+    touched?: boolean;
+    validating?: boolean;
+    errors?: string[];
+}
+
+interface CustomizedFormProps {
+    onChange: (fields: FieldData[]) => void;
+    fields: FieldData[];
+}
+
+const CustomizedForm: React.FC<CustomizedFormProps> = ({ onChange, fields }) => (
+    <Form
+        name="basic"
+        autoComplete="on"
+        layout="inline"
+        disabled={true}
+        fields={fields}
+        onFieldsChange={(_, allFields) => {
+            onChange(allFields);
+        }}
+    >
+        <Form.Item
+            label="UID"
+            name="uid"
+            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 0px' }}
+        >
+            <Input />
+        </Form.Item>
+        <Form.Item
+            label="Tên đăng nhập"
+            name="username"
+            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+        >
+            <Input />
+        </Form.Item>
+
+    </Form>
+);
+
+function changePass(){
+    console.log('cut');
+}
 
 function ProfileComponent(){
+    const [fields, setFields] = useState<FieldData[]>([
+        { name: ['username'], value: 'memaybeo' },
+        { name: ['uid'], value: '1'},
+    ]);
+    return <div>
 
-    return <div>Profile</div>
+        <Row justify={'start'}>
+            <Col span={12} offset={6}>
+                <Divider orientation="left">Profile</Divider>
+                <CustomizedForm
+                    fields={fields}
+                    onChange={(newFields) => {
+                        setFields(newFields);
+                    }}
+                />
+                <Divider orientation="left">Password</Divider>
+                <Form
+                    name="basic"
+                    initialValues={{remember: false}}
+                    onFinish={changePass}
+                    autoComplete="off"
+                    layout="vertical"
+                >
+                    <Form.Item
+                        label="Mật khẩu cũ"
+                        name="oldpassword"
+
+                        rules={[{required: true, message: 'Vui lòng nhập mật khẩu cũ!'}]}
+                    >
+                        <Input.Password placeholder="Vui lòng nhập mật khẩu cũ"/>
+                    </Form.Item>
+
+                    <Form.Item label="Mật khẩu mới" style={{ marginBottom: 0 }} rules={[{required: true, message: 'Vui lòng nhập mật khẩu cũ!'}]}>
+
+                        <Form.Item
+                            name="newpass"
+                            rules={[{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]}
+                            style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
+                        >
+                            <Input.Password placeholder="Vui lòng nhập mật khẩu mới" />
+                        </Form.Item>
+                        <Form.Item
+                            name="renewpass"
+                            rules={[{ required: true, message: 'Vui lòng nhập lại mật khẩu mới!' }]}
+                            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
+                        >
+                            <Input.Password placeholder="Vui lòng nhập lại mật khẩu mới" />
+                        </Form.Item>
+                    </Form.Item>
+
+                    <Form.Item>
+                        <Button type="primary" htmlType="submit"  >
+                            Đổi mật khẩu
+                        </Button>
+                    </Form.Item>
+                </Form>
+                <Divider orientation="left">Script</Divider>
+                <Paragraph copyable={{ text: 'Hello, Ant Design!' }}>
+                    Script:
+                </Paragraph>
+            </Col>
+        </Row>
+    </div>
 }
 
 export default ProfileComponent

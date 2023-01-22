@@ -5,16 +5,18 @@ import {Navigate, Route, RouteProps, Routes,Outlet} from 'react-router-dom';
 import Header from "../Header/header";
 import './App.css';
 
-import Home from "../Pages/Home/home";
-import {Login} from "../Pages/Login/Login";
-import View from "../Pages/View/view";
 import {useStore, useStoreWithInitializer} from "../../state/storeHooks";
 import {endLoad, loadUser} from './App.slice';
 import {store} from '../../state/store';
 import axios from "axios";
 import {getUser} from "../../services/data";
 import {userDecoder} from "../../types/user";
-import Choida from "../Pages/Choida/app";
+
+//Pages
+
+import {Login} from "../Pages/Login/Login";
+import View from "../Pages/View/view";
+import Profile from "../Pages/Profile/Profile";
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
@@ -29,15 +31,13 @@ function App() {
                 </Col>
             </Row>
             <Routes >
-                <Route path="/" element={<Home/>}/>
+                <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
+                    <Route path="/" element={<View/>}/>
+                </Route>
                 <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
                     <Route path="/login" element={<Login/>}/>
                 </Route>
-                <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                    <Route path="/data" element={<View/>}/>
-                </Route>
-
-                <Route path="/choida" element={<Choida />}/>
+                <Route path="/profile" element={<Profile />}/>
 
                 <Route path="*" element={<h1>404</h1>}/>
             </Routes>
