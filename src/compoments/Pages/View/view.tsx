@@ -40,11 +40,17 @@ function DataCompoment()
     const [dataApiSpecialFilter, setDataApiSpecialFilter] = useState([]);
     const [specialFilter, setSpecialFilter] = useState([]);
 
-
-
     // page pagination
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
+
+    //Sort - Data
+
+    const [dataValue, setDataValue] = useState('Level')
+
+    const handleData = (val: { value: any}) => {
+        setDataValue(val.value)
+    }
 
     const refreshData = () =>{
         setLoadingR(true);
@@ -64,7 +70,7 @@ function DataCompoment()
         setLoading(true);
         setTimeout(() => {
             deleteData(selectedRowKeys as string[]).then((res) => {
-                console.log(res);
+                //console.log(res);
             })
             messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
             setSelectedRowKeys([]);
@@ -90,7 +96,7 @@ function DataCompoment()
     }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
+        //console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
@@ -165,7 +171,7 @@ function DataCompoment()
                 }
 
             },
-            sorter: (a:any, b:any) => JSON.parse(a.Description).Data.Level - JSON.parse(b.Description).Data.Level,
+            sorter: (a:any, b:any) => JSON.parse(a.Description).Data[dataValue] - JSON.parse(b.Description).Data[dataValue],
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
@@ -294,7 +300,6 @@ function DataCompoment()
                 let GData = description['Inventory']['Gun']
                 let cac = '';
 
-
                 return (
                     <>
 
@@ -417,7 +422,7 @@ function DataCompoment()
                     specialList.push(key)
                 }
             })
-            console.log(specialFilter)
+            //console.log(specialFilter)
             // kiểm specialFilter có trong specialList không
             return multipleInArray(specialList, specialFilter);
 
@@ -468,6 +473,7 @@ function DataCompoment()
                         placeholder="Chọn Special"
                         optionLabelProp="label"
                         onChange={handleSpecialFilter}
+                        style={{ width: 500 }}
                     >
                         <Option value="Dough" label="Dough">
                             Dough
@@ -487,6 +493,34 @@ function DataCompoment()
                         </Form.Item>
                     </Form>
                 </div>
+
+                <div style={{ marginBottom: 16, marginLeft: 16 }}>
+                    <Form>
+                        <Form.Item label="Sort Data">
+                            <Select
+                                labelInValue
+                                defaultValue={{ value: 'Level', label: 'Level' }}
+                                style={{ width: 120 }}
+                                onChange= {handleData}
+                                options={[
+                                    {
+                                        value: 'Level',
+                                        label: 'Level',
+                                    },
+                                    {
+                                        value: 'Fragments',
+                                        label: 'Fragments',
+                                    },
+                                    {
+                                        value: 'Beli',
+                                        label: 'Beli',
+                                    }
+                                ]}
+                            />
+                        </Form.Item>
+                    </Form>
+                </div>
+
                 </Col>
                 <Col span={24}>
                     <Table
