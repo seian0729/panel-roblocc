@@ -29,7 +29,7 @@ export async function getData(){
 }
 
 // deleteData
-export async function deleteData(username: string){
-    const { data } = await axios.post('data/deleteData', {Username: username})
+export async function deleteData(username: string[]){
+    const { data } = await axios.post('data/bulkDeleteData', {Usernames: username})
     return data
 }

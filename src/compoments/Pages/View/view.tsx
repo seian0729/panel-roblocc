@@ -36,6 +36,7 @@ function DataCompoment()
     const [dataApi, setDataApi] = useState([]);
     //dataSpecialFilter
     const [dataApiSpecialFilter, setDataApiSpecialFilter] = useState([]);
+    const [specialFilter, setSpecialFilter] = useState([]);
 
 
 
@@ -60,9 +61,8 @@ function DataCompoment()
     const deleteAccount = () => {
         setLoading(true);
         setTimeout(() => {
-            selectedRowKeys.forEach((item) => {
-                console.log(item as string)
-                deleteData(item as string)
+            deleteData(selectedRowKeys as string[]).then((res) => {
+                console.log(res);
             })
             messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
             setSelectedRowKeys([]);
@@ -325,55 +325,6 @@ function DataCompoment()
                     </>
 
                 )
-            },
-            filters: [
-                {
-                    text: 'Dough',
-                    value: 'Dough',
-                },
-                {
-                    text: 'Leopard',
-                    value: 'Leopard',
-                },
-                {
-                    text: 'Cursed Dual Katana',
-                    value: 'Cursed Dual Katana',
-                },
-                {
-                    text: 'Soul Guitar',
-                    value: 'Soul Guitar',
-                }
-            ],
-            onFilter: (value: any, record) => {
-                console.log(value);
-                let description = JSON.parse(record.Description);
-                let bfData = description['Inventory']['Blox Fruit']
-                let sData = description['Inventory']['Sword']
-                let GData = description['Inventory']['Gun']
-
-                const specialList: any[] = [];
-
-
-                bfData.map((key : any) => {
-                    if (key == 'Dough' || key == 'Leopard'){
-                        specialList.push(key)
-                    }
-                })
-
-                sData.map((key : any) => {
-                    if (key == 'Cursed Dual Katana'){
-                        specialList.push(key)
-                    }
-                })
-
-                GData.map((key : any) => {
-                    if (key == 'Soul Guitar'){
-                        specialList.push(key)
-                    }
-                })
-
-                return specialList.includes(value)
-
             }
 
         },
@@ -419,6 +370,56 @@ function DataCompoment()
     useEffect(() => {
         setDataApiSpecialFilter(dataApi)
     }, [dataApi])
+    function multipleInArray(arr: string | any[], values: any[]) {
+        return values.every(value => {
+            return arr.includes(value);
+        });
+    }
+    let filterSpecial = () => {
+        let dataApiSpecialFilterTemp = dataApiSpecialFilter;
+        dataApiSpecialFilterTemp = dataApiSpecialFilterTemp.filter((item: any) => {
+            let description = JSON.parse(item.Description);
+            let bfData = description['Inventory']['Blox Fruit']
+            let sData = description['Inventory']['Sword']
+            let GData = description['Inventory']['Gun']
+
+            const specialList: any[] = [];
+
+
+            bfData.map((key : any) => {
+                if (key == 'Dough' || key == 'Leopard'){
+                    specialList.push(key)
+                }
+            })
+
+            sData.map((key : any) => {
+                if (key == 'Cursed Dual Katana'){
+                    specialList.push(key)
+                }
+            })
+
+            GData.map((key : any) => {
+                if (key == 'Soul Guitar'){
+                    specialList.push(key)
+                }
+            })
+            console.log(specialFilter)
+            // kiểm specialFilter có trong specialList không
+            return multipleInArray(specialList, specialFilter);
+
+        })
+
+        setDataApiSpecialFilter(dataApiSpecialFilterTemp)
+
+    }
+
+    useEffect(() => {
+        filterSpecial()
+    }, [specialFilter])
+    let handleSpecialFilter = (value: any) => {
+        setDataApiSpecialFilter(dataApi)
+        setSpecialFilter(value)
+    }
 
     return (
         <div>
@@ -440,42 +441,19 @@ function DataCompoment()
                     </Space>
                 </div>
                 </Col>
-                <Col span={12}>
-                    <div style={{ marginBottom: 16, marginLeft: 16 }}>
-                        <Form>
-                            <Form.Item label="Fighting Style">
-                                <Select
-                                    mode="multiple"
-                                    placeholder="Chọn Fighting Style"
-                                    defaultValue={['3-5 Melee']}
-                                    optionLabelProp="label"
-                                >
-                                    <Option value="3-5 Melee" label="3-5 Melee">
-                                        3-5 Melee
-                                    </Option>
-                                    <Option value="0-2 Melee" label="0-2 Melee">
-                                        0-2 Melee
-                                    </Option>
-                                    <Option value="Godhuman" label="Godhuman">
-                                        Godhuman
-                                    </Option>
-                                </Select>
-                            </Form.Item>
-                        </Form>
-                    </div>
-                </Col>
 
 
 
-                <Col span={12}>
+
+                <Col span={24}>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Form>
                         <Form.Item label="Special">
                     <Select
                         mode="multiple"
                         placeholder="Chọn Special"
-                        defaultValue={['Dough']}
                         optionLabelProp="label"
+                        onChange={handleSpecialFilter}
                     >
                         <Option value="Dough" label="Dough">
                             Dough
