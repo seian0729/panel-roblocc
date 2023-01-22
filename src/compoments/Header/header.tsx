@@ -30,7 +30,7 @@ const menu: MenuProps = {
 const Header: React.FC = () => {
     const { user } = useStore(({ app }) => app);
     // console user in user
-    const {username} = user.unwrap()
+
     const items: MenuProps['items'] = [
         {
             label: (
@@ -78,6 +78,7 @@ const Header: React.FC = () => {
     }
 
     if (user.isSome()) {
+        let { username } = user.unwrap();
         items.push({
             label: (
                 <Link to="/profile">
