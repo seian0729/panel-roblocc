@@ -5,6 +5,7 @@ import {store} from "../state/store";
 
 export interface PublicUser {
     username: string;
+    id: string;
 }
 
 export interface User extends PublicUser {
@@ -13,6 +14,7 @@ export interface User extends PublicUser {
 
 export const userDecoder: Decoder<User> = object({
     username: string,
+    id: string,
     token: string,
 });
 

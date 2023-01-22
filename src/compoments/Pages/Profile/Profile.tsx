@@ -1,5 +1,9 @@
 import React,  { useState } from 'react';
 import {Row, Col, Typography, Divider, Form, Input, Button,} from 'antd';
+import {useStore} from "../../../state/storeHooks";
+import SyntaxHighlighter from 'react-syntax-highlighter';
+import {darcula} from "react-syntax-highlighter/dist/cjs/styles/hljs";
+
 const { Paragraph } = Typography;
 
 interface FieldData {
@@ -49,10 +53,19 @@ function changePass(){
 }
 
 function ProfileComponent(){
+    const { user } = useStore(({ app }) => app);
+    console.log(user.unwrap());
+    const {username,id} = user.unwrap();
     const [fields, setFields] = useState<FieldData[]>([
-        { name: ['username'], value: 'memaybeo' },
-        { name: ['uid'], value: '1'},
+        { name: ['username'], value: username },
+        { name: ['uid'], value: id},
     ]);
+    const codeString = `getgenv().Setting = {
+    UID = ${id},
+    DelayUpdate = 120;
+    Note = 'May 1'
+}
+loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
     return <div>
 
         <Row justify={'start'}>
@@ -106,9 +119,12 @@ function ProfileComponent(){
                     </Form.Item>
                 </Form>
                 <Divider orientation="left">Script</Divider>
-                <Paragraph copyable={{ text: 'Hello, Ant Design!' }}>
+                <Paragraph copyable={{ text: codeString }}>
                     Script:
                 </Paragraph>
+                <SyntaxHighlighter language="lua" style={darcula}>
+                    {codeString}
+                </SyntaxHighlighter>
             </Col>
         </Row>
     </div>

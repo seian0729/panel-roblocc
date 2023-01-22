@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Row} from 'antd';
+import {Col, Row, Spin} from 'antd';
 import {Navigate, Route, RouteProps, Routes,Outlet} from 'react-router-dom';
 
 import Header from "../Header/header";
@@ -23,6 +23,17 @@ function App() {
 
     const userIsLogged = user.isSome();
 
+    if (loading) {
+        return (
+                <Row justify="center" align={"middle"}>
+
+                        <Spin size="large"/>
+
+                </Row>
+
+        )
+    }
+
     return (
         <div className="App">
             <Row>
@@ -37,7 +48,9 @@ function App() {
                 <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
                     <Route path="/login" element={<Login/>}/>
                 </Route>
+                <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
                 <Route path="/profile" element={<Profile />}/>
+                </Route>
 
                 <Route path="*" element={<h1>404</h1>}/>
             </Routes>
@@ -48,6 +61,7 @@ function App() {
 
 async function load() {
     const token = localStorage.getItem('token');
+    console.log(token);
     if (!store.getState().app.loading || !token) {
         store.dispatch(endLoad());
         return;

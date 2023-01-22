@@ -98,6 +98,7 @@ export function Login() {
 
                 },
                 err: (err) => {
+                    console.log(err);
                     apiNotification.open({
                         message: 'Đăng nhập',
                         description: 'Tên đăng nhập hoặc mật khẩu không đúng',
