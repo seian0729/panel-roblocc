@@ -165,7 +165,7 @@ function DataCompoment()
                 }
 
             },
-
+            sorter: (a:any, b:any) => JSON.parse(a.Description).Data.Level - JSON.parse(b.Description).Data.Level,
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
@@ -244,10 +244,6 @@ function DataCompoment()
                     </>
              )
             },
-            /*
-            onFilter: (value: any, record: { special: string[]; }) => record.special.includes(value),
-            sorter: (a: { special: string[]; }, b: { special: string[]; }) => a.special.length - b.special.length,
-            */
         },
 
         {
