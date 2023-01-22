@@ -19,6 +19,8 @@ import {deleteData, getData} from "../../../services/data";
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 import type { FilterConfirmProps } from 'antd/es/table/interface';
+import moment from "moment";
+
 const { Option } = Select
 function DataCompoment()
 {
@@ -109,6 +111,7 @@ function DataCompoment()
         fightingStyle: string[];
         Note: string;
         Description: string;
+        updatedAt: string;
     }
 
     let fstext = '';
@@ -118,6 +121,7 @@ function DataCompoment()
     const filtersNoteT: any [] = [];
 
 
+    // @ts-ignore
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
         {
@@ -329,6 +333,20 @@ function DataCompoment()
 
         },
         {
+          title: 'Ngày Update (co the bug)',
+          dataIndex: 'updateDate',
+            render: (_, record   ) => {
+                return(
+                    <>
+                        {
+                            new Date(record.updatedAt).toLocaleString()
+                        }
+                    </>
+                )
+            },
+            sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
+        },
+        {
             title: 'Note',
             dataIndex: 'Note',
             width: '15%',
@@ -354,7 +372,7 @@ function DataCompoment()
             },
 
             filters: filtersNote,
-            onFilter: (value: any, record: { Note: string; }) => record.Note.indexOf(value) === 0,
+            onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
             filterSearch: true,
         }
         ];
