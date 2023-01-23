@@ -7,18 +7,17 @@ import {
     Table,
     Tag,
     Space,
-    Tooltip,
-    ConfigProvider,
     Select,
-    Input,
-    Grid, Form
+    Form
 } from 'antd';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType  } from 'antd/es/table';
 import {deleteData, getData} from "../../../services/data";
+/*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 import type { FilterConfirmProps } from 'antd/es/table/interface';
+ */
 import moment from "moment";
 
 const { Option } = Select
@@ -118,10 +117,16 @@ function DataCompoment()
         Note: string;
         Description: string;
         updatedAt: string;
+        accountStatus: string;
     }
+
+    // variable
 
     let fstext = '';
     let fscolor = '';
+
+    let statusColor = '';
+    let statusText = ''
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
@@ -213,7 +218,7 @@ function DataCompoment()
                 let fsList = description['Fighting Style']
 
                 if (value === 'God'){
-                    return fsList.length == 6
+                    return fsList.length === 6
                 }
                 else if (value === '3-5'){
                     return fsList.length < 6 && fsList.length > 2
@@ -232,7 +237,7 @@ function DataCompoment()
                 return (
                     <>
                         {fightingStyle.map(() => {
-                            if (fightingStyle.length == 6) {
+                            if (fightingStyle.length === 6) {
                                 fstext = 'Godhuman';
                                 fscolor = 'blue';
                             }
@@ -304,19 +309,19 @@ function DataCompoment()
                     <>
 
                         {bfData.map((key : any) => {
-                            if (key == 'Dough' || key == 'Leopard'){
+                            if (key === 'Dough' || key === 'Leopard'){
                                 cac += key+' / '
                             }
                         })}
 
                         {sData.map((key : any) => {
-                            if (key == 'Cursed Dual Katana'){
+                            if (key === 'Cursed Dual Katana'){
                                 cac += key+' / '
                             }
                         })}
 
                         {GData.map((key : any) => {
-                            if (key == 'Soul Guitar'){
+                            if (key === 'Soul Guitar'){
                                 cac += key+' / '
                             }
 
@@ -346,6 +351,49 @@ function DataCompoment()
                 )
             },
             sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
+        },
+        {
+          title: 'Status (co the bug)',
+          dataIndex: 'accountStatus',
+            filters: [
+                {
+                    text: 'Online',
+                    value: 'Online',
+                },
+                {
+                    text: 'Offline',
+                    value: 'Offline',
+                },
+            ],
+            onFilter: (value: any, record) => {
+                if (value === 'Online'){
+                    return moment().unix() - moment(record.updatedAt).unix() < 500
+                }
+                else if (value === 'Offline'){
+                    return moment().unix() - moment(record.updatedAt).unix() >= 500
+                }
+                else {
+                    return  false
+                }
+
+            },
+            render: (_, record   ) => {
+              if (moment().unix() - moment(record.updatedAt).unix() >= 500){
+                  statusColor = 'red';
+                  statusText = 'Offline';
+              }
+              else {
+                  statusColor = 'green';
+                  statusText = 'Online'
+              }
+                return(
+                    <>
+                        <Tag color={statusColor} key={statusText}>
+                            {statusText}
+                        </Tag>
+                    </>
+                )
+            },
         },
         {
             title: 'Note',
@@ -406,19 +454,19 @@ function DataCompoment()
 
 
             bfData.map((key : any) => {
-                if (key == 'Dough' || key == 'Leopard'){
+                if (key === 'Dough' || key === 'Leopard'){
                     specialList.push(key)
                 }
             })
 
             sData.map((key : any) => {
-                if (key == 'Cursed Dual Katana'){
+                if (key === 'Cursed Dual Katana'){
                     specialList.push(key)
                 }
             })
 
             GData.map((key : any) => {
-                if (key == 'Soul Guitar'){
+                if (key === 'Soul Guitar'){
                     specialList.push(key)
                 }
             })
@@ -460,9 +508,6 @@ function DataCompoment()
                     </Space>
                 </div>
                 </Col>
-
-
-
 
                 <Col span={24}>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
