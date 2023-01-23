@@ -339,8 +339,9 @@ function DataCompoment()
 
         },
         {
-          title: 'Ngày Update (co the bug)',
+          title: 'Date Update (maybe bug)',
           dataIndex: 'updateDate',
+            width: '15%',
             render: (_, record   ) => {
                 return(
                     <>
@@ -353,8 +354,9 @@ function DataCompoment()
             sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
         },
         {
-          title: 'Status (co the bug)',
+          title: 'Status (maybe bug)',
           dataIndex: 'accountStatus',
+          width: '10%',
             filters: [
                 {
                     text: 'Online',
@@ -398,7 +400,7 @@ function DataCompoment()
         {
             title: 'Note',
             dataIndex: 'Note',
-            width: '15%',
+            width: '10%',
             render: (_, record   ) => {
                 {
                     filtersNoteT.push({
@@ -496,13 +498,13 @@ function DataCompoment()
                 <Col span={24}>
                 <div style={{ marginBottom: 16, marginLeft: 16 }}>
                     <Space wrap>
-                        <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Sao chép dữ liệu</Button>
-                        <Button type="primary" onClick={refreshData} loading={loadingR}>Làm mới</Button>
+                        <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Copy Data</Button>
+                        <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
                         <Button type="primary" onClick={deleteAccount} disabled={!hasSelected} loading={loading} danger>
-                            Xóa tài khoản đã chọn
+                            Delete Selected Account
                         </Button>
                         <span>
-                          {hasSelected ? `Đã chọn ${selectedRowKeys.length} tài khoản` : ''}
+                          {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
                         </span>
 
                     </Space>
@@ -515,7 +517,7 @@ function DataCompoment()
                         <Form.Item label="Special">
                     <Select
                         mode="multiple"
-                        placeholder="Chọn Special"
+                        placeholder="Choose Special"
                         optionLabelProp="label"
                         onChange={handleSpecialFilter}
                         style={{ width: 500 }}

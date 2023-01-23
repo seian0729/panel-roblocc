@@ -38,7 +38,7 @@ const CustomizedForm: React.FC<CustomizedFormProps> = ({ onChange, fields }) => 
             <Input />
         </Form.Item>
         <Form.Item
-            label="Tên đăng nhập"
+            label="Username"
             name="username"
             style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
         >
@@ -85,35 +85,35 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
                     layout="vertical"
                 >
                     <Form.Item
-                        label="Mật khẩu cũ"
+                        label="Current Password"
                         name="oldpassword"
 
-                        rules={[{required: true, message: 'Vui lòng nhập mật khẩu cũ!'}]}
+                        rules={[{required: true, message: 'Current Password is empty!'}]}
                     >
-                        <Input.Password placeholder="Vui lòng nhập mật khẩu cũ"/>
+                        <Input.Password placeholder="Current Password"/>
                     </Form.Item>
 
-                    <Form.Item label="Mật khẩu mới" style={{ marginBottom: 0 }} rules={[{required: true, message: 'Vui lòng nhập mật khẩu cũ!'}]}>
+                    <Form.Item label="New Password" style={{ marginBottom: 0 }} rules={[{required: true, message: '!'}]}>
 
                         <Form.Item
                             name="newpass"
-                            rules={[{ required: true, message: 'Vui lòng nhập mật khẩu mới!' }]}
+                            rules={[{ required: true, message: 'New Password is empty!' }]}
                             style={{ display: 'inline-block', width: 'calc(50% - 8px)' }}
                         >
-                            <Input.Password placeholder="Vui lòng nhập mật khẩu mới" />
+                            <Input.Password placeholder="New Password" />
                         </Form.Item>
                         <Form.Item
                             name="renewpass"
-                            rules={[{ required: true, message: 'Vui lòng nhập lại mật khẩu mới!' }]}
+                            rules={[{ required: true, message: 'Confirm New Password is empty!' }]}
                             style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
                         >
-                            <Input.Password placeholder="Vui lòng nhập lại mật khẩu mới" />
+                            <Input.Password placeholder="Confirm New Password" />
                         </Form.Item>
                     </Form.Item>
 
                     <Form.Item>
                         <Button type="primary" htmlType="submit"  >
-                            Đổi mật khẩu
+                            Change Password
                         </Button>
                     </Form.Item>
                 </Form>

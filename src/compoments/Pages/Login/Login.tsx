@@ -44,25 +44,25 @@ export function Login() {
                         layout="vertical"
                     >
                         <Form.Item
-                            label="Tên đăng nhập"
+                            label="Username"
                             name="username"
-                            rules={[{required: true, message: 'Vui lòng nhập tên đăng nhập!'}]}
+                            rules={[{required: true, message: 'Username is empty!'}]}
 
                         >
                             <Input onChange={e => onUpdateField('username', e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item
-                            label="Mật khẩu"
+                            label="Password"
                             name="password"
-                            rules={[{required: true, message: 'Vui lòng nhập mật khẩu!'}]}
+                            rules={[{required: true, message: 'Password is empty!'}]}
                         >
                             <Input.Password onChange={e => onUpdateField('password', e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item>
                             <Button type="primary" htmlType="submit"  >
-                                Đăng nhập
+                                Login
                             </Button>
                         </Form.Item>
                     </Form>
@@ -83,8 +83,8 @@ export function Login() {
                     console.log(user);
 
                     apiNotification.open({
-                        message: 'Đăng nhập',
-                        description: 'Đăng nhập thành công',
+                        message: 'Login',
+                        description: 'Login Success',
                         duration: 2,
                         icon: <CheckCircleOutlined style={{ color: '#63d465' }} />,
                         onClose: () => {
@@ -100,8 +100,8 @@ export function Login() {
                 err: (err) => {
                     console.log(err);
                     apiNotification.open({
-                        message: 'Đăng nhập',
-                        description: 'Tên đăng nhập hoặc mật khẩu không đúng',
+                        message: 'Login',
+                        description: 'Your username or password is incorrect',
                         duration: 2,
                         icon: <CloseCircleOutlined style={{ color: '#ff4d4f' }} />,
                     });

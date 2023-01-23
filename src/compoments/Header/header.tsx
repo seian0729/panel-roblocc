@@ -37,7 +37,7 @@ const Header: React.FC = () => {
                 return {
                     label: (
                         <Link to="/login">
-                            <span>Đăng nhập</span>
+                            <span>Login</span>
                         </Link>
                     ),
                     key: 'login',
@@ -61,7 +61,7 @@ const Header: React.FC = () => {
     ];
     // logout button
     function logout() {
-        message.success('Đăng xuất thành công')
+        message.success('Logout Success')
         setTimeout(() => {
            logoutFromApp()
         }, 3000);
@@ -83,7 +83,7 @@ const Header: React.FC = () => {
         items.push({
             label: (
 
-                    <span onClick={logout}>Đăng xuất</span>
+                    <span onClick={logout}>Logout</span>
 
             ),
             key: 'logout',
