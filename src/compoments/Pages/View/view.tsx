@@ -59,7 +59,7 @@ function DataCompoment()
                 setDataApi(res.data);
             })
 
-            messageApi.success('Đã làm mới lại tất cả dữ liệu <3');
+            messageApi.success('Refresh Success <3');
             setSelectedRowKeys([]);
             setLoadingR(false);
         }, 1000);
@@ -71,7 +71,7 @@ function DataCompoment()
             deleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
-            messageApi.success(`Đã xóa thành công: ${selectedRowKeys.length} tài khoản !`);
+            messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             setSelectedRowKeys([]);
             setLoading(false);
             refreshData()
@@ -88,7 +88,7 @@ function DataCompoment()
                 text += item + '\n'
             })
             navigator.clipboard.writeText(text);
-            messageApi.success(`Đã sao chép ${selectedRowKeys.length} dữ liệu vào khay nhớ tạm <3`);
+            messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingC(false);
         },1000)
