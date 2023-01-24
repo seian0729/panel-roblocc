@@ -8,8 +8,10 @@ import {
     Tag,
     Space,
     Select,
-    Form
+    Form,
+    Popconfirm
 } from 'antd';
+import { QuestionCircleOutlined } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type { ColumnsType  } from 'antd/es/table';
 import {deleteData, getData} from "../../../services/data";
@@ -50,6 +52,10 @@ function DataCompoment()
     const handleData = (val: { value: any}) => {
         setDataValue(val.value)
     }
+
+    const confirm = () => {
+        message.info('Clicked on Yes.');
+    };
 
     const refreshData = () =>{
         setLoadingR(true);
@@ -500,9 +506,19 @@ function DataCompoment()
                     <Space wrap>
                         <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Copy Data</Button>
                         <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
-                        <Button type="primary" onClick={deleteAccount} disabled={!hasSelected} loading={loading} danger>
+                        <Popconfirm
+                            placement="bottom"
+                            title={'Are you sure to delete?'}
+                            description={`${selectedRowKeys.length} account`}
+                            onConfirm={deleteAccount}
+                            okText="Yes"
+                            cancelText="No"
+                            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                        >
+                        <Button type="primary" disabled={!hasSelected} loading={loading} danger>
                             Delete Selected Account
                         </Button>
+                        </Popconfirm>
                         <span>
                           {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
                         </span>

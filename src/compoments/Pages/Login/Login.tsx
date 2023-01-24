@@ -19,7 +19,7 @@ export function Login() {
     const onFinishFailed = () => {
         messageApi.open({
             type: 'error',
-            content: 'Vui lòng nhập đầy đủ thông tin',
+            content: 'Username or Password is empty',
         });
     };
 
@@ -33,7 +33,7 @@ export function Login() {
             {messcontextHolder}
             <Row justify="center" >
                 <Col span={8} >
-                    <Divider orientation="left">Đăng nhập</Divider>
+                    <Divider orientation="left">Login</Divider>
 
                     <Form
                         name="basic"
