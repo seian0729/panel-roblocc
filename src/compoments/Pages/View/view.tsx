@@ -43,7 +43,7 @@ function DataCompoment()
 
     // page pagination
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(100);
+    const [pageSize, setPageSize] = useState(10);
 
     //Sort - Data
 
@@ -160,7 +160,7 @@ function DataCompoment()
                     value: '1000-1500',
                 },
                 {
-                    text: '1500-2450',
+                    text: '1500-2449',
                     value: '1500-2450',
                 }
             ],
@@ -173,8 +173,8 @@ function DataCompoment()
                 else if(value === '1000-1500'){
                     return dataList.Level >= 1000 && dataList.Level <= 1500
                 }
-                else if(value === '1500-2450'){
-                    return dataList.Level >= 1500 && dataList.Level <= 2450
+                else if(value === '1500-2449'){
+                    return dataList.Level >= 1500 && dataList.Level < 2450
                 }
 
                 else{
