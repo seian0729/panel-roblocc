@@ -1,19 +1,19 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Rô bờ lóc - Bờ lóc trái cây Ba Nèo",
+  "name": "Rô bờ lóc - Bờ lóc trái cây Ba Nèo",
   "icons": [
     {
-      "src": "favicon.ico",
+      "src": "https://chimovo.com/CustomUI/Chim/Logo/724450364069511181.png",
       "sizes": "64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     },
     {
-      "src": "logo192.png",
+      "src": "https://chimovo.com/CustomUI/Chim/Logo/726813565616390164.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "logo512.png",
+      "src": "https://chimovo.com/CustomUI/Chim/Logo/726813565616390164.png",
       "type": "image/png",
       "sizes": "512x512"
     }
