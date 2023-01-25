@@ -43,7 +43,7 @@ function DataCompoment()
 
     // page pagination
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
+    const [pageSize, setPageSize] = useState(100);
 
     //Sort - Data
 
@@ -594,9 +594,6 @@ function DataCompoment()
                         pagination={{
                             total: dataApiSpecialFilter.length,
                             pageSizeOptions:[
-                                10,
-                                20,
-                                50,
                                 100,
                                 200,
                                 500,
