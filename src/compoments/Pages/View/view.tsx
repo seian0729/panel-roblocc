@@ -161,7 +161,7 @@ function DataCompoment()
                 },
                 {
                     text: '1500-2449',
-                    value: '1500-2450',
+                    value: '1500-2449',
                 }
             ],
             onFilter: (value: any, record) => {
@@ -174,7 +174,7 @@ function DataCompoment()
                     return dataList.Level >= 1000 && dataList.Level <= 1500
                 }
                 else if(value === '1500-2449'){
-                    return dataList.Level >= 1500 && dataList.Level < 2450
+                    return dataList.Level >= 1500 && dataList.Level < 2449
                 }
 
                 else{
