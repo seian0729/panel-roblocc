@@ -48,7 +48,7 @@ const Header: React.FC = () => {
                 return {
                     label: (
                         <Link to="/">
-                            <span>Dữ liệu</span>
+                            <span>Data</span>
                         </Link>
                     ),
                     key: '',

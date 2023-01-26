@@ -54,7 +54,6 @@ function changePass(){
 
 function ProfileComponent(){
     const { user } = useStore(({ app }) => app);
-    console.log(user.unwrap());
     const {username,id} = user.unwrap();
     const [fields, setFields] = useState<FieldData[]>([
         { name: ['username'], value: username },
