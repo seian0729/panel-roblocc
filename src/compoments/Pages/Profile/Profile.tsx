@@ -76,6 +76,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
                         setFields(newFields);
                     }}
                 />
+                {/*
                 <Divider orientation="left">Password</Divider>
                 <Form
                     name="basic"
@@ -116,6 +117,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
                         </Button>
                     </Form.Item>
                 </Form>
+                */}
                 <Divider orientation="left">Script</Divider>
                 <Paragraph copyable={{ text: codeString }}>
                     Script:
