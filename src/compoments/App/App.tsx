@@ -37,6 +37,11 @@ function App() {
 
     return (
         <ConfigProvider theme={{
+            "token": {
+                "colorPrimary": "#e16428",
+                "colorBgBase": "#040404",
+                "colorTextBase": "#f6e9e9"
+              },
             algorithm: theme.darkAlgorithm,
         }}>
             <Layout style={{height:"100vh"}}>
