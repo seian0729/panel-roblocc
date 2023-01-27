@@ -37,12 +37,15 @@ function App() {
 
     return (
         <ConfigProvider theme={{
-
             algorithm: theme.darkAlgorithm,
         }}>
-            <Layout>
+            <Layout style={{height:"100vh"}}>
 
-                <Header/>
+                <Layout.Header>
+                    <Header/>
+                </Layout.Header>
+
+                <Layout.Content>
 
                 <Routes >
                     <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
@@ -57,6 +60,9 @@ function App() {
 
                     <Route path="*" element={<h1>404</h1>}/>
                 </Routes>
+                </Layout.Content>
+
+                <Layout.Footer style={{textAlign: 'center'}}>Rô Bờ lóc by PaulVoid and Ailaichum</Layout.Footer>
 
 
             </Layout>
