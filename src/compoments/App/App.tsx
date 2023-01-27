@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Row, Spin} from 'antd';
+import {Col, Layout, Row, Spin, theme} from 'antd';
 import {Navigate, Route, RouteProps, Routes,Outlet} from 'react-router-dom';
 
 import Header from "../Header/header";
@@ -11,6 +11,7 @@ import {store} from '../../state/store';
 import axios from "axios";
 import {getUser} from "../../services/data";
 import {userDecoder} from "../../types/user";
+import {ConfigProvider} from "antd";
 
 //Pages
 
@@ -35,27 +36,33 @@ function App() {
     }
 
     return (
-        <div className="App">
-            <Row>
-                <Col span={24}>
-                    <Header/>
-                </Col>
-            </Row>
-            <Routes >
-                <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                    <Route path="/" element={<View/>}/>
-                </Route>
-                <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
-                    <Route path="/login" element={<Login/>}/>
-                </Route>
-                <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                <Route path="/profile" element={<Profile />}/>
-                </Route>
+        <ConfigProvider theme={{
 
-                <Route path="*" element={<h1>404</h1>}/>
-            </Routes>
+            algorithm: theme.darkAlgorithm,
+        }}>
+            <Layout>
 
-        </div>
+                <Header/>
+
+                <Routes >
+                    <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
+                        <Route path="/" element={<View/>}/>
+                    </Route>
+                    <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
+                        <Route path="/login" element={<Login/>}/>
+                    </Route>
+                    <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
+                        <Route path="/profile" element={<Profile />}/>
+                    </Route>
+
+                    <Route path="*" element={<h1>404</h1>}/>
+                </Routes>
+
+
+            </Layout>
+
+
+        </ConfigProvider>
     );
 }
 
