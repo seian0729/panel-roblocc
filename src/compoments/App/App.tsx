@@ -40,7 +40,7 @@ function App() {
             "token": {
                 "colorPrimary": "#e16428",
                 "colorBgBase": "#040404",
-                "colorTextBase": "#f6e9e9"
+                "colorTextBase": "#f6e9e9",
               },
             algorithm: theme.darkAlgorithm,
         }}>

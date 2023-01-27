@@ -520,8 +520,8 @@ function DataCompoment()
                             Delete Selected Account
                         </Button>
                         </Popconfirm>
-                        <span>
-                          {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
+                        <span style={{color:"#f6e9e9"}}>
+                          {hasSelected ? `Selected ${selectedRowKeys.length} account` : '' }
                         </span>
 
                     </Space>
