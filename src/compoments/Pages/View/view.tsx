@@ -43,7 +43,7 @@ function DataCompoment()
 
     // page pagination
     const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(100);
+    const [pageSize, setPageSize] = useState(10);
 
     //Sort - Data
 
@@ -587,7 +587,6 @@ function DataCompoment()
                 </Col>
                 <Col span={24}>
                     <Table
-                        scroll={{ y: 500 , x: "max-content" }}
                         rowSelection={rowSelection}
                         columns={columns}
                         dataSource={dataApiSpecialFilter}
