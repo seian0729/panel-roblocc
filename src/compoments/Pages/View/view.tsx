@@ -593,7 +593,7 @@ function DataCompoment()
                         dataSource={dataApiSpecialFilter}
                         rowKey={(record) => record.UsernameRoblocc}
                         pagination={{
-                            total: dataApiSpecialFilter.length,
+                            total: dataApiSpecialFilter.length == 50 ? 51 : dataApiSpecialFilter.length ,
                             pageSizeOptions:[
                                 100,
                                 200,
