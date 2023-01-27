@@ -1,10 +1,7 @@
 import {
-    AppstoreOutlined,
     UserOutlined,
-    HomeOutlined,
     LogoutOutlined,
     TableOutlined,
-    SettingOutlined,
     ProfileOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';

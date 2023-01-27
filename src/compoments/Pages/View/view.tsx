@@ -9,7 +9,8 @@ import {
     Space,
     Select,
     Form,
-    Popconfirm
+    Popconfirm,
+    FloatButton
 } from 'antd';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
@@ -610,6 +611,7 @@ function DataCompoment()
                             }
                         }}
                     />
+                    <FloatButton.BackTop />
                 </Col>
             </Row>
         </div>

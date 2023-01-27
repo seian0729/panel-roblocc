@@ -46,7 +46,7 @@ function App() {
         }}>
             <Layout style={{height:"100vh"}}>
 
-                <Layout.Header>
+                <Layout.Header style={{background:"#181818"}}>
                     <Header/>
                 </Layout.Header>
 
