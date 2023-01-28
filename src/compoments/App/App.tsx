@@ -80,7 +80,6 @@ function App() {
 
 async function load() {
     const token = localStorage.getItem('token');
-    console.log(token);
     if (!store.getState().app.loading || !token) {
         store.dispatch(endLoad());
         return;
