@@ -146,6 +146,7 @@ function DataCompoment()
             title: 'RUsername',
             dataIndex: 'UsernameRoblocc',
             width: '10%',
+            sorter: (a, b) => { return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)},
         },
         {
             title: 'Data',
