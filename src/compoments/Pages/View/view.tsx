@@ -604,6 +604,7 @@ function DataCompoment()
                                 5000
                             ],
                             showTotal: (total,range) => `${range[0]}-${range[1]} of ${total} items`,
+                            position: ['topCenter'],
                             current: page,
                             pageSize: pageSize,
                             defaultPageSize: 10,
