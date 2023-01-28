@@ -595,6 +595,7 @@ function DataCompoment()
                         pagination={{
                             total: dataApiSpecialFilter.length == 50 ? 51 : dataApiSpecialFilter.length ,
                             pageSizeOptions:[
+                                10,
                                 100,
                                 200,
                                 500,
@@ -605,6 +606,8 @@ function DataCompoment()
                             showTotal: (total,range) => `${range[0]}-${range[1]} of ${total} items`,
                             current: page,
                             pageSize: pageSize,
+                            defaultPageSize: 10,
+                            showSizeChanger: true,
                             onChange: (page,pageSize) => {
                                 setPage(page);
                                 setPageSize(pageSize);
