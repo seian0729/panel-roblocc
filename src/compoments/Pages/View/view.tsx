@@ -516,6 +516,7 @@ function DataCompoment()
                             okText="Yes"
                             cancelText="No"
                             icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
+                            disabled={!hasSelected}
                         >
                         <Button type="primary" disabled={!hasSelected} loading={loading} danger>
                             Delete Selected Account
