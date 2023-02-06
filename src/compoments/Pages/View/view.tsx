@@ -39,6 +39,7 @@ function DataCompoment() {
     const [loading, setLoading] = useState(false);
     const [loadingR, setLoadingR] = useState(false);
     const [loadingC, setLoadingC] = useState(false);
+    const [loadingU, setLoadingU] = useState(false);
 
     // data
     const [dataApi, setDataApi] = useState([]);
@@ -110,6 +111,20 @@ function DataCompoment() {
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingC(false);
+        }, 1000)
+    }
+    const copyUsername = () => {
+        setLoadingU(true);
+        // ajax request after empty completing
+        setTimeout(() => {
+            let text = '';
+            selectedRowKeys.forEach((item : any) => {
+                text += item + '\n';
+            })
+            navigator.clipboard.writeText(text);
+            messageApi.success(`Copied ${selectedRowKeys.length} username into clipboard <3`);
+            setSelectedRowKeys([]);
+            setLoadingU(false);
         }, 1000)
     }
 
@@ -522,6 +537,9 @@ function DataCompoment() {
                         <Space wrap>
                             <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Copy
                                 Data</Button>
+                            <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
+                                Username</Button>
+
                             <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
                             <Popconfirm
                                 placement="bottom"
