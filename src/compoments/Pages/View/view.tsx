@@ -11,20 +11,21 @@ import {
     Space,
     Table,
     Tag,
-    Upload
+    Upload,
+    Typography
 } from 'antd';
 import {QuestionCircleOutlined, UploadOutlined} from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
+import moment from "moment";
+const { Text } = Typography;
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 import type { FilterConfirmProps } from 'antd/es/table/interface';
  */
-import moment from "moment";
-;
 
 const {Option} = Select
 
@@ -142,7 +143,18 @@ function DataCompoment() {
         action: 'https://api.chimovo.com/v1/data/bulkUpdatePasswordAndCookie',
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token'),
-        }
+        },
+        onChange({ file, fileList }) {
+            if (file.status !== 'uploading') {
+                console.log(file.status, file, fileList);
+                if (file.status === 'done'){
+                    messageApi.success('The file has been upload successfully!')
+                }
+                if (file.status === 'error'){
+                    messageApi.error(`Failed to upload ${file.name}! - ${file.response.message}`)
+                }
+            }
+        },
     }
     interface DataType {
         UID: number;
@@ -171,8 +183,6 @@ function DataCompoment() {
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
 
-
-    // @ts-ignore
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
         {
