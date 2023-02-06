@@ -159,7 +159,7 @@ function DataCompoment() {
 
                     })}
 
-                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '/' + cacc + '/' + itemDescript.Data.DevilFruit + '/'
+                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + cacc + '/' + itemDescript.Data.DevilFruit + '/'
                         + itemDescript['Awakened Abilities'] + '/' + fstext + '/' +  cac.substring(0, cac.length - 2) + "\n"
                 }
             })
