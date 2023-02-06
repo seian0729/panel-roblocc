@@ -1,31 +1,35 @@
 import {
-    Col,
-    Row,
-    Divider,
     Button,
+    Col,
+    Divider,
+    FloatButton,
+    Form,
     message,
+    Popconfirm,
+    Row,
+    Select,
+    Space,
     Table,
     Tag,
-    Space,
-    Select,
-    Form,
-    Popconfirm,
-    FloatButton
+    Upload
 } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import {QuestionCircleOutlined, UploadOutlined} from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
-import type { ColumnsType  } from 'antd/es/table';
+import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../services/data";
+import type { UploadProps } from 'antd';
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
 import type { FilterConfirmProps } from 'antd/es/table/interface';
  */
 import moment from "moment";
+;
 
-const { Option } = Select
-function DataCompoment()
-{
+const {Option} = Select
+
+
+function DataCompoment() {
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -50,7 +54,7 @@ function DataCompoment()
 
     const [dataValue, setDataValue] = useState('Level')
 
-    const handleData = (val: { value: any}) => {
+    const handleData = (val: { value: any }) => {
         setDataValue(val.value)
     }
 
@@ -58,7 +62,7 @@ function DataCompoment()
         message.info('Clicked on Yes.');
     };
 
-    const refreshData = () =>{
+    const refreshData = () => {
         setLoadingR(true);
         // ajax request after empty completing
         setTimeout(() => {
@@ -91,14 +95,22 @@ function DataCompoment()
         // ajax request after empty completing
         setTimeout(() => {
             let text = '';
-            selectedRowKeys.forEach((item) => {
-                text += item + '\n'
+
+
+            dataApiSpecialFilter.forEach((item : DataType) => {
+                // if item in selectedRowKeys
+                if (selectedRowKeys.includes(item.UsernameRoblocc)) {
+                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '\n';
+
+                }
             })
+
+
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingC(false);
-        },1000)
+        }, 1000)
     }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -110,9 +122,17 @@ function DataCompoment()
         disable: true,
         selectedRowKeys,
         onChange: onSelectChange,
+
     };
     const hasSelected = selectedRowKeys.length > 0;
-
+    const props: UploadProps = {
+        name: 'file',
+        listType: 'text',
+        action: 'https://api.chimovo.com/v1/data/bulkUpdatePasswordAndCookie',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem('token'),
+        }
+    }
     interface DataType {
         UID: number;
         UsernameRoblocc: string;
@@ -125,6 +145,8 @@ function DataCompoment()
         Description: string;
         updatedAt: string;
         accountStatus: string;
+        Password: string;
+        Cookie: string;
     }
 
     // variable
@@ -146,7 +168,9 @@ function DataCompoment()
             title: 'RUsername',
             dataIndex: 'UsernameRoblocc',
             width: '10%',
-            sorter: (a, b) => { return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)},
+            sorter: (a, b) => {
+                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
+            },
         },
         {
             title: 'Data',
@@ -169,36 +193,32 @@ function DataCompoment()
             onFilter: (value: any, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
-                if(value === '2450'){
+                if (value === '2450') {
                     return dataList.Level === 2450
-                }
-                else if(value === '1000-1500'){
+                } else if (value === '1000-1500') {
                     return dataList.Level >= 1000 && dataList.Level <= 1500
-                }
-                else if(value === '1500-2449'){
+                } else if (value === '1500-2449') {
                     return dataList.Level >= 1500 && dataList.Level < 2450
-                }
-
-                else{
+                } else {
                     return false
                 }
 
             },
-            sorter: (a:any, b:any) => JSON.parse(a.Description).Data[dataValue] - JSON.parse(b.Description).Data[dataValue],
+            sorter: (a: any, b: any) => JSON.parse(a.Description).Data[dataValue] - JSON.parse(b.Description).Data[dataValue],
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
-                return(<>
-                        <Tag color='orange'>
-                            Level: {new Intl.NumberFormat().format(dataList.Level)}
-                        </Tag>
-                        <Tag color='purple'>
-                            Fragments: {new Intl.NumberFormat().format(dataList.Fragments)}
-                        </Tag>
-                        <Tag color='green'>
-                            Beli: {new Intl.NumberFormat().format(dataList.Beli)}
-                        </Tag>
-                    </>)
+                return (<>
+                    <Tag color='orange'>
+                        Level: {new Intl.NumberFormat().format(dataList.Level)}
+                    </Tag>
+                    <Tag color='purple'>
+                        Fragments: {new Intl.NumberFormat().format(dataList.Fragments)}
+                    </Tag>
+                    <Tag color='green'>
+                        Beli: {new Intl.NumberFormat().format(dataList.Beli)}
+                    </Tag>
+                </>)
             }
 
         },
@@ -225,21 +245,18 @@ function DataCompoment()
                 let description = JSON.parse(record.Description);
                 let fsList = description['Fighting Style']
 
-                if (value === 'God'){
+                if (value === 'God') {
                     return fsList.length === 6
-                }
-                else if (value === '3-5'){
+                } else if (value === '3-5') {
                     return fsList.length < 6 && fsList.length > 2
-                }
-                else if (value === '<2'){
+                } else if (value === '<2') {
                     return fsList.length < 2
-                }
-                else{
+                } else {
                     return false
                 }
 
             },
-            render: (_, record ) =>{
+            render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let fightingStyle = description['Fighting Style'];
                 return (
@@ -248,12 +265,10 @@ function DataCompoment()
                             if (fightingStyle.length === 6) {
                                 fstext = 'Godhuman';
                                 fscolor = 'blue';
-                            }
-                            else if (fightingStyle.length > 2){
+                            } else if (fightingStyle.length > 2) {
                                 fstext = '3-5 Melee';
                                 fscolor = 'volcano';
-                            }
-                            else {
+                            } else {
                                 fstext = '0-2 Melee';
                                 fscolor = 'red';
                             }
@@ -261,7 +276,7 @@ function DataCompoment()
                         })}
                         <Tag color={fscolor}>{fstext}</Tag>
                     </>
-             )
+                )
             },
         },
 
@@ -285,12 +300,12 @@ function DataCompoment()
             /*
             sorter: (a: { awakened: string[]; }, b: { awakened: string[]; }) => a.awakened.length - b.awakened.length,
              */
-            render: (_, record   ) => {
+            render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let awakened = description['Awakened Abilities'];
                 return (
                     <>
-                        {awakened.map((key : any) => {
+                        {awakened.map((key: any) => {
                             return (
                                 <Tag color="green" key={key}>
                                     {key}
@@ -306,7 +321,7 @@ function DataCompoment()
         {
             title: 'Special',
             dataIndex: 'special',
-            render: (_, record   ) => {
+            render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let bfData = description['Inventory']['Blox Fruit']
                 let sData = description['Inventory']['Sword']
@@ -316,27 +331,27 @@ function DataCompoment()
                 return (
                     <>
 
-                        {bfData.map((key : any) => {
-                            if (key === 'Dough' || key === 'Leopard'){
-                                cac += key+' / '
+                        {bfData.map((key: any) => {
+                            if (key === 'Dough' || key === 'Leopard') {
+                                cac += key + ' / '
                             }
                         })}
 
-                        {sData.map((key : any) => {
-                            if (key === 'Cursed Dual Katana'){
-                                cac += key+' / '
+                        {sData.map((key: any) => {
+                            if (key === 'Cursed Dual Katana') {
+                                cac += key + ' / '
                             }
                         })}
 
-                        {GData.map((key : any) => {
-                            if (key === 'Soul Guitar'){
-                                cac += key+' / '
+                        {GData.map((key: any) => {
+                            if (key === 'Soul Guitar') {
+                                cac += key + ' / '
                             }
 
                         })}
 
                         <Tag color={'red'}>
-                            {cac.substring(0,cac.length-2)}
+                            {cac.substring(0, cac.length - 2)}
                         </Tag>
 
 
@@ -347,11 +362,11 @@ function DataCompoment()
 
         },
         {
-          title: 'Date Update (maybe bug)',
-          dataIndex: 'updateDate',
+            title: 'Date Update (maybe bug)',
+            dataIndex: 'updateDate',
             width: '15%',
-            render: (_, record   ) => {
-                return(
+            render: (_, record) => {
+                return (
                     <>
                         {
                             new Date(record.updatedAt).toLocaleString()
@@ -362,9 +377,9 @@ function DataCompoment()
             sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
         },
         {
-          title: 'Status (maybe bug)',
-          dataIndex: 'accountStatus',
-          width: '10%',
+            title: 'Status (maybe bug)',
+            dataIndex: 'accountStatus',
+            width: '10%',
             filters: [
                 {
                     text: 'Online',
@@ -376,27 +391,24 @@ function DataCompoment()
                 },
             ],
             onFilter: (value: any, record) => {
-                if (value === 'Online'){
+                if (value === 'Online') {
                     return moment().unix() - moment(record.updatedAt).unix() < 500
-                }
-                else if (value === 'Offline'){
+                } else if (value === 'Offline') {
                     return moment().unix() - moment(record.updatedAt).unix() >= 500
-                }
-                else {
-                    return  false
+                } else {
+                    return false
                 }
 
             },
-            render: (_, record   ) => {
-              if (moment().unix() - moment(record.updatedAt).unix() >= 500){
-                  statusColor = 'red';
-                  statusText = 'Offline';
-              }
-              else {
-                  statusColor = 'green';
-                  statusText = 'Online'
-              }
-                return(
+            render: (_, record) => {
+                if (moment().unix() - moment(record.updatedAt).unix() >= 500) {
+                    statusColor = 'red';
+                    statusText = 'Offline';
+                } else {
+                    statusColor = 'green';
+                    statusText = 'Online'
+                }
+                return (
                     <>
                         <Tag color={statusColor} key={statusText}>
                             {statusText}
@@ -409,21 +421,21 @@ function DataCompoment()
             title: 'Note',
             dataIndex: 'Note',
             width: '10%',
-            render: (_, record   ) => {
+            render: (_, record) => {
                 {
                     filtersNoteT.push({
                         text: record.Note,
                         value: record.Note,
                     })
 
-                    for ( var index=0; index< filtersNoteT.length; index++ ) {
-                        if (!filtersNote.find(a => a.text === filtersNoteT[index].text)){
+                    for (var index = 0; index < filtersNoteT.length; index++) {
+                        if (!filtersNote.find(a => a.text === filtersNoteT[index].text)) {
                             filtersNote.push(filtersNoteT[index])
                         }
                     }
                 }
 
-                return(
+                return (
                     <>
                         {record.Note}
                     </>
@@ -434,7 +446,7 @@ function DataCompoment()
             onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
             filterSearch: true,
         }
-        ];
+    ];
 
     // copy all value in the array
 
@@ -447,11 +459,13 @@ function DataCompoment()
     useEffect(() => {
         setDataApiSpecialFilter(dataApi)
     }, [dataApi])
+
     function multipleInArray(arr: string | any[], values: any[]) {
         return values.every(value => {
             return arr.includes(value);
         });
     }
+
     let filterSpecial = () => {
         let dataApiSpecialFilterTemp = dataApiSpecialFilter;
         dataApiSpecialFilterTemp = dataApiSpecialFilterTemp.filter((item: any) => {
@@ -463,20 +477,20 @@ function DataCompoment()
             const specialList: any[] = [];
 
 
-            bfData.map((key : any) => {
-                if (key === 'Dough' || key === 'Leopard'){
+            bfData.map((key: any) => {
+                if (key === 'Dough' || key === 'Leopard') {
                     specialList.push(key)
                 }
             })
 
-            sData.map((key : any) => {
-                if (key === 'Cursed Dual Katana'){
+            sData.map((key: any) => {
+                if (key === 'Cursed Dual Katana') {
                     specialList.push(key)
                 }
             })
 
-            GData.map((key : any) => {
-                if (key === 'Soul Guitar'){
+            GData.map((key: any) => {
+                if (key === 'Soul Guitar') {
                     specialList.push(key)
                 }
             })
@@ -504,88 +518,103 @@ function DataCompoment()
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col span={24}>
-                <div style={{ marginBottom: 16, marginLeft: 16 }}>
-                    <Space wrap>
-                        <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Copy Data</Button>
-                        <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
-                        <Popconfirm
-                            placement="bottom"
-                            title={'Are you sure to delete?'}
-                            description={`${selectedRowKeys.length} account`}
-                            onConfirm={deleteAccount}
-                            okText="Yes"
-                            cancelText="No"
-                            icon={<QuestionCircleOutlined style={{ color: 'red' }} />}
-                            disabled={!hasSelected}
-                        >
-                        <Button type="primary" disabled={!hasSelected} loading={loading} danger>
-                            Delete Selected Account
-                        </Button>
-                        </Popconfirm>
-                        <span style={{color:"#f6e9e9"}}>
-                          {hasSelected ? `Selected ${selectedRowKeys.length} account` : '' }
+                    <div style={{marginBottom: 16, marginLeft: 16}}>
+                        <Space wrap>
+                            <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Copy
+                                Data</Button>
+                            <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
+                            <Popconfirm
+                                placement="bottom"
+                                title={'Are you sure to delete?'}
+                                description={`${selectedRowKeys.length} account`}
+                                onConfirm={deleteAccount}
+                                okText="Yes"
+                                cancelText="No"
+                                icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                disabled={!hasSelected}
+                            >
+                                <Button type="primary" disabled={!hasSelected} loading={loading} danger>
+                                    Delete Selected Account
+                                </Button>
+                            </Popconfirm>
+                            <span style={{color: "#f6e9e9"}}>
+                          {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
                         </span>
 
-                    </Space>
-                </div>
+                        </Space>
+                    </div>
                 </Col>
 
                 <Col span={24}>
-                <div style={{ marginBottom: 16, marginLeft: 16 }}>
-                    <Form>
-                        <Form.Item label="Special">
-                    <Select
-                        mode="multiple"
-                        placeholder="Choose Special"
-                        optionLabelProp="label"
-                        onChange={handleSpecialFilter}
-                        style={{ width: 500 }}
-                    >
-                        <Option value="Dough" label="Dough">
-                            Dough
-                        </Option>
-                        <Option value="Leopard" label="Leopard">
-                            Leopard
-                        </Option>
-                        <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
-                            Cursed Dual Katana
-                        </Option>
-                        <Option value="Soul Guitar" label="Soul Guitar">
-                            Soul Guitar
-                        </Option>
+                    <div style={{marginBottom: 16, marginLeft: 16}}>
+                        <Form>
+                            <Form.Item label="Special">
+                                <Select
+                                    mode="multiple"
+                                    placeholder="Choose Special"
+                                    optionLabelProp="label"
+                                    onChange={handleSpecialFilter}
+                                    style={{width: 500}}
+                                >
+                                    <Option value="Dough" label="Dough">
+                                        Dough
+                                    </Option>
+                                    <Option value="Leopard" label="Leopard">
+                                        Leopard
+                                    </Option>
+                                    <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
+                                        Cursed Dual Katana
+                                    </Option>
+                                    <Option value="Soul Guitar" label="Soul Guitar">
+                                        Soul Guitar
+                                    </Option>
 
-                    </Select>
+                                </Select>
 
-                        </Form.Item>
-                    </Form>
-                </div>
+                            </Form.Item>
+                        </Form>
+                    </div>
 
-                <div style={{ marginBottom: 16, marginLeft: 16 }}>
-                    <Form>
-                        <Form.Item label="Sort Data">
-                            <Select
-                                labelInValue
-                                defaultValue={{ value: 'Level', label: 'Level' }}
-                                style={{ width: 120 }}
-                                onChange= {handleData}
-                                options={[
-                                    {
-                                        value: 'Level',
-                                        label: 'Level',
-                                    },
-                                    {
-                                        value: 'Fragments',
-                                        label: 'Fragments',
-                                    },
-                                    {
-                                        value: 'Beli',
-                                        label: 'Beli',
-                                    }
-                                ]}
-                            />
-                        </Form.Item>
-                    </Form>
-                </div>
+                    <div style={{marginBottom: 16, marginLeft: 16}}>
+                        <Form>
+                            <Form.Item label="Sort Data">
+                                <Select
+                                    labelInValue
+                                    defaultValue={{value: 'Level', label: 'Level'}}
+                                    style={{width: 120}}
+                                    onChange={handleData}
+                                    options={[
+                                        {
+                                            value: 'Level',
+                                            label: 'Level',
+                                        },
+                                        {
+                                            value: 'Fragments',
+                                            label: 'Fragments',
+                                        },
+                                        {
+                                            value: 'Beli',
+                                            label: 'Beli',
+                                        }
+                                    ]}
+                                />
+                            </Form.Item>
+                        </Form>
+                    </div>
+
+
+                    <div style={{marginBottom: 16, marginLeft: 16}}>
+                        <Form>
+                            <Form.Item label="Import">
+                                <Upload {...props}>
+                                    <Button icon={<UploadOutlined/>}>Click to Upload</Button>
+                                </Upload>
+
+                                </Form.Item>
+                            Ghi chú: File import phải là file .txt và định dạng như sau: username/password/cookie
+                        </Form>
+                    </div>
+
 
                 </Col>
                 <Col span={24}>
@@ -595,8 +624,8 @@ function DataCompoment()
                         dataSource={dataApiSpecialFilter}
                         rowKey={(record) => record.UsernameRoblocc}
                         pagination={{
-                            total: dataApiSpecialFilter.length == 50 ? 51 : dataApiSpecialFilter.length,
-                            pageSizeOptions:[
+                            total: dataApiSpecialFilter.length,
+                            pageSizeOptions: [
                                 10,
                                 100,
                                 200,
@@ -605,19 +634,19 @@ function DataCompoment()
                                 2000,
                                 5000
                             ],
-                            showTotal: (total,range) => `${range[0]}-${range[1]} of ${total} items`,
+                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
                             position: ['topCenter'],
                             current: page,
                             pageSize: pageSize,
                             defaultPageSize: 10,
                             showSizeChanger: true,
-                            onChange: (page,pageSize) => {
+                            onChange: (page, pageSize) => {
                                 setPage(page);
                                 setPageSize(pageSize);
                             }
                         }}
                     />
-                    <FloatButton.BackTop />
+                    <FloatButton.BackTop/>
                 </Col>
             </Row>
         </div>
@@ -625,4 +654,4 @@ function DataCompoment()
 
 }
 
-export default  DataCompoment
+export default DataCompoment
