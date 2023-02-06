@@ -12,15 +12,15 @@ import {
     Table,
     Tag,
     Upload,
-    Typography
+    Modal
 } from 'antd';
-import {QuestionCircleOutlined, UploadOutlined} from '@ant-design/icons';
+import {QuestionCircleOutlined, UploadOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
-const { Text } = Typography;
+import {useStore} from "../../../state/storeHooks";
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
@@ -94,15 +94,12 @@ function DataCompoment() {
         setTimeout(() => {
             let text = '';
 
-
             dataApiSpecialFilter.forEach((item : DataType) => {
                 // if item in selectedRowKeys
                 if (selectedRowKeys.includes(item.UsernameRoblocc)) {
                     text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '\n';
-
                 }
             })
-
 
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
@@ -110,6 +107,62 @@ function DataCompoment() {
             setLoadingC(false);
         }, 1000)
     }
+
+    const copyDataChim = () => {
+        setLoadingC(true);
+        setTimeout(() => {
+            let text = '';
+
+            dataApiSpecialFilter.forEach((item : DataType) => {
+                // if item in selectedRowKeys
+                if (selectedRowKeys.includes(item.UsernameRoblocc)) {
+                    const itemDescript = JSON.parse(item.Description)
+                    let fightingStyle = itemDescript['Fighting Style']
+                    let bfData = itemDescript['Inventory']['Blox Fruit']
+                    let sData = itemDescript['Inventory']['Sword']
+                    let GData = itemDescript['Inventory']['Gun']
+                    let cac = '';
+
+                    {bfData.map((key: any) => {
+                        if (key === 'Dough' || key === 'Leopard') {
+                            cac += key + ' - '
+                        }
+                    })}
+
+                    {sData.map((key: any) => {
+                        if (key === 'Cursed Dual Katana') {
+                            cac += key + ' - '
+                        }
+                    })}
+
+                    {GData.map((key: any) => {
+                        if (key === 'Soul Guitar') {
+                            cac += key + ' - '
+                        }
+
+                    })}
+
+                    {fightingStyle.map(() => {
+                        if (fightingStyle.length === 6) {
+                            fstext = 'Godhuman';
+                        } else if (fightingStyle.length > 2) {
+                            fstext = '3-5 Melee';
+                        } else {
+                            fstext = '0-2 Melee';
+                        }
+
+                    })}
+                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '/' + fstext + "/" +  cac.substring(0, cac.length - 2) + "\n"
+                }
+            })
+
+            navigator.clipboard.writeText(text);
+            messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
+            setSelectedRowKeys([]);
+            setLoadingC(false);
+        }, 1000)
+    }
+
     const copyUsername = () => {
         setLoadingU(true);
         // ajax request after empty completing
@@ -533,15 +586,37 @@ function DataCompoment() {
         setSpecialFilter(value)
     }
 
+    const { user } = useStore(({ app }) => app);
+
+    let { username } = user.unwrap();
+
+    const [modal, ModalcontextHolder] = Modal.useModal();
+
+    const openModal = () => {
+        modal.confirm({
+            title: 'Copy Data',
+            icon: <ExclamationCircleOutlined />,
+            content: 'Select method copy data',
+            okText: 'Fully Data',
+            cancelText: 'Basic Data',
+            onOk: copyDataChim,
+            onCancel: copyData
+        });
+    }
+
+
     return (
+
         <div>
             {contextHolder}
+            {ModalcontextHolder}
+
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col span={24}>
                     <div style={{marginBottom: 16, marginLeft: 16}}>
                         <Space wrap>
-                            <Button type="primary" onClick={copyData} disabled={!hasSelected} loading={loadingC}>Copy
+                            <Button type="primary" onClick={username === "Chim" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
                                 Data</Button>
                             <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
                                 Username</Button>
