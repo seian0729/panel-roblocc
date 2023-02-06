@@ -77,10 +77,10 @@ export function Login() {
 
         const result = await login(username, password);
 
-        console.log(result);
+        //console.log(result);
         result.match({
                 ok: (user) => {
-                    console.log(user);
+                    //console.log(user);
 
                     apiNotification.open({
                         message: 'Login',
@@ -98,7 +98,7 @@ export function Login() {
 
                 },
                 err: (err) => {
-                    console.log(err);
+                    //console.log(err);
                     apiNotification.open({
                         message: 'Login',
                         description: 'Your username or password is incorrect',

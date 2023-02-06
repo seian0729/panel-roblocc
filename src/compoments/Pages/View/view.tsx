@@ -59,10 +59,6 @@ function DataCompoment() {
         setDataValue(val.value)
     }
 
-    const confirm = () => {
-        message.info('Clicked on Yes.');
-    };
-
     const refreshData = () => {
         setLoadingR(true);
         // ajax request after empty completing
