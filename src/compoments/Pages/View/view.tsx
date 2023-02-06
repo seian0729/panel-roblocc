@@ -117,11 +117,17 @@ function DataCompoment() {
                 // if item in selectedRowKeys
                 if (selectedRowKeys.includes(item.UsernameRoblocc)) {
                     const itemDescript = JSON.parse(item.Description)
+                    let dataList = itemDescript.Data
                     let fightingStyle = itemDescript['Fighting Style']
                     let bfData = itemDescript['Inventory']['Blox Fruit']
                     let sData = itemDescript['Inventory']['Sword']
                     let GData = itemDescript['Inventory']['Gun']
                     let cac = '';
+                    let cacc ='';
+
+                    cacc += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
+                    cacc += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
+                    cacc += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
                     {bfData.map((key: any) => {
                         if (key === 'Dough' || key === 'Leopard') {
@@ -152,7 +158,9 @@ function DataCompoment() {
                         }
 
                     })}
-                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '/' + fstext + "/" +  cac.substring(0, cac.length - 2) + "\n"
+
+                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '/' + cacc + '/' + itemDescript.Data.DevilFruit + '/'
+                        + itemDescript['Awakened Abilities'] + '/' + fstext + '/' +  cac.substring(0, cac.length - 2) + "\n"
                 }
             })
 
