@@ -12,7 +12,8 @@ import {
     Table,
     Tag,
     Upload,
-    Modal
+    Modal,
+    Badge
 } from 'antd';
 import {QuestionCircleOutlined, UploadOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
@@ -237,9 +238,6 @@ function DataCompoment() {
 
     let fstext = '';
     let fscolor = '';
-
-    let statusColor = '';
-    let statusText = ''
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
@@ -481,18 +479,10 @@ function DataCompoment() {
 
             },
             render: (_, record) => {
-                if (moment().unix() - moment(record.updatedAt).unix() >= 500) {
-                    statusColor = 'red';
-                    statusText = 'Offline';
-                } else {
-                    statusColor = 'green';
-                    statusText = 'Online'
-                }
                 return (
                     <>
-                        <Tag color={statusColor} key={statusText}>
-                            {statusText}
-                        </Tag>
+                        <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'error' : 'success' }
+                               text={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'Offline' : 'Online'} />
                     </>
                 )
             },
