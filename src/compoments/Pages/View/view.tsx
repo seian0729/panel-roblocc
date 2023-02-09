@@ -105,7 +105,7 @@ function DataCompoment() {
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingC(false);
-        }, 1000)
+        }, 500)
     }
 
     const copyDataChim = () => {
@@ -168,7 +168,7 @@ function DataCompoment() {
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingC(false);
-        }, 1000)
+        }, 500)
     }
 
     const copyUsername = () => {
@@ -183,7 +183,7 @@ function DataCompoment() {
             messageApi.success(`Copied ${selectedRowKeys.length} username into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingU(false);
-        }, 1000)
+        }, 500)
     }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -376,12 +376,10 @@ function DataCompoment() {
             }
         },
         {
-            title: 'Awakened Abilities ',
+            title: 'Awakened Abilities',
             dataIndex: 'awakened',
             width: '10%',
-            /*
-            sorter: (a: { awakened: string[]; }, b: { awakened: string[]; }) => a.awakened.length - b.awakened.length,
-             */
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Awakened Abilities'].length - JSON.parse(b.Description)['Awakened Abilities'].length,
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let awakened = description['Awakened Abilities'];
@@ -444,7 +442,7 @@ function DataCompoment() {
 
         },
         {
-            title: 'Date Update (maybe bug)',
+            title: 'Date Update',
             dataIndex: 'updateDate',
             width: '15%',
             render: (_, record) => {
@@ -459,7 +457,7 @@ function DataCompoment() {
             sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
         },
         {
-            title: 'Status (maybe bug)',
+            title: 'Status',
             dataIndex: 'accountStatus',
             width: '10%',
             filters: [
