@@ -15,13 +15,19 @@ import {
     Modal,
     Badge
 } from 'antd';
-import {QuestionCircleOutlined, UploadOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+    QuestionCircleOutlined,
+    UploadOutlined,
+    ExclamationCircleOutlined,
+    SearchOutlined
+} from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../state/storeHooks";
+import Highlighter from 'react-highlight-words';
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
@@ -399,6 +405,36 @@ function DataCompoment() {
         {
             title: 'Special',
             dataIndex: 'special',
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+            ),
+            filterDropdown: () =>{
+                return (
+                    <div style={{ padding: 8 }}>
+                        <Select
+                            key = "cac"
+                            mode="multiple"
+                            placeholder="Search Special (Multiple)"
+                            optionLabelProp="label"
+                            onChange={handleSpecialFilter}
+                            style={{width: 310, marginBottom: 8, display: 'block' }}
+                        >
+                            <Option value="Dough" label="Dough">
+                                Dough
+                            </Option>
+                            <Option value="Leopard" label="Leopard">
+                                Leopard
+                            </Option>
+                            <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
+                                Cursed Dual Katana
+                            </Option>
+                            <Option value="Soul Guitar" label="Soul Guitar">
+                                Soul Guitar
+                            </Option>
+                        </Select>
+                    </div>
+                )
+            },
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let bfData = description['Inventory']['Blox Fruit']
@@ -641,35 +677,6 @@ function DataCompoment() {
                 </Col>
 
                 <Col span={24}>
-                    <div style={{marginBottom: 16, marginLeft: 16}}>
-                        <Form>
-                            <Form.Item label="Special">
-                                <Select
-                                    mode="multiple"
-                                    placeholder="Choose Special"
-                                    optionLabelProp="label"
-                                    onChange={handleSpecialFilter}
-                                    style={{width: 500}}
-                                >
-                                    <Option value="Dough" label="Dough">
-                                        Dough
-                                    </Option>
-                                    <Option value="Leopard" label="Leopard">
-                                        Leopard
-                                    </Option>
-                                    <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
-                                        Cursed Dual Katana
-                                    </Option>
-                                    <Option value="Soul Guitar" label="Soul Guitar">
-                                        Soul Guitar
-                                    </Option>
-
-                                </Select>
-
-                            </Form.Item>
-                        </Form>
-                    </div>
-
                     <div style={{marginBottom: 16, marginLeft: 16}}>
                         <Form>
                             <Form.Item label="Sort Data">

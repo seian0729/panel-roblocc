@@ -18,6 +18,7 @@ import {ConfigProvider} from "antd";
 import {Login} from "../Pages/Login/Login";
 import View from "../Pages/View/view";
 import Profile from "../Pages/Profile/Profile";
+import Admin from "../Pages/Admin/admin"
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
@@ -52,7 +53,7 @@ function App() {
                     <Header/>
                 </Layout.Header>
 
-                <Layout.Content>
+                <Layout.Content >
 
                 <Routes >
                     <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
@@ -64,7 +65,9 @@ function App() {
                     <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
                         <Route path="/profile" element={<Profile />}/>
                     </Route>
-
+                    <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
+                        <Route path="/admin" element={<Admin />}/>
+                    </Route>
                     <Route path="*" element={<h1>404</h1>}/>
                 </Routes>
                 </Layout.Content>
