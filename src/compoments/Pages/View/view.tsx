@@ -27,7 +27,6 @@ import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../state/storeHooks";
-import Highlighter from 'react-highlight-words';
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
@@ -84,9 +83,11 @@ function DataCompoment() {
     const deleteAccount = () => {
         setLoading(true);
         setTimeout(() => {
+            /*
             deleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
+             */
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             setSelectedRowKeys([]);
             setLoading(false);
@@ -212,7 +213,7 @@ function DataCompoment() {
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
-        onChange({ file, fileList }) {
+        onChange({ file}) {
             if (file.status !== 'uploading') {
                 // console.log(file.status, file, fileList);
                 if (file.status === 'done'){
@@ -636,13 +637,11 @@ function DataCompoment() {
         });
     }
 
-
     return (
 
         <div>
             {contextHolder}
             {ModalcontextHolder}
-
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col span={24}>

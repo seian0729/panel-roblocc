@@ -1,5 +1,5 @@
 import React from 'react';
-import {Col, Layout, Row, Spin, theme} from 'antd';
+import {Layout, Row, Spin, theme} from 'antd';
 import {Navigate, Route, RouteProps, Routes,Outlet} from 'react-router-dom';
 
 import Header from "../Header/header";
@@ -18,7 +18,13 @@ import {ConfigProvider} from "antd";
 import {Login} from "../Pages/Login/Login";
 import View from "../Pages/View/view";
 import Profile from "../Pages/Profile/Profile";
-import Admin from "../Pages/Admin/admin"
+import Page404 from "../Pages/404/404"
+
+//Dashboard
+import Dashboard from "../Pages/Dashboard/dashboard"
+import Users from "../Pages/Dashboard/users/users"
+import AddUser from "../Pages/Dashboard/users/addUser";
+import EditUser from "../Pages/Dashboard/users/editUser";
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
@@ -66,9 +72,17 @@ function App() {
                         <Route path="/profile" element={<Profile />}/>
                     </Route>
                     <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                        <Route path="/admin" element={<Admin />}/>
+                        <Route path="dashboard">
+                            <Route index element={<Dashboard />}/>
+                            <Route path="users" element={<Users />} />
+                            <Route path="add-user" element={<AddUser />} />
+                            <Route path="edit-user">
+                                <Route index element={<EditUser />}/>
+                                <Route path=":id" element={<EditUser />}/>
+                            </Route>
+                        </Route>
                     </Route>
-                    <Route path="*" element={<h1>404</h1>}/>
+                    <Route path="*" element={<Page404 />}/>
                 </Routes>
                 </Layout.Content>
 

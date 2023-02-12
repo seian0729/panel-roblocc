@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import {
-    AppstoreOutlined,
     UserOutlined,
     DesktopOutlined,
-    MailOutlined,
     MenuFoldOutlined,
     MenuUnfoldOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Button, Menu } from 'antd';
+import {Link} from "react-router-dom";
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -31,10 +30,16 @@ function getItem(
 const items: MenuItem[] = [
     getItem('Chung', '1', <DesktopOutlined />),
     getItem('Quản Lý Người Dùng', '2', <UserOutlined />,[
-        getItem('Tất cả người dùng', '3'),
-        getItem('Thêm người dùng', '4'),
-        getItem('Xóa người dùng', '5'),
-        getItem('Sửa người dùng', '6'),
+        getItem((
+            <Link to="users">
+                <span>Tất cả người dùng</span>
+            </Link>
+        ), '3',),
+        getItem((
+            <Link to="add-user">
+                <span>Thêm người dùng</span>
+            </Link>
+        ), '4',)
     ]),
 ];
 
