@@ -83,11 +83,9 @@ function DataCompoment() {
     const deleteAccount = () => {
         setLoading(true);
         setTimeout(() => {
-            /*
             deleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
-             */
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             setSelectedRowKeys([]);
             setLoading(false);
