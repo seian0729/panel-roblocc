@@ -45,6 +45,15 @@ const CustomizedForm: React.FC<CustomizedFormProps> = ({ onChange, fields }) => 
             <Input />
         </Form.Item>
 
+
+        <Form.Item
+            label="Role"
+            name="role"
+            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 0px' }}
+        >
+            <Input />
+        </Form.Item>
+
     </Form>
 );
 
@@ -54,10 +63,11 @@ function changePass(){
 
 function ProfileComponent(){
     const { user } = useStore(({ app }) => app);
-    const {username,id} = user.unwrap();
+    const {username,id,role} = user.unwrap();
     const [fields, setFields] = useState<FieldData[]>([
         { name: ['username'], value: username },
         { name: ['uid'], value: id},
+        { name: ['role'], value: role},
     ]);
     const codeString = `getgenv().Setting = {
     UID = ${id},
@@ -118,7 +128,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
                     </Form.Item>
                 </Form>
                 */}
-                <Divider orientation="left">Script</Divider>
+                <Divider orientation="left"></Divider>
                 <Paragraph copyable={{ text: codeString }}>
                     Script:
                 </Paragraph>
