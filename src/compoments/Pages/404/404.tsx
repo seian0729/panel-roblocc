@@ -1,13 +1,14 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Button, Result } from 'antd';
+import {Link} from "react-router-dom";
 
-const PageNotFound: React.FC = () => {
-    return(<div style={{color:"red", textAlign: 'center'}}>
-        <h2 style={{fontSize: 'xx-large'}}>
-            Page Not Found
-        </h2>
-        <Link to='/'> Quay về trang chủ </Link>
-    </div>)
-}
+const App: React.FC = () => (
+    <Result
+        status="404"
+        title="404"
+        subTitle="Sorry, the page you visited does not exist."
+        extra={<Link to={"/"}><Button type="primary">Back Home</Button></Link>}
+    />
+);
 
-export default PageNotFound
+export default App;

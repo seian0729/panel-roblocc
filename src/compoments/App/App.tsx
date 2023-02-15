@@ -22,9 +22,6 @@ import Page404 from "../Pages/404/404"
 
 //Dashboard
 import Dashboard from "../Pages/Dashboard/dashboard"
-import Users from "../Pages/Dashboard/users/users"
-import AddUser from "../Pages/Dashboard/users/addUser";
-import EditUser from "../Pages/Dashboard/users/editUser";
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
@@ -78,18 +75,11 @@ function App() {
                     <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
                         <Route path="/profile" element={<Profile />}/>
                     </Route>
-                    <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
+                    <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
                         <Route path="dashboard">
                             <Route index element={<Dashboard />}/>
-                            <Route path="users" element={<Users />} />
-                            <Route path="add-user" element={<AddUser />} />
-                            <Route path="edit-user">
-                                <Route index element={<EditUser />}/>
-                                <Route path=":id" element={<EditUser />}/>
-                            </Route>
+
                         </Route>
-                    </Route>
-                    <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
                     </Route>
                     <Route path="*" element={<Page404 />}/>
                 </Routes>
