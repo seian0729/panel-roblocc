@@ -31,6 +31,13 @@ function App() {
 
     const userIsLogged = user.isSome();
 
+    const isAdmin = user.match({
+        none: () => false,
+        some: (user) => user.role === 'Admin'
+    });
+
+
+
     if (loading) {
         return (
                 <Row justify="center" align={"middle"}>

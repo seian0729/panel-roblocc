@@ -10,12 +10,14 @@ export interface PublicUser {
 
 export interface User extends PublicUser {
     token: string;
+    role: string;
 }
 
 export const userDecoder: Decoder<User> = object({
     username: string,
     id: string,
     token: string,
+    role: string,
 });
 
 export interface UserSettings extends PublicUser {
@@ -26,7 +28,7 @@ export interface UserSettings extends PublicUser {
 export function loadUserIntoApp(user: User) {
     localStorage.setItem('token', user.token);
     console.log('token', user.token);
-    axios.defaults.headers.Authorization = `Token ${user.token}`;
+    axios.defaults.headers.Authorization = `Bearer ${user.token}`;
     store.dispatch(loadUser(user));
     console.log('user', user);
 }
