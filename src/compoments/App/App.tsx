@@ -89,6 +89,8 @@ function App() {
                             </Route>
                         </Route>
                     </Route>
+                    <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
+                    </Route>
                     <Route path="*" element={<Page404 />}/>
                 </Routes>
                 </Layout.Content>
@@ -138,5 +140,17 @@ function GuestOnlyRoute({
     }
     return <Outlet />
 }
+
+// admin only route
+function AdminOnlyRoute({
+    userIsLogged,
+    isAdmin
+}: { userIsLogged: boolean, isAdmin: boolean } & RouteProps) {
+    if (!userIsLogged || !isAdmin) {
+        return <Navigate to="/"/>;
+
+    }
+    return <Outlet />
+                        }
 
 export default App;
