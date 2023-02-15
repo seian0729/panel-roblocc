@@ -60,9 +60,7 @@ function DataCompoment() {
     const [pageSize, setPageSize] = useState(10);
 
     //Sort - Data
-
     const [dataValue, setDataValue] = useState('Level')
-
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
     }
@@ -294,7 +292,7 @@ function DataCompoment() {
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
-                return (<>
+                return (<Space size='small'>
                     <Tag color='orange'>
                         Level: {new Intl.NumberFormat().format(dataList.Level)}
                     </Tag>
@@ -304,7 +302,7 @@ function DataCompoment() {
                     <Tag color='green'>
                         Beli: {new Intl.NumberFormat().format(dataList.Beli)}
                     </Tag>
-                </>)
+                </Space>)
             }
 
         },
@@ -420,7 +418,8 @@ function DataCompoment() {
                 let description = JSON.parse(record.Description);
                 let awakened = description['Awakened Abilities'];
                 return (
-                    <>
+                    <Space>
+
                         {awakened.map((key: any) => {
                             return (
                                 <Tag color="green" key={key}>
@@ -428,7 +427,7 @@ function DataCompoment() {
                                 </Tag>
                             );
                         })}
-                    </>
+                    </Space>
 
                 )
             }

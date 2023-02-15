@@ -1,5 +1,5 @@
 import React,  { useState } from 'react';
-import {Row, Col, Typography, Divider, Form, Input, Button} from 'antd';
+import {Row, Col, Typography, Divider, Form, Input, Space} from 'antd';
 import {useStore} from "../../../state/storeHooks";
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import {darcula} from "react-syntax-highlighter/dist/cjs/styles/hljs";
@@ -23,37 +23,33 @@ const CustomizedForm: React.FC<CustomizedFormProps> = ({ onChange, fields }) => 
     <Form
         name="basic"
         autoComplete="on"
-        layout="inline"
+        layout="vertical"
         disabled={true}
         fields={fields}
         onFieldsChange={(_, allFields) => {
             onChange(allFields);
         }}
     >
+        <Space size='middle'>
         <Form.Item
             label="UID"
-            name="uid"
-            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 0px' }}
-        >
+            name="uid">
             <Input />
         </Form.Item>
         <Form.Item
             label="Username"
             name="username"
-            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 8px' }}
         >
             <Input />
         </Form.Item>
-
 
         <Form.Item
             label="Role"
-            name="role"
-            style={{ display: 'inline-block', width: 'calc(50% - 8px)', margin: '0 0px' }}
-        >
+            name="role">
             <Input />
         </Form.Item>
 
+        </Space>
     </Form>
 );
 
