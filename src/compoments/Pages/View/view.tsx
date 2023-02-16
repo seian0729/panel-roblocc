@@ -756,15 +756,7 @@ function DataCompoment() {
                         rowKey={(record) => record.UsernameRoblocc}
                         pagination={{
                             total: dataApiSpecialFilter.length,
-                            pageSizeOptions: [
-                                10,
-                                100,
-                                200,
-                                500,
-                                1000,
-                                2000,
-                                5000
-                            ],
+                            pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
                             showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
                             position: ['topCenter'],
                             current: page,

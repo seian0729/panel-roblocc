@@ -23,6 +23,21 @@ import Page404 from "../Pages/404/404"
 //Dashboard
 import Dashboard from "../Pages/Dashboard/dashboard"
 
+//Theme ne
+const tokenTheme = {
+    colorPrimary: "#e16428",
+    colorBgBase: "#040404",
+    colorTextBase: "#f6e9e9",
+    wireframe: true,
+  };
+  
+  const algorithmTheme = theme.darkAlgorithm;
+  
+  const themeConfig = {
+    token: tokenTheme,
+    algorithm: algorithmTheme,
+  };
+
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
 
@@ -48,15 +63,8 @@ function App() {
 
     return (
 
-        <ConfigProvider theme={{
-            "token": {
-                "colorPrimary": "#e16428",
-                "colorBgBase": "#040404",
-                "colorTextBase": "#f6e9e9",
-                "wireframe": true,
-              },
-            algorithm: theme.darkAlgorithm,
-        }}>
+<ConfigProvider theme={themeConfig}>
+
             <Layout style={{height:"100vh"}}>
 
                 <Layout.Header style={{background:"#181818"}}>
