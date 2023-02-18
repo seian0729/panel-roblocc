@@ -2,7 +2,7 @@ import {
     UserOutlined,
     LogoutOutlined,
     TableOutlined,
-    ProfileOutlined
+    ProfileOutlined, DashboardOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu, message } from 'antd';
@@ -27,7 +27,6 @@ const menu: MenuProps = {
 const Header: React.FC = () => {
     const { user } = useStore(({ app }) => app);
     // console user in user
-
     const items: MenuProps['items'] = [
         user.match({
             none: () => {
@@ -75,13 +74,22 @@ const Header: React.FC = () => {
             key: 'settings',
             icon: <ProfileOutlined /> ,
         });
-        // user
+        // admin
+        if (user.unwrap().role === 'Admin') {
+            items.push({
+                label: (
+                    <Link to="/dashboard">
+                        <span>Dashboard</span>
+                    </Link>
+                ),
+                key: 'dashboard',
+                icon: <DashboardOutlined /> ,
+            });
+        }
         // đăng xuất
         items.push({
             label: (
-
-                    <span onClick={logout}>Logout</span>
-
+                <span onClick={logout}>Logout</span>
             ),
             key: 'logout',
             icon: <LogoutOutlined />,
