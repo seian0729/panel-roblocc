@@ -127,28 +127,28 @@ function DataCompoment() {
                     let bfData = itemDescript['Inventory']['Blox Fruit']
                     let sData = itemDescript['Inventory']['Sword']
                     let GData = itemDescript['Inventory']['Gun']
-                    let cac = '';
-                    let cacc ='';
+                    let specaiCData = '';
+                    let fullyCData ='';
 
-                    cacc += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
-                    cacc += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
-                    cacc += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
+                    fullyCData += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
+                    fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
+                    fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
                     {bfData.map((key: any) => {
                         if (key === 'Dough' || key === 'Leopard') {
-                            cac += key + ' - '
+                            specaiCData += key + ' - '
                         }
                     })}
 
                     {sData.map((key: any) => {
                         if (key === 'Cursed Dual Katana') {
-                            cac += key + ' - '
+                            specaiCData += key + ' - '
                         }
                     })}
 
                     {GData.map((key: any) => {
                         if (key === 'Soul Guitar') {
-                            cac += key + ' - '
+                            specaiCData += key + ' - '
                         }
 
                     })}
@@ -164,8 +164,8 @@ function DataCompoment() {
 
                     })}
 
-                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + cacc + '/' + itemDescript.Data.DevilFruit + '/'
-                        + itemDescript['Awakened Abilities'] + '/' + fstext + '/' +  cac.substring(0, cac.length - 2) + "\n"
+                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + '/'
+                        + itemDescript['Awakened Abilities'] + '/' + fstext + '/' +  specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }
             })
 
@@ -466,37 +466,90 @@ function DataCompoment() {
                     </div>
                 )
             },
+            sorter: (a: any, b: any) => {
+                let strSortA = '';
+                let strSortB = '';
+                let descriptionA = JSON.parse(a.Description);
+                let descriptionB = JSON.parse(b.Description);
+                let bfDataA = descriptionA['Inventory']['Blox Fruit']
+                let sDataA = descriptionA['Inventory']['Sword']
+                let GDataA = descriptionA['Inventory']['Gun']
+                let bfDataB = descriptionB['Inventory']['Blox Fruit']
+                let sDataB = descriptionB['Inventory']['Sword']
+                let GDataB = descriptionB['Inventory']['Gun']
+
+                bfDataA.map((key: any) => {
+                    if (key === 'Dough' || key === 'Leopard') {
+                        strSortA += key + ' / '
+                    }
+                })
+
+                sDataA.map((key: any) => {
+                    if (key === 'Cursed Dual Katana') {
+                        strSortA += key + ' / '
+                    }
+                })
+
+                GDataA.map((key: any) => {
+                    if (key === 'Soul Guitar') {
+                        strSortA += key + ' / '
+                    }
+                })
+
+                bfDataB.map((key: any) => {
+                    if (key === 'Dough' || key === 'Leopard') {
+                        strSortB += key + ' / '
+                    }
+                })
+
+                sDataB.map((key: any) => {
+                    if (key === 'Cursed Dual Katana') {
+                        strSortB += key + ' / '
+                    }
+                })
+
+                GDataB.map((key: any) => {
+                    if (key === 'Soul Guitar') {
+                        strSortB += key + ' / '
+                    }
+                })
+
+                return strSortA.length - strSortB.length
+
+            },
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let bfData = description['Inventory']['Blox Fruit']
                 let sData = description['Inventory']['Sword']
                 let GData = description['Inventory']['Gun']
-                let cac = '';
+                let strRender = '';
 
                 return (
                     <>
 
                         {bfData.map((key: any) => {
                             if (key === 'Dough' || key === 'Leopard') {
-                                cac += key + ' / '
+                                strRender += key + ' / '
                             }
                         })}
 
                         {sData.map((key: any) => {
                             if (key === 'Cursed Dual Katana') {
-                                cac += key + ' / '
+                                strRender += key + ' / '
                             }
                         })}
 
                         {GData.map((key: any) => {
                             if (key === 'Soul Guitar') {
-                                cac += key + ' / '
+                                strRender += key + ' / '
                             }
 
                         })}
 
+
+
                         <Tag color={'red'}>
-                            {cac.substring(0, cac.length - 2)}
+                            {strRender.substring(0, strRender.length - 3)}
                         </Tag>
 
 
@@ -745,8 +798,6 @@ function DataCompoment() {
                             Ghi chú: File import phải là file .txt và định dạng như sau: username/password/cookie
                         </Form>
                     </div>
-
-
                 </Col>
                 <Col span={24}>
                     <Table
