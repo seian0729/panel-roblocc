@@ -14,13 +14,15 @@ import {
     Upload,
     Modal,
     Badge,
-    Input
+    Input,
+    Statistic,
+    Card
 } from 'antd';
 import {
     QuestionCircleOutlined,
     UploadOutlined,
     ExclamationCircleOutlined,
-    SearchOutlined
+    SearchOutlined, UserOutlined
 } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
@@ -28,6 +30,7 @@ import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../state/storeHooks";
+import {count} from "ramda";
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
@@ -65,6 +68,10 @@ function DataCompoment() {
         setDataValue(val.value)
     }
 
+    //Online - Offline
+    const [onlineAccount, setOnline] = useState(0)
+    const [offlineAccount, setOffline] = useState(0)
+
     const refreshData = () => {
         setLoadingR(true);
         // ajax request after empty completing
@@ -92,6 +99,27 @@ function DataCompoment() {
         }, 1000);
     };
 
+    const getOnline = () => {
+        var temp = 0
+        dataApi.forEach((item : DataType) => {
+          const update = moment(item.updatedAt).unix()
+            if (moment().unix() - update <= 500) {
+                temp++
+            }
+        })
+        return temp
+    }
+
+    const getOffline = () => {
+        var temp = 0
+        dataApi.forEach((item : DataType) => {
+          const update = moment(item.updatedAt).unix()
+            if (moment().unix() - update > 500) {
+                temp++
+            }
+        })
+        return temp
+    }
 
     const copyData = () => {
         setLoadingC(true);
@@ -580,18 +608,18 @@ function DataCompoment() {
             width: '10%',
             filters: [
                 {
-                    text: 'Online',
-                    value: 'Online',
+                    text: 'Active',
+                    value: 'Active',
                 },
                 {
-                    text: 'Offline',
-                    value: 'Offline',
+                    text: 'Inactive',
+                    value: 'Inactive',
                 },
             ],
             onFilter: (value: any, record) => {
-                if (value === 'Online') {
+                if (value === 'Active') {
                     return moment().unix() - moment(record.updatedAt).unix() < 500
-                } else if (value === 'Offline') {
+                } else if (value === 'Inactive') {
                     return moment().unix() - moment(record.updatedAt).unix() >= 500
                 } else {
                     return false
@@ -602,7 +630,7 @@ function DataCompoment() {
                 return (
                     <>
                         <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'error' : 'success' }
-                               text={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'Offline' : 'Online'} />
+                               text={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'Inactive' : 'Active'} />
                     </>
                 )
             },
@@ -726,6 +754,34 @@ function DataCompoment() {
             {contextHolder}
             {ModalcontextHolder}
             <Row justify={'start'}>
+                {/*
+                <Divider orientation="left">Accounts</Divider>
+                <Col span={12} style={{marginLeft: 16 }}>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Card bordered={false}>
+                                <Statistic
+                                    title="Active"
+                                    value={getOnline()}
+                                    valueStyle={{ color: '#6abe39' }}
+                                    prefix={<UserOutlined />}
+                                />
+                            </Card>
+                        </Col>
+                        <Col span={12}>
+                            <Card bordered={false}>
+                                <Statistic
+                                    title="Inactive"
+                                    value={getOffline()}
+                                    valueStyle={{ color: '#e84749' }}
+                                    prefix={<UserOutlined />}
+                                />
+                            </Card>
+                        </Col>
+                    </Row>
+                </Col>
+                */
+                }
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col span={24}>
                     <div style={{marginBottom: 16, marginLeft: 16}}>
@@ -825,7 +881,6 @@ function DataCompoment() {
             </Row>
         </div>
     )
-
 }
 
 export default DataCompoment
