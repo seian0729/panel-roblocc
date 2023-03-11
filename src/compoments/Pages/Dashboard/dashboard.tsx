@@ -11,7 +11,7 @@ import {
     Space,
     Table,
     Modal,
-    Select
+    Select,
 } from 'antd';
 
 
@@ -22,6 +22,7 @@ import {
 interface Item {
     key: string;
     username: string;
+    password: string;
     role: string;
     total: number;
 }
@@ -31,6 +32,7 @@ for (let i = 0; i < 10; i++) {
     originData.push({
         key: i.toString(),
         username: `Edrward ${i}`,
+        password: `London Park no. ${i}`,
         role: 'Users',
         total: Math.floor(Math.random() * 1000),
     });
@@ -44,40 +46,6 @@ interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
     index: number;
     children: React.ReactNode;
 }
-
-const EditableCell: React.FC<EditableCellProps> = ({
-       editing,
-       dataIndex,
-       title,
-       inputType,
-       record,
-       index,
-       children,
-       ...restProps
-   }) => {
-    const inputNode = inputType === 'number' ? <InputNumber /> : <Input />;
-
-    return (
-        <td {...restProps}>
-            {editing ? (
-                <Form.Item
-                    name={dataIndex}
-                    style={{ margin: 0 }}
-                    rules={[
-                        {
-                            required: true,
-                            message: `Please Input ${title}!`,
-                        },
-                    ]}
-                >
-                    {inputNode}
-                </Form.Item>
-            ) : (
-                children
-            )}
-        </td>
-    );
-};
 
 //Modal form add account
 
@@ -138,15 +106,82 @@ const App: React.FC = () => {
             dataIndex: 'username',
             width: '25%',
             editable: true,
+            render: (_: any, record: Item) => {
+                const editable = isEditing(record);
+                return editable ? (
+                    <Form.Item
+                        name="username"
+                        style={{ margin: 0 }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input username!',
+                            }
+                        ]}
+                    >
+                        <Input />
+                    </Form.Item>
+                ): (
+                    record.username
+                )
+            }
         },
         {
             title: 'Role',
             dataIndex: 'role',
             width: '15%',
             editable: true,
+            render: (_: any, record: Item) => {
+                const editable = isEditing(record);
+                return editable ? (
+                    <Form.Item
+                        name="role"
+                        style={{ margin: 0 }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input role!',
+                            }
+                        ]}
+                    >
+                        <Select>
+                            <Select.Option value="Users">Users</Select.Option>
+                            <Select.Option value="Admin">Admin</Select.Option>
+                        </Select>
+                    </Form.Item>
+                ): (
+                    record.role
+                )
+            }
         },
         {
-            title: 'Total Account (Include Deleted)',
+            title: 'Password',
+            dataIndex: 'password',
+            width: '25%',
+            editable: true,
+            render: (_: any, record: Item) => {
+                const editable = isEditing(record);
+                return editable ? (
+                    <Form.Item
+                        name="password"
+                        style={{ margin: 0 }}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input password!',
+                            }
+                        ]}
+                    >
+                        <Input.Password />
+                    </Form.Item>
+                    )
+                    : (
+                        <Input.Password disabled={true} value={record.password} />
+                    )
+            }
+        },
+        {
+            title: 'Total Account',
             dataIndex: 'total',
             width: '15%',
             editable: false,
@@ -254,11 +289,6 @@ const App: React.FC = () => {
                 <Col span={24}>
                     <Form form={form} component={false}>
                         <Table
-                            components={{
-                                body: {
-                                    cell: EditableCell,
-                                },
-                            }}
                             bordered
                             dataSource={data}
                             columns={mergedColumns}

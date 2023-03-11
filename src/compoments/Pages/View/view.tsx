@@ -145,7 +145,6 @@ function DataCompoment() {
         setLoadingC(true);
         setTimeout(() => {
             let text = '';
-
             dataApiSpecialFilter.forEach((item : DataType) => {
                 // if item in selectedRowKeys
                 if (selectedRowKeys.includes(item.UsernameRoblocc)) {
@@ -155,6 +154,8 @@ function DataCompoment() {
                     let bfData = itemDescript['Inventory']['Blox Fruit']
                     let sData = itemDescript['Inventory']['Sword']
                     let GData = itemDescript['Inventory']['Gun']
+                    let MGata = itemDescript['Inventory']['Material']
+                    let WGata = itemDescript['Inventory']['Wear']
                     let specaiCData = '';
                     let fullyCData ='';
 
@@ -177,6 +178,20 @@ function DataCompoment() {
                     {GData.map((key: any) => {
                         if (key === 'Soul Guitar') {
                             specaiCData += key + ' - '
+                        }
+
+                    })}
+
+                    {MGata.map((key: any) => {
+                        if (key === 'Mirror Fractal') {
+                            specaiCData += key + ' / '
+                        }
+
+                    })}
+
+                    {WGata.map((key: any) => {
+                        if (key === 'Valkyrie Helm') {
+                            specaiCData += key + ' / '
                         }
 
                     })}
@@ -490,6 +505,12 @@ function DataCompoment() {
                             <Option value="Soul Guitar" label="Soul Guitar">
                                 Soul Guitar
                             </Option>
+                            <Option value="Mirror Fractal" label="Mirror Fractal">
+                                Mirror Fractal
+                            </Option>
+                            <Option value="Valkyrie Helm" label="Valkyrie Helm">
+                                Valkyrie Helm
+                            </Option>
                         </Select>
                     </div>
                 )
@@ -502,9 +523,13 @@ function DataCompoment() {
                 let bfDataA = descriptionA['Inventory']['Blox Fruit']
                 let sDataA = descriptionA['Inventory']['Sword']
                 let GDataA = descriptionA['Inventory']['Gun']
+                let MGataA = descriptionA['Inventory']['Material']
+                let WGataA = descriptionA['Inventory']['Wear']
                 let bfDataB = descriptionB['Inventory']['Blox Fruit']
                 let sDataB = descriptionB['Inventory']['Sword']
                 let GDataB = descriptionB['Inventory']['Gun']
+                let MGataB = descriptionB['Inventory']['Material']
+                let WGataB = descriptionB['Inventory']['Wear']
 
                 bfDataA.map((key: any) => {
                     if (key === 'Dough' || key === 'Leopard') {
@@ -524,6 +549,22 @@ function DataCompoment() {
                     }
                 })
 
+                {MGataA.map((key: any) => {
+                    if (key === 'Mirror Fractal') {
+                        strSortA += key + ' / '
+                    }
+
+                })}
+
+                {WGataA.map((key: any) => {
+                    if (key === 'Valkyrie Helm') {
+                        strSortA += key + ' / '
+                    }
+
+                })}
+
+
+
                 bfDataB.map((key: any) => {
                     if (key === 'Dough' || key === 'Leopard') {
                         strSortB += key + ' / '
@@ -542,6 +583,20 @@ function DataCompoment() {
                     }
                 })
 
+                {MGataB.map((key: any) => {
+                    if (key === 'Mirror Fractal') {
+                        strSortB += key + ' / '
+                    }
+
+                })}
+
+                {WGataB.map((key: any) => {
+                    if (key === 'Valkyrie Helm') {
+                        strSortB += key + ' / '
+                    }
+
+                })}
+
                 return strSortA.length - strSortB.length
 
             },
@@ -550,6 +605,8 @@ function DataCompoment() {
                 let bfData = description['Inventory']['Blox Fruit']
                 let sData = description['Inventory']['Sword']
                 let GData = description['Inventory']['Gun']
+                let MGata = description['Inventory']['Material']
+                let WGata = description['Inventory']['Wear']
                 let strRender = '';
 
                 return (
@@ -574,7 +631,19 @@ function DataCompoment() {
 
                         })}
 
+                        {MGata.map((key: any) => {
+                            if (key === 'Mirror Fractal') {
+                                strRender += key + ' / '
+                            }
 
+                        })}
+
+                        {WGata.map((key: any) => {
+                            if (key === 'Valkyrie Helm') {
+                                strRender += key + ' / '
+                            }
+
+                        })}
 
                         <Tag color={'red'}>
                             {strRender.substring(0, strRender.length - 3)}
@@ -691,6 +760,8 @@ function DataCompoment() {
             let bfData = description['Inventory']['Blox Fruit']
             let sData = description['Inventory']['Sword']
             let GData = description['Inventory']['Gun']
+            let MGata = description['Inventory']['Material']
+            let WGata = description['Inventory']['Wear']
 
             const specialList: any[] = [];
 
@@ -712,6 +783,19 @@ function DataCompoment() {
                     specialList.push(key)
                 }
             })
+
+            MGata.map((key: any) => {
+                if (key === 'Mirror Fractal') {
+                    specialList.push(key)
+                }
+            })
+
+            WGata.map((key: any) => {
+                if (key === 'Valkyrie Helm') {
+                    specialList.push(key)
+                }
+            })
+
             //console.log(specialFilter)
             // kiểm specialFilter có trong specialList không
             return multipleInArray(specialList, specialFilter);
