@@ -870,7 +870,7 @@ function DataCompoment() {
                 <Col span={24}>
                     <div style={{marginBottom: 16, marginLeft: 16}}>
                         <Space wrap>
-                            <Button type="primary" onClick={username === "Chim" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
+                            <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
                                 Data</Button>
                             <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
                                 Username</Button>
