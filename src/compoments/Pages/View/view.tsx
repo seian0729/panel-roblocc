@@ -16,13 +16,17 @@ import {
     Badge,
     Input,
     Statistic,
-    Card
+    Card,
+    Collapse,
+    theme
 } from 'antd';
 import {
     QuestionCircleOutlined,
     UploadOutlined,
     ExclamationCircleOutlined,
-    SearchOutlined, UserOutlined
+    SearchOutlined,
+    UserOutlined,
+    CaretRightOutlined,
 } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
@@ -31,6 +35,7 @@ import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../state/storeHooks";
 import {count} from "ramda";
+import * as child_process from "child_process";
 /*
 import {array, string} from "decoders";
 import {count, countBy, forEach} from "ramda";
@@ -39,8 +44,18 @@ import type { FilterConfirmProps } from 'antd/es/table/interface';
 
 const {Option} = Select
 
+const { Panel } = Collapse;
 
 function DataCompoment() {
+
+    const { token } = theme.useToken();
+
+    const panelStyle = {
+        marginBottom: 10,
+        background: token.colorFillAlter,
+        borderRadius: token.borderRadiusLG,
+        border: 'none',
+    };
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -71,6 +86,8 @@ function DataCompoment() {
     //Online - Offline
     const [onlineAccount, setOnline] = useState(0)
     const [offlineAccount, setOffline] = useState(0)
+
+    let ngu
 
     const refreshData = () => {
         setLoadingR(true);
@@ -279,6 +296,7 @@ function DataCompoment() {
         accountStatus: string;
         Password: string;
         Cookie: string;
+        dataChildren?: DataType[]
     }
 
     // variable
@@ -820,6 +838,9 @@ function DataCompoment() {
 
     const [modal, ModalcontextHolder] = Modal.useModal();
 
+    // console.log(getOnline())
+    // console.log(getOffline())
+
     const openModal = () => {
         modal.confirm({
             title: 'Copy Data',
@@ -837,112 +858,200 @@ function DataCompoment() {
         <div>
             {contextHolder}
             {ModalcontextHolder}
-            <Row justify={'start'}>
-                {/*
-                <Divider orientation="left">Accounts</Divider>
-                <Col span={12} style={{marginLeft: 16 }}>
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Card bordered={false}>
-                                <Statistic
-                                    title="Active"
-                                    value={getOnline()}
-                                    valueStyle={{ color: '#6abe39' }}
-                                    prefix={<UserOutlined />}
-                                />
-                            </Card>
-                        </Col>
-                        <Col span={12}>
-                            <Card bordered={false}>
-                                <Statistic
-                                    title="Inactive"
-                                    value={getOffline()}
-                                    valueStyle={{ color: '#e84749' }}
-                                    prefix={<UserOutlined />}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
-                </Col>
-                */
-                }
+            <Row justify={'start'} >
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
-                <Col span={24}>
-                    <div style={{marginBottom: 16, marginLeft: 16}}>
-                        <Space wrap>
-                            <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
-                                Data</Button>
-                            <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
-                                Username</Button>
+                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{paddingRight: 16, paddingLeft: 16}}>
+                    <Card title="Account Control">
+                        <div style={{marginBottom: 16}}>
+                            <Space wrap>
+                                <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
+                                    Data</Button>
+                                <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
+                                    Username</Button>
 
-                            <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
-                            <Popconfirm
-                                placement="bottom"
-                                title={'Are you sure to delete?'}
-                                description={`${selectedRowKeys.length} account`}
-                                onConfirm={deleteAccount}
-                                okText="Yes"
-                                cancelText="No"
-                                icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                disabled={!hasSelected}
-                            >
-                                <Button type="primary" disabled={!hasSelected} loading={loading} danger>
-                                    Delete Selected Account
-                                </Button>
-                            </Popconfirm>
-                            <span style={{color: "#f6e9e9"}}>
-                          {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
-                        </span>
+                                <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
+                                <Popconfirm
+                                    placement="bottom"
+                                    title={'Are you sure to delete?'}
+                                    description={`${selectedRowKeys.length} account`}
+                                    onConfirm={deleteAccount}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                    disabled={!hasSelected}
+                                >
+                                    <Button type="primary" disabled={!hasSelected} loading={loading} danger>
+                                        Delete Selected Account
+                                    </Button>
+                                </Popconfirm>
+                                <span style={{color: "#f6e9e9"}}>
+                                  {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
+                                </span>
+                            </Space>
+                        </div>
 
-                        </Space>
-                    </div>
-                </Col>
-
-                <Col span={24}>
-                    <div style={{marginBottom: 16, marginLeft: 16}}>
-                        <Form>
-                            <Form.Item label="Sort Data">
-                                <Select
-                                    labelInValue
-                                    defaultValue={{value: 'Level', label: 'Level'}}
-                                    style={{width: 120}}
-                                    onChange={handleData}
-                                    options={[
-                                        {
-                                            value: 'Level',
-                                            label: 'Level',
-                                        },
-                                        {
-                                            value: 'Fragments',
-                                            label: 'Fragments',
-                                        },
-                                        {
-                                            value: 'Beli',
-                                            label: 'Beli',
-                                        }
-                                    ]}
-                                />
-                            </Form.Item>
-                        </Form>
-                    </div>
+                        <div>
+                            <Form>
+                                <Form.Item label="Sort Data">
+                                    <Select
+                                        labelInValue
+                                        defaultValue={{value: 'Level', label: 'Level'}}
+                                        style={{width: 120}}
+                                        onChange={handleData}
+                                        options={[
+                                            {
+                                                value: 'Level',
+                                                label: 'Level',
+                                            },
+                                            {
+                                                value: 'Fragments',
+                                                label: 'Fragments',
+                                            },
+                                            {
+                                                value: 'Beli',
+                                                label: 'Beli',
+                                            }
+                                        ]}
+                                    />
+                                </Form.Item>
+                            </Form>
+                        </div>
 
 
-                    <div style={{marginBottom: 16, marginLeft: 16}}>
-                        <Form>
-                            <Form.Item label="Import">
-                                <Upload {...props}>
-                                    <Button icon={<UploadOutlined/>}>Click to Upload</Button>
-                                </Upload>
+                        <div>
+                            <Form>
+                                <Form.Item label="Import">
+                                    <Upload {...props}>
+                                        <Button icon={<UploadOutlined/>}>Click to Upload</Button>
+                                    </Upload>
 
                                 </Form.Item>
-                            Ghi chú: File import phải là file .txt và định dạng như sau: username/password/cookie
-                        </Form>
-                    </div>
+                                Ghi chú: File import phải là file .txt và định dạng như sau: username/password/cookie
+                            </Form>
+                        </div>
+                    </Card>
                 </Col>
-                <Col span={24}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{paddingRight: 16, paddingLeft: 16}}>
+                    <Card title="Account Status">
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                <Card bordered={false}>
+                                    <Statistic
+                                        title="Active"
+                                        value={getOnline()}
+                                        valueStyle={{ color: '#6abe39' }}
+                                        prefix={<UserOutlined />}
+                                        suffix="Account(s)"
+                                    />
+                                </Card>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                <Card bordered={false}>
+                                    <Statistic
+                                        title="Inactive"
+                                        value={getOffline()}
+                                        valueStyle={{ color: '#e84749' }}
+                                        prefix={<UserOutlined />}
+                                        suffix="Account(s)"
+                                    />
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingRight: 16, paddingLeft: 16}}>
                     <Table
                         rowSelection={rowSelection}
                         columns={columns}
+                        expandable={
+                            {expandedRowRender: (record, index) => {
+
+                                    let recordInventory = JSON.parse(record.Description)['Inventory']
+                                    let recordFruits = recordInventory['Blox Fruit']
+                                    let recordSwords = recordInventory['Sword']
+                                    let recordGuns = recordInventory['Gun']
+                                    let recordWears = recordInventory['Wear']
+                                    let recordMaterials = recordInventory['Material']
+                                    // (recordInventory)
+
+                                    return (
+                                        <Collapse
+                                            bordered={false}
+                                            defaultActiveKey={['1']}
+                                            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                                        >
+                                            <Panel header="Blox Fruit" key="1" style={panelStyle}>
+                                                {
+                                                    recordFruits.map((key: any) => {
+                                                        return (
+                                                            <Tag color="geekblue" key={key}>
+                                                                {key}
+                                                            </Tag>
+                                                        );
+                                                    })
+                                                    }
+                                            </Panel>
+
+                                            <Panel header="Sword" key="2" style={panelStyle}>
+                                                {
+                                                    recordSwords.length == 0 ? <Tag color="red">Sword Data Not Found</Tag> :
+                                                    recordSwords.map((key: any) => {
+                                                        return (
+                                                            <Tag color="geekblue" key={key}>
+                                                                {key}
+                                                            </Tag>
+                                                        );
+                                                    })
+                                                }
+                                            </Panel>
+
+                                            <Panel header="Gun" key="3" style={panelStyle}>
+                                                {
+                                                    recordGuns.length == 0 ? <Tag color="red">Gun Data Not Found</Tag> :
+                                                        recordGuns.map((key: any) => {
+                                                            return (
+                                                                <Tag color="geekblue" key={key}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        })
+                                                }
+                                            </Panel>
+
+                                            <Panel header="Wear" key="4" style={panelStyle}>
+                                                {
+                                                    recordWears.length == 0 ? <Tag color="red">Wear Data Not Found</Tag> :
+                                                        recordWears.map((key: any) => {
+                                                            return (
+                                                                <Tag color="geekblue" key={key}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        })
+                                                }
+                                            </Panel>
+
+                                            <Panel header="Material" key="5" style={panelStyle}>
+                                                {
+                                                    recordMaterials.length == 0 ? <Tag color="red">Material Data Not Found</Tag> :
+                                                        recordMaterials.map((key: any) => {
+                                                            return (
+                                                                <Tag color="geekblue" key={key}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        })
+                                                }
+                                            </Panel>
+
+                                        </Collapse>
+                                    )
+                                },
+                            }
+
+                        }
                         dataSource={dataApiSpecialFilter}
                         rowKey={(record) => record.UsernameRoblocc}
                         pagination={{
