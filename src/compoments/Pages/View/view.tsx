@@ -63,10 +63,10 @@ function DataCompoment() {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     // loading
-    const [loading, setLoading] = useState(false);
-    const [loadingR, setLoadingR] = useState(false);
-    const [loadingC, setLoadingC] = useState(false);
-    const [loadingU, setLoadingU] = useState(false);
+    const [loadingDelete, setLoadingDelete] = useState(false);
+    const [loadingReload, setLoadingReload] = useState(false);
+    const [loadingCopy, setLoadingCopy] = useState(false);
+    const [loadingUsername, setLoadingUsername] = useState(false);
 
     // data
     const [dataApi, setDataApi] = useState([]);
@@ -91,7 +91,7 @@ function DataCompoment() {
     let ngu
 
     const refreshData = () => {
-        setLoadingR(true);
+        setLoadingReload(true);
         // ajax request after empty completing
         setTimeout(() => {
             getData().then((res) => {
@@ -100,19 +100,19 @@ function DataCompoment() {
 
             messageApi.success('Refresh Success <3');
             setSelectedRowKeys([]);
-            setLoadingR(false);
+            setLoadingReload(false);
         }, 1000);
     }
 
     const deleteAccount = () => {
-        setLoading(true);
+        setLoadingDelete(true);
         setTimeout(() => {
             deleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             setSelectedRowKeys([]);
-            setLoading(false);
+            setLoadingDelete(false);
             refreshData()
         }, 1000);
     };
@@ -140,7 +140,7 @@ function DataCompoment() {
     }
 
     const copyData = () => {
-        setLoadingC(true);
+        setLoadingCopy(true);
         // ajax request after empty completing
         setTimeout(() => {
             let text = '';
@@ -155,12 +155,12 @@ function DataCompoment() {
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
-            setLoadingC(false);
+            setLoadingCopy(false);
         }, 500)
     }
 
-    const copyDataChim = () => {
-        setLoadingC(true);
+    const copyFullyData = () => {
+        setLoadingCopy(true);
         setTimeout(() => {
             let text = '';
             dataApiSpecialFilter.forEach((item : DataType) => {
@@ -233,12 +233,12 @@ function DataCompoment() {
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
-            setLoadingC(false);
+            setLoadingCopy(false);
         }, 500)
     }
 
     const copyUsername = () => {
-        setLoadingU(true);
+        setLoadingUsername(true);
         // ajax request after empty completing
         setTimeout(() => {
             let text = '';
@@ -248,7 +248,7 @@ function DataCompoment() {
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} username into clipboard <3`);
             setSelectedRowKeys([]);
-            setLoadingU(false);
+            setLoadingUsername(false);
         }, 500)
     }
 
@@ -854,7 +854,7 @@ function DataCompoment() {
             content: 'Select method copy data',
             okText: 'Fully Data',
             cancelText: 'Basic Data',
-            onOk: copyDataChim,
+            onOk: copyFullyData,
             onCancel: copyData
         });
     }
@@ -870,12 +870,12 @@ function DataCompoment() {
                     <Card title="Account Control">
                         <div style={{marginBottom: 16}}>
                             <Space wrap>
-                                <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
+                                <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingCopy}>Copy
                                     Data</Button>
-                                <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
+                                <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingUsername}>Copy
                                     Username</Button>
 
-                                <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
+                                <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
                                 <Popconfirm
                                     placement="bottom"
                                     title={'Are you sure to delete?'}
@@ -886,7 +886,7 @@ function DataCompoment() {
                                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
                                     disabled={!hasSelected}
                                 >
-                                    <Button type="primary" disabled={!hasSelected} loading={loading} danger>
+                                    <Button type="primary" disabled={!hasSelected} loading={loadingDelete} danger>
                                         Delete Selected Account
                                     </Button>
                                 </Popconfirm>
