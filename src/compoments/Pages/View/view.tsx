@@ -1074,7 +1074,6 @@ function DataCompoment() {
                                 setPageSize(pageSize);
                             }
                         }}
-                        onChange={handleChange}
                     />
                     <FloatButton.BackTop/>
                 </Col>
