@@ -34,6 +34,7 @@ import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../state/storeHooks";
+import type { TableProps } from 'antd';
 import {count} from "ramda";
 import * as child_process from "child_process";
 /*
@@ -307,6 +308,10 @@ function DataCompoment() {
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
 
+    const handleChange: TableProps<DataType>['onChange'] = (filters, sorter) => {
+        console.log('Various parameters', filters, sorter);
+    };
+
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
         {
@@ -317,8 +322,10 @@ function DataCompoment() {
                 return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
             },
         },
+
         {
             title: 'Data',
+            dataIndex: 'level',
             width: '15%',
             filters: [
                 {
@@ -338,16 +345,15 @@ function DataCompoment() {
             onFilter: (value: any, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
-                if (value === '2450') {
+                if (value == '2450') {
                     return dataList.Level === 2450
-                } else if (value === '1000-1500') {
+                } else if (value == '1000-1500') {
                     return dataList.Level >= 1000 && dataList.Level <= 1500
-                } else if (value === '1500-2449') {
+                } else if (value == '1500-2449') {
                     return dataList.Level >= 1500 && dataList.Level < 2450
                 } else {
                     return false
                 }
-
             },
             sorter: (a: any, b: any) => JSON.parse(a.Description).Data[dataValue] - JSON.parse(b.Description).Data[dataValue],
             render: (_, record) => {
@@ -996,7 +1002,7 @@ function DataCompoment() {
 
                                             <Panel header="Sword" key="2" style={panelStyle}>
                                                 {
-                                                    recordSwords.length == 0 ? <Tag color="red">Sword Data Not Found</Tag> :
+                                                    recordSwords.length === 0 ? <Tag color="red">Sword Data Not Found</Tag> :
                                                     recordSwords.map((key: any) => {
                                                         return (
                                                             <Tag color="geekblue" key={key}>
@@ -1009,7 +1015,7 @@ function DataCompoment() {
 
                                             <Panel header="Gun" key="3" style={panelStyle}>
                                                 {
-                                                    recordGuns.length == 0 ? <Tag color="red">Gun Data Not Found</Tag> :
+                                                    recordGuns.length === 0 ? <Tag color="red">Gun Data Not Found</Tag> :
                                                         recordGuns.map((key: any) => {
                                                             return (
                                                                 <Tag color="geekblue" key={key}>
@@ -1022,7 +1028,7 @@ function DataCompoment() {
 
                                             <Panel header="Wear" key="4" style={panelStyle}>
                                                 {
-                                                    recordWears.length == 0 ? <Tag color="red">Wear Data Not Found</Tag> :
+                                                    recordWears.length === 0 ? <Tag color="red">Wear Data Not Found</Tag> :
                                                         recordWears.map((key: any) => {
                                                             return (
                                                                 <Tag color="geekblue" key={key}>
@@ -1035,7 +1041,7 @@ function DataCompoment() {
 
                                             <Panel header="Material" key="5" style={panelStyle}>
                                                 {
-                                                    recordMaterials.length == 0 ? <Tag color="red">Material Data Not Found</Tag> :
+                                                    recordMaterials.length === 0 ? <Tag color="red">Material Data Not Found</Tag> :
                                                         recordMaterials.map((key: any) => {
                                                             return (
                                                                 <Tag color="geekblue" key={key}>
@@ -1068,6 +1074,7 @@ function DataCompoment() {
                                 setPageSize(pageSize);
                             }
                         }}
+                        onChange={handleChange}
                     />
                     <FloatButton.BackTop/>
                 </Col>
