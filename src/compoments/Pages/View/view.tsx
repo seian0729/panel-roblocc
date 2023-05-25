@@ -33,10 +33,10 @@ import {
 import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData} from "../../../../services/data";
+import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
-import {useStore} from "../../../../state/storeHooks";
+import {useStore} from "../../../state/storeHooks";
 import type { TableProps } from 'antd';
 import {count, fromPairs} from "ramda";
 import * as child_process from "child_process";
