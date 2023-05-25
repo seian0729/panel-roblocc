@@ -38,37 +38,12 @@ import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../state/storeHooks";
 import type { TableProps } from 'antd';
-import {count, fromPairs} from "ramda";
-import * as child_process from "child_process";
-import {useSpring, animated} from "@react-spring/web";
-/*
-import {array, string} from "decoders";
-import {count, countBy, forEach} from "ramda";
-import type { FilterConfirmProps } from 'antd/es/table/interface';
- */
 
 const {Option} = Select
 
 const { Panel } = Collapse;
 
 function DataCompoment() {
-
-    /*
-    function AnimatedNumber(n: number){
-        const { num } = useSpring({
-            from: {num: 0},
-            num: n,
-            delay: 200,
-            config: {mass: 1, tension: 20, friction: 10},
-        })
-        return (
-            <animated.div>
-                {num.to((n) => n.toFixed(0))}
-            </animated.div>
-        )
-    }
-
-     */
 
 
     const { token } = theme.useToken();
