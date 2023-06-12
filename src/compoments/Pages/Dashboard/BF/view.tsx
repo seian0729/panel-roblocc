@@ -18,9 +18,7 @@ import {
     Statistic,
     Card,
     Collapse,
-    theme,
-    Skeleton,
-    Checkbox
+    theme
 } from 'antd';
 import {
     QuestionCircleOutlined,
@@ -30,20 +28,26 @@ import {
     UserOutlined,
     CaretRightOutlined,
 } from '@ant-design/icons';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData} from "../../../../services/data";
+import {deleteData, getData} from "../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
-import {useStore} from "../../../../state/storeHooks";
+import {useStore} from "../../../state/storeHooks";
+import type { TableProps } from 'antd';
+import {count} from "ramda";
+import * as child_process from "child_process";
+/*
+import {array, string} from "decoders";
+import {count, countBy, forEach} from "ramda";
+import type { FilterConfirmProps } from 'antd/es/table/interface';
+ */
 
 const {Option} = Select
 
 const { Panel } = Collapse;
 
 function DataCompoment() {
-
 
     const { token } = theme.useToken();
 
@@ -58,15 +62,11 @@ function DataCompoment() {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
-    // main loading
-    const [loadingSkeTable, sLoadingSkeTable] = useState(true);
-    const [loadingTable, setLoadingTable] = useState(true);
-
     // loading
-    const [loadingDelete, setLoadingDelete] = useState(false);
-    const [loadingReload, setLoadingReload] = useState(false);
-    const [loadingCopy, setLoadingCopy] = useState(false);
-    const [loadingUsername, setLoadingUsername] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [loadingR, setLoadingR] = useState(false);
+    const [loadingC, setLoadingC] = useState(false);
+    const [loadingU, setLoadingU] = useState(false);
 
     // data
     const [dataApi, setDataApi] = useState([]);
@@ -84,44 +84,35 @@ function DataCompoment() {
         setDataValue(val.value)
     }
 
-    //Filter Specical
-
-    const [filteredSpecial, setFilteredSpecial] = useState(false)
-
-    //Hidename
-    const [hidename, setHidename] = useState(false)
-
-    const onChangeHidename = (e: CheckboxChangeEvent) => {
-        setHidename(e.target.checked)
-    };
-
     //Online - Offline
+    const [onlineAccount, setOnline] = useState(0)
+    const [offlineAccount, setOffline] = useState(0)
+
+    let ngu
 
     const refreshData = () => {
-        setLoadingReload(true);
-        setLoadingTable(true);
+        setLoadingR(true);
         // ajax request after empty completing
         setTimeout(() => {
-            getData(null).then((res) => {
+            getData().then((res) => {
                 setDataApi(res.data);
             })
 
             messageApi.success('Refresh Success <3');
             setSelectedRowKeys([]);
-            setLoadingReload(false);
-            setLoadingTable(false)
+            setLoadingR(false);
         }, 1000);
     }
 
     const deleteAccount = () => {
-        setLoadingDelete(true);
+        setLoading(true);
         setTimeout(() => {
             deleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             setSelectedRowKeys([]);
-            setLoadingDelete(false);
+            setLoading(false);
             refreshData()
         }, 1000);
     };
@@ -149,7 +140,7 @@ function DataCompoment() {
     }
 
     const copyData = () => {
-        setLoadingCopy(true);
+        setLoadingC(true);
         // ajax request after empty completing
         setTimeout(() => {
             let text = '';
@@ -164,12 +155,12 @@ function DataCompoment() {
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
-            setLoadingCopy(false);
+            setLoadingC(false);
         }, 500)
     }
 
-    const copyFullyData = () => {
-        setLoadingCopy(true);
+    const copyDataChim = () => {
+        setLoadingC(true);
         setTimeout(() => {
             let text = '';
             dataApiSpecialFilter.forEach((item : DataType) => {
@@ -242,12 +233,12 @@ function DataCompoment() {
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
-            setLoadingCopy(false);
+            setLoadingC(false);
         }, 500)
     }
 
     const copyUsername = () => {
-        setLoadingUsername(true);
+        setLoadingU(true);
         // ajax request after empty completing
         setTimeout(() => {
             let text = '';
@@ -257,7 +248,7 @@ function DataCompoment() {
             navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} username into clipboard <3`);
             setSelectedRowKeys([]);
-            setLoadingUsername(false);
+            setLoadingU(false);
         }, 500)
     }
 
@@ -317,31 +308,21 @@ function DataCompoment() {
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
 
-    /*
     const handleChange: TableProps<DataType>['onChange'] = (filters, sorter) => {
-        // console.log('Various parameters', filters, sorter);
+        console.log('Various parameters', filters, sorter);
     };
-     */
 
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
         {
-            title: 'Roblox Username',
+            title: 'RUsername',
             dataIndex: 'UsernameRoblocc',
             width: '10%',
-            render: (_, record) => {
-                let UsernameRoblocc = record.UsernameRoblocc
-                // console.log(UsernameRoblocc.length/100*30, UsernameRoblocc.length)
-                return(
-                    <div>
-                        {!hidename ? UsernameRoblocc : (UsernameRoblocc.substring(0,UsernameRoblocc.length/100*30)+ "*".repeat(UsernameRoblocc.length - UsernameRoblocc.length/100*30)) }
-                    </div>
-                )
-            },
             sorter: (a, b) => {
                 return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
             },
         },
+
         {
             title: 'Data',
             dataIndex: 'level',
@@ -378,19 +359,17 @@ function DataCompoment() {
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
-                return (<div>
-                    <Tag color='orange' style={{margin: 4}}>
+                return (<Space size='small'>
+                    <Tag color='orange'>
                         Level: {new Intl.NumberFormat().format(dataList.Level)}
                     </Tag>
-                    <div>
-                        <Tag color='purple' style={{margin: 4}}>
-                            Fragments: {new Intl.NumberFormat().format(dataList.Fragments)}
-                        </Tag>
-                        <Tag color='green' style={{margin: 4}}>
-                            Beli: {new Intl.NumberFormat().format(dataList.Beli)}
-                        </Tag>
-                    </div>
-                </div>)
+                    <Tag color='purple'>
+                        Fragments: {new Intl.NumberFormat().format(dataList.Fragments)}
+                    </Tag>
+                    <Tag color='green'>
+                        Beli: {new Intl.NumberFormat().format(dataList.Beli)}
+                    </Tag>
+                </Space>)
             }
 
         },
@@ -481,7 +460,7 @@ function DataCompoment() {
               </div>
             ),
             filterIcon: (filtered: boolean) => (
-                <SearchOutlined style={{ color: filtered ? '#729ddc' : undefined }} />
+                <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
             ),
             onFilter: (value, record) => {
                 let description = JSON.parse(record.Description);
@@ -510,8 +489,8 @@ function DataCompoment() {
 
                         {awakened.map((key: any) => {
                             return (
-                                <Tag color={key.length > 10 ? "red" : "green"} key={key}>
-                                    {key.length > 10 ? 'None' : key }
+                                <Tag color="green" key={key}>
+                                    {key}
                                 </Tag>
                             );
                         })}
@@ -524,9 +503,8 @@ function DataCompoment() {
         {
             title: 'Special',
             dataIndex: 'special',
-            width: '15%',
-            filterIcon: () => (
-                <SearchOutlined style={{ color: filteredSpecial ? '#729ddc' : undefined }} />
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
             ),
             filterDropdown: () =>{
                 return (
@@ -653,59 +631,47 @@ function DataCompoment() {
                 let GData = description['Inventory']['Gun']
                 let MGata = description['Inventory']['Material']
                 let WGata = description['Inventory']['Wear']
-
-                const specialRender : any[] = [];
+                let strRender = '';
 
                 return (
                     <>
 
                         {bfData.map((key: any) => {
                             if (key === 'Dough' || key === 'Leopard') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
+                                strRender += key + ' / '
                             }
                         })}
 
                         {sData.map((key: any) => {
                             if (key === 'Cursed Dual Katana') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
+                                strRender += key + ' / '
                             }
                         })}
 
                         {GData.map((key: any) => {
                             if (key === 'Soul Guitar') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
+                                strRender += key + ' / '
                             }
 
                         })}
 
                         {MGata.map((key: any) => {
                             if (key === 'Mirror Fractal') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
+                                strRender += key + ' / '
                             }
 
                         })}
 
                         {WGata.map((key: any) => {
                             if (key === 'Valkyrie Helm') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
+                                strRender += key + ' / '
                             }
 
                         })}
 
-                        {
-                            specialRender.map((key: any) => {
-                                return (
-                                    <Tag color="red" key={key} style={{margin: 4}}>
-                                        {key}
-                                    </Tag>
-                                );
-                            })
-                        }
+                        <Tag color={'red'}>
+                            {strRender.substring(0, strRender.length - 3)}
+                        </Tag>
 
 
                     </>
@@ -722,7 +688,7 @@ function DataCompoment() {
                 return (
                     <>
                         {
-                            moment(record.updatedAt).fromNow()
+                            new Date(record.updatedAt).toLocaleString()
                         }
                     </>
                 )
@@ -773,7 +739,7 @@ function DataCompoment() {
                         value: record.Note,
                     })
 
-                    for (let index = 0; index < filtersNoteT.length; index++) {
+                    for (var index = 0; index < filtersNoteT.length; index++) {
                         if (!filtersNote.find(a => a.text === filtersNoteT[index].text)) {
                             filtersNote.push(filtersNoteT[index])
                         }
@@ -796,11 +762,8 @@ function DataCompoment() {
     // copy all value in the array
 
     useEffect(() => {
-
-        getData(null).then((res) => {
+        getData().then((res) => {
             setDataApi(res.data);
-            setLoadingTable(false)
-            sLoadingSkeTable(false)
         })
 
     }, [])
@@ -859,9 +822,7 @@ function DataCompoment() {
 
             //console.log(specialFilter)
             // kiểm specialFilter có trong specialList không
-            setFilteredSpecial(!multipleInArray(specialList, specialFilter))
             return multipleInArray(specialList, specialFilter);
-
 
         })
 
@@ -893,7 +854,7 @@ function DataCompoment() {
             content: 'Select method copy data',
             okText: 'Fully Data',
             cancelText: 'Basic Data',
-            onOk: copyFullyData,
+            onOk: copyDataChim,
             onCancel: copyData
         });
     }
@@ -905,16 +866,16 @@ function DataCompoment() {
             {ModalcontextHolder}
             <Row justify={'start'} >
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
-                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{paddingRight: 16, paddingLeft: 16}}>
                     <Card title="Account Control">
                         <div style={{marginBottom: 16}}>
                             <Space wrap>
-                                <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingCopy}>Copy
+                                <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData} disabled={!hasSelected} loading={loadingC}>Copy
                                     Data</Button>
-                                <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingUsername}>Copy
+                                <Button type="primary" onClick={copyUsername} disabled={!hasSelected} loading={loadingU}>Copy
                                     Username</Button>
 
-                                <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
+                                <Button type="primary" onClick={refreshData} loading={loadingR}>Refresh</Button>
                                 <Popconfirm
                                     placement="bottom"
                                     title={'Are you sure to delete?'}
@@ -925,7 +886,7 @@ function DataCompoment() {
                                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
                                     disabled={!hasSelected}
                                 >
-                                    <Button type="primary" disabled={!hasSelected} loading={loadingDelete} danger>
+                                    <Button type="primary" disabled={!hasSelected} loading={loading} danger>
                                         Delete Selected Account
                                     </Button>
                                 </Popconfirm>
@@ -961,6 +922,8 @@ function DataCompoment() {
                                 </Form.Item>
                             </Form>
                         </div>
+
+
                         <div>
                             <Form>
                                 <Form.Item label="Import">
@@ -972,20 +935,12 @@ function DataCompoment() {
                                 Ghi chú: File import phải là file .txt và định dạng như sau: username/password/cookie
                             </Form>
                         </div>
-
-                        <div style={{marginTop: 12}}>
-                            <Form>
-                                <Form.Item label="Hide Name (optional)*">
-                                    <Checkbox  onChange={onChangeHidename} />
-                                </Form.Item>
-                            </Form>
-                        </div>
                     </Card>
                 </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
+                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{paddingRight: 16, paddingLeft: 16}}>
                     <Card title="Account Status">
-                        <Row>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{paddingRight: 12}}>
+                        <Row gutter={16}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                                 <Card bordered={false}>
                                     <Statistic
                                         title="Active"
@@ -996,7 +951,7 @@ function DataCompoment() {
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={12}  style={{paddingLeft: 12}}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                                 <Card bordered={false}>
                                     <Statistic
                                         title="Inactive"
@@ -1012,125 +967,116 @@ function DataCompoment() {
                 </Col>
             </Row>
             <Row>
-                    <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
-                        <Skeleton
-                            loading={loadingSkeTable}
-                            active={loadingSkeTable}
-                            paragraph = {{
-                                rows: 10
-                            }}
-                        >
-                            <Table
-                                rowSelection={rowSelection}
-                                columns={columns}
-                                expandable={
-                                    {expandedRowRender: (record, index) => {
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingRight: 16, paddingLeft: 16}}>
+                    <Table
+                        rowSelection={rowSelection}
+                        columns={columns}
+                        expandable={
+                            {expandedRowRender: (record, index) => {
 
-                                            let recordInventory = JSON.parse(record.Description)['Inventory']
-                                            let recordFruits = recordInventory['Blox Fruit']
-                                            let recordSwords = recordInventory['Sword']
-                                            let recordGuns = recordInventory['Gun']
-                                            let recordWears = recordInventory['Wear']
-                                            let recordMaterials = recordInventory['Material']
-                                            // (recordInventory)
+                                    let recordInventory = JSON.parse(record.Description)['Inventory']
+                                    let recordFruits = recordInventory['Blox Fruit']
+                                    let recordSwords = recordInventory['Sword']
+                                    let recordGuns = recordInventory['Gun']
+                                    let recordWears = recordInventory['Wear']
+                                    let recordMaterials = recordInventory['Material']
+                                    // (recordInventory)
 
-                                            return (
-                                                <Collapse
-                                                    bordered={false}
-                                                    defaultActiveKey={['1']}
-                                                    expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
-                                                >
-                                                    <Panel header="Blox Fruit" key="1" style={panelStyle}>
-                                                        {
-                                                            recordFruits.map((key: any) => {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            })
-                                                        }
-                                                    </Panel>
+                                    return (
+                                        <Collapse
+                                            bordered={false}
+                                            defaultActiveKey={['1']}
+                                            expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                                        >
+                                            <Panel header="Blox Fruit" key="1" style={panelStyle}>
+                                                {
+                                                    recordFruits.map((key: any) => {
+                                                        return (
+                                                            <Tag color="geekblue" key={key}>
+                                                                {key}
+                                                            </Tag>
+                                                        );
+                                                    })
+                                                    }
+                                            </Panel>
 
-                                                    <Panel header="Sword" key="2" style={panelStyle}>
-                                                        {
-                                                            recordSwords.length === 0 ? <Tag color="red">Sword Data Not Found</Tag> :
-                                                                recordSwords.map((key: any) => {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                })
-                                                        }
-                                                    </Panel>
+                                            <Panel header="Sword" key="2" style={panelStyle}>
+                                                {
+                                                    recordSwords.length === 0 ? <Tag color="red">Sword Data Not Found</Tag> :
+                                                    recordSwords.map((key: any) => {
+                                                        return (
+                                                            <Tag color="geekblue" key={key}>
+                                                                {key}
+                                                            </Tag>
+                                                        );
+                                                    })
+                                                }
+                                            </Panel>
 
-                                                    <Panel header="Gun" key="3" style={panelStyle}>
-                                                        {
-                                                            recordGuns.length === 0 ? <Tag color="red">Gun Data Not Found</Tag> :
-                                                                recordGuns.map((key: any) => {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                })
-                                                        }
-                                                    </Panel>
+                                            <Panel header="Gun" key="3" style={panelStyle}>
+                                                {
+                                                    recordGuns.length === 0 ? <Tag color="red">Gun Data Not Found</Tag> :
+                                                        recordGuns.map((key: any) => {
+                                                            return (
+                                                                <Tag color="geekblue" key={key}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        })
+                                                }
+                                            </Panel>
 
-                                                    <Panel header="Wear" key="4" style={panelStyle}>
-                                                        {
-                                                            recordWears.length === 0 ? <Tag color="red">Wear Data Not Found</Tag> :
-                                                                recordWears.map((key: any) => {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                })
-                                                        }
-                                                    </Panel>
+                                            <Panel header="Wear" key="4" style={panelStyle}>
+                                                {
+                                                    recordWears.length === 0 ? <Tag color="red">Wear Data Not Found</Tag> :
+                                                        recordWears.map((key: any) => {
+                                                            return (
+                                                                <Tag color="geekblue" key={key}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        })
+                                                }
+                                            </Panel>
 
-                                                    <Panel header="Material" key="5" style={panelStyle}>
-                                                        {
-                                                            recordMaterials.length === 0 ? <Tag color="red">Material Data Not Found</Tag> :
-                                                                recordMaterials.map((key: any) => {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                })
-                                                        }
-                                                    </Panel>
+                                            <Panel header="Material" key="5" style={panelStyle}>
+                                                {
+                                                    recordMaterials.length === 0 ? <Tag color="red">Material Data Not Found</Tag> :
+                                                        recordMaterials.map((key: any) => {
+                                                            return (
+                                                                <Tag color="geekblue" key={key}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        })
+                                                }
+                                            </Panel>
 
-                                                </Collapse>
-                                            )
-                                        },
-                                    }
+                                        </Collapse>
+                                    )
+                                },
+                            }
 
-                                }
-                                dataSource={dataApiSpecialFilter}
-                                rowKey={(record) => record.UsernameRoblocc}
-                                loading = {loadingTable}
-                                pagination={{
-                                    total: dataApiSpecialFilter.length,
-                                    pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
-                                    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
-                                    position: ['topCenter'],
-                                    current: page,
-                                    pageSize: pageSize,
-                                    defaultPageSize: 10,
-                                    showSizeChanger: true,
-                                    onChange: (page, pageSize) => {
-                                        setPage(page);
-                                        setPageSize(pageSize);
-                                    },
-                                }}
-                            />
-                            <FloatButton.BackTop/>
-                        </Skeleton>
-                    </Col>
+                        }
+                        dataSource={dataApiSpecialFilter}
+                        rowKey={(record) => record.UsernameRoblocc}
+                        pagination={{
+                            total: dataApiSpecialFilter.length,
+                            pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
+                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+                            position: ['topCenter'],
+                            current: page,
+                            pageSize: pageSize,
+                            defaultPageSize: 10,
+                            showSizeChanger: true,
+                            onChange: (page, pageSize) => {
+                                setPage(page);
+                                setPageSize(pageSize);
+                            }
+                        }}
+                    />
+                    <FloatButton.BackTop/>
+                </Col>
             </Row>
         </div>
     )
