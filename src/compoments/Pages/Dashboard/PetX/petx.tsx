@@ -125,7 +125,7 @@ const PetX: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 500) {
+            if (moment().unix() - update <= 90) {
                 temp++
             }
         })
@@ -136,7 +136,7 @@ const PetX: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update > 500) {
+            if (moment().unix() - update > 90) {
                 temp++
             }
         })
@@ -273,9 +273,9 @@ const PetX: React.FC = () => {
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 500
+                    return moment().unix() - moment(record.updatedAt).unix() < 90
                 } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 500
+                    return moment().unix() - moment(record.updatedAt).unix() >= 90
                 } else {
                     return false
                 }
@@ -284,8 +284,8 @@ const PetX: React.FC = () => {
             render: (_, record) => {
                 return (
                     <>
-                        <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'error' : 'success' }
-                               text={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'Inactive' : 'Active'} />
+                        <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'error' : 'success' }
+                               text={moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'Inactive' : 'Active'} />
                     </>
                 )
             },
