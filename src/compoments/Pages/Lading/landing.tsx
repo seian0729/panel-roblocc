@@ -9,13 +9,6 @@ import img from "../../../img/だいしきゅーだいしゅき_p1.png"
 const { Title, Paragraph } = Typography;
 
 const { Content, Footer } = Layout;
-
-document.addEventListener('aos:in', ({ detail }) => {
-    console.log('animated in', detail);
-});
-document.addEventListener('aos:out', ({ detail }) => {
-    console.log('animated out', detail);
-});
 const Landing: React.FC = () => {
     const { user } = useStore(({ app }) => app);
     const userIsLogged = user.isSome();
