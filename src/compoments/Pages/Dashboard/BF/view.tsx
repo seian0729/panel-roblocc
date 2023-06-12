@@ -35,13 +35,6 @@ import type { UploadProps } from 'antd';
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { TableProps } from 'antd';
-import {count} from "ramda";
-import * as child_process from "child_process";
-/*
-import {array, string} from "decoders";
-import {count, countBy, forEach} from "ramda";
-import type { FilterConfirmProps } from 'antd/es/table/interface';
- */
 
 const {Option} = Select
 
@@ -83,10 +76,6 @@ function DataCompoment() {
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
     }
-
-    //Online - Offline
-    const [onlineAccount, setOnline] = useState(0)
-    const [offlineAccount, setOffline] = useState(0)
 
     let ngu
 
