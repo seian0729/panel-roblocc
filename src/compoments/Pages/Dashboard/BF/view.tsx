@@ -30,10 +30,10 @@ import {
 } from '@ant-design/icons';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData} from "../../../services/data";
+import {deleteData, getData} from "../../../../services/data";
 import type { UploadProps } from 'antd';
 import moment from "moment";
-import {useStore} from "../../../state/storeHooks";
+import {useStore} from "../../../../state/storeHooks";
 import type { TableProps } from 'antd';
 import {count} from "ramda";
 import * as child_process from "child_process";
@@ -94,7 +94,7 @@ function DataCompoment() {
         setLoadingR(true);
         // ajax request after empty completing
         setTimeout(() => {
-            getData().then((res) => {
+            getData(null).then((res) => {
                 setDataApi(res.data);
             })
 
@@ -762,7 +762,7 @@ function DataCompoment() {
     // copy all value in the array
 
     useEffect(() => {
-        getData().then((res) => {
+        getData(null).then((res) => {
             setDataApi(res.data);
         })
 
