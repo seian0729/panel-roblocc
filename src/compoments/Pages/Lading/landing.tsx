@@ -2,9 +2,6 @@ import React from 'react';
 import {Button, Card, Col, Layout, Row, theme, Typography} from 'antd';
 import {Link} from 'react-router-dom';
 
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-
 import {useStore} from "../../../state/storeHooks";
 
 import img from "../../../img/だいしきゅーだいしゅき_p1.png"
@@ -12,8 +9,6 @@ import img from "../../../img/だいしきゅーだいしゅき_p1.png"
 const { Title, Paragraph } = Typography;
 
 const { Content, Footer } = Layout;
-
-AOS.init();
 
 document.addEventListener('aos:in', ({ detail }) => {
     console.log('animated in', detail);
@@ -53,7 +48,7 @@ const Landing: React.FC = () => {
                     </Row>
                 </div>
 
-                <div style={{marginTop: 24, paddingBottom: 48 , background:'#1f1f1f'}} data-aos="fade-up">
+                <div style={{marginTop: 24, paddingBottom: 48 , background:'#1f1f1f'}}>
                     <div style={{paddingTop: 12, textAlign:'center'}}>
                         <Title level={2} >
                             THEM BUN LONG QUA
@@ -62,13 +57,13 @@ const Landing: React.FC = () => {
                     <Row justify={'center'} className={'banner-title'}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Row>
-                                <Col xs={24} md={12} data-aos="fade-up" data-aos-delay="200">
+                                <Col xs={24} md={12}>
                                     <Card style={{margin: 4}}>
                                         7749 User
                                     </Card>
                                 </Col>
 
-                                <Col xs={24} md={12} data-aos="fade-up" data-aos-delay="200">
+                                <Col xs={24} md={12}>
                                     <Card style={{margin: 4}}>
                                         9981 Accounts
                                     </Card>
