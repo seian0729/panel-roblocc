@@ -33,11 +33,13 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #e16428;
+  background-color: #83b5ff;
+  transition: background-color .25s;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #e68f67;
+  background-color: rgba(131, 181, 255, 0.76);
+  transition: background-color .25s;
 }
 
 @keyframes App-logo-spin {

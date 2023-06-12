@@ -1,308 +1,208 @@
 import React, { useState } from 'react';
 import {
-    Button,
-    Col,
-    Divider,
-    Form,
-    Input,
-    InputNumber,
-    Popconfirm,
-    Row,
-    Space,
-    Table,
-    Modal,
-    Select,
-} from 'antd';
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UserOutlined,
+    LogoutOutlined,
+    TableOutlined,
+    DashboardOutlined
+} from '@ant-design/icons';
+import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button} from 'antd';
+import type { MenuProps } from 'antd';
+import {Link, useLocation, useParams } from 'react-router-dom';
+import {logoutFromApp} from "../../../types/user";
+import {useStore} from "../../../state/storeHooks";
+import './dashboard.css'
+
+//pages
+import View from "./BF/view"
+import Petx from "./PetX/petx";
+import Page404 from "../404/404";
+import Profile from "../Profile/profile";
+
+//img
+import psxImg from '../../../img/psx.png';
+import bloxImg from '../../../img/bloxshut.png';
+
+const { Header, Sider, Content } = Layout;
+const { Text } = Typography;
 
 
-import {
-    PlusCircleOutlined,
-} from "@ant-design/icons";
+const Dashboard: React.FC = () => {
 
-interface Item {
-    key: string;
-    username: string;
-    password: string;
-    role: string;
-    total: number;
-}
 
-const originData: Item[] = [];
-for (let i = 0; i < 10; i++) {
-    originData.push({
-        key: i.toString(),
-        username: `Edrward ${i}`,
-        password: `London Park no. ${i}`,
-        role: 'Users',
-        total: Math.floor(Math.random() * 1000),
-    });
-}
-interface EditableCellProps extends React.HTMLAttributes<HTMLElement> {
-    editing: boolean;
-    dataIndex: string;
-    title: any;
-    inputType: 'number' | 'text';
-    record: Item;
-    index: number;
-    children: React.ReactNode;
-}
 
-//Modal form add account
+    let params = useParams()
 
-const App: React.FC = () => {
-    const [form] = Form.useForm();
-    const [data, setData] = useState(originData);
-    const [editingKey, setEditingKey] = useState('');
+    const { user } = useStore(({ app }) => app);
 
-    const isEditing = (record: Item) => record.key === editingKey;
+    // console user in user
+    const items: MenuProps['items'] = [
+        user.match({
+            none: () => {
+                return {
+                    label: (
+                        <Link to="/login">
+                            <span>Login</span>
+                        </Link>
+                    ),
+                    key: 'login',
+                    icon: <UserOutlined />,
+                };
+            },
+            some: () => {
+                return {
+                    label: (
+                            <span>Dashboard</span>
+                    ),
+                    key: 'dashboard',
+                    icon: <TableOutlined />,
+                    children: [
+                        {
+                            label: (
+                                <Link to="../../dashboard/bloxfruit">
+                                    <span>Blox Fruits</span>
+                                </Link>
+                            ),
+                            key: 'bloxfruit',
+                        },
+                        {
+                            label: (
+                                <Link to="../../dashboard/petx">
+                                    <span>Pet Simulator X</span>
+                                </Link>
+                            ),
+                            key: 'petsimx',
+                        },
+                    ]
+                };
 
-    const edit = (record: Partial<Item> & { key: React.Key }) => {
-        form.setFieldsValue({ username: '', role: '', ...record });
-        setEditingKey(record.key);
-    };
+            }
+        })
 
-    const cancel = () => {
-        setEditingKey('');
-    };
-
-    const deleteAccount = (key: React.Key) => {
-        const newData = [...data];
-        const index = newData.findIndex((item) => key === item.key);
-        if (index > -1) {
-            newData.splice(index, 1);
-            setData(newData);
-            setEditingKey('');
-        }
+    ];
+    // logout button
+    function logout() {
+        message.success('Logout Success')
+        setTimeout(() => {
+            logoutFromApp()
+        }, 3000);
     }
 
-    const save = async (key: React.Key) => {
-        try {
-            const row = (await form.validateFields()) as Item;
-
-            const newData = [...data];
-            const index = newData.findIndex((item) => key === item.key);
-            if (index > -1) {
-                const item = newData[index];
-                newData.splice(index, 1, {
-                    ...item,
-                    ...row,
-                });
-                setData(newData);
-                setEditingKey('');
-            } else {
-                newData.push(row);
-                setData(newData);
-                setEditingKey('');
-            }
-        } catch (errInfo) {
-            console.log('Validate Failed:', errInfo);
+    if (user.isSome()) {
+        let { username } = user.unwrap();
+        items.push({
+            label: (
+                <Link to="../../dashboard/profile">
+                    <span>{username == 'TungStrong' ? 'TungBede' : username}</span>
+                </Link>
+            ),
+            key: 'profile',
+            icon: <UserOutlined /> ,
+        });
+        // admin
+        if (user.unwrap().role === 'Admin') {
+            items.push({
+                label: (
+                    "Admin"
+                ),
+                key: 'admin',
+                icon: <DashboardOutlined /> ,
+                disabled: true
+            });
         }
+        // đăng xuất
+        items.push({
+            label: (
+                <span onClick={logout}>Logout</span>
+            ),
+            key: 'logout',
+            icon: <LogoutOutlined />,
+        });
+
+    }
+
+
+    let myPath = useLocation().pathname.replace('/','');
+
+    const [current, setCurrent] = useState(myPath);
+
+    const onClick: MenuProps['onClick'] = (e) => {
+        setCurrent(e.key);
     };
 
-
-    const columns = [
-        {
-            title: 'Username',
-            dataIndex: 'username',
-            width: '25%',
-            editable: true,
-            render: (_: any, record: Item) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <Form.Item
-                        name="username"
-                        style={{ margin: 0 }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input username!',
-                            }
-                        ]}
-                    >
-                        <Input />
-                    </Form.Item>
-                ): (
-                    record.username
-                )
-            }
-        },
-        {
-            title: 'Role',
-            dataIndex: 'role',
-            width: '15%',
-            editable: true,
-            render: (_: any, record: Item) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <Form.Item
-                        name="role"
-                        style={{ margin: 0 }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input role!',
-                            }
-                        ]}
-                    >
-                        <Select>
-                            <Select.Option value="Users">Users</Select.Option>
-                            <Select.Option value="Admin">Admin</Select.Option>
-                        </Select>
-                    </Form.Item>
-                ): (
-                    record.role
-                )
-            }
-        },
-        {
-            title: 'Password',
-            dataIndex: 'password',
-            width: '25%',
-            editable: true,
-            render: (_: any, record: Item) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <Form.Item
-                        name="password"
-                        style={{ margin: 0 }}
-                        rules={[
-                            {
-                                required: true,
-                                message: 'Please input password!',
-                            }
-                        ]}
-                    >
-                        <Input.Password />
-                    </Form.Item>
-                    )
-                    : (
-                        <Input.Password disabled={true} value={record.password} />
-                    )
-            }
-        },
-        {
-            title: 'Total Account',
-            dataIndex: 'total',
-            width: '15%',
-            editable: false,
-        },
-        {
-            title: 'Hành động',
-            dataIndex: 'action',
-            render: (_: any, record: Item) => {
-                const editable = isEditing(record);
-                return editable ? (
-                    <span>
-                        <Button type='primary' onClick={() => save(record.key)} style={{ marginRight: 8 }}>Save</Button>
-                        <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                          <Button type='primary' danger>Cancel</Button>
-                        </Popconfirm>
-                  </span>
-                ) : (
-                    <Space size={'small'}>
-                        <Button type='primary' disabled={editingKey !== ''} onClick={() => edit(record)}>Edit</Button>
-                        <Popconfirm title="Sure to delete? " onConfirm={()=> deleteAccount(record.key)}>
-                            <Button type='primary' danger>Delete</Button>
-                        </Popconfirm>
-                    </Space>
-
-                );
-
-            },
-        },
-    ];
-
-    const mergedColumns = columns.map((col) => {
-        if (!col.editable) {
-            return col;
-        }
-        return {
-            ...col,
-            onCell: (record: Item) => ({
-                record,
-                inputType: col.dataIndex === 'age' ? 'number' : 'text',
-                dataIndex: col.dataIndex,
-                title: col.title,
-                editing: isEditing(record),
-            }),
-        };
-    });
-
-    const [open, setOpen] = useState(false);
-
-    const showModal = () => {
-        setOpen(true);
-    };
-
-    const hideModal = () => {
-        setOpen(false);
-    };
-
+    const [collapsed, setCollapsed] = useState(false);
+    const {
+        token: { colorBgContainer },
+    } = theme.useToken();
 
     return (
-        <div>
+        <Layout>
+            <Sider trigger={null} collapsible collapsed={collapsed} style={{background: "rgb(24, 24, 24)", color: "white"}}>
+                <div style={{textAlign: "center", padding: 12}}>
+                    <Text strong={true} style={{padding: 6}}>CHIMOVO</Text>
+                </div>
 
-            <Modal
-                title="Thêm Account"
-                open={open}
-                onOk={hideModal}
-                onCancel={hideModal}
-                okText="Ok"
-                cancelText="Cancel"
-            >
-                <Form form={form} component={false}>
-                    <Form.Item
-                        label="Username"
-                        name="addusername"
-                        rules={[{ required: true, message: 'Please input your username!' }]}
-                    >
-                        <Input />
-                    </Form.Item>
-                    <Form.Item
-                        label="Password"
-                        name="addpassword"
-                        rules={[{ required: true, message: 'Please input your password!' }]}
-                    >
-                        <Input.Password />
-                    </Form.Item>
-                    <Form.Item
-                        label="Role"
-                        name="addrole"
-                        rules={[{ required: true, message: 'Please input your role!' }]}
-                    >
-                        <Select>
-                            <Select.Option value="admin">Admin</Select.Option>
-                            <Select.Option value="user">User</Select.Option>
-                        </Select>
-                    </Form.Item>
-                </Form>
-            </Modal>
-            <Row justify={'start'}>
-                <Col span={24}>
-                    <Divider orientation="left">Dashboard</Divider>
-                </Col>
-                <Col span={24}>
-                    <div style={{marginBottom: 16, marginLeft: 16}}>
-                        <Button type='primary' icon={<PlusCircleOutlined />} onClick={showModal}>Thêm Account</Button>
-                    </div>
-                </Col>
-                <Col span={24}>
-                    <Form form={form} component={false}>
-                        <Table
-                            bordered
-                            dataSource={data}
-                            columns={mergedColumns}
-                            rowClassName="editable-row"
-                            pagination={{
-                                onChange: cancel,
-                            }}
-                        />
-                    </Form>
-                </Col>
-            </Row>
+                <Menu
+                    mode="inline"
+                    defaultSelectedKeys={['1']}
+                    onClick={ onClick } selectedKeys={[current]}
+                    items={items}
 
-        </div>
+                />
+            </Sider>
+            <Layout className="site-layout">
+                <Header style={{ padding: 0, background: colorBgContainer }}>
+                    {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                        className: 'trigger',
+                        onClick: () => setCollapsed(!collapsed),
+                    })}
+                </Header>
+                <Content
+                    style={{
+                        margin: '6px 6px',
+                        padding: 24,
+                        background: colorBgContainer,
+                        borderRadius: 8
+                    }}
+                >
+                    {
+                            params.dashboardName === undefined ?
+                                <div style={{color: "white"}}>
+                                    <Row gutter={16}>
+                                        <Col>
+                                            <Card title="Blox Fruit"
+                                                  hoverable
+                                                  cover={<img style={{width: 225}} alt="example" src={bloxImg} />}
+                                            >
+                                                <Link to={"bloxfruit"}>
+                                                    <Button style={{width: "100%"}} type={"default"}> Blox Fruit </Button>
+                                                </Link>
+                                            </Card>
+                                        </Col>
+                                        <Col>
+                                            <Card title="Pet Simulator X"
+                                                  hoverable
+                                                  cover={<img alt="example" src={psxImg} />}
+                                            >
+                                                <Link to={"petx"}>
+                                                    <Button style={{width: "100%"}} type={"default"}> Pet Simulator X </Button>
+                                                </Link>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </div> :
+                            params.dashboardName === 'bloxfruit' ? <View/> :
+                            params.dashboardName === 'petx' ? <Petx/> :
+                            params.dashboardName === 'profile' ? <Profile/> : <Page404/>
+                    }
+                </Content>
+                <Layout.Footer style={{textAlign: 'center'}}>Rô Bờ lóc Panel by PaulVoid and Ailaichum</Layout.Footer>
+
+            </Layout>
+        </Layout>
     );
 };
 
-export default App;
+export default Dashboard;
+

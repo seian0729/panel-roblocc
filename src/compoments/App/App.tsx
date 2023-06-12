@@ -1,45 +1,59 @@
 import React from 'react';
-import {Layout, Row, Spin, theme} from 'antd';
-import {Navigate, Route, RouteProps, Routes,Outlet} from 'react-router-dom';
+import {Layout, MenuProps, message, Row, Spin, theme} from 'antd';
+import {Navigate, Route, RouteProps, Routes, Outlet, useLocation, Link} from 'react-router-dom';
 
-import Header from "../Header/header";
 import './App.css';
 
-import {useStore, useStoreWithInitializer} from "../../state/storeHooks";
+import {useStoreWithInitializer} from "../../state/storeHooks";
 import {endLoad, loadUser} from './App.slice';
 import {store} from '../../state/store';
 import axios from "axios";
 import {getUser} from "../../services/data";
-import {userDecoder} from "../../types/user";
+import {logoutFromApp} from "../../types/user";
 import {ConfigProvider} from "antd";
 
 //Pages
 
 import {Login} from "../Pages/Login/Login";
-import View from "../Pages/View/view";
-import Profile from "../Pages/Profile/Profile";
 import Page404 from "../Pages/404/404"
 
 //Dashboard
 import Dashboard from "../Pages/Dashboard/dashboard"
 
+//Admin
+import Admin from "../Pages/Admin/admin"
+//LandingPage
+
+import Landing from "../Pages/Lading/landing";
+import LandingHeader from "../Pages/Lading/headerLanding";
+import {
+    DashboardOutlined,
+    LogoutOutlined,
+    ProfileOutlined,
+    TableOutlined,
+    UserOutlined,
+} from "@ant-design/icons";
+import Register from "../Pages/Register/register";
+
+
 //Theme ne
 const tokenTheme = {
-    colorPrimary: "#e16428",
+    "colorPrimary": "#83b5ff",
     colorBgBase: "#040404",
     colorTextBase: "#f6e9e9",
     wireframe: true,
-  };
-  
-  const algorithmTheme = theme.darkAlgorithm;
-  
-  const themeConfig = {
+};
+
+const algorithmTheme = theme.darkAlgorithm;
+
+const themeConfig = {
     token: tokenTheme,
     algorithm: algorithmTheme,
-  };
+};
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
+
 
     const userIsLogged = user.isSome();
 
@@ -61,45 +75,123 @@ function App() {
         )
     }
 
+    // console user in user
+    const items: MenuProps['items'] = [
+        user.match({
+            none: () => {
+                return {
+                    label: (
+                        <Link to="/login">
+                            <span>Login</span>
+                        </Link>
+                    ),
+                    key: 'login',
+                    icon: <UserOutlined />,
+                };
+            },
+            some: (user) => {
+                return {
+                    label: (
+                        <Link to="/dashboard">
+                            <span>Dashboard</span>
+                        </Link>
+                    ),
+                    key: 'dashboard',
+                    icon: <TableOutlined />,
+                };
+
+            }
+        })
+
+    ];
+    // logout button
+    function logout() {
+        message.success('Logout Success')
+        setTimeout(() => {
+            logoutFromApp()
+        }, 3000);
+    }
+
+    if (user.isSome()) {
+        let { username } = user.unwrap();
+        items.push({
+            label: (
+                <Link to="/profile">
+                    <span>{username == 'TungStrong' ? 'TungBede' : username}</span>
+                </Link>
+            ),
+            key: 'profile',
+            icon: <ProfileOutlined /> ,
+        });
+        // admin
+        if (user.unwrap().role === 'Admin') {
+            items.push({
+                label: (
+                    <Link to="/admin">
+                        <span>Admin</span>
+                    </Link>
+                ),
+                key: 'admin',
+                icon: <DashboardOutlined /> ,
+            });
+        }
+        // đăng xuất
+        items.push({
+            label: (
+                <span onClick={logout}>Logout</span>
+            ),
+            key: 'logout',
+            icon: <LogoutOutlined />,
+        });
+
+    }
+
+
+
     return (
+<       ConfigProvider theme={themeConfig}>
 
-<ConfigProvider theme={themeConfig}>
+            <Layout style={{minHeight:"100vh"}} >
 
-            <Layout style={{height:"100vh"}}>
+                {
+                    userIsLogged === true && window.location.pathname != '/' ?
+                        "" : <LandingHeader/>
 
-                <Layout.Header style={{background:"#181818"}}>
-                    <Header/>
-                </Layout.Header>
+                }
+
+
 
                 <Layout.Content >
 
-                <Routes >
-                    <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                        <Route path="/" element={<View/>}/>
-                    </Route>
-                    <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
-                        <Route path="/login" element={<Login/>}/>
-                    </Route>
-                    <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                        <Route path="/profile" element={<Profile />}/>
-                    </Route>
-                    <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
-                        <Route path="dashboard">
-                            <Route index element={<Dashboard />}/>
-
+                    <Routes >
+                        <Route path="/" element={<Landing/>}/>
+                        <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
+                            <Route path="dashboard">
+                                <Route index element={<Dashboard/>}/>
+                                <Route path={":dashboardName"} element={<Dashboard/>}/>
+                                <Route path={"*"} element={<Page404/>}/>
+                            </Route>
                         </Route>
-                    </Route>
-                    <Route path="*" element={<Page404 />}/>
-                </Routes>
+                        <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
+                            <Route path="/login" element={<Login/>}/>
+                        </Route>
+                        <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
+                            <Route path="/register" element={<Register/>}/>
+                        </Route>
+                        <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
+                            <Route path="admin">
+                                <Route index element={<Admin />}/>
+                                <Route path="*" element={<Page404 />}/>
+                            </Route>
+                        </Route>
+                        <Route path="*" element={<Page404 />}/>
+                    </Routes>
+
                 </Layout.Content>
-
-                <Layout.Footer style={{textAlign: 'center'}}>Rô Bờ lóc by PaulVoid and Ailaichum</Layout.Footer>
-
-
             </Layout>
 
 
-        </ConfigProvider>
+</ConfigProvider>
     );
 }
 
@@ -149,6 +241,6 @@ function AdminOnlyRoute({
 
     }
     return <Outlet />
-                        }
+}
 
 export default App;

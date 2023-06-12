@@ -52,11 +52,6 @@ const CustomizedForm: React.FC<CustomizedFormProps> = ({ onChange, fields }) => 
         </Space>
     </Form>
 );
-
-function changePass(){
-    console.log('cut');
-}
-
 function ProfileComponent(){
     const { user } = useStore(({ app }) => app);
     const {username,id,role} = user.unwrap();

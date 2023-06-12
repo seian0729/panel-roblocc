@@ -2,26 +2,18 @@ import {
     UserOutlined,
     LogoutOutlined,
     TableOutlined,
-    ProfileOutlined, DashboardOutlined
+    ProfileOutlined,
+    DashboardOutlined
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Menu, message } from 'antd';
 import React, {useState} from "react";
-import {Link, Route, Routes, useLocation } from 'react-router-dom';
+import {Link, useLocation } from 'react-router-dom';
 import {logoutFromApp} from "../../types/user";
 
 //pages
 
-import {Login} from "../Pages/Login/Login";
 import {useStore} from "../../state/storeHooks";
-
-const menu: MenuProps = {
-    defaultSelectedKeys: ['1'],
-    defaultOpenKeys: ['sub1'],
-    mode: 'inline',
-    theme: 'dark',
-};
-
 
 
 const Header: React.FC = () => {
@@ -40,14 +32,14 @@ const Header: React.FC = () => {
                     icon: <UserOutlined />,
                 };
             },
-            some: (user) => {
+            some: () => {
                 return {
                     label: (
-                        <Link to="/">
-                            <span>Data</span>
+                        <Link to="/dashboard">
+                            <span>Dashboard</span>
                         </Link>
                     ),
-                    key: '',
+                    key: 'dashboard',
                     icon: <TableOutlined />,
                 };
 
@@ -71,18 +63,18 @@ const Header: React.FC = () => {
                     <span>{username == 'TungStrong' ? 'TungBede' : username}</span>
                 </Link>
             ),
-            key: 'settings',
+            key: 'profile',
             icon: <ProfileOutlined /> ,
         });
         // admin
         if (user.unwrap().role === 'Admin') {
             items.push({
                 label: (
-                    <Link to="/dashboard">
-                        <span>Dashboard</span>
+                    <Link to="/admin">
+                        <span>Admin</span>
                     </Link>
                 ),
-                key: 'dashboard',
+                key: 'admin',
                 icon: <DashboardOutlined /> ,
             });
         }
