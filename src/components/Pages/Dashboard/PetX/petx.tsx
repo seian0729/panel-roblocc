@@ -91,12 +91,6 @@ const PetX: React.FC = () => {
 
     //Format
 
-    const [formatDia, setFormatDia] = useState(false)
-
-    const onChangeformatDia = (e: CheckboxChangeEvent) => {
-        setFormatDia(e.target.checked)
-    };
-
     //Refresh data
     const refreshData = () => {
         setLoadingReload(true);
@@ -216,7 +210,7 @@ const PetX: React.FC = () => {
                 let Description = JSON.parse(record.Description)
                 return (
                     <Tag color='processing' style={{margin: 4}}>
-                        {!hideDiamond ? (!formatDia ? new Intl.NumberFormat().format(Description['Total Diamond']) : formatNumber(Description['Total Diamond'])) : "NaN"}
+                        {!hideDiamond ?  formatNumber(Description['Total Diamond']) : "NaN"}
                     </Tag>
                 );
             }
@@ -231,7 +225,7 @@ const PetX: React.FC = () => {
                 return (
                     <div>
                         <Tag color='cyan'>
-                            {!hideDiamond ? (!formatDia ? new Intl.NumberFormat().format(Description['Diamond Gained']) : formatNumber(Number(Description['Diamond Gained']))) : "NaN"}
+                            {!hideDiamond ? formatNumber(Number(Description['Diamond Gained'])) : "NaN"}
                         </Tag>
                     </div>
                 );
@@ -387,13 +381,6 @@ const PetX: React.FC = () => {
                                 </Form.Item>
                             </Form>
                         </div>
-                        <div>
-                            <Form>
-                                <Form.Item label="Format Diamond">
-                                    <Checkbox onChange={onChangeformatDia}/>
-                                </Form.Item>
-                            </Form>
-                        </div>
                     </Card>
                 </Card>
             </Col>
@@ -430,7 +417,7 @@ const PetX: React.FC = () => {
                             <Card hoverable={true}>
                                 <Statistic
                                     title="Total Diamonds"
-                                    value={(!formatDia ? getTotalDiamonds() : formatNumber(getTotalDiamonds()))}
+                                    value={formatNumber(getTotalDiamonds())}
                                     valueStyle={{color: '#5487ff'}}
                                     prefix={<BankOutlined/>}
                                 />
