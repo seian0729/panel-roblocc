@@ -22,9 +22,9 @@ const Landing: React.FC = () => {
                     <Row justify={'center'} style={{marginTop: 24}} className={'banner-title'}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Row>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{paddingRight: 12, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                                     <div>
-                                        <Title level={3}>Just a Roblox Panel for Blox Fruits</Title>
+                                        <Title level={3}>Just a Roblox Panel</Title>
                                         <Paragraph>
                                             Them bun long qua
                                         </Paragraph>
@@ -33,7 +33,7 @@ const Landing: React.FC = () => {
                                         </Link>
                                     </div>
                                 </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{paddingLeft: 12}}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
                                     <img alt={'thumb'} src={img} style={{maxWidth: '100%', height: 'auto', borderRadius: 8}}/>
                                 </Col>
                             </Row>

@@ -715,8 +715,8 @@ function DataCompoment() {
 
         },
         {
-            title: 'Date Update',
-            dataIndex: 'updateDate',
+            title: 'Last Update',
+            dataIndex: 'lastUpdate',
             width: '15%',
             render: (_, record) => {
                 return (

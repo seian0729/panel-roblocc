@@ -243,8 +243,8 @@ const PetX: React.FC = () => {
             }
         },
         {
-            title: 'Date Update',
-            dataIndex: 'updateDate',
+            title: 'Last Update',
+            dataIndex: 'lastDate',
             width: '15%',
             render: (_, record) => {
                 return (

@@ -15,7 +15,7 @@ import {useStore} from "../../../state/storeHooks";
 import './dashboard.css'
 
 //pages
-import View from "./BF/view"
+import View from "./BF/bf"
 import Petx from "./PetX/petx";
 import Page404 from "../404/404";
 import Profile from "../Profile/profile";
