@@ -43,7 +43,7 @@ const HeaderLanding: React.FC = () => {
                             <Button>  Get Started </Button>
                         </Link>
                     ),
-                    key: 'login',
+                    key: '',
                 }
             },
             some: (user) => {

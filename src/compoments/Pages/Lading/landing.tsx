@@ -28,9 +28,16 @@ const Landing: React.FC = () => {
                                         <Paragraph>
                                             Them bun long qua
                                         </Paragraph>
-                                        <Link to={!userIsLogged ? "login" : "dashboard" }>
-                                            <Button type={"primary"}> {!userIsLogged ? "Get Started" : "Dashboard" } </Button>
-                                        </Link>
+                                        {
+                                            !userIsLogged ?
+                                            <Link to={"login"}>
+                                                <Button type={"primary"}> {"Get Started"} </Button>
+                                            </Link>
+                                                :
+                                                <a href={"dashboard"}>
+                                                    <Button type={"primary"}>Dashboard</Button>
+                                                </a>
+                                        }
                                     </div>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
