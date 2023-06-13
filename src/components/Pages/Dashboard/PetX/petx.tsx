@@ -223,11 +223,10 @@ const PetX: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
-                    <div>
-                        <Tag color='cyan'>
-                            {!hideDiamond ? formatNumber(Number(Description['Diamond Gained'])) : "NaN"}
+
+                        <Tag color={moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'error' : 'cyan'}>
+                            {moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'Inactive' : (!hideDiamond ? formatNumber(Number(Description['Diamond Gained'])) : "NaN")}
                         </Tag>
-                    </div>
                 );
             }
         },
@@ -239,8 +238,8 @@ const PetX: React.FC = () => {
                 let Description = JSON.parse(record.Description)
                 return (
                     <div>
-                        <Tag color='blue'>
-                            {Description['Time Elapsed']}
+                        <Tag color={moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'error' : 'blue'}>
+                            {moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'Inactive' : Description['Time Elapsed']}
                         </Tag>
                     </div>
                 );
