@@ -225,13 +225,13 @@ const PetX: React.FC = () => {
             title: 'Diamonds Gained',
             dataIndex: "diamondsGained",
             width: '10%',
-            sorter: (a: any, b: any) => Number(JSON.parse(a.Description)['Diamond Gained'].replaceAll(',', '')) - Number(JSON.parse(b.Description)['Diamond Gained'].replaceAll(',', '')),
+            sorter: (a: any, b: any) => Number(JSON.parse(a.Description)['Diamond Gained']) - Number(JSON.parse(b.Description)['Diamond Gained']),
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
                     <div>
                         <Tag color='cyan'>
-                            {!hideDiamond ? (!formatDia ? Description['Diamond Gained'] : formatNumber(Number(Description['Diamond Gained'].replaceAll(',', '')))) : "NaN"}
+                            {!hideDiamond ? (!formatDia ? new Intl.NumberFormat().format(Description['Diamond Gained']) : formatNumber(Number(Description['Diamond Gained']))) : "NaN"}
                         </Tag>
                     </div>
                 );
