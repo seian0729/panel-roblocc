@@ -23,10 +23,19 @@ import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {
     BankOutlined,
+    BarChartOutlined,
+    PayCircleOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
-function formatNumber(num: number, precision = 2) {
+
+const rate = 20
+
+function calCash(diamond: number){
+    const cash = diamond / (rate * 1000000000) * 10000
+    return Math.round(cash)
+}
+function formatNumber(num: number, precision = 3) {
     const map = [
         { suffix: 'T', threshold: 1e12 },
         { suffix: 'B', threshold: 1e9 },
@@ -389,9 +398,9 @@ const PetX: React.FC = () => {
             </Col>
             <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
                 <Card title="Account Status">
-                    <Row gutter={16}>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card bordered={false}>
+                    <Row gutter={[16, 16]}>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                            <Card hoverable={true}>
                                 <Statistic
                                     title="Active"
                                     value={getOnline()}
@@ -401,8 +410,8 @@ const PetX: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card bordered={false}>
+                        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                            <Card hoverable={true}>
                                 <Statistic
                                     title="Inactive"
                                     value={getOffline()}
@@ -412,14 +421,39 @@ const PetX: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-
+                    </Row>
+                </Card>
+                <Card title="Diamonds" style={{marginTop: 16}}>
+                    <Row gutter={[16,16]}>
                         <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card bordered={false}>
+                            <Card hoverable={true}>
                                 <Statistic
                                     title="Total Diamonds"
                                     value={(!formatDia ? getTotalDiamonds() : formatNumber(getTotalDiamonds()))}
                                     valueStyle={{ color: '#5487ff' }}
                                     prefix={<BankOutlined />}
+                                />
+                            </Card>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Card hoverable={true}>
+                                <Statistic
+                                    title="Rate"
+                                    value={rate}
+                                    valueStyle={{ color: '#8ea0ff' }}
+                                    prefix={<BarChartOutlined />}
+                                />
+                            </Card>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Card hoverable={true}>
+                                <Statistic
+                                    title="Total Earnings"
+                                    value={formatNumber(calCash(getTotalDiamonds()))}
+                                    valueStyle={{ color: '#54ff8a' }}
+                                    prefix={<PayCircleOutlined />}
                                 />
                             </Card>
                         </Col>

@@ -16,7 +16,7 @@ import './dashboard.css'
 
 //pages
 import View from "./BF/bf"
-import Petx from "./PetX/petx";
+import PetX from "./PetX/petx";
 import Page404 from "../404/404";
 import Profile from "../Profile/profile";
 
@@ -193,7 +193,7 @@ const Dashboard: React.FC = () => {
                                     </Row>
                                 </div> :
                             params.dashboardName === 'bloxfruit' ? <View/> :
-                            params.dashboardName === 'petx' ? <Petx/> :
+                            params.dashboardName === 'petx' ? <PetX/> :
                             params.dashboardName === 'profile' ? <Profile/> : <Page404/>
                     }
                 </Content>
