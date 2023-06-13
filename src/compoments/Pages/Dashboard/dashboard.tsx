@@ -169,11 +169,11 @@ const Dashboard: React.FC = () => {
                     {
                             params.dashboardName === undefined ?
                                 <div style={{color: "white"}}>
-                                    <Row gutter={16}>
+                                    <Row gutter={[16,16]}>
                                         <Col>
                                             <Card title="Blox Fruit"
                                                   hoverable
-                                                  cover={<img style={{width: 225}} alt="example" src={bloxImg} />}
+                                                  cover={<img style={{width: "100%"}} alt="example" src={bloxImg} />}
                                             >
                                                 <Link to={"bloxfruit"}>
                                                     <Button style={{width: "100%"}} type={"default"}> Blox Fruit </Button>
