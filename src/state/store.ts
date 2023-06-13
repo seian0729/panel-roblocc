@@ -1,6 +1,6 @@
 import { Action, configureStore } from '@reduxjs/toolkit';
-import login from "../compoments/Pages/Login/Login.slice";
-import app from "../compoments/App/App.slice";
+import login from "../components/Pages/Login/Login.slice";
+import app from "../components/App/App.slice";
 
 
 

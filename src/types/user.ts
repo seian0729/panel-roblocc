@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { Decoder, object, string } from 'decoders';
-import {loadUser,logout} from "../compoments/App/App.slice";
+import {loadUser,logout} from "../components/App/App.slice";
 import {store} from "../state/store";
 
 export interface PublicUser {
