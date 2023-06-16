@@ -929,7 +929,7 @@ function DataCompoment() {
                     <Card title="Account Control">
                         <div style={{marginBottom: 16}}>
                             <Space wrap>
-                                <Button type="primary" onClick={username === "Chim" || "Chimmm" ? openModal : copyData}
+                                <Button type="primary" onClick={username === "Chim" || "Chimmm" || "TungStrong" ? openModal : copyData}
                                         disabled={!hasSelected} loading={loadingCopy}>Copy
                                     Data</Button>
                                 <Button type="primary" onClick={copyUsername} disabled={!hasSelected}
