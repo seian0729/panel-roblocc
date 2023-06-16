@@ -47,7 +47,7 @@ function calCash(diamond: number) {
     return Math.round(cash)
 }
 
-function formatNumber(num: number, precision = 3) {
+function formatNumber(num: number, precision: number) {
     const map = [
         {suffix: 'T', threshold: 1e12},
         {suffix: 'B', threshold: 1e9},
@@ -112,7 +112,9 @@ const PetX: React.FC = () => {
             getData(2316994223).then((res) => {
                 setDataApi(res.data);
             })
-
+            getOrder().then((res) => {
+                setOrderData(res.data);
+            })
             messageApi.success('Refresh Success <3');
             setSelectedRowKeys([]);
             setLoadingReload(false);
@@ -261,7 +263,7 @@ const PetX: React.FC = () => {
                 let Description = JSON.parse(record.Description)
                 return (
                     <Tag color='processing' style={{margin: 4}}>
-                        {!hideDiamond ?  formatNumber(Description['Total Diamond']) : "NaN"}
+                        {!hideDiamond ?  formatNumber(Description['Total Diamond'],3) : "NaN"}
                     </Tag>
                 );
             }
@@ -276,7 +278,7 @@ const PetX: React.FC = () => {
                 return (
 
                         <Tag color={moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'error' : 'cyan'}>
-                            {moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'Inactive' : (!hideDiamond ? formatNumber(Number(Description['Diamond Gained'])) : "NaN")}
+                            {moment().unix() - moment(record.updatedAt).unix() >= 90 ? 'Inactive' : (!hideDiamond ? formatNumber(Number(Description['Diamond Gained']),3) : "NaN")}
                         </Tag>
                 );
             }
@@ -417,7 +419,7 @@ const PetX: React.FC = () => {
             render: (_, record) => {
                 return (
                     <Tag color='processing' style={{margin: 4}}>
-                        {formatNumber(record.Diamonds)}
+                        {formatNumber(record.Diamonds,0)}
                     </Tag>
                 )
             },
@@ -453,11 +455,13 @@ const PetX: React.FC = () => {
             width: '5%',
             render: (_, record) => {
                 const status = JSON.parse(record.Status)
-                console.log(status)
+                console.log(status.messages)
                 const colors = [
-                    'info',
-                    'success'
+                    'processing',
+                    'success',
+                    'error'
                 ]
+                console.log(colors)
                 return (
                     <Tag color={colors[Number(status.Status)]} style={{margin: 4}}>
                         {status.messages}
@@ -614,7 +618,7 @@ const PetX: React.FC = () => {
                                                 <Card hoverable={true}>
                                                     <Statistic
                                                         title="Total Diamonds"
-                                                        value={formatNumber(getTotalDiamonds())}
+                                                        value={formatNumber(getTotalDiamonds(),3)}
                                                         valueStyle={{color: '#5487ff'}}
                                                         prefix={<BankOutlined/>}
                                                     />
@@ -636,7 +640,7 @@ const PetX: React.FC = () => {
                                                 <Card hoverable={true}>
                                                     <Statistic
                                                         title="Total Earnings"
-                                                        value={formatNumber(calCash(getTotalDiamonds()))}
+                                                        value={formatNumber(calCash(getTotalDiamonds()),3)}
                                                         valueStyle={{color: '#54ff8a'}}
                                                         prefix={<PayCircleOutlined/>}
                                                     />
