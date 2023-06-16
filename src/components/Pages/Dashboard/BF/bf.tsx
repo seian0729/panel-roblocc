@@ -948,7 +948,7 @@ function DataCompoment() {
                                     disabled={!hasSelected}
                                 >
                                     <Button type="primary" disabled={!hasSelected} loading={loadingDelete} danger>
-                                        Delete Selected Account
+                                        Delete Account
                                     </Button>
                                 </Popconfirm>
                                 <span style={{color: "#f6e9e9"}}>

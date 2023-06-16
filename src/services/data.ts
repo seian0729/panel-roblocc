@@ -32,3 +32,16 @@ export async function deleteData(username: string[]){
     const { data } = await axios.post('data/bulkDeleteData', {Usernames: username})
     return data
 }
+
+// seller nhi - send dia
+export async function sendDiamond(uid: number,username: string, amount: number){
+    const { data } = await axios.post('Petx/createData', {Uid: uid, UserReceive: username, Diamonds: amount})
+    return data
+}
+
+// seller nhi - order history
+
+export async function getOrder(){
+    const { data } = await axios.get('Petx/getOrder', )
+    return data
+}

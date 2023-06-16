@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Row, Col, Button, message, notification, Form, Input, Divider} from 'antd';
-import {CloseCircleOutlined, CheckCircleOutlined} from '@ant-design/icons';
+import {CloseCircleOutlined, CheckCircleOutlined, UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useStoreWithInitializer} from "../../../state/storeHooks";
 import {dispatchOnCall, store} from "../../../state/store";
 import {initializeLogin, LoginState, updateErrors, updateField} from "./Login.slice";
@@ -49,7 +49,7 @@ export function Login() {
                             rules={[{required: true, message: 'Username is empty!'}]}
 
                         >
-                            <Input onChange={e => onUpdateField('username', e.target.value)}/>
+                            <Input prefix={<UserOutlined className="site-form-item-icon" />} onChange={e => onUpdateField('username', e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item
@@ -57,7 +57,7 @@ export function Login() {
                             name="password"
                             rules={[{required: true, message: 'Password is empty!'}]}
                         >
-                            <Input.Password onChange={e => onUpdateField('password', e.target.value)}/>
+                            <Input.Password prefix={<LockOutlined className="site-form-item-icon" />} onChange={e => onUpdateField('password', e.target.value)}/>
                         </Form.Item>
 
                         <Form.Item>
