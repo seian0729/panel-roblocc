@@ -205,13 +205,12 @@ const PetX: React.FC = () => {
     };
 
     const sellernhi = () => {
-        const key = 'res seller nhi'
+        const key = 'res-seller'
         messageApi.open({
             key,
             type: 'loading',
             content: 'Sent the order to server...'
         })
-        console.log(amountDia)
 
         sendDiamond(Number(id), userReceive, amountDia).then((res) => {
             console.log(res)
@@ -221,7 +220,7 @@ const PetX: React.FC = () => {
                     type: 'success',
                     content: res.message
                 })
-            }, 2000);
+            }, 1500);
         })
 
     }
