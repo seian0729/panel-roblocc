@@ -694,7 +694,7 @@ const PetX: React.FC = () => {
                             <FloatButton.BackTop/>
                         </Skeleton>
                     </Tabs.TabPane>
-                    <Tabs.TabPane tab="Order History" key="order-history">
+                    <Tabs.TabPane tab="Sent History" key="order-history">
                         <Skeleton
                             loading={loadingSkeTable}
                             active={loadingSkeTable}

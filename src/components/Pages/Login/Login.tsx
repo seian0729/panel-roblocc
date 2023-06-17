@@ -90,7 +90,7 @@ export function Login() {
                         icon: <CheckCircleOutlined style={{color: '#63d465'}}/>,
                         onClose: () => {
                             setTimeout(() => {
-                                window.location.hash = '#';
+                                window.location.href = 'dashboard'
                                 loadUserIntoApp(user);
                             }, 500)
                         }
