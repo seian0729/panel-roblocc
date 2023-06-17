@@ -35,8 +35,11 @@ export async function deleteData(username: string[]){
 
 // seller nhi - send dia
 export async function sendDiamond(uid: number,username: string, amount: number){
-    const { data } = await axios.post('Petx/createData', {Uid: uid, UserReceive: username, Diamonds: amount})
+    console.log(uid, username, amount)
+
+    const { data } = await axios.post('Petx/createData', {Uid: uid, UserReceive: username, Diamonds: Number(amount)})
     return data
+
 }
 
 // seller nhi - order history

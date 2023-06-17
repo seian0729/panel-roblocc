@@ -211,6 +211,8 @@ const PetX: React.FC = () => {
             type: 'loading',
             content: 'Sent the order to server...'
         })
+        console.log(amountDia)
+
         sendDiamond(Number(id), userReceive, amountDia).then((res) => {
             console.log(res)
             setTimeout(() => {
@@ -221,6 +223,7 @@ const PetX: React.FC = () => {
                 })
             }, 2000);
         })
+
     }
 
     const hasSelected = selectedRowKeys.length > 0;
