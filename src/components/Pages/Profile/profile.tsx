@@ -138,35 +138,32 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                 </Form>
                 */}
                 <Divider orientation="left">Scripts</Divider>
-                <Paragraph copyable={{text: bloxfruitString}}>
-                    Script:
-                </Paragraph>
-                    <Collapse bordered={false} items={[{
-                        key: '1',
-                        label: 'Blox Fruit',
-                        children: <>
-                            <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
-                                {bloxfruitString}
-                            </SyntaxHighlighter>
-                            <Button type={"default"}
-                                    onClick={() => copyScript('Blox Fruit', bloxfruitString)}>
-                                Copy Script
-                            </Button>
-                        </>
-                    }]} style={{marginTop: 6}}/>
-                    <Collapse bordered={false} items={[{
-                        key: '1',
-                        label: 'Pet Simulator X',
-                        children: <>
-                            <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
-                                {petxString}
-                            </SyntaxHighlighter>
-                            <Button type={"default"}
-                                    onClick={() => copyScript('Pet Simulator X', petxString)}>
-                                Copy Script
-                            </Button>
-                        </>
-                    }]} style={{marginTop: 6}}/>
+                <Collapse bordered={false} items={[{
+                    key: '1',
+                    label: 'Blox Fruit',
+                    children: <>
+                        <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
+                            {bloxfruitString}
+                        </SyntaxHighlighter>
+                        <Button type={"default"}
+                                onClick={() => copyScript('Blox Fruit', bloxfruitString)}>
+                            Copy Script
+                        </Button>
+                    </>
+                }]} style={{marginTop: 6}}/>
+                <Collapse bordered={false} items={[{
+                    key: '1',
+                    label: 'Pet Simulator X',
+                    children: <>
+                        <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
+                            {petxString}
+                        </SyntaxHighlighter>
+                        <Button type={"default"}
+                                onClick={() => copyScript('Pet Simulator X', petxString)}>
+                            Copy Script
+                        </Button>
+                    </>
+                }]} style={{marginTop: 6}}/>
             </Col>
         </Row>
     </div>
