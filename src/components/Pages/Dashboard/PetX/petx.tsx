@@ -227,6 +227,7 @@ const PetX: React.FC = () => {
 
     const hasSelected = selectedRowKeys.length > 0;
     interface DataType {
+        Id: number
         UID: number;
         UsernameRoblocc: string;
         Description: string;
@@ -676,6 +677,8 @@ const PetX: React.FC = () => {
                                 dataSource={dataApi}
                                 rowKey={(record) => record.UsernameRoblocc}
                                 loading={loadingTable}
+                                size={"small"}
+                                tableLayout={"fixed"}
                                 pagination={{
                                     total: dataApi.length,
                                     pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
@@ -707,6 +710,8 @@ const PetX: React.FC = () => {
                                 dataSource={orderData}
                                 rowKey={(record) => record.Id}
                                 loading={loadingTable}
+                                size={"small"}
+                                tableLayout={"fixed"}
                                 pagination={{
                                     total: orderData.length,
                                     pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],

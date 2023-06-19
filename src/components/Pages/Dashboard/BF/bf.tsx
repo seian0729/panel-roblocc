@@ -519,16 +519,16 @@ function DataCompoment() {
                 let description = JSON.parse(record.Description);
                 let awakened = description['Awakened Abilities'];
                 return (
-                    <Space>
+                    <>
 
                         {awakened.map((key: any) => {
                             return (
-                                <Tag color={key.length > 10 ? "red" : "green"} key={key}>
+                                <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
                                     {key.length > 10 ? 'None' : key}
                                 </Tag>
                             );
                         })}
-                    </Space>
+                    </>
 
                 )
             }
@@ -1141,6 +1141,8 @@ function DataCompoment() {
                             dataSource={dataApiSpecialFilter}
                             rowKey={(record) => record.UsernameRoblocc}
                             loading={loadingTable}
+                            size={"small"}
+                            tableLayout={"fixed"}
                             pagination={{
                                 total: dataApiSpecialFilter.length,
                                 pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
