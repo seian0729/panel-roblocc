@@ -73,7 +73,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
     DelayUpdate = 60;
     Note = 'May 1'
 }
---Soon`;
+loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))()`;
 
     return <div>
 
