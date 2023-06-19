@@ -87,7 +87,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
     return <div>
         {contextHolder}
         <Row justify={'start'}>
-            <Col span={12} offset={6}>
+            <Col xs={24} sm={24} md={24} lg={12} xl={12} offset={6}>
                 <Divider orientation="left">Profile</Divider>
                 <CustomizedForm
                     fields={fields}
