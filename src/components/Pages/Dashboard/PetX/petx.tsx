@@ -26,7 +26,7 @@ import {
     deleteData,
     getData,
     sendDiamond,
-    getOrder
+    getOrder, getRate
 } from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
@@ -40,12 +40,6 @@ import {
 import {useStore} from "../../../../state/storeHooks";
 import {Interface} from "readline";
 
-const rate = 20
-
-function calCash(diamond: number) {
-    const cash = diamond / (rate * 1000000000) * 10000
-    return Math.round(cash)
-}
 
 function formatNumber(num: number, precision: number) {
     const map = [
@@ -102,6 +96,13 @@ const PetX: React.FC = () => {
     const onChangeHideDiamond = (e: CheckboxChangeEvent) => {
         setHideDiamond(e.target.checked)
     };
+    //Rate
+    const [rate, setRate] = useState(0);
+
+    function calCash(diamond: number) {
+        const cash = diamond / (rate * 1000000000) * 10000
+        return Math.round(cash)
+    }
 
     //Refresh data
     const refreshData = () => {
@@ -484,15 +485,28 @@ const PetX: React.FC = () => {
             sLoadingSkeTable(false)
         })
 
+
+
     }, [])
 
     useEffect(() => {
+
         getOrder().then((res) => {
             //console.log(res)
             setOrderData(res.data);
             setLoadingTable(false)
             sLoadingSkeTable(false)
         })
+
+    }, [])
+
+    useEffect(() => {
+
+        getRate().then((res) => {
+            setRate(res.rate)
+        })
+
+
     }, [])
 
 

@@ -45,6 +45,13 @@ export async function sendDiamond(uid: number,username: string, amount: number){
 // seller nhi - order history
 
 export async function getOrder(){
-    const { data } = await axios.get('Petx/getOrder', )
+    const { data } = await axios.get('Petx/getOrder')
+    return data
+}
+
+// get rate
+
+export async function getRate(){
+    const { data } = await axios.get('Petx/getRate')
     return data
 }
