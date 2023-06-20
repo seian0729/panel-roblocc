@@ -213,7 +213,7 @@ const PetX: React.FC = () => {
         })
 
         sendDiamond(Number(id), userReceive, amountDia).then((res) => {
-            console.log(res)
+            // console.log(res)
             setTimeout(() => {
                 messageApi.open({
                     key,
@@ -458,13 +458,13 @@ const PetX: React.FC = () => {
             width: '5%',
             render: (_, record) => {
                 const status = JSON.parse(record.Status)
-                console.log(status.messages)
+                // console.log(status.messages)
                 const colors = [
                     'processing',
                     'success',
                     'error'
                 ]
-                console.log(colors)
+                // console.log(colors)
                 return (
                     <Tag color={colors[Number(status.Status)]} style={{margin: 4}}>
                         {status.messages}
