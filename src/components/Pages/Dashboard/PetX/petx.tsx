@@ -692,7 +692,6 @@ const PetX: React.FC = () => {
                                 rowKey={(record) => record.UsernameRoblocc}
                                 loading={loadingTable}
                                 size={"small"}
-                                tableLayout={"fixed"}
                                 pagination={{
                                     total: dataApi.length,
                                     pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
@@ -725,7 +724,6 @@ const PetX: React.FC = () => {
                                 rowKey={(record) => record.Id}
                                 loading={loadingTable}
                                 size={"small"}
-                                tableLayout={"fixed"}
                                 pagination={{
                                     total: orderData.length,
                                     pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],

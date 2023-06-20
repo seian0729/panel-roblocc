@@ -1142,7 +1142,6 @@ function DataCompoment() {
                             rowKey={(record) => record.UsernameRoblocc}
                             loading={loadingTable}
                             size={"small"}
-                            tableLayout={"fixed"}
                             pagination={{
                                 total: dataApiSpecialFilter.length,
                                 pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
