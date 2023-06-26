@@ -199,7 +199,7 @@ const Dashboard: React.FC = () => {
                                     params.dashboardName === 'profile' ? <Profile/> : <Page404/>
                     }
                 </Content>
-                <Layout.Footer style={{textAlign: 'center'}}>Rô Bờ lóc Panel by PaulVoid and Ailaichum</Layout.Footer>
+                <Layout.Footer style={{textAlign: 'center'}}>Roblox Panel by PaulVoid and Hanei</Layout.Footer>
 
             </Layout>
         </Layout>
