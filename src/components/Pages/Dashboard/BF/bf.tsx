@@ -104,7 +104,7 @@ function DataCompoment() {
         setLoadingTable(true);
         // ajax request after empty completing
         setTimeout(() => {
-            getData(null).then((res) => {
+            getData(994732206).then((res) => {
                 setDataApi(res.data);
             })
 
@@ -817,7 +817,7 @@ function DataCompoment() {
 
     useEffect(() => {
 
-        getData(null).then((res) => {
+        getData(994732206).then((res) => {
             setDataApi(res.data);
             setLoadingTable(false)
             sLoadingSkeTable(false)
