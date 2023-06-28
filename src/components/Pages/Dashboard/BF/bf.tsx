@@ -28,7 +28,7 @@ import {
     ExclamationCircleOutlined,
     SearchOutlined,
     UserOutlined,
-    CaretRightOutlined,
+    CaretRightOutlined, FundProjectionScreenOutlined,
 } from '@ant-design/icons';
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
@@ -1005,9 +1005,9 @@ function DataCompoment() {
                     </Card>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                    <Card title="Account Status">
-                        <Row>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{paddingRight: 12}}>
+                    <Card title="Accounts Status">
+                        <Row gutter={[16, 16]}>
+                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                 <Card bordered={false}>
                                     <Statistic
                                         title="Active"
@@ -1018,12 +1018,23 @@ function DataCompoment() {
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={12} style={{paddingLeft: 12}}>
+                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                 <Card bordered={false}>
                                     <Statistic
                                         title="Inactive"
                                         value={getOffline()}
                                         valueStyle={{color: '#e84749'}}
+                                        prefix={<UserOutlined/>}
+                                        suffix="Account(s)"
+                                    />
+                                </Card>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                <Card bordered={false}>
+                                    <Statistic
+                                        title="Total"
+                                        value={getOffline() + getOnline()}
+                                        valueStyle={{color: '#535dff'}}
                                         prefix={<UserOutlined/>}
                                         suffix="Account(s)"
                                     />
