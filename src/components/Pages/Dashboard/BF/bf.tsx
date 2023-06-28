@@ -718,6 +718,11 @@ function DataCompoment() {
                         })}
 
                         {
+                            specialRender.length == 0 ?
+                                <Tag color="red" key={'none'} style={{margin: 4}}>
+                                    Special Item Not Found
+                                </Tag>
+                                :
                             specialRender.map((key: any) => {
                                 return (
                                     <Tag color="red" key={key} style={{margin: 4}}>
@@ -1008,7 +1013,7 @@ function DataCompoment() {
                     <Card title="Accounts Status">
                         <Row gutter={[16, 16]}>
                             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                <Card bordered={false}>
+                                <Card hoverable={true}>
                                     <Statistic
                                         title="Active"
                                         value={getOnline()}
@@ -1019,7 +1024,7 @@ function DataCompoment() {
                                 </Card>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                <Card bordered={false}>
+                                <Card hoverable={true}>
                                     <Statistic
                                         title="Inactive"
                                         value={getOffline()}
@@ -1030,7 +1035,7 @@ function DataCompoment() {
                                 </Card>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                <Card bordered={false}>
+                                <Card hoverable={true}>
                                     <Statistic
                                         title="Total"
                                         value={getOffline() + getOnline()}

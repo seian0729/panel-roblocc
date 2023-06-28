@@ -565,7 +565,7 @@ const PetX: React.FC = () => {
                                 <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                                     <Card title="Account Status">
                                         <Row gutter={[16, 16]}>
-                                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                                 <Card hoverable={true}>
                                                     <Statistic
                                                         title="Active"
@@ -576,12 +576,23 @@ const PetX: React.FC = () => {
                                                     />
                                                 </Card>
                                             </Col>
-                                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                                 <Card hoverable={true}>
                                                     <Statistic
                                                         title="Inactive"
                                                         value={getOffline()}
                                                         valueStyle={{color: '#e84749'}}
+                                                        prefix={<UserOutlined/>}
+                                                        suffix="Account(s)"
+                                                    />
+                                                </Card>
+                                            </Col>
+                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                                <Card hoverable={true}>
+                                                    <Statistic
+                                                        title="Total"
+                                                        value={getOffline() + getOnline()}
+                                                        valueStyle={{color: '#535dff'}}
                                                         prefix={<UserOutlined/>}
                                                         suffix="Account(s)"
                                                     />
