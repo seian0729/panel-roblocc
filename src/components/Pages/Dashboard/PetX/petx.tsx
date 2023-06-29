@@ -1,33 +1,28 @@
 import React, {useEffect, useState} from "react";
+import type {TabsProps} from 'antd';
 import {
-    Button,
-    Divider,
-    message,
-    Row,
-    Col,
-    Space,
-    Table,
     Badge,
+    Button,
     Card,
-    Skeleton,
     Checkbox,
-    Popconfirm,
-    Form,
-    Statistic,
-    Tag,
+    Col,
+    Divider,
     FloatButton,
+    Form,
     Input,
     InputNumber,
-    Tabs
+    message,
+    Popconfirm,
+    Row,
+    Skeleton,
+    Space,
+    Statistic,
+    Table,
+    Tabs,
+    Tag
 } from 'antd'
-import type { TabsProps } from 'antd';
 import {CheckboxChangeEvent} from "antd/es/checkbox";
-import {
-    deleteData,
-    getData,
-    sendDiamond,
-    getOrder, getRate
-} from "../../../../services/data";
+import {deleteData, getData, getOrder, getRate, sendDiamond} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {
@@ -38,7 +33,6 @@ import {
     UserOutlined
 } from "@ant-design/icons";
 import {useStore} from "../../../../state/storeHooks";
-import {Interface} from "readline";
 
 
 function formatNumber(num: number, precision: number) {
@@ -509,6 +503,256 @@ const PetX: React.FC = () => {
 
     }, [])
 
+    const itemsAccount: TabsProps['items'] = [
+        {
+            key: 'account',
+            label: `Account`,
+            children: <Card title="Account">
+                <Row gutter={[16, 16]}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Row gutter={[12, 12]}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                <Card style={{marginBottom: 16}} title="Control">
+                                    <Space wrap>
+                                        <Button type="primary" onClick={refreshData}
+                                                loading={loadingReload}>Refresh</Button>
+                                        <Popconfirm
+                                            placement="bottom"
+                                            title={'Are you sure to delete?'}
+                                            description={`${selectedRowKeys.length} account`}
+                                            onConfirm={deleteAccount}
+                                            okText="Yes"
+                                            cancelText="No"
+                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            disabled={!hasSelected}
+                                        >
+                                            <Button type="primary" disabled={!hasSelected} loading={loadingDelete}
+                                                    danger>
+                                                Delete Account
+                                            </Button>
+                                        </Popconfirm>
+                                        <span style={{color: "#f6e9e9"}}>
+                                              {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
+                                            </span>
+                                    </Space>
+                                </Card>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                                <Card title="Optional">
+                                    <Form layout="inline">
+                                        <Form.Item label="Hide Name">
+                                            <Checkbox onChange={onChangeHidename}/>
+                                        </Form.Item>
+
+                                        <Form.Item label="Hide Diamond">
+                                            <Checkbox onChange={onChangeHideDiamond}/>
+                                        </Form.Item>
+                                    </Form>
+                                </Card>
+                            </Col>
+                        </Row>
+                    </Col>
+
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Card title="Account Status">
+                            <Row gutter={[16, 16]}>
+                                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Card hoverable={true}>
+                                        <Statistic
+                                            title="Active"
+                                            value={getOnline()}
+                                            valueStyle={{color: '#6abe39'}}
+                                            prefix={<UserOutlined/>}
+                                            suffix="Account(s)"
+                                        />
+                                    </Card>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Card hoverable={true}>
+                                        <Statistic
+                                            title="Inactive"
+                                            value={getOffline()}
+                                            valueStyle={{color: '#e84749'}}
+                                            prefix={<UserOutlined/>}
+                                            suffix="Account(s)"
+                                        />
+                                    </Card>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Card hoverable={true}>
+                                        <Statistic
+                                            title="Total"
+                                            value={getOffline() + getOnline()}
+                                            valueStyle={{color: '#535dff'}}
+                                            prefix={<UserOutlined/>}
+                                            suffix="Account(s)"
+                                        />
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                </Row>
+            </Card>,
+        },
+        {
+            key: 'diamond',
+            label: `Diamond`,
+            children: <Card title="Diamonds">
+                <Row gutter={[16, 16]}>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Card title="Seller nhí">
+                            <Form
+                                onFinish={sellernhi}
+                                onFinishFailed={onSellerNhiFail}
+                            >
+                                <Form.Item
+                                    label="Username Receive"
+                                    name="username"
+                                    rules={[{required: true, message: 'Username is empty!'}]}
+
+                                >
+                                    <Input prefix={<UserOutlined className="site-form-item-icon"/>}
+                                           onChange={e => setUserReceive(e.target.value)}/>
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Diamonds"
+                                    name="dia"
+                                    rules={[{required: true, message: 'Diamonds is empty!'}]}
+
+                                >
+                                    <InputNumber style={{width: '100%'}}
+                                                 prefix={<BankOutlined className="site-form-item-icon"/>}
+                                                 onChange={value => setAmountDia(Number(value))}/>
+                                </Form.Item>
+
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" style={{float: "left"}}>
+                                        Seller nhí
+                                    </Button>
+                                </Form.Item>
+                            </Form>
+                        </Card>
+                    </Col>
+                    <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Card title="Statistic">
+                            <Row gutter={[16, 16]}>
+                                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Card hoverable={true}>
+                                        <Statistic
+                                            title="Total Diamonds"
+                                            value={formatNumber(getTotalDiamonds(), 3)}
+                                            valueStyle={{color: '#5487ff'}}
+                                            prefix={<BankOutlined/>}
+                                        />
+                                    </Card>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Card hoverable={true}>
+                                        <Statistic
+                                            title="Rate"
+                                            value={rate}
+                                            valueStyle={{color: '#8ea0ff'}}
+                                            prefix={<BarChartOutlined/>}
+                                        />
+                                    </Card>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                                    <Card hoverable={true}>
+                                        <Statistic
+                                            title="Total Earnings"
+                                            value={formatNumber(calCash(getTotalDiamonds()), 3)}
+                                            valueStyle={{color: '#54ff8a'}}
+                                            prefix={<PayCircleOutlined/>}
+                                        />
+                                    </Card>
+                                </Col>
+                            </Row>
+                        </Card>
+                    </Col>
+                </Row>
+            </Card>,
+        },
+    ];
+
+
+    const itemsData: TabsProps['items'] = [
+        {
+            key: 'data',
+            label: `Data`,
+            children:
+                <Skeleton
+                    loading={loadingSkeTable}
+                    active={loadingSkeTable}
+                    paragraph={{
+                        rows: 10
+                    }}
+                >
+                    <Table
+                        rowSelection={rowSelection}
+                        columns={columnsData}
+                        dataSource={dataApi}
+                        rowKey={(record) => record.UsernameRoblocc}
+                        loading={loadingTable}
+                        size={"small"}
+                        pagination={{
+                            total: dataApi.length,
+                            pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
+                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
+                            position: ['topCenter'],
+                            current: page,
+                            pageSize: pageSize,
+                            defaultPageSize: 10,
+                            showSizeChanger: true,
+                            onChange: (page, pageSize) => {
+                                setPage(page);
+                                setPageSize(pageSize);
+                            },
+                        }}
+                    />
+                    <FloatButton.BackTop/>
+                </Skeleton>
+        },
+        {
+            key: 'sent-history',
+            label: `Sent History`,
+            children:
+                <Skeleton
+                    loading={loadingSkeTable}
+                    active={loadingSkeTable}
+                    paragraph={{
+                        rows: 10
+                    }}
+                >
+                    <Table
+                        columns={columnsOrder}
+                        dataSource={orderData}
+                        rowKey={(record) => record.Id}
+                        loading={loadingTable}
+                        size={"small"}
+                        pagination={{
+                            total: orderData.length,
+                            pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
+                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} orders`,
+                            position: ['topCenter'],
+                            current: pageOrder,
+                            pageSize: pageOrderSize,
+                            defaultPageSize: 10,
+                            showSizeChanger: true,
+                            onChange: (page, pageSize) => {
+                                setPageOrder(page);
+                                setPageOrderSize(pageSize);
+                            },
+                        }}
+                    />
+                    <FloatButton.BackTop/>
+                </Skeleton>,
+        },
+    ]
+
 
     return (<div>
         {contextHolder}
@@ -516,244 +760,14 @@ const PetX: React.FC = () => {
             <Divider orientation="left">Roblocc Panel - Pet Simulator X</Divider>
 
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 12}}>
-                <Tabs defaultActiveKey = {'Account'} animated = {{inkBar: true, tabPane: true}}>
-                    <Tabs.TabPane tab="Account" key="account">
-                        <Card title="Account">
-                            <Row gutter={[16, 16]}>
-                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                    <Row gutter={[12,12]}>
-                                        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                            <Card style={{marginBottom: 16}} title="Control">
-                                                <Space wrap>
-                                                    <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
-                                                    <Popconfirm
-                                                        placement="bottom"
-                                                        title={'Are you sure to delete?'}
-                                                        description={`${selectedRowKeys.length} account`}
-                                                        onConfirm={deleteAccount}
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                                        disabled={!hasSelected}
-                                                    >
-                                                        <Button type="primary" disabled={!hasSelected} loading={loadingDelete} danger>
-                                                            Delete Account
-                                                        </Button>
-                                                    </Popconfirm>
-                                                    <span style={{color: "#f6e9e9"}}>
-                                              {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
-                                            </span>
-                                                </Space>
-                                            </Card>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                            <Card title="Optional">
-                                                <Form layout="inline">
-                                                    <Form.Item label="Hide Name">
-                                                        <Checkbox onChange={onChangeHidename}/>
-                                                    </Form.Item>
-
-                                                    <Form.Item label="Hide Diamond">
-                                                        <Checkbox onChange={onChangeHideDiamond}/>
-                                                    </Form.Item>
-                                                </Form>
-                                            </Card>
-                                        </Col>
-                                    </Row>
-                                </Col>
-
-                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                    <Card title="Account Status">
-                                        <Row gutter={[16, 16]}>
-                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                                <Card hoverable={true}>
-                                                    <Statistic
-                                                        title="Active"
-                                                        value={getOnline()}
-                                                        valueStyle={{color: '#6abe39'}}
-                                                        prefix={<UserOutlined/>}
-                                                        suffix="Account(s)"
-                                                    />
-                                                </Card>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                                <Card hoverable={true}>
-                                                    <Statistic
-                                                        title="Inactive"
-                                                        value={getOffline()}
-                                                        valueStyle={{color: '#e84749'}}
-                                                        prefix={<UserOutlined/>}
-                                                        suffix="Account(s)"
-                                                    />
-                                                </Card>
-                                            </Col>
-                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                                <Card hoverable={true}>
-                                                    <Statistic
-                                                        title="Total"
-                                                        value={getOffline() + getOnline()}
-                                                        valueStyle={{color: '#535dff'}}
-                                                        prefix={<UserOutlined/>}
-                                                        suffix="Account(s)"
-                                                    />
-                                                </Card>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Tabs.TabPane>
-                    <Tabs.TabPane tab="Diamond" key="diamond">
-                        <Card title="Diamonds">
-                            <Row gutter={[16, 16]}>
-                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                    <Card title="Seller nhí">
-                                        <Form
-                                            onFinish={sellernhi}
-                                            onFinishFailed={onSellerNhiFail}
-                                        >
-                                            <Form.Item
-                                                label="Username Receive"
-                                                name="username"
-                                                rules={[{required: true, message: 'Username is empty!'}]}
-
-                                            >
-                                                <Input prefix={<UserOutlined className="site-form-item-icon" />} onChange={e => setUserReceive(e.target.value)}/>
-                                            </Form.Item>
-
-                                            <Form.Item
-                                                label="Diamonds"
-                                                name="dia"
-                                                rules={[{required: true, message: 'Diamonds is empty!'}]}
-
-                                            >
-                                                <InputNumber style={{ width: '100%' }} prefix={<BankOutlined className="site-form-item-icon" />} onChange={value => setAmountDia(Number(value))}/>
-                                            </Form.Item>
-
-                                            <Form.Item>
-                                                <Button type="primary" htmlType="submit" style={{float:"left"}}>
-                                                    Seller nhí
-                                                </Button>
-                                            </Form.Item>
-                                        </Form>
-                                    </Card>
-                                </Col>
-                                <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                    <Card title="Statistic">
-                                        <Row gutter={[16, 16]}>
-                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                                <Card hoverable={true}>
-                                                    <Statistic
-                                                        title="Total Diamonds"
-                                                        value={formatNumber(getTotalDiamonds(),3)}
-                                                        valueStyle={{color: '#5487ff'}}
-                                                        prefix={<BankOutlined/>}
-                                                    />
-                                                </Card>
-                                            </Col>
-
-                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                                <Card hoverable={true}>
-                                                    <Statistic
-                                                        title="Rate"
-                                                        value={rate}
-                                                        valueStyle={{color: '#8ea0ff'}}
-                                                        prefix={<BarChartOutlined/>}
-                                                    />
-                                                </Card>
-                                            </Col>
-
-                                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                                <Card hoverable={true}>
-                                                    <Statistic
-                                                        title="Total Earnings"
-                                                        value={formatNumber(calCash(getTotalDiamonds()),3)}
-                                                        valueStyle={{color: '#54ff8a'}}
-                                                        prefix={<PayCircleOutlined/>}
-                                                    />
-                                                </Card>
-                                            </Col>
-                                        </Row>
-                                    </Card>
-                                </Col>
-                            </Row>
-                        </Card>
-                    </Tabs.TabPane>
-                </Tabs>
+                <Tabs defaultActiveKey={'account'} items={itemsAccount} animated={{inkBar: true, tabPane: true}}/>
             </Col>
 
 
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
-                <Tabs defaultActiveKey = {'data'} animated = {{inkBar: true, tabPane: true}}>
-                    <Tabs.TabPane tab="Data" key="data">
-                        <Skeleton
-                            loading={loadingSkeTable}
-                            active={loadingSkeTable}
-                            paragraph={{
-                                rows: 10
-                            }}
-                        >
-                            <Table
-                                rowSelection={rowSelection}
-                                columns={columnsData}
-                                dataSource={dataApi}
-                                rowKey={(record) => record.UsernameRoblocc}
-                                loading={loadingTable}
-                                size={"small"}
-                                pagination={{
-                                    total: dataApi.length,
-                                    pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
-                                    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
-                                    position: ['topCenter'],
-                                    current: page,
-                                    pageSize: pageSize,
-                                    defaultPageSize: 10,
-                                    showSizeChanger: true,
-                                    onChange: (page, pageSize) => {
-                                        setPage(page);
-                                        setPageSize(pageSize);
-                                    },
-                                }}
-                            />
-                            <FloatButton.BackTop/>
-                        </Skeleton>
-                    </Tabs.TabPane>
-                    <Tabs.TabPane tab="Sent History" key="order-history">
-                        <Skeleton
-                            loading={loadingSkeTable}
-                            active={loadingSkeTable}
-                            paragraph={{
-                                rows: 10
-                            }}
-                        >
-                            <Table
-                                columns={columnsOrder}
-                                dataSource={orderData}
-                                rowKey={(record) => record.Id}
-                                loading={loadingTable}
-                                size={"small"}
-                                pagination={{
-                                    total: orderData.length,
-                                    pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
-                                    showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} orders`,
-                                    position: ['topCenter'],
-                                    current: pageOrder,
-                                    pageSize: pageOrderSize,
-                                    defaultPageSize: 10,
-                                    showSizeChanger: true,
-                                    onChange: (page, pageSize) => {
-                                        setPageOrder(page);
-                                        setPageOrderSize(pageSize);
-                                    },
-                                }}
-                            />
-                            <FloatButton.BackTop/>
-                        </Skeleton>
-                    </Tabs.TabPane>
-                </Tabs>
+                <Tabs defaultActiveKey={'data'} items={itemsData} animated={{inkBar: true, tabPane: true}}/>
             </Col>
         </Row>
     </div>);

@@ -1,43 +1,42 @@
+import type {CollapseProps, TableProps, UploadProps} from 'antd';
 import {
+    Badge,
     Button,
+    Card,
+    Checkbox,
     Col,
+    Collapse,
     Divider,
     FloatButton,
     Form,
+    Input,
     message,
+    Modal,
     Popconfirm,
     Row,
     Select,
+    Skeleton,
     Space,
+    Statistic,
     Table,
     Tag,
-    Upload,
-    Modal,
-    Badge,
-    Input,
-    Statistic,
-    Card,
-    Collapse,
     theme,
-    Skeleton,
-    Checkbox
+    Upload
 } from 'antd';
 import {
-    QuestionCircleOutlined,
-    UploadOutlined,
+    CaretRightOutlined,
     ExclamationCircleOutlined,
+    QuestionCircleOutlined,
     SearchOutlined,
+    UploadOutlined,
     UserOutlined,
-    CaretRightOutlined, FundProjectionScreenOutlined,
 } from '@ant-design/icons';
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../../services/data";
-import type {UploadProps} from 'antd';
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
-import type {TableProps} from 'antd';
 
 const {Option} = Select
 
@@ -575,8 +574,8 @@ function DataCompoment() {
                 )
             },
             sorter: (a: any, b: any) => {
-                let strSortA = '';
-                let strSortB = '';
+                let objSortA = [];
+                let objSortB = [];
                 let descriptionA = JSON.parse(a.Description);
                 let descriptionB = JSON.parse(b.Description);
                 let bfDataA = descriptionA['Inventory']['Blox Fruit']
@@ -591,79 +590,89 @@ function DataCompoment() {
                 let WGataB = descriptionB['Inventory']['Wear']
 
                 bfDataA.map((key: any) => {
-                    if (key === 'Dough' || key === 'Leopard') {
-                        strSortA += key + ' / '
+                    if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                        objSortA.push(key)
+                    } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                        objSortA.push(key.Name)
                     }
+
                 })
 
                 sDataA.map((key: any) => {
-                    if (key === 'Cursed Dual Katana') {
-                        strSortA += key + ' / '
+                    if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
+                        objSortA.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                        objSortA.push(key.Name)
                     }
                 })
 
                 GDataA.map((key: any) => {
-                    if (key === 'Soul Guitar') {
-                        strSortA += key + ' / '
+                    if (typeof (key) == 'string' && key === 'Soul Guitar') {
+                        objSortA.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                        objSortA.push(key.Name)
                     }
                 })
 
-                {
-                    MGataA.map((key: any) => {
-                        if (key === 'Mirror Fractal') {
-                            strSortA += key + ' / '
-                        }
+                MGataA.map((key: any) => {
+                    if (typeof (key) == 'string' && key === 'Mirror Fractal') {
+                        objSortA.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                        objSortA.push(key.Name)
+                    }
+                })
 
-                    })
-                }
-
-                {
-                    WGataA.map((key: any) => {
-                        if (key === 'Valkyrie Helm') {
-                            strSortA += key + ' / '
-                        }
-
-                    })
-                }
+                WGataA.map((key: any) => {
+                    if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
+                        objSortA.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                        objSortA.push(key.Name)
+                    }
+                })
 
 
                 bfDataB.map((key: any) => {
-                    if (key === 'Dough' || key === 'Leopard') {
-                        strSortB += key + ' / '
+                    if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                        objSortB.push(key)
+                    } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                        objSortB.push(key.Name)
                     }
+
                 })
 
                 sDataB.map((key: any) => {
-                    if (key === 'Cursed Dual Katana') {
-                        strSortB += key + ' / '
+                    if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
+                        objSortB.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                        objSortB.push(key.Name)
                     }
                 })
 
                 GDataB.map((key: any) => {
-                    if (key === 'Soul Guitar') {
-                        strSortB += key + ' / '
+                    if (typeof (key) == 'string' && key === 'Soul Guitar') {
+                        objSortB.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                        objSortB.push(key.Name)
                     }
                 })
 
-                {
-                    MGataB.map((key: any) => {
-                        if (key === 'Mirror Fractal') {
-                            strSortB += key + ' / '
-                        }
+                MGataB.map((key: any) => {
+                    if (typeof (key) == 'string' && key === 'Mirror Fractal') {
+                        objSortB.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                        objSortB.push(key.Name)
+                    }
+                })
 
-                    })
-                }
+                WGataB.map((key: any) => {
+                    if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
+                        objSortB.push(key)
+                    } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                        objSortB.push(key.Name)
+                    }
+                })
 
-                {
-                    WGataB.map((key: any) => {
-                        if (key === 'Valkyrie Helm') {
-                            strSortB += key + ' / '
-                        }
-
-                    })
-                }
-
-                return strSortA.length - strSortB.length
+                return objSortA.length - objSortB.length
 
             },
             render: (_, record) => {
@@ -674,47 +683,61 @@ function DataCompoment() {
                 let MGata = description['Inventory']['Material']
                 let WGata = description['Inventory']['Wear']
 
+
                 const specialRender: any[] = [];
 
                 return (
                     <>
 
                         {bfData.map((key: any) => {
-                            if (key === 'Dough' || key === 'Leopard') {
+                            if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
                                 //strRender += key + ' / '
                                 specialRender.push(key)
+                            } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                                //strRender += key + ' / '
+                                specialRender.push(key.Name)
                             }
                         })}
 
                         {sData.map((key: any) => {
-                            if (key === 'Cursed Dual Katana') {
+                            if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
                                 //strRender += key + ' / '
                                 specialRender.push(key)
+                            } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                                //strRender += key + ' / '
+                                specialRender.push(key.Name)
                             }
                         })}
 
                         {GData.map((key: any) => {
-                            if (key === 'Soul Guitar') {
+                            if (typeof (key) == 'string' && key === 'Soul Guitar') {
                                 //strRender += key + ' / '
                                 specialRender.push(key)
+                            } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                                //strRender += key + ' / '
+                                specialRender.push(key.Name)
                             }
-
                         })}
 
                         {MGata.map((key: any) => {
-                            if (key === 'Mirror Fractal') {
+                            if (typeof (key) == 'string' && key === 'Mirror Fractal') {
                                 //strRender += key + ' / '
                                 specialRender.push(key)
+                            } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                                //strRender += key + ' / '
+                                specialRender.push(key.Name)
                             }
 
                         })}
 
                         {WGata.map((key: any) => {
-                            if (key === 'Valkyrie Helm') {
+                            if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
                                 //strRender += key + ' / '
                                 specialRender.push(key)
+                            } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                                //strRender += key + ' / '
+                                specialRender.push(key.Name)
                             }
-
                         })}
 
                         {
@@ -723,13 +746,13 @@ function DataCompoment() {
                                     Special Item Not Found
                                 </Tag>
                                 :
-                            specialRender.map((key: any) => {
-                                return (
-                                    <Tag color="red" key={key} style={{margin: 4}}>
-                                        {key}
-                                    </Tag>
-                                );
-                            })
+                                specialRender.map((key: any) => {
+                                    return (
+                                        <Tag color="red" key={key} style={{margin: 4}}>
+                                            {key}
+                                        </Tag>
+                                    );
+                                })
                         }
 
 
@@ -851,34 +874,44 @@ function DataCompoment() {
 
             const specialList: any[] = [];
 
-
             bfData.map((key: any) => {
-                if (key === 'Dough' || key === 'Leopard') {
+                if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
                     specialList.push(key)
+                } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                    specialList.push(key.Name)
                 }
+
             })
 
             sData.map((key: any) => {
-                if (key === 'Cursed Dual Katana') {
+                if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
                     specialList.push(key)
+                } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                    specialList.push(key.Name)
                 }
             })
 
             GData.map((key: any) => {
-                if (key === 'Soul Guitar') {
+                if (typeof (key) == 'string' && key === 'Soul Guitar') {
                     specialList.push(key)
+                } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                    specialList.push(key.Name)
                 }
             })
 
             MGata.map((key: any) => {
-                if (key === 'Mirror Fractal') {
+                if (typeof (key) == 'string' && key === 'Mirror Fractal') {
                     specialList.push(key)
+                } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                    specialList.push(key.Name)
                 }
             })
 
             WGata.map((key: any) => {
-                if (key === 'Valkyrie Helm') {
+                if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
                     specialList.push(key)
+                } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                    specialList.push(key.Name)
                 }
             })
 
@@ -1071,84 +1104,164 @@ function DataCompoment() {
                                         let recordGuns = recordInventory['Gun']
                                         let recordWears = recordInventory['Wear']
                                         let recordMaterials = recordInventory['Material']
+
+                                        const colorsInventory = [
+                                            'default',
+                                            'processing',
+                                            'purple',
+                                            'magenta',
+                                            'error',
+                                        ]
+                                        recordFruits.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                        recordSwords.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                        recordGuns.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                        recordWears.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                        recordMaterials.sort((a: any, b: any) => b.Rarity - a.Rarity);
                                         // (recordInventory)
+
+                                        const collapseItems: CollapseProps['items'] = [
+                                            {
+                                                key: 'bloxfruit',
+                                                label: 'Blox Fruit',
+                                                children: <>
+                                                    {
+                                                        recordFruits.map((key: any) => {
+                                                            if (typeof (key) == 'string') {
+                                                                return (
+                                                                    <Tag color="geekblue" key={key}>
+                                                                        {key}
+                                                                    </Tag>
+                                                                );
+                                                            } else if (typeof (key) == 'object') {
+                                                                return (
+                                                                    <Tag color={colorsInventory[key.Rarity]}
+                                                                         key={key.Name}>
+                                                                        {key.Name}
+                                                                    </Tag>
+                                                                );
+                                                            }
+                                                        })
+                                                    }
+                                                </>,
+                                                style: panelStyle
+                                            },
+                                            {
+                                                key: 'sword',
+                                                label: 'Sword',
+                                                children: <>
+                                                    {
+                                                        recordSwords.length === 0 ?
+                                                            <Tag color="red">Sword Data Not Found</Tag> :
+                                                            recordSwords.map((key: any) => {
+                                                                if (typeof (key) == 'string') {
+                                                                    return (
+                                                                        <Tag color="geekblue" key={key}>
+                                                                            {key}
+                                                                        </Tag>
+                                                                    );
+                                                                } else if (typeof (key) == 'object') {
+                                                                    return (
+                                                                        <Tag color={colorsInventory[key.Rarity]}
+                                                                             key={key.Name}>
+                                                                            {key.Name}
+                                                                        </Tag>
+                                                                    );
+                                                                }
+                                                            })
+                                                    }
+                                                </>,
+                                                style: panelStyle
+                                            },
+                                            {
+                                                key: 'gun',
+                                                label: 'Gun',
+                                                children: <>
+                                                    {
+                                                        recordGuns.length === 0 ?
+                                                            <Tag color="red">Gun Data Not Found</Tag> :
+                                                            recordGuns.map((key: any) => {
+                                                                if (typeof (key) == 'string') {
+                                                                    return (
+                                                                        <Tag color="geekblue" key={key}>
+                                                                            {key}
+                                                                        </Tag>
+                                                                    );
+                                                                } else if (typeof (key) == 'object') {
+                                                                    return (
+                                                                        <Tag color={colorsInventory[key.Rarity]}
+                                                                             key={key.Name}>
+                                                                            {key.Name}
+                                                                        </Tag>
+                                                                    );
+                                                                }
+                                                            })
+                                                    }
+                                                </>,
+                                                style: panelStyle
+                                            },
+                                            {
+                                                key: 'wear',
+                                                label: 'Wear',
+                                                children: <>
+                                                    {
+                                                        recordWears.length === 0 ?
+                                                            <Tag color="red">Wear Data Not Found</Tag> :
+                                                            recordWears.map((key: any) => {
+                                                                if (typeof (key) == 'string') {
+                                                                    return (
+                                                                        <Tag color="geekblue" key={key}>
+                                                                            {key}
+                                                                        </Tag>
+                                                                    );
+                                                                } else if (typeof (key) == 'object') {
+                                                                    return (
+                                                                        <Tag color={colorsInventory[key.Rarity]}
+                                                                             key={key.Name}>
+                                                                            {key.Name}
+                                                                        </Tag>
+                                                                    );
+                                                                }
+                                                            })
+                                                    }
+                                                </>,
+                                                style: panelStyle
+                                            },
+                                            {
+                                                key: 'materials',
+                                                label: 'Material',
+                                                children: <>
+                                                    {
+                                                        recordMaterials.length === 0 ?
+                                                            <Tag color="red">Material Data Not Found</Tag> :
+                                                            recordMaterials.map((key: any) => {
+                                                                if (typeof (key) == 'string') {
+                                                                    return (
+                                                                        <Tag color="geekblue" key={key}>
+                                                                            {key}
+                                                                        </Tag>
+                                                                    );
+                                                                } else if (typeof (key) == 'object') {
+                                                                    return (
+                                                                        <Tag color={colorsInventory[key.Rarity]}
+                                                                             key={key.Name}>
+                                                                            {key.Name}
+                                                                        </Tag>
+                                                                    );
+                                                                }
+                                                            })
+                                                    }
+                                                </>,
+                                                style: panelStyle
+                                            },
+                                        ]
 
                                         return (
                                             <Collapse
                                                 bordered={false}
                                                 defaultActiveKey={['1']}
+                                                items={collapseItems}
                                                 expandIcon={({isActive}) => <CaretRightOutlined
-                                                    rotate={isActive ? 90 : 0}/>}
-                                            >
-                                                <Panel header="Blox Fruit" key="1" style={panelStyle}>
-                                                    {
-                                                        recordFruits.map((key: any) => {
-                                                            return (
-                                                                <Tag color="geekblue" key={key}>
-                                                                    {key}
-                                                                </Tag>
-                                                            );
-                                                        })
-                                                    }
-                                                </Panel>
-
-                                                <Panel header="Sword" key="2" style={panelStyle}>
-                                                    {
-                                                        recordSwords.length === 0 ?
-                                                            <Tag color="red">Sword Data Not Found</Tag> :
-                                                            recordSwords.map((key: any) => {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            })
-                                                    }
-                                                </Panel>
-
-                                                <Panel header="Gun" key="3" style={panelStyle}>
-                                                    {
-                                                        recordGuns.length === 0 ?
-                                                            <Tag color="red">Gun Data Not Found</Tag> :
-                                                            recordGuns.map((key: any) => {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            })
-                                                    }
-                                                </Panel>
-
-                                                <Panel header="Wear" key="4" style={panelStyle}>
-                                                    {
-                                                        recordWears.length === 0 ?
-                                                            <Tag color="red">Wear Data Not Found</Tag> :
-                                                            recordWears.map((key: any) => {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            })
-                                                    }
-                                                </Panel>
-
-                                                <Panel header="Material" key="5" style={panelStyle}>
-                                                    {
-                                                        recordMaterials.length === 0 ?
-                                                            <Tag color="red">Material Data Not Found</Tag> :
-                                                            recordMaterials.map((key: any) => {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            })
-                                                    }
-                                                </Panel>
-
-                                            </Collapse>
+                                                    rotate={isActive ? 90 : 0}/>}/>
                                         )
                                     },
                                 }
