@@ -203,7 +203,6 @@ function DataCompoment() {
                         if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
                             specaiCData += key + ' - '
                         } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
-                            console.log(key.Name)
                             specaiCData += key.Name + ' - '
                         }
                     })
@@ -212,7 +211,6 @@ function DataCompoment() {
                         if (typeof (key) == 'string' && key === 'Soul Guitar') {
                             specaiCData += key + ' - '
                         } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
-                            console.log(key.Name)
                             specaiCData += key.Name + ' - '
                         }
                     })
@@ -221,7 +219,6 @@ function DataCompoment() {
                         if (typeof (key) == 'string' && key === 'Mirror Fractal') {
                             specaiCData += key + ' - '
                         } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
-                            console.log(key.Name)
                             specaiCData += key.Name + ' - '
                         }
                     })
@@ -230,7 +227,6 @@ function DataCompoment() {
                         if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
                             specaiCData += key + ' - '
                         } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
-                            console.log(key.Name)
                             specaiCData += key.Name + ' - '
                         }
                     })
@@ -244,7 +240,7 @@ function DataCompoment() {
                             fstext = '0-2 Melee';
                         }
                     })
-                    
+
                     text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + '/'
                         + itemDescript['Awakened Abilities'] + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }
