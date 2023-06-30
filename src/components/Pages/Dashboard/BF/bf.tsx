@@ -191,62 +191,60 @@ function DataCompoment() {
                     fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
-                    {
-                        bfData.map((key: any) => {
-                            if (key === 'Dough' || key === 'Leopard') {
-                                specaiCData += key + ' - '
-                            }
-                        })
-                    }
+                    bfData.map((key: any) => {
+                        if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                            specaiCData += key + ' - '
+                        } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
 
-                    {
-                        sData.map((key: any) => {
-                            if (key === 'Cursed Dual Katana') {
-                                specaiCData += key + ' - '
-                            }
-                        })
-                    }
+                    sData.map((key: any) => {
+                        if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
+                            specaiCData += key + ' - '
+                        } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                            console.log(key.Name)
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
 
-                    {
-                        GData.map((key: any) => {
-                            if (key === 'Soul Guitar') {
-                                specaiCData += key + ' - '
-                            }
+                    GData.map((key: any) => {
+                        if (typeof (key) == 'string' && key === 'Soul Guitar') {
+                            specaiCData += key + ' - '
+                        } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                            console.log(key.Name)
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
 
-                        })
-                    }
+                    MGata.map((key: any) => {
+                        if (typeof (key) == 'string' && key === 'Mirror Fractal') {
+                            specaiCData += key + ' - '
+                        } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                            console.log(key.Name)
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
 
-                    {
-                        MGata.map((key: any) => {
-                            if (key === 'Mirror Fractal') {
-                                specaiCData += key + ' / '
-                            }
+                    WGata.map((key: any) => {
+                        if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
+                            specaiCData += key + ' - '
+                        } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                            console.log(key.Name)
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
 
-                        })
-                    }
-
-                    {
-                        WGata.map((key: any) => {
-                            if (key === 'Valkyrie Helm') {
-                                specaiCData += key + ' / '
-                            }
-
-                        })
-                    }
-
-                    {
-                        fightingStyle.map(() => {
-                            if (fightingStyle.length === 6) {
-                                fstext = 'Godhuman';
-                            } else if (fightingStyle.length > 2) {
-                                fstext = '3-5 Melee';
-                            } else {
-                                fstext = '0-2 Melee';
-                            }
-
-                        })
-                    }
-
+                    fightingStyle.map(() => {
+                        if (fightingStyle.length === 6) {
+                            fstext = 'Godhuman';
+                        } else if (fightingStyle.length > 2) {
+                            fstext = '3-5 Melee';
+                        } else {
+                            fstext = '0-2 Melee';
+                        }
+                    })
+                    
                     text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + '/'
                         + itemDescript['Awakened Abilities'] + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }

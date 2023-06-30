@@ -94,7 +94,7 @@ const Dashboard: React.FC = () => {
         items.push({
             label: (
                 <Link to="../../dashboard/profile">
-                    <span>{username == 'TungStrong' ? 'TungBede' : username}</span>
+                    <span>{username}</span>
                 </Link>
             ),
             key: 'profile',

@@ -48,7 +48,7 @@ const HeaderLanding: React.FC = () => {
             some: (user) => {
                 return {
                     label: (
-                        <Button>{user.username == 'TungStrong' ? 'TungBede' : user.username}</Button>
+                        <Button>{user.username}</Button>
                     ),
                     key: 'profilelabel',
                     children: [
