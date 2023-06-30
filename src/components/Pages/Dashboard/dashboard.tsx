@@ -137,7 +137,7 @@ const Dashboard: React.FC = () => {
     } = theme.useToken();
 
     return (
-        <Layout>
+        <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
                    style={{background: "rgb(24, 24, 24)", color: "white"}}>
                 <div style={{textAlign: "center", padding: 12}}>
