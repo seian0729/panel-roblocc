@@ -37,7 +37,7 @@ const Landing: React.FC = () => {
                   </div>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{ padding: 12 }}>
-                  <img alt="thumb" src={img} style={{ maxWidth: '100%', height: 'auto', borderRadius: 8 }} />
+                  <img alt="thumb" src={img} style={{ maxWidth: '100%', height: 'auto', borderRadius: 8, boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.8)" }} />
                 </Col>
               </Row>
             </Col>
@@ -53,10 +53,10 @@ const Landing: React.FC = () => {
     <Col xs={24} sm={24} md={24} lg={24} xl={12}>
     <Row justify="center" align="middle">
         <Col xs={12} md={6}>
-            <Card style={{ margin: 4, textAlign: "center", background: "rgba(10, 10, 12, 0.3)"}}>7749 User</Card>
+            <Card style={{ margin: 4, textAlign: "center", background: "rgba(10, 10, 12, 0.3)", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)"}}>7749 User</Card>
               </Col>
         <Col xs={12} md={6}>
-            <Card style={{ margin: 4, textAlign: "center", background: "rgba(10, 10, 12, 0.3)"}}>9981 Accounts</Card>
+            <Card style={{ margin: 4, textAlign: "center", background: "rgba(10, 10, 12, 0.3)", boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.5)"}}>9981 Accounts</Card>
               </Col>
              </Row>
            </Col>
