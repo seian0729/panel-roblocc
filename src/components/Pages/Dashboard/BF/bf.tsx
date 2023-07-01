@@ -7,6 +7,7 @@ import {
     Col,
     Collapse,
     Divider,
+    Drawer,
     FloatButton,
     Form,
     Input,
@@ -37,6 +38,7 @@ import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
+
 const {Option} = Select
 
 const {Panel} = Collapse;
@@ -134,6 +136,33 @@ function DataCompoment() {
                 temp++
             }
         })
+        return temp
+    }
+    // get online for each note
+
+    interface DrawerProps {
+        note: string,
+        online: number
+    }
+    const getOnlineForNote = () => {
+        // [ {note: 'note1', online: 0}, {note: 'note2', online: 0} ]
+        let temp: DrawerProps[] = []
+        // get all note
+        dataApi.forEach((item: DataType) => {
+            const note = item.Note
+            if (!temp.find((item: DrawerProps) => item.note === note)) {
+                temp.push({note: note, online: 0})
+            }
+        })
+        // get online for each note
+        dataApi.forEach((item: DataType) => {
+            const note = item.Note
+            const update = moment(item.updatedAt).unix()
+            if (moment().unix() - update <= 500) {
+                temp.find((item: DrawerProps) => item.note === note)!.online++
+            }
+        })
+        console.log(temp)
         return temp
     }
 
@@ -298,6 +327,9 @@ function DataCompoment() {
             }
         },
     }
+
+    const [openDrawer, setOpenDrawer] = useState(false);
+
 
     interface DataType {
         UID: number;
@@ -960,7 +992,8 @@ function DataCompoment() {
                     <Card title="Account Control">
                         <div style={{marginBottom: 16}}>
                             <Space wrap>
-                                <Button type="primary" onClick={username === "Chim" || "Chimmm" || "TungStrong" ? openModal : copyData}
+                                <Button type="primary"
+                                        onClick={username === "Chim" || "Chimmm" || "TungStrong" ? openModal : copyData}
                                         disabled={!hasSelected} loading={loadingCopy}>Copy
                                     Data</Button>
                                 <Button type="primary" onClick={copyUsername} disabled={!hasSelected}
@@ -968,6 +1001,9 @@ function DataCompoment() {
                                     Username</Button>
 
                                 <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
+                                <Button type="primary" onClick={() => {
+                                    setOpenDrawer(true)
+                                }}>Note Active</Button>
                                 <Popconfirm
                                     placement="bottom"
                                     title={'Are you sure to delete?'}
@@ -1148,7 +1184,8 @@ function DataCompoment() {
                                                             recordSwords.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                        <Tag color="geekblue" key={key}
+                                                                             style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
@@ -1175,7 +1212,8 @@ function DataCompoment() {
                                                             recordGuns.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                        <Tag color="geekblue" key={key}
+                                                                             style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
@@ -1202,7 +1240,8 @@ function DataCompoment() {
                                                             recordWears.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                        <Tag color="geekblue" key={key}
+                                                                             style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
@@ -1229,7 +1268,8 @@ function DataCompoment() {
                                                             recordMaterials.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                        <Tag color="geekblue" key={key}
+                                                                             style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
@@ -1283,6 +1323,30 @@ function DataCompoment() {
                     </Skeleton>
                 </Col>
             </Row>
+            <Drawer
+                title="Active từng Note"
+                placement="right"
+                closable={true}
+                onClose={() => {
+                    setOpenDrawer(false)
+                }}
+                open={openDrawer}
+                getContainer={false}>
+                <Table
+                    dataSource={getOnlineForNote()}
+                    columns={[
+                        {
+                            title: 'Note',
+                            dataIndex: 'note',
+                        },
+                        {
+                            title: 'Online',
+                            dataIndex: 'online',
+                        }
+                    ]}
+                    rowKey={(record) => record.note}
+                    ></Table>
+            </Drawer>
         </div>
     )
 }
