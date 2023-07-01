@@ -37,7 +37,6 @@ import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
-
 const {Option} = Select
 
 const {Panel} = Collapse;
@@ -1122,14 +1121,14 @@ function DataCompoment() {
                                                         recordFruits.map((key: any) => {
                                                             if (typeof (key) == 'string') {
                                                                 return (
-                                                                    <Tag color="geekblue" key={key}>
+                                                                    <Tag color="geekblue" key={key} style={{margin: 4}}>
                                                                         {key}
                                                                     </Tag>
                                                                 );
                                                             } else if (typeof (key) == 'object') {
                                                                 return (
                                                                     <Tag color={colorsInventory[key.Rarity]}
-                                                                         key={key.Name}>
+                                                                         key={key.Name} style={{margin: 4}}>
                                                                         {key.Name}
                                                                     </Tag>
                                                                 );
@@ -1149,14 +1148,14 @@ function DataCompoment() {
                                                             recordSwords.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key}>
+                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
                                                                 } else if (typeof (key) == 'object') {
                                                                     return (
                                                                         <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name}>
+                                                                             key={key.Name} style={{margin: 4}}>
                                                                             {key.Name}
                                                                         </Tag>
                                                                     );
@@ -1176,14 +1175,14 @@ function DataCompoment() {
                                                             recordGuns.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key}>
+                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
                                                                 } else if (typeof (key) == 'object') {
                                                                     return (
                                                                         <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name}>
+                                                                             key={key.Name} style={{margin: 4}}>
                                                                             {key.Name}
                                                                         </Tag>
                                                                     );
@@ -1203,14 +1202,14 @@ function DataCompoment() {
                                                             recordWears.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key}>
+                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
                                                                 } else if (typeof (key) == 'object') {
                                                                     return (
                                                                         <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name}>
+                                                                             key={key.Name} style={{margin: 4}}>
                                                                             {key.Name}
                                                                         </Tag>
                                                                     );
@@ -1230,14 +1229,14 @@ function DataCompoment() {
                                                             recordMaterials.map((key: any) => {
                                                                 if (typeof (key) == 'string') {
                                                                     return (
-                                                                        <Tag color="geekblue" key={key}>
+                                                                        <Tag color="geekblue" key={key} style={{margin: 4}}>
                                                                             {key}
                                                                         </Tag>
                                                                     );
                                                                 } else if (typeof (key) == 'object') {
                                                                     return (
                                                                         <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name}>
+                                                                             key={key.Name} style={{margin: 4}}>
                                                                             {key.Name}
                                                                         </Tag>
                                                                     );
