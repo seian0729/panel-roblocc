@@ -328,7 +328,7 @@ function DataCompoment() {
         },
     }
 
-    const [openDrawer, setOpenDrawer] = useState(false);
+    const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
 
 
     interface DataType {
@@ -1002,7 +1002,7 @@ function DataCompoment() {
 
                                 <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
                                 <Button type="primary" onClick={() => {
-                                    setOpenDrawer(true)
+                                    setOpenNoteDrawer(true)
                                 }}>Note Active</Button>
                                 <Popconfirm
                                     placement="bottom"
@@ -1328,9 +1328,9 @@ function DataCompoment() {
                 placement="right"
                 closable={true}
                 onClose={() => {
-                    setOpenDrawer(false)
+                    setOpenNoteDrawer(false)
                 }}
-                open={openDrawer}
+                open={openNoteDrawer}
                 getContainer={false}>
                 <Table
                     dataSource={getOnlineForNote()}

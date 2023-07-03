@@ -139,6 +139,7 @@ const Dashboard: React.FC = () => {
     return (
         <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
+                   collapsedWidth="0"
                    style={{background: "rgb(24, 24, 24)", color: "white"}}>
                 <div style={{textAlign: "center", padding: 12}}>
                     <Text strong={true} style={{padding: 6}}>CHIMOVO</Text>
@@ -162,7 +163,7 @@ const Dashboard: React.FC = () => {
                 <Content
                     style={{
                         margin: '6px 6px',
-                        padding: 24,
+                        padding: 5,
                         background: colorBgContainer,
                         borderRadius: 8
                     }}
