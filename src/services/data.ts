@@ -9,7 +9,7 @@ axios.defaults.baseURL = settings.baseApiUrl;
 export async function login(username: string, password: string): Promise<Result<User, GenericErrors>> {
     try {
         const {data} = await axios.post('users/login', {username, password});
-        //console.log('data', data);
+        console.log('data', data);
         return Ok(guard(object({user: userDecoder}))(data).user);
     } catch ({response: {data}}) {
         return Err(guard(object({errors: genericErrorsDecoder}))(data).errors);
@@ -21,6 +21,7 @@ export async function getUser(): Promise<User> {
     return guard(object({ user: userDecoder }))(data).user;
 }
 
+// Get data - gameid
 export async function getData(gameid: any){
     const { data } = await axios.get(gameid == null ? 'data/getData' : "data/getData?gameId="+gameid, )
     return data
@@ -32,6 +33,13 @@ export async function deleteData(username: string[]){
     const { data } = await axios.post('data/bulkDeleteData', {Usernames: username})
     return data
 }
+
+// getTotalAccount
+export async function getTotalAccount(){
+    const { data } = await axios.get('data/getTotalAccount')
+    return data
+}
+
 
 // seller nhi - send dia
 export async function sendDiamond(uid: number,username: string, amount: number){

@@ -559,33 +559,30 @@ const PetX: React.FC = () => {
                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                     <Card hoverable={true}>
                                         <Statistic
-                                            title="Active"
+                                            title="Active Accounts"
                                             value={getOnline()}
                                             valueStyle={{color: '#6abe39'}}
                                             prefix={<UserOutlined/>}
-                                            suffix="Account(s)"
                                         />
                                     </Card>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                     <Card hoverable={true}>
                                         <Statistic
-                                            title="Inactive"
+                                            title="Inactive Accounts"
                                             value={getOffline()}
                                             valueStyle={{color: '#e84749'}}
                                             prefix={<UserOutlined/>}
-                                            suffix="Account(s)"
                                         />
                                     </Card>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                                     <Card hoverable={true}>
                                         <Statistic
-                                            title="Total"
+                                            title="Total Accounts"
                                             value={getOffline() + getOnline()}
                                             valueStyle={{color: '#535dff'}}
                                             prefix={<UserOutlined/>}
-                                            suffix="Account(s)"
                                         />
                                     </Card>
                                 </Col>

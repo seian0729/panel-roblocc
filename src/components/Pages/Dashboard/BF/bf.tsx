@@ -22,7 +22,9 @@ import {
     Table,
     Tag,
     theme,
-    Upload
+    Upload,
+    Progress,
+    Typography
 } from 'antd';
 import {
     CaretRightOutlined,
@@ -35,9 +37,10 @@ import {
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData} from "../../../../services/data";
+import {deleteData, getData, getTotalAccount} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
+const { Text } = Typography;
 
 const {Option} = Select
 
@@ -71,6 +74,7 @@ function DataCompoment() {
 
     // data
     const [dataApi, setDataApi] = useState([]);
+    const [countAccount, setCountAccount] = useState(0)
     //dataSpecialFilter
     const [dataApiSpecialFilter, setDataApiSpecialFilter] = useState([]);
     const [specialFilter, setSpecialFilter] = useState([]);
@@ -162,7 +166,7 @@ function DataCompoment() {
                 temp.find((item: DrawerProps) => item.note === note)!.online++
             }
         })
-        console.log(temp)
+        //console.log(temp)
         return temp
     }
 
@@ -869,14 +873,20 @@ function DataCompoment() {
     // copy all value in the array
 
     useEffect(() => {
-
         getData(994732206).then((res) => {
             setDataApi(res.data);
             setLoadingTable(false)
             sLoadingSkeTable(false)
         })
-
     }, [])
+
+    useEffect(() => {
+        getTotalAccount().then((res) => {
+            setCountAccount(res.data)
+        })
+    }, [])
+
+
     useEffect(() => {
         setDataApiSpecialFilter(dataApi)
     }, [dataApi])
@@ -963,6 +973,8 @@ function DataCompoment() {
     const {user} = useStore(({app}) => app);
 
     let {username} = user.unwrap();
+
+    const limitacc = Number(user.unwrap().limitacc);
 
     const [modal, ModalcontextHolder] = Modal.useModal();
 
@@ -1074,37 +1086,41 @@ function DataCompoment() {
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
                     <Card title="Accounts Status">
                         <Row gutter={[16, 16]}>
-                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                                 <Card hoverable={true}>
                                     <Statistic
-                                        title="Active"
+                                        title="Active Accounts"
                                         value={getOnline()}
                                         valueStyle={{color: '#6abe39'}}
                                         prefix={<UserOutlined/>}
-                                        suffix="Account(s)"
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                                 <Card hoverable={true}>
                                     <Statistic
-                                        title="Inactive"
+                                        title="Inactive Accounts"
                                         value={getOffline()}
                                         valueStyle={{color: '#e84749'}}
                                         prefix={<UserOutlined/>}
-                                        suffix="Account(s)"
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                                 <Card hoverable={true}>
                                     <Statistic
-                                        title="Total"
+                                        title="Total Accounts"
                                         value={getOffline() + getOnline()}
                                         valueStyle={{color: '#535dff'}}
                                         prefix={<UserOutlined/>}
-                                        suffix="Account(s)"
                                     />
+                                </Card>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                                <Card hoverable={true}>
+                                    <Text type="secondary">Limit Account</Text>
+                                    <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent}%`} size="small" />
+                                    <Text type="secondary">{countAccount} / {limitacc}</Text>
                                 </Card>
                             </Col>
                         </Row>
