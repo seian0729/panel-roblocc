@@ -24,7 +24,7 @@ import {
     theme,
     Upload,
     Progress,
-    Typography
+    Typography, Tooltip
 } from 'antd';
 import {
     CaretRightOutlined,
@@ -1118,9 +1118,12 @@ function DataCompoment() {
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                                 <Card hoverable={true}>
-                                    <Text type="secondary">Limit Account</Text>
-                                    <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent}%`} size="small" />
-                                    <Text type="secondary">{countAccount} / {limitacc}</Text>
+                                        <Space direction={"vertical"} style={{width: '100%'}}>
+                                            <Text type="secondary">Limit Account</Text>
+                                            <Tooltip title={countAccount + " / " + limitacc + " accounts"}>
+                                                <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small" />
+                                            </Tooltip>
+                                        </Space>
                                 </Card>
                             </Col>
                         </Row>
