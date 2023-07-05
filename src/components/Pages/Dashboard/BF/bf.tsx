@@ -28,7 +28,7 @@ import {
 } from 'antd';
 import {
     CaretRightOutlined,
-    ExclamationCircleOutlined,
+    ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
     UploadOutlined,
@@ -45,6 +45,7 @@ const { Text } = Typography;
 const {Option} = Select
 
 const {Panel} = Collapse;
+const { Dragger } = Upload;
 
 function DataCompoment() {
 
@@ -112,6 +113,9 @@ function DataCompoment() {
                 setDataApi(res.data);
             })
 
+            getTotalAccount().then((res) => {
+                setCountAccount(res.data)
+            })
             messageApi.success('Refresh Success <3');
             setSelectedRowKeys([]);
             setLoadingReload(false);
@@ -324,9 +328,12 @@ function DataCompoment() {
                 // console.log(file.status, file, fileList);
                 if (file.status === 'done') {
                     messageApi.success('The file has been upload successfully!')
+                    refreshData()
                 }
                 if (file.status === 'error') {
-                    messageApi.error(`Failed to upload ${file.name}! - ${file.response.message}`)
+                    file.response = file.response.status
+                    messageApi.error(`Failed to upload ${file.name}! - ${file.response}`)
+                    refreshData()
                 }
             }
         },
@@ -1064,13 +1071,18 @@ function DataCompoment() {
                         </div>
                         <div>
                             <Form>
-                                <Form.Item label="Import">
-                                    <Upload {...props}>
-                                        <Button icon={<UploadOutlined/>}>Click to Upload</Button>
-                                    </Upload>
+                                <Form.Item>
+                                    <Dragger {...props}>
+                                        <p className="ant-upload-drag-icon">
+                                            <InboxOutlined />
+                                        </p>
+                                        <p className="ant-upload-text">Click or drag file to this area to upload account into panel</p>
+                                        <p className="ant-upload-hint">
+                                            Supported only .txt file and format file accounts  username/password/cookie
+                                        </p>
+                                    </Dragger>
 
                                 </Form.Item>
-                                Ghi chú: File import phải là file .txt và định dạng như sau: username/password/cookie
                             </Form>
                         </div>
 
@@ -1121,7 +1133,7 @@ function DataCompoment() {
                                         <Space direction={"vertical"} style={{width: '100%'}}>
                                             <Text type="secondary">Limit Account</Text>
                                             <Tooltip title={countAccount + " / " + limitacc + " accounts"}>
-                                                <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small" />
+                                                <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small"  status={countAccount*(100/limitacc) == 100 ? "exception" : "success"}/>
                                             </Tooltip>
                                         </Space>
                                 </Card>
