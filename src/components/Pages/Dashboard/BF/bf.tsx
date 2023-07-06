@@ -913,7 +913,6 @@ function DataCompoment() {
     useEffect(() => {
         getTotalAccount().then((res) => {
             setCountAccount(res.data)
-            messageApi.success('Data has been loaded')
         })
     }, [])
 
@@ -1188,51 +1187,72 @@ function DataCompoment() {
             </Row>
             <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
-                    <Skeleton
-                        loading={loadingSkeTable}
-                        active={loadingSkeTable}
-                        paragraph={{
-                            rows: 10
-                        }}
-                    >
-                        <Table
-                            rowSelection={rowSelection}
-                            columns={columns}
-                            expandable={
-                                {
-                                    expandedRowRender: (record, index) => {
+                    <Table
+                        rowSelection={rowSelection}
+                        columns={columns}
+                        expandable={
+                            {
+                                expandedRowRender: (record, index) => {
 
-                                        let recordInventory = JSON.parse(record.Description)['Inventory']
-                                        let recordFruits = recordInventory['Blox Fruit']
-                                        let recordSwords = recordInventory['Sword']
-                                        let recordGuns = recordInventory['Gun']
-                                        let recordWears = recordInventory['Wear']
-                                        let recordMaterials = recordInventory['Material']
+                                    let recordInventory = JSON.parse(record.Description)['Inventory']
+                                    let recordFruits = recordInventory['Blox Fruit']
+                                    let recordSwords = recordInventory['Sword']
+                                    let recordGuns = recordInventory['Gun']
+                                    let recordWears = recordInventory['Wear']
+                                    let recordMaterials = recordInventory['Material']
 
-                                        const colorsInventory = [
-                                            'default',
-                                            'processing',
-                                            'purple',
-                                            'magenta',
-                                            'error',
-                                        ]
-                                        recordFruits.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                        recordSwords.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                        recordGuns.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                        recordWears.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                        recordMaterials.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                        // (recordInventory)
+                                    const colorsInventory = [
+                                        'default',
+                                        'processing',
+                                        'purple',
+                                        'magenta',
+                                        'error',
+                                    ]
+                                    recordFruits.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                    recordSwords.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                    recordGuns.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                    recordWears.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                    recordMaterials.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                    // (recordInventory)
 
-                                        const collapseItems: CollapseProps['items'] = [
-                                            {
-                                                key: 'bloxfruit',
-                                                label: 'Blox Fruit',
-                                                children: <>
-                                                    {
-                                                        recordFruits.map((key: any) => {
+                                    const collapseItems: CollapseProps['items'] = [
+                                        {
+                                            key: 'bloxfruit',
+                                            label: 'Blox Fruit',
+                                            children: <>
+                                                {
+                                                    recordFruits.map((key: any) => {
+                                                        if (typeof (key) == 'string') {
+                                                            return (
+                                                                <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                    {key}
+                                                                </Tag>
+                                                            );
+                                                        } else if (typeof (key) == 'object') {
+                                                            return (
+                                                                <Tag color={colorsInventory[key.Rarity]}
+                                                                     key={key.Name} style={{margin: 4}}>
+                                                                    {key.Name}
+                                                                </Tag>
+                                                            );
+                                                        }
+                                                    })
+                                                }
+                                            </>,
+                                            style: panelStyle
+                                        },
+                                        {
+                                            key: 'sword',
+                                            label: 'Sword',
+                                            children: <>
+                                                {
+                                                    recordSwords.length === 0 ?
+                                                        <Tag color="red">Sword Data Not Found</Tag> :
+                                                        recordSwords.map((key: any) => {
                                                             if (typeof (key) == 'string') {
                                                                 return (
-                                                                    <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                    <Tag color="geekblue" key={key}
+                                                                         style={{margin: 4}}>
                                                                         {key}
                                                                     </Tag>
                                                                 );
@@ -1245,161 +1265,131 @@ function DataCompoment() {
                                                                 );
                                                             }
                                                         })
-                                                    }
-                                                </>,
-                                                style: panelStyle
-                                            },
-                                            {
-                                                key: 'sword',
-                                                label: 'Sword',
-                                                children: <>
-                                                    {
-                                                        recordSwords.length === 0 ?
-                                                            <Tag color="red">Sword Data Not Found</Tag> :
-                                                            recordSwords.map((key: any) => {
-                                                                if (typeof (key) == 'string') {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}
-                                                                             style={{margin: 4}}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                } else if (typeof (key) == 'object') {
-                                                                    return (
-                                                                        <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name} style={{margin: 4}}>
-                                                                            {key.Name}
-                                                                        </Tag>
-                                                                    );
-                                                                }
-                                                            })
-                                                    }
-                                                </>,
-                                                style: panelStyle
-                                            },
-                                            {
-                                                key: 'gun',
-                                                label: 'Gun',
-                                                children: <>
-                                                    {
-                                                        recordGuns.length === 0 ?
-                                                            <Tag color="red">Gun Data Not Found</Tag> :
-                                                            recordGuns.map((key: any) => {
-                                                                if (typeof (key) == 'string') {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}
-                                                                             style={{margin: 4}}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                } else if (typeof (key) == 'object') {
-                                                                    return (
-                                                                        <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name} style={{margin: 4}}>
-                                                                            {key.Name}
-                                                                        </Tag>
-                                                                    );
-                                                                }
-                                                            })
-                                                    }
-                                                </>,
-                                                style: panelStyle
-                                            },
-                                            {
-                                                key: 'wear',
-                                                label: 'Wear',
-                                                children: <>
-                                                    {
-                                                        recordWears.length === 0 ?
-                                                            <Tag color="red">Wear Data Not Found</Tag> :
-                                                            recordWears.map((key: any) => {
-                                                                if (typeof (key) == 'string') {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}
-                                                                             style={{margin: 4}}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                } else if (typeof (key) == 'object') {
-                                                                    return (
-                                                                        <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name} style={{margin: 4}}>
-                                                                            {key.Name}
-                                                                        </Tag>
-                                                                    );
-                                                                }
-                                                            })
-                                                    }
-                                                </>,
-                                                style: panelStyle
-                                            },
-                                            {
-                                                key: 'materials',
-                                                label: 'Material',
-                                                children: <>
-                                                    {
-                                                        recordMaterials.length === 0 ?
-                                                            <Tag color="red">Material Data Not Found</Tag> :
-                                                            recordMaterials.map((key: any) => {
-                                                                if (typeof (key) == 'string') {
-                                                                    return (
-                                                                        <Tag color="geekblue" key={key}
-                                                                             style={{margin: 4}}>
-                                                                            {key}
-                                                                        </Tag>
-                                                                    );
-                                                                } else if (typeof (key) == 'object') {
-                                                                    return (
-                                                                        <Tag color={colorsInventory[key.Rarity]}
-                                                                             key={key.Name} style={{margin: 4}}>
-                                                                            {key.Name}
-                                                                        </Tag>
-                                                                    );
-                                                                }
-                                                            })
-                                                    }
-                                                </>,
-                                                style: panelStyle
-                                            },
-                                        ]
+                                                }
+                                            </>,
+                                            style: panelStyle
+                                        },
+                                        {
+                                            key: 'gun',
+                                            label: 'Gun',
+                                            children: <>
+                                                {
+                                                    recordGuns.length === 0 ?
+                                                        <Tag color="red">Gun Data Not Found</Tag> :
+                                                        recordGuns.map((key: any) => {
+                                                            if (typeof (key) == 'string') {
+                                                                return (
+                                                                    <Tag color="geekblue" key={key}
+                                                                         style={{margin: 4}}>
+                                                                        {key}
+                                                                    </Tag>
+                                                                );
+                                                            } else if (typeof (key) == 'object') {
+                                                                return (
+                                                                    <Tag color={colorsInventory[key.Rarity]}
+                                                                         key={key.Name} style={{margin: 4}}>
+                                                                        {key.Name}
+                                                                    </Tag>
+                                                                );
+                                                            }
+                                                        })
+                                                }
+                                            </>,
+                                            style: panelStyle
+                                        },
+                                        {
+                                            key: 'wear',
+                                            label: 'Wear',
+                                            children: <>
+                                                {
+                                                    recordWears.length === 0 ?
+                                                        <Tag color="red">Wear Data Not Found</Tag> :
+                                                        recordWears.map((key: any) => {
+                                                            if (typeof (key) == 'string') {
+                                                                return (
+                                                                    <Tag color="geekblue" key={key}
+                                                                         style={{margin: 4}}>
+                                                                        {key}
+                                                                    </Tag>
+                                                                );
+                                                            } else if (typeof (key) == 'object') {
+                                                                return (
+                                                                    <Tag color={colorsInventory[key.Rarity]}
+                                                                         key={key.Name} style={{margin: 4}}>
+                                                                        {key.Name}
+                                                                    </Tag>
+                                                                );
+                                                            }
+                                                        })
+                                                }
+                                            </>,
+                                            style: panelStyle
+                                        },
+                                        {
+                                            key: 'materials',
+                                            label: 'Material',
+                                            children: <>
+                                                {
+                                                    recordMaterials.length === 0 ?
+                                                        <Tag color="red">Material Data Not Found</Tag> :
+                                                        recordMaterials.map((key: any) => {
+                                                            if (typeof (key) == 'string') {
+                                                                return (
+                                                                    <Tag color="geekblue" key={key}
+                                                                         style={{margin: 4}}>
+                                                                        {key}
+                                                                    </Tag>
+                                                                );
+                                                            } else if (typeof (key) == 'object') {
+                                                                return (
+                                                                    <Tag color={colorsInventory[key.Rarity]}
+                                                                         key={key.Name} style={{margin: 4}}>
+                                                                        {key.Name}
+                                                                    </Tag>
+                                                                );
+                                                            }
+                                                        })
+                                                }
+                                            </>,
+                                            style: panelStyle
+                                        },
+                                    ]
 
-                                        return (
-                                            <Collapse
-                                                bordered={false}
-                                                defaultActiveKey={['1']}
-                                                items={collapseItems}
-                                                expandIcon={({isActive}) => <CaretRightOutlined
-                                                    rotate={isActive ? 90 : 0}/>}/>
-                                        )
-                                    },
-                                }
-
-                            }
-                            dataSource={dataApiSpecialFilter}
-                            rowKey={(record) => record.UsernameRoblocc}
-                            loading={loadingTable}
-                            size={"small"}
-                            pagination={{
-                                total: newRender ? totalPage : dataApiSpecialFilter.length,
-                                pageSizeOptions: [10, 50, 100],
-                                showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
-                                position: ['topCenter'],
-                                defaultPageSize: 10,
-                                showSizeChanger: true,
-                                onChange: (page, pageSize) => {
-                                    console.log(newRender)
-                                    if (newRender) {
-                                        fetchDataLimit(page, pageSize)
-                                    }
-                                    else {
-                                        setPage(page);
-                                        setPageSize(pageSize);
-                                    }
+                                    return (
+                                        <Collapse
+                                            bordered={false}
+                                            defaultActiveKey={['1']}
+                                            items={collapseItems}
+                                            expandIcon={({isActive}) => <CaretRightOutlined
+                                                rotate={isActive ? 90 : 0}/>}/>
+                                    )
                                 },
-                            }}
-                        />
-                        <FloatButton.BackTop/>
-                    </Skeleton>
+                            }
+
+                        }
+                        dataSource={dataApiSpecialFilter}
+                        rowKey={(record) => record.UsernameRoblocc}
+                        loading={loadingTable}
+                        size={"small"}
+                        pagination={{
+                            total: newRender ? totalPage : dataApiSpecialFilter.length,
+                            pageSizeOptions: [10, 50, 100, 500, 1000, 2000, 5000],
+                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
+                            position: ['topCenter'],
+                            defaultPageSize: 10,
+                            showSizeChanger: true,
+                            onChange: (page, pageSize) => {
+                                if (newRender) {
+                                    fetchDataLimit(page, pageSize)
+                                }
+                                else {
+                                    setPage(page);
+                                    setPageSize(pageSize);
+                                }
+                            },
+                        }}
+                    />
+                    <FloatButton.BackTop/>
                 </Col>
             </Row>
             <Drawer
