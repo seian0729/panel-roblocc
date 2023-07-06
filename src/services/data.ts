@@ -23,7 +23,12 @@ export async function getUser(): Promise<User> {
 
 // Get data - gameid
 export async function getData(gameid: any){
-    const { data } = await axios.get(gameid == null ? 'data/getData' : "data/getData?gameId="+gameid, )
+    const { data } = await axios.get(`data/getData?gameId=${gameid}`)
+    return data
+}
+
+export async function getDataLimit(gameid: number, page: number, limit: number){
+    const { data } = await axios.get(`data/getDataLimit?gameId=${gameid}&page=${page}&limit=${limit}`)
     return data
 }
 

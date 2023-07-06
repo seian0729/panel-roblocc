@@ -31,13 +31,12 @@ import {
     ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
-    UploadOutlined,
     UserOutlined,
 } from '@ant-design/icons';
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData, getTotalAccount} from "../../../../services/data";
+import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 const { Text } = Typography;
@@ -75,12 +74,14 @@ function DataCompoment() {
 
     // data
     const [dataApi, setDataApi] = useState([]);
+    const [dataLimitApi, setDataLimitApi] = useState([]);
     const [countAccount, setCountAccount] = useState(0)
     //dataSpecialFilter
     const [dataApiSpecialFilter, setDataApiSpecialFilter] = useState([]);
     const [specialFilter, setSpecialFilter] = useState([]);
 
     // page pagination
+    const [totalPage, setTotalPage] = useState(1);
     const [page, setPage] = useState(1);
     const [pageSize, setPageSize] = useState(10);
 
@@ -96,9 +97,15 @@ function DataCompoment() {
 
     //Hidename
     const [hidename, setHidename] = useState(false)
+    //Render Method
+    const [newRender, setNewRender] = useState(false);
 
     const onChangeHidename = (e: CheckboxChangeEvent) => {
         setHidename(e.target.checked)
+    };
+
+    const onChangeRender = (e: CheckboxChangeEvent) => {
+        setNewRender(e.target.checked)
     };
 
     //Online - Offline
@@ -877,6 +884,21 @@ function DataCompoment() {
         }
     ];
 
+    const fetchDataLimit = (page: number, pageSize: number) => {
+        // console.log(`page: ${page} pageSize: ${pageSize}`)
+        if (newRender) {
+            setLoadingTable(true)
+        }
+        getDataLimit(994732206,page,pageSize).then((res) => {
+            setTotalPage(res.totalData)
+            setDataLimitApi(res.data)
+            if (newRender) {
+                setLoadingTable(false)
+                sLoadingSkeTable(false)
+            }
+        })
+    }
+
     // copy all value in the array
 
     useEffect(() => {
@@ -884,19 +906,29 @@ function DataCompoment() {
             setDataApi(res.data);
             setLoadingTable(false)
             sLoadingSkeTable(false)
+            messageApi.success('Data has been loaded')
         })
     }, [])
 
     useEffect(() => {
         getTotalAccount().then((res) => {
             setCountAccount(res.data)
+            messageApi.success('Data has been loaded')
         })
     }, [])
 
+    useEffect(() => {
+        fetchDataLimit(1, 10)
+    },[pageSize])
 
     useEffect(() => {
-        setDataApiSpecialFilter(dataApi)
-    }, [dataApi])
+        if (newRender) {
+            setDataApiSpecialFilter(dataLimitApi)
+        }
+        else{
+            setDataApiSpecialFilter(dataApi)
+        }
+    }, [newRender ? dataLimitApi : dataApi])
 
     function multipleInArray(arr: string | any[], values: any[]) {
         return values.every(value => {
@@ -1093,6 +1125,18 @@ function DataCompoment() {
                                 </Form.Item>
                             </Form>
                         </div>
+
+                        { /*
+                        <div style={{marginTop: 12}}>
+                            <Form>
+                                <Form.Item label="New Render Method (optional)*">
+                                    <Checkbox onChange={onChangeRender}/>
+                                </Form.Item>
+                            </Form>
+                        </div>
+                        */
+                        }
+
                     </Card>
                 </Col>
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
@@ -1336,17 +1380,21 @@ function DataCompoment() {
                             loading={loadingTable}
                             size={"small"}
                             pagination={{
-                                total: dataApiSpecialFilter.length,
-                                pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
+                                total: newRender ? totalPage : dataApiSpecialFilter.length,
+                                pageSizeOptions: [10, 50, 100],
                                 showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
                                 position: ['topCenter'],
-                                current: page,
-                                pageSize: pageSize,
                                 defaultPageSize: 10,
                                 showSizeChanger: true,
                                 onChange: (page, pageSize) => {
-                                    setPage(page);
-                                    setPageSize(pageSize);
+                                    console.log(newRender)
+                                    if (newRender) {
+                                        fetchDataLimit(page, pageSize)
+                                    }
+                                    else {
+                                        setPage(page);
+                                        setPageSize(pageSize);
+                                    }
                                 },
                             }}
                         />
