@@ -158,7 +158,7 @@ const Dashboard: React.FC = () => {
                 tempCountNoti++;
             }
         }
-        else{
+        else if (moment().tz('Asia/Ho_Chi_Minh').unix() - dateExpiredFormated.unix() > 0) {
             logout()
         }
     })
