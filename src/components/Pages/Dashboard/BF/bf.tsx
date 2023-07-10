@@ -48,7 +48,6 @@ const { Dragger } = Upload;
 
 function DataCompoment() {
 
-
     const {token} = theme.useToken();
 
     const panelStyle = {
@@ -330,6 +329,7 @@ function DataCompoment() {
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
+        accept:".txt",
         onChange({file}) {
             if (file.status !== 'uploading') {
                 // console.log(file.status, file, fileList);
@@ -338,7 +338,8 @@ function DataCompoment() {
                     refreshData()
                 }
                 if (file.status === 'error') {
-                    file.response = file.response.status
+                    console.log(file.response)
+                    file.response = file.response.message
                     messageApi.error(`Failed to upload ${file.name}! - ${file.response}`)
                     refreshData()
                 }
@@ -1043,7 +1044,7 @@ function DataCompoment() {
                         <div style={{marginBottom: 16}}>
                             <Space wrap>
                                 <Button type="primary"
-                                        onClick={username === "Chim" || "Chimmm" || "TungStrong" ? openModal : copyData}
+                                        onClick={openModal}
                                         disabled={!hasSelected} loading={loadingCopy}>Copy
                                     Data</Button>
                                 <Button type="primary" onClick={copyUsername} disabled={!hasSelected}
@@ -1109,7 +1110,7 @@ function DataCompoment() {
                                         </p>
                                         <p className="ant-upload-text">Click or drag file to this area to upload account into panel</p>
                                         <p className="ant-upload-hint">
-                                            Supported only .txt file and format file accounts  username/password/cookie
+                                            {"Supported only .txt file and formatted file accounts => username/password/cookie"}
                                         </p>
                                     </Dragger>
 
@@ -1176,7 +1177,7 @@ function DataCompoment() {
                                         <Space direction={"vertical"} style={{width: '100%'}}>
                                             <Text type="secondary">Limit Account</Text>
                                             <Tooltip title={countAccount + " / " + limitacc + " accounts"}>
-                                                <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small"  status={countAccount*(100/limitacc) == 100 ? "exception" : "success"}/>
+                                                <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small"  status={countAccount*(100/limitacc) >= 100 ? "exception" : "success"}/>
                                             </Tooltip>
                                         </Space>
                                 </Card>

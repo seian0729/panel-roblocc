@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     MenuFoldOutlined,
     MenuUnfoldOutlined,
     UserOutlined,
     LogoutOutlined,
     TableOutlined,
-    DashboardOutlined
+    DashboardOutlined, CloseCircleOutlined
 } from '@ant-design/icons';
-import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button} from 'antd';
+import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button, notification} from 'antd';
 import type {MenuProps} from 'antd';
 import {Link, useLocation, useParams} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
 import {useStore} from "../../../state/storeHooks";
 import './dashboard.css'
+import moment from "moment";
+import 'moment-timezone';
 
 //pages
 import View from "./BF/bf"
@@ -26,14 +28,17 @@ import bloxImg from '../../../img/bloxshut.png';
 
 const {Header, Sider, Content} = Layout;
 const {Text} = Typography;
-
+let tempCountNoti = 0
 
 const Dashboard: React.FC = () => {
 
+    const [apiNotification, contextHolder] = notification.useNotification();
 
     let params = useParams()
 
     const {user} = useStore(({app}) => app);
+
+    let { dateExpired } = user.unwrap()
 
     // console user in user
     const items: MenuProps['items'] = [
@@ -135,8 +140,34 @@ const Dashboard: React.FC = () => {
     const {
         token: {colorBgContainer},
     } = theme.useToken();
+    const dateExpiredFormated = moment.tz(dateExpired, "Asia/Ho_Chi_Minh");
+
+    useEffect(() => {
+        if (moment().tz('Asia/Ho_Chi_Minh').unix() - dateExpiredFormated.unix() > -86400 &&
+            moment().tz('Asia/Ho_Chi_Minh').unix() - dateExpiredFormated.unix() < 0
+        ){
+            if (tempCountNoti <= 1){
+                setTimeout(() =>{
+                    apiNotification.open({
+                        message: 'Account',
+                        description: 'Your access is  expire '+ dateExpiredFormated.fromNow(),
+                        duration: 10,
+                        icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
+                    })
+                },1000)
+                tempCountNoti++;
+            }
+        }
+        else{
+            logout()
+        }
+    })
+
 
     return (
+        <>
+            {contextHolder}
+
         <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
                    collapsedWidth="0"
@@ -204,7 +235,9 @@ const Dashboard: React.FC = () => {
 
             </Layout>
         </Layout>
+        </>
     );
+
 };
 
 export default Dashboard;

@@ -99,10 +99,10 @@ export function Login() {
 
                 },
                 err: (err) => {
-                    //console.log(err);
+                    //console.log(err.message);
                     apiNotification.open({
                         message: 'Login',
-                        description: 'Your username or password is incorrect',
+                        description: err.message,
                         duration: 2,
                         icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
                     });

@@ -1,6 +1,6 @@
 import React from 'react';
-import {Layout, MenuProps, message, Row, Spin, theme} from 'antd';
-import {Navigate, Route, RouteProps, Routes, Outlet, useLocation, Link} from 'react-router-dom';
+import {ConfigProvider, Layout, MenuProps, message, Row, Spin, theme} from 'antd';
+import {Link, Navigate, Outlet, Route, RouteProps, Routes} from 'react-router-dom';
 
 import './App.css';
 
@@ -10,10 +10,10 @@ import {store} from '../../state/store';
 import axios from "axios";
 import {getUser} from "../../services/data";
 import {logoutFromApp} from "../../types/user";
-import {ConfigProvider} from "antd";
+import moment from "moment";
+import 'moment-timezone';
 
 //Pages
-
 import {Login} from "../Pages/Login/Login";
 import Page404 from "../Pages/404/404"
 
@@ -23,16 +23,9 @@ import Dashboard from "../Pages/Dashboard/dashboard"
 //Admin
 import Admin from "../Pages/Admin/admin"
 //LandingPage
-
 import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
-import {
-    DashboardOutlined,
-    LogoutOutlined,
-    ProfileOutlined,
-    TableOutlined,
-    UserOutlined,
-} from "@ant-design/icons";
+import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
 
 
@@ -61,7 +54,6 @@ function App() {
         none: () => false,
         some: (user) => user.role === 'Admin'
     });
-
 
     if (loading) {
         return (
@@ -193,6 +185,8 @@ function App() {
     );
 }
 
+
+
 async function load() {
     const token = localStorage.getItem('token');
     if (!store.getState().app.loading || !token) {
@@ -200,7 +194,6 @@ async function load() {
         return;
     }
     axios.defaults.headers.Authorization = `Bearer ${token}`;
-
 
     try {
         store.dispatch(loadUser(await getUser()));

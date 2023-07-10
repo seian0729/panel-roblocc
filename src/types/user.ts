@@ -7,6 +7,7 @@ export interface PublicUser {
     username: string;
     id: string;
     limitacc: string,
+    dateExpired: string,
 }
 
 export interface User extends PublicUser {
@@ -20,6 +21,7 @@ export const userDecoder: Decoder<User> = object({
     id: string,
     token: string,
     role: string,
+    dateExpired: string
 });
 
 export interface UserSettings extends PublicUser {
