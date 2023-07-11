@@ -16,7 +16,6 @@ import {
     Popconfirm,
     Row,
     Select,
-    Skeleton,
     Space,
     Statistic,
     Table,
@@ -39,6 +38,7 @@ import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
+import {Console} from "inspector";
 const { Text } = Typography;
 
 const {Option} = Select
@@ -908,6 +908,8 @@ function DataCompoment() {
             setLoadingTable(false)
             sLoadingSkeTable(false)
             messageApi.success('Data has been loaded')
+            messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 120000).fromNow() }`,10);
+            messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,60)
         })
     }, [])
 
@@ -929,6 +931,17 @@ function DataCompoment() {
             setDataApiSpecialFilter(dataApi)
         }
     }, [newRender ? dataLimitApi : dataApi])
+
+    useEffect(() =>{
+        const intervalId = setInterval(() => {
+            // console.log('==== Automatically Refresh Data ==== ');
+            refreshData()
+            messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 120000).fromNow() }`,10);
+            messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,60)
+            // console.log(new Date())
+        }, 120000);
+        return () => clearInterval(intervalId);
+    })
 
     function multipleInArray(arr: string | any[], values: any[]) {
         return values.every(value => {
