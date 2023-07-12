@@ -23,28 +23,30 @@ import {
     theme,
     Upload,
     Progress,
-    Typography, Tooltip
+    Typography,
+    Tooltip,
+    Dropdown
 } from 'antd';
 import {
-    CaretRightOutlined,
+    CaretRightOutlined, DownOutlined,
     ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
     UserOutlined,
 } from '@ant-design/icons';
+
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
-import {Console} from "inspector";
+import type { MenuProps } from 'antd';
 const { Text } = Typography;
-
 const {Option} = Select
-
 const {Panel} = Collapse;
 const { Dragger } = Upload;
+
 
 function DataCompoment() {
 
@@ -809,7 +811,7 @@ function DataCompoment() {
         {
             title: 'Last Update',
             dataIndex: 'lastUpdate',
-            width: '15%',
+            width: '10%',
             render: (_, record) => {
                 return (
                     <>
@@ -837,21 +839,92 @@ function DataCompoment() {
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 500
+                    return moment().unix() - moment(record.updatedAt).unix() < 300
                 } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 500
+                    return moment().unix() - moment(record.updatedAt).unix() >= 300
                 } else {
                     return false
                 }
 
             },
             render: (_, record) => {
-                return (
-                    <>
-                        <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'error' : 'success'}
-                               text={moment().unix() - moment(record.updatedAt).unix() >= 500 ? 'Inactive' : 'Active'}/>
-                    </>
-                )
+                let description = JSON.parse(record.Description);
+                const items: MenuProps['items'] = [
+                    {
+                        label: 'Dit khoi trai cay',
+                        key: '0',
+                        disabled: true
+                    },
+                    {
+                        type: 'divider',
+                    },
+                ];
+                if ('SeaHub BF' in description){
+                    let SeaHubBF = description['SeaHub BF'];
+                    if (typeof(SeaHubBF) == 'object' ) {
+                        const seaHubBFRender = Object.entries(SeaHubBF)
+                        seaHubBFRender.map((key) => {
+                            const labelKey = key[1]
+                            const labelKeyB: string = labelKey as string;
+                            if (moment().unix() - moment(record.updatedAt).unix() <= 300){
+                                items?.push(
+                                    {
+                                        key: key[0],
+                                        type: 'group',
+                                        label: key[0],
+                                        children: [
+                                            {
+                                                key: key[0],
+                                                label: labelKeyB,
+                                            },
+                                        ],
+                                    },
+                                )
+                            }
+                            else
+                                items?.push(
+                                    {
+                                        key: key[0],
+                                        type: 'group',
+                                        label: key[0],
+                                        children: [
+                                            {
+                                                key: key[0],
+                                                label: 'Inactive',
+                                                danger: true,
+                                            },
+                                        ],
+                                    },
+                                )
+
+                        })
+                    }
+
+                    return (
+                        <>
+                            <Dropdown menu={{ items }}>
+                            <Badge
+                                status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
+                                text={
+                                    <Space>
+                                        {moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'Inactive' : 'Active'}
+                                        <DownOutlined />
+                                    </Space>
+                                }/>
+                            </Dropdown>
+
+                        </>
+                    )
+                }
+                else {
+                    return (
+                        <>
+                            <Badge
+                                status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
+                                text={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'Inactive' : 'Active'}/>
+                        </>
+                    )
+                }
             },
         },
         {
