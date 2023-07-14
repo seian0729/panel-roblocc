@@ -95,11 +95,10 @@ const Dashboard: React.FC = () => {
     }
 
     if (user.isSome()) {
-        let {username} = user.unwrap();
         items.push({
             label: (
                 <Link to="../../dashboard/profile">
-                    <span>{username}</span>
+                    <span>Profile</span>
                 </Link>
             ),
             key: 'profile',
@@ -140,17 +139,17 @@ const Dashboard: React.FC = () => {
     const {
         token: {colorBgContainer},
     } = theme.useToken();
-    const dateExpiredFormated = moment.tz(dateExpired, "Asia/Ho_Chi_Minh");
+
 
     useEffect(() => {
-        if (moment().tz('Asia/Ho_Chi_Minh').unix() - dateExpiredFormated.unix() > -86400 &&
-            moment().tz('Asia/Ho_Chi_Minh').unix() - dateExpiredFormated.unix() < 0
+        if (moment().unix() - dateExpired > -86400 &&
+            moment().unix() - dateExpired < 0
         ){
             if (tempCountNoti <= 1){
                 setTimeout(() =>{
                     apiNotification.open({
                         message: 'Account',
-                        description: 'Your access is  expire '+ dateExpiredFormated.fromNow(),
+                        description: 'Your access is  expire '+ moment(dateExpired*1000).fromNow(),
                         duration: 10,
                         icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
                     })
@@ -158,7 +157,7 @@ const Dashboard: React.FC = () => {
                 tempCountNoti++;
             }
         }
-        else if (moment().tz('Asia/Ho_Chi_Minh').unix() - dateExpiredFormated.unix() > 0) {
+        else if ( moment().unix() - dateExpired > 0) {
             logout()
         }
     })
@@ -184,6 +183,7 @@ const Dashboard: React.FC = () => {
 
                 />
             </Sider>
+
             <Layout className="site-layout">
                 <Header style={{padding: 0, background: colorBgContainer}}>
                     {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
@@ -196,7 +196,6 @@ const Dashboard: React.FC = () => {
                         margin: '6px 6px',
                         padding: 5,
                         background: colorBgContainer,
-                        borderRadius: 8
                     }}
                 >
                     {

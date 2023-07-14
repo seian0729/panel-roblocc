@@ -6,6 +6,7 @@ export interface LoginState {
     user: {
         username: string;
         password: string;
+        key: string;
     };
     errors: GenericErrors;
     loginIn: boolean;
@@ -15,6 +16,7 @@ const initialState: LoginState = {
     user: {
         username: '',
         password: '',
+        key: '',
     },
     errors: {},
     loginIn: false,

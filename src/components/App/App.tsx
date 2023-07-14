@@ -140,7 +140,7 @@ function App() {
 
 
     return (
-        <       ConfigProvider theme={themeConfig}>
+        <ConfigProvider theme={themeConfig}>
 
             <Layout style={{minHeight: "100vh"}}>
 

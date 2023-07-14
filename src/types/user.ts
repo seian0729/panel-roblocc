@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {Decoder, object, string} from 'decoders';
+import {Decoder, number, object, string} from 'decoders';
 import {loadUser,logout} from "../components/App/App.slice";
 import {store} from "../state/store";
 
@@ -7,7 +7,8 @@ export interface PublicUser {
     username: string;
     id: string;
     limitacc: string,
-    dateExpired: string,
+    dateExpired: number,
+    siginKey: string,
 }
 
 export interface User extends PublicUser {
@@ -21,7 +22,8 @@ export const userDecoder: Decoder<User> = object({
     id: string,
     token: string,
     role: string,
-    dateExpired: string
+    dateExpired: number,
+    siginKey: string,
 });
 
 export interface UserSettings extends PublicUser {
