@@ -63,11 +63,19 @@ function ProfileComponent() {
         },
         {
             key: 4,
-            title: 'Role',
+            title: 'Tags',
             value: <>
-                <Space size={[0, 8]} wrap>
-                    <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
-                </Space>
+                    {
+                        username == 'Hanei' ? <>
+                            <Space size={[0, 8]} wrap>
+                                <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
+                                <Tag color={'volcano'}>Developer</Tag>
+                                <Tag color={'magenta'}>Tester</Tag>
+                                <Tag color={'orange'}>Lifetime Access</Tag>
+                            </Space>
+                        </> : <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
+                    }
+
             </>
         },
         {

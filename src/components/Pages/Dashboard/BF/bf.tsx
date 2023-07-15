@@ -42,6 +42,7 @@ import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../se
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps } from 'antd';
+
 const { Text } = Typography;
 const {Option} = Select
 const {Panel} = Collapse;
@@ -350,7 +351,6 @@ function DataCompoment() {
     }
 
     const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
-
 
     interface DataType {
         UID: number;
@@ -1096,8 +1096,6 @@ function DataCompoment() {
     }
 
     const {user} = useStore(({app}) => app);
-
-    let {username} = user.unwrap();
 
     const limitacc = Number(user.unwrap().limitacc);
 
