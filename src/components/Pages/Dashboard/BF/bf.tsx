@@ -712,12 +712,23 @@ function DataCompoment() {
                     ['Cursed Dual Katana']: 'CDK',
                     ['Soul Guitar']: 'SG',
                     ['Mirror Fractal']: 'MF',
-                    ['Valkyrie Helm']: 'VH'
+                    ['Valkyrie Helm']: 'VH',
+                    ['Dough']: 'Dough',
+                    ['Leopard']: 'Leopard',
                 }
 
 
                 return (
                     <>
+                        {bfData.map((key: any) => {
+                            if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                                //strRender += key + ' / '
+                                specialRender.push(key)
+                            } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                                //strRender += key + ' / '
+                                specialRender.push(key.Name)
+                            }
+                        })}
 
                         {sData.map((key: any) => {
                             if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
