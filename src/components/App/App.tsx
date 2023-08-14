@@ -10,7 +10,6 @@ import {store} from '../../state/store';
 import axios from "axios";
 import {getUser} from "../../services/data";
 import {logoutFromApp} from "../../types/user";
-import moment from "moment";
 import 'moment-timezone';
 
 //Pages
@@ -46,7 +45,6 @@ const themeConfig = {
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
-
 
     const userIsLogged = user.isSome();
 
@@ -109,7 +107,7 @@ function App() {
         items.push({
             label: (
                 <Link to="/profile">
-                    <span>{username == 'TungStrong' ? 'TungBede' : username}</span>
+                    <span>{username}</span>
                 </Link>
             ),
             key: 'profile',

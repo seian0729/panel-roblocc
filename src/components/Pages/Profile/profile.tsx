@@ -1,13 +1,10 @@
 import React, {useState} from 'react';
 import type {TabsProps} from 'antd';
 import {
-    Alert,
     Button,
     Col,
     Collapse,
     Divider,
-    Form,
-    Input,
     List,
     message,
     Row,
@@ -18,9 +15,8 @@ import {
 } from 'antd';
 import {useStore} from "../../../state/storeHooks";
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import {darcula} from "react-syntax-highlighter/dist/cjs/styles/hljs";
+import {atomOneDark} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import moment from "moment";
-const {Paragraph} = Typography;
 
 interface FieldData {
     name: string | number | (string | number)[];
@@ -186,7 +182,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                         key: '1',
                         label: 'Blox Fruit',
                         children: <>
-                            <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
+                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
                                 {bloxfruitString}
                             </SyntaxHighlighter>
                             <Button type={"default"}
@@ -199,7 +195,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                         key: '1',
                         label: 'Blox Fruit - Dit Blox Fruit',
                         children: <>
-                            <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
+                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
                                 {ditbloxfruitString}
                             </SyntaxHighlighter>
                             <Button type={"default"}
@@ -212,7 +208,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                         key: '3',
                         label: 'Pet Simulator X',
                         children: <>
-                            <SyntaxHighlighter language="lua" style={darcula} customStyle={{borderRadius: 6}}>
+                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
                                 {petxString}
                             </SyntaxHighlighter>
                             <Button type={"default"}
@@ -237,7 +233,6 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                 <Divider orientation="left">Profile - {title}</Divider>
                 <Tabs
                     defaultActiveKey="1"
-                    tabPosition={'left'}
                     items={items}
                     onChange={onChangeTab}
                 />

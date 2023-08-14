@@ -54,9 +54,9 @@ const HeaderLanding: React.FC = () => {
                     children: [
                         {
                             label: (
-                                <Link to="dashboard/profile">
+                                <a href="dashboard/profile">
                                     <span>Profile</span>
-                                </Link>
+                                </a>
                             ),
                             key: 'profile',
                         },

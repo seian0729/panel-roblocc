@@ -5,7 +5,7 @@ import {
     UserOutlined,
     LogoutOutlined,
     TableOutlined,
-    DashboardOutlined, CloseCircleOutlined
+    DashboardOutlined, CloseCircleOutlined, DotChartOutlined
 } from '@ant-design/icons';
 import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button, notification} from 'antd';
 import type {MenuProps} from 'antd';
@@ -21,7 +21,6 @@ import View from "./BF/bf"
 import PetX from "./PetX/petx";
 import Page404 from "../404/404";
 import Profile from "../Profile/profile";
-
 //img
 import psxImg from '../../../img/psx.png';
 import bloxImg from '../../../img/bloxshut.png';
@@ -34,11 +33,40 @@ const Dashboard: React.FC = () => {
 
     const [apiNotification, contextHolder] = notification.useNotification();
 
+    const [currentKey, setCurrentKey] = useState()
+
     let params = useParams()
 
     const {user} = useStore(({app}) => app);
 
     let { dateExpired } = user.unwrap()
+
+    const dashboardItems: MenuProps['items'] = [
+        {
+            label: (
+                <Link to="../../dashboard">
+                    <span>Dashboard</span>
+                </Link>
+            ),
+            key: '',
+        },
+        {
+            label: (
+                <Link to="../../dashboard/bloxfruit">
+                    <span>Blox Fruits</span>
+                </Link>
+            ),
+            key: 'bloxfruit',
+        },
+        {
+            label: (
+                <Link to="../../dashboard/petx">
+                    <span>Pet Simulator X</span>
+                </Link>
+            ),
+            key: 'petx',
+        },
+    ]
 
     // console user in user
     const items: MenuProps['items'] = [
@@ -61,24 +89,7 @@ const Dashboard: React.FC = () => {
                     ),
                     key: 'dashboard',
                     icon: <TableOutlined/>,
-                    children: [
-                        {
-                            label: (
-                                <Link to="../../dashboard/bloxfruit">
-                                    <span>Blox Fruits</span>
-                                </Link>
-                            ),
-                            key: 'bloxfruit',
-                        },
-                        {
-                            label: (
-                                <Link to="../../dashboard/petx">
-                                    <span>Pet Simulator X</span>
-                                </Link>
-                            ),
-                            key: 'petsimx',
-                        },
-                    ]
+                    children: dashboardItems
                 };
 
             }
@@ -95,6 +106,7 @@ const Dashboard: React.FC = () => {
     }
 
     if (user.isSome()) {
+        // Profile
         items.push({
             label: (
                 <Link to="../../dashboard/profile">
@@ -104,7 +116,7 @@ const Dashboard: React.FC = () => {
             key: 'profile',
             icon: <UserOutlined/>,
         });
-        // admin
+        // Admin
         if (user.unwrap().role === 'Admin') {
             items.push({
                 label: (
@@ -130,6 +142,10 @@ const Dashboard: React.FC = () => {
     let myPath = useLocation().pathname.replace('/', '');
 
     const [current, setCurrent] = useState(myPath);
+    if(current.includes('dashboard')) {
+        setCurrent(current.substring(10, current.length))
+    }
+
 
     const onClick: MenuProps['onClick'] = (e) => {
         setCurrent(e.key);
@@ -178,7 +194,8 @@ const Dashboard: React.FC = () => {
                 <Menu
                     mode="inline"
                     defaultSelectedKeys={['1']}
-                    onClick={onClick} selectedKeys={[current]}
+                    onClick={onClick}
+                    selectedKeys={[current]}
                     items={items}
 
                 />
@@ -227,7 +244,8 @@ const Dashboard: React.FC = () => {
                             </div> :
                             params.dashboardName === 'bloxfruit' ? <View/> :
                                 params.dashboardName === 'petx' ? <PetX/> :
-                                    params.dashboardName === 'profile' ? <Profile/> : <Page404/>
+                                    params.dashboardName === 'profile' ? <Profile/> :
+                                        <Page404/>
                     }
                 </Content>
                 <Layout.Footer style={{textAlign: 'center'}}>Roblox Panel by PaulVoid and Hanei</Layout.Footer>

@@ -507,12 +507,12 @@ const PetX: React.FC = () => {
         {
             key: 'account',
             label: `Account`,
-            children: <Card title="Account">
+            children: <Card size="small" title="Account">
                 <Row gutter={[16, 16]}>
                     <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                         <Row gutter={[12, 12]}>
                             <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                <Card style={{marginBottom: 16}} title="Control">
+                                <Card size="small" style={{marginBottom: 16}} title="Control">
                                     <Space wrap>
                                         <Button type="primary" onClick={refreshData}
                                                 loading={loadingReload}>Refresh</Button>
@@ -538,7 +538,7 @@ const PetX: React.FC = () => {
                                 </Card>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                                <Card title="Optional">
+                                <Card size="small" title="Optional">
                                     <Form layout="inline">
                                         <Form.Item label="Hide Name">
                                             <Checkbox onChange={onChangeHidename}/>
@@ -554,10 +554,10 @@ const PetX: React.FC = () => {
                     </Col>
 
                     <Col xs={24} sm={24} md={24} lg={12} xl={12}>
-                        <Card title="Account Status">
+                        <Card size="small" title="Account Status">
                             <Row gutter={[16, 16]}>
                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                    <Card hoverable={true}>
+                                    <Card size="small" hoverable={true}>
                                         <Statistic
                                             title="Active Accounts"
                                             value={getOnline()}
@@ -567,7 +567,7 @@ const PetX: React.FC = () => {
                                     </Card>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                    <Card hoverable={true}>
+                                    <Card size="small" hoverable={true}>
                                         <Statistic
                                             title="Inactive Accounts"
                                             value={getOffline()}
@@ -577,7 +577,7 @@ const PetX: React.FC = () => {
                                     </Card>
                                 </Col>
                                 <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                                    <Card hoverable={true}>
+                                    <Card size="small" hoverable={true}>
                                         <Statistic
                                             title="Total Accounts"
                                             value={getOffline() + getOnline()}
@@ -681,13 +681,7 @@ const PetX: React.FC = () => {
             key: 'data',
             label: `Data`,
             children:
-                <Skeleton
-                    loading={loadingSkeTable}
-                    active={loadingSkeTable}
-                    paragraph={{
-                        rows: 10
-                    }}
-                >
+            <>
                     <Table
                         rowSelection={rowSelection}
                         columns={columnsData}
@@ -711,7 +705,7 @@ const PetX: React.FC = () => {
                         }}
                     />
                     <FloatButton.BackTop/>
-                </Skeleton>
+                </>
         },
         {
             key: 'sent-history',
