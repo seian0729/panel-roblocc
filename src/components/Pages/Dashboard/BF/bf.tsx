@@ -235,6 +235,14 @@ function DataCompoment() {
                     fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
+                    bfData.map((key: any) => {
+                        if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                            specaiCData += key + ' - '
+                        } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
+
                     sData.map((key: any) => {
                         if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
                             specaiCData += key + ' - '
