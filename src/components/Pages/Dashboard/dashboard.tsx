@@ -7,7 +7,7 @@ import {
     TableOutlined,
     DashboardOutlined, CloseCircleOutlined, DotChartOutlined
 } from '@ant-design/icons';
-import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button, notification} from 'antd';
+import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button, notification, Alert, Space} from 'antd';
 import type {MenuProps} from 'antd';
 import {Link, useLocation, useParams} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
@@ -215,9 +215,22 @@ const Dashboard: React.FC = () => {
                         background: colorBgContainer,
                     }}
                 >
+                    <Space direction="vertical" style={{ width: '100%' }}>
+                        <Alert
+                            message="Important Announcement"
+                            description="This panel is close soon (until your access expired or after 15/9/2023 [0h - JST] ), So i didn't do any thing include update"
+                            type="warning"
+                            showIcon
+                        />
+                        <Alert
+                            message="Thank everyone has support my project, Special thank PaulVoid to help me alot  (back-end, react, etc)．　ありがとうございます。　＜３．　Cảm ơn mọi người rất nhiều ạ!"
+                            banner
+                            type="info"
+                        />
+                    </Space>
                     {
                         params.dashboardName === undefined ?
-                            <div style={{color: "white"}}>
+                            <div style={{color: "white", marginTop: 12}}>
                                 <Row gutter={[16, 16]}>
                                     <Col>
                                         <Card title="Blox Fruit"
