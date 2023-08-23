@@ -998,6 +998,17 @@ function DataCompoment() {
         }
     }, [newRender ? dataLimitApi : dataApi])
 
+    useEffect(() =>{
+        const intervalId = setInterval(() => {
+            // console.log('==== Automatically Refresh Data ==== ');
+            refreshData()
+            messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 120000).fromNow() }`,10);
+            messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,60)
+            // console.log(new Date())
+        }, 120000);
+        return () => clearInterval(intervalId);
+    })
+
     function multipleInArray(arr: string | any[], values: any[]) {
         return values.every(value => {
             return arr.includes(value);
