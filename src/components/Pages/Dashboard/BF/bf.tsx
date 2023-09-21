@@ -88,6 +88,9 @@ function DataCompoment() {
 
     //Sort - Data
     const [dataValue, setDataValue] = useState('Level')
+
+    //Active
+    const [active, setActive] = useState(false);
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
     }
@@ -148,7 +151,7 @@ function DataCompoment() {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 500) {
+            if (moment().unix() - update <= 600) {
                 temp++
             }
         })
@@ -174,7 +177,7 @@ function DataCompoment() {
         dataApi.forEach((item: DataType) => {
             const note = item.Note
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 500) {
+            if (moment().unix() - update <= 600) {
                 temp.find((item: DrawerProps) => item.note === note)!.online++
             }
         })
@@ -834,9 +837,9 @@ function DataCompoment() {
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 300
+                    return moment().unix() - moment(record.updatedAt).unix() < 600
                 } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 300
+                    return moment().unix() - moment(record.updatedAt).unix() >= 600
                 } else {
                     return false
                 }
@@ -861,7 +864,7 @@ function DataCompoment() {
                         seaHubBFRender.map((key) => {
                             const labelKey = key[1]
                             const labelKeyB: string = labelKey as string;
-                            if (moment().unix() - moment(record.updatedAt).unix() <= 300){
+                            if (moment().unix() - moment(record.updatedAt).unix() <= 600){
                                 items?.push(
                                     {
                                         key: key[0],
@@ -899,10 +902,10 @@ function DataCompoment() {
                         <>
                             <Dropdown menu={{ items }}>
                                 <Badge
-                                    status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
+                                    status={moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'error' : 'success'}
                                     text={
                                         <Space>
-                                            {moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'Inactive' : 'Active'}
+                                            {moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'Inactive' : 'Active'}
                                             <DownOutlined />
                                         </Space>
                                     }/>
@@ -915,8 +918,8 @@ function DataCompoment() {
                     return (
                         <>
                             <Badge
-                                status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
-                                text={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'Inactive' : 'Active'}/>
+                                status={moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'error' : 'success'}
+                                text={moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'Inactive' : 'Active'}/>
                         </>
                     )
                 }
@@ -999,13 +1002,28 @@ function DataCompoment() {
     }, [newRender ? dataLimitApi : dataApi])
 
     useEffect(() =>{
-        const intervalId = setInterval(() => {
-            // console.log('==== Automatically Refresh Data ==== ');
+        window.onfocus = function (ev) {
+            setActive(true)
+        };
+
+        window.onblur = function (ev) {
+            setActive(false)
+        };
+    })
+
+    const AutoRefreshData = () => {
+        if(active){
             refreshData()
-            messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 120000).fromNow() }`,10);
+            messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 300000).fromNow() }`,10);
             messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,60)
-            // console.log(new Date())
-        }, 120000);
+        }
+        else{
+            messageApi.error('AFK Detected - Automatically Refresh Data has been disabled')
+        }
+    }
+
+    useEffect(() =>{
+        const intervalId = setInterval(AutoRefreshData, 300000);
         return () => clearInterval(intervalId);
     })
 
