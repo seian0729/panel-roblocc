@@ -215,23 +215,6 @@ const Dashboard: React.FC = () => {
                         background: colorBgContainer,
                     }}
                 >
-                    <Space direction="vertical" style={{ width: '100%' }}>
-                        <Alert
-                            message="Important Announcement"
-                            description="This panel is close soon (until your access expired or after 15/9/2023 [0h - JST] ), So i didn't do any thing include update"
-                            type="warning"
-                        />
-                        <Alert
-                            message="Thank everyone has support my project, Special thank PaulVoid to help me alot  (back-end, react, etc)．　ありがとうございます。　＜３．　Cảm ơn mọi người rất nhiều ạ!"
-                            banner
-                            type="info"
-                        />
-                        <Alert
-                            message="AFTER 15/9 ALL DATA BAS BEEN REMOVED"
-                            banner
-                            type="error"
-                        />
-                    </Space>
                     {
                         params.dashboardName === undefined ?
                             <div style={{color: "white", marginTop: 12}}>
