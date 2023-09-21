@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import type {TabsProps} from 'antd';
 import {
+    Alert,
     Button,
     Col,
     Collapse,
@@ -174,9 +175,9 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
             children:
                 <>
                     {
-                        /*
-                        <Alert message="I has changed some Setting - OLD Setting still working - U can change it if you want" type="warning" showIcon />
-                         */
+
+                        <Alert message="Please create a new file (.txt or .lua) in auto execute and put script into this" type="warning" showIcon />
+
                     }
                     <Collapse bordered={false} items={[{
                         key: '1',
@@ -187,19 +188,6 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                             </SyntaxHighlighter>
                             <Button type={"default"}
                                     onClick={() => copyScript('Blox Fruit', bloxfruitString)}>
-                                Copy Script
-                            </Button>
-                        </>
-                    }]} style={{marginTop: 6}}/>
-                    <Collapse bordered={false} items={[{
-                        key: '1',
-                        label: 'Blox Fruit - Dit Blox Fruit',
-                        children: <>
-                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
-                                {ditbloxfruitString}
-                            </SyntaxHighlighter>
-                            <Button type={"default"}
-                                    onClick={() => copyScript('Blox Fruit - Dit Blox Fruit', bloxfruitString)}>
                                 Copy Script
                             </Button>
                         </>
