@@ -476,6 +476,17 @@ function DataCompoment() {
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 let fightingStyle = description['Fighting Style'];
+                const items: MenuProps['items'] = [
+                    {
+                        label: 'Fighting Style - List',
+                        key: 'list',
+                        disabled: true
+                    },
+                    {
+                        type: 'divider',
+                    },
+                ];
+
                 return (
                     <>
                         {fightingStyle.map(() => {
@@ -489,9 +500,21 @@ function DataCompoment() {
                                 fstext = '0-2 Melee';
                                 fscolor = 'red';
                             }
-
                         })}
-                        <Tag color={fscolor}>{fstext}</Tag>
+
+                        {
+                            fightingStyle.map((str: string, index: number) => {
+                                items?.push({
+                                    key: index,
+                                    label: `${index +  1}. ${str}`,
+                                })
+                                }
+                            )
+                        }
+
+                        <Dropdown menu={{ items }}>
+                            <Tag color={fscolor}>{fstext}</Tag>
+                        </Dropdown>
                     </>
                 )
             },
