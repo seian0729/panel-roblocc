@@ -112,17 +112,10 @@ function ProfileComponent() {
 
     const bloxfruitString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 120;
+    DelayUpdate = 300;
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
-
-    const ditbloxfruitString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 120;
-    Note = '${username}'
-}
---Put Dit Blox Fruit Script Below This Line`
 
     const petxString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
