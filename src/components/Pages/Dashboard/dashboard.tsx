@@ -24,6 +24,7 @@ import Profile from "../Profile/profile";
 //img
 import psxImg from '../../../img/psx.png';
 import bloxImg from '../../../img/bloxshut.png';
+import Bladeball from "./BladeBall/bladeball";
 
 const {Header, Sider, Content} = Layout;
 const {Text} = Typography;
@@ -39,7 +40,11 @@ const Dashboard: React.FC = () => {
 
     const {user} = useStore(({app}) => app);
 
-    let { dateExpired } = user.unwrap()
+    let { dateExpired, username } = user.unwrap()
+
+    const whitelistAccounts = ["Hanei","k7ndz","huy8481"];
+
+    console.log(whitelistAccounts.find((element) => element == username))
 
     const dashboardItems: MenuProps['items'] = [
         {
@@ -135,6 +140,17 @@ const Dashboard: React.FC = () => {
             key: 'logout',
             icon: <LogoutOutlined/>,
         });
+
+        if (whitelistAccounts.find((element) => element == username) != undefined){
+            dashboardItems.push({
+                label: (
+                    <Link to="../../dashboard/bladeball">
+                        <span>Blade Ball</span>
+                    </Link>
+                ),
+                key: 'bladeball',
+            },)
+        }
 
     }
 
@@ -245,6 +261,7 @@ const Dashboard: React.FC = () => {
                             params.dashboardName === 'bloxfruit' ? <View/> :
                                 params.dashboardName === 'petx' ? <PetX/> :
                                     params.dashboardName === 'profile' ? <Profile/> :
+                                        params.dashboardName === 'bladeball' && whitelistAccounts.find((element) => element == username) != undefined ? <Bladeball/>:
                                         <Page404/>
                     }
                 </Content>

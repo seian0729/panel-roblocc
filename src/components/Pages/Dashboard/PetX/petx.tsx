@@ -471,36 +471,27 @@ const PetX: React.FC = () => {
     ]
 
     useEffect(() => {
-
         getData(2316994223).then((res) => {
             //console.log(res)
             setDataApi(res.data);
             setLoadingTable(false)
             sLoadingSkeTable(false)
         })
-
-
-
     }, [])
 
     useEffect(() => {
-
         getOrder().then((res) => {
             //console.log(res)
             setOrderData(res.data);
             setLoadingTable(false)
             sLoadingSkeTable(false)
         })
-
     }, [])
 
     useEffect(() => {
-
         getRate().then((res) => {
             setRate(res.rate)
         })
-
-
     }, [])
 
     const itemsAccount: TabsProps['items'] = [
