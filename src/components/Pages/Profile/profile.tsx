@@ -35,6 +35,7 @@ interface CustomizedFormProps {
 function ProfileComponent() {
     const {user} = useStore(({app}) => app);
     const {id, username, role, siginKey, dateExpired} = user.unwrap();
+    const whitelistAccounts = ["Hanei","k7ndz","huy8481"];
     const [ showKey, setShowKey ] = useState(false)
     const data = [
         {
@@ -124,6 +125,13 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))()`;
 
+    const bladeBallString = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120;
+    Note = '${username}'
+}
+loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
+
     const [messageApi, contextHolder] = message.useMessage();
     const [title, setTitle] = useState('Info')
 
@@ -198,6 +206,22 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
                             </Button>
                         </>
                     }]} style={{marginTop: 6}}/>
+                    {
+                        whitelistAccounts.find((element) => element == username) != undefined ? <Collapse bordered={false} items={[{
+                            key: '4',
+                            label: 'Blade Ball',
+                            children: <>
+                                <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                    {bladeBallString}
+                                </SyntaxHighlighter>
+                                <Button type={"default"}
+                                        onClick={() => copyScript('Blade Ball', bladeBallString)}>
+                                    Copy Script
+                                </Button>
+                            </>
+                        }]} style={{marginTop: 6}}/>
+                            : <></>
+                    }
                 </>,
         },
         {
