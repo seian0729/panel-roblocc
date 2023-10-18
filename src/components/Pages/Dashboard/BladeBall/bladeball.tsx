@@ -151,6 +151,7 @@ const Bladeball: React.FC = () => {
             title: "Coins",
             dataIndex: 'Coins',
             width: '20%',
+            sorter: (a,b) => (JSON.parse(a.Description)['Coins'] - JSON.parse(b.Description)['Coins']),
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
                 return <Tag color={"orange"} key={'coins'} style={{margin: 4}}>

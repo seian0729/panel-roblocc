@@ -21,10 +21,12 @@ import View from "./BF/bf"
 import PetX from "./PetX/petx";
 import Page404 from "../404/404";
 import Profile from "../Profile/profile";
+import Bladeball from "./BladeBall/bladeball";
 //img
 import psxImg from '../../../img/psx.png';
 import bloxImg from '../../../img/bloxshut.png';
-import Bladeball from "./BladeBall/bladeball";
+import bladeballImg from "../../../img/5487b2557b4811e4c8431f9faa663749.png";
+
 
 const {Header, Sider, Content} = Layout;
 const {Text} = Typography;
@@ -44,7 +46,7 @@ const Dashboard: React.FC = () => {
 
     const whitelistAccounts = ["Hanei","k7ndz","huy8481"];
 
-    console.log(whitelistAccounts.find((element) => element == username))
+    //console.log(whitelistAccounts.find((element) => element == username))
 
     const dashboardItems: MenuProps['items'] = [
         {
@@ -256,6 +258,20 @@ const Dashboard: React.FC = () => {
                                             </Link>
                                         </Card>
                                     </Col>
+                                    {
+                                        whitelistAccounts.find((element) => element == username) != undefined ?
+                                            <Col>
+                                                <Card title="Blade Ball"
+                                                      hoverable
+                                                      cover={<img style={{width: 225}} alt="example" src={bladeballImg}/>}
+                                                >
+                                                    <Link to={"bladeball"}>
+                                                        <Button style={{width: "100%"}} type={"default"}> Blade Ball </Button>
+                                                    </Link>
+                                                </Card>
+                                            </Col>
+                                            : <></>
+                                    }
                                 </Row>
                             </div> :
                             params.dashboardName === 'bloxfruit' ? <View/> :
