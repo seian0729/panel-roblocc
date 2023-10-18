@@ -36,6 +36,7 @@ const Bladeball: React.FC = () => {
     //loading
     const [loadingReload, setLoadingReload] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
+    const [loadingCopy, setLoadingCopy] = useState(false);
 
     //data
     const [dataApi, setDataApi] = useState([]);
@@ -115,6 +116,23 @@ const Bladeball: React.FC = () => {
             }
         })
         return temp
+    }
+
+    const copyData = () => {
+        setLoadingCopy(true);
+        let text = '';
+
+        dataApi.forEach((item: DataType) => {
+            if (selectedRowKeys.includes(item.UsernameRoblocc)) {
+                text += item.UsernameRoblocc + '/' + JSON.parse(item.Description)['Coins'] + '\n';
+            }
+        })
+        navigator.clipboard.writeText(text);
+        setTimeout(() =>{
+            messageApi.success(`Copied ${selectedRowKeys.length} accounts into clipboard <3`);
+            setSelectedRowKeys([]);
+            setLoadingCopy(false);
+        },1000)
     }
 
     const hasSelected = selectedRowKeys.length > 0;
@@ -270,7 +288,7 @@ const Bladeball: React.FC = () => {
     return (<div>
         {contextHolder}
         <Row justify={'start'}>
-            <Divider orientation="left">Roblocc Panel - Pet Simulator X</Divider>
+            <Divider orientation="left">Roblocc Panel - Blade Ball</Divider>
 
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 12}}>
                 <Card size="small" title="Account">
@@ -297,6 +315,10 @@ const Bladeball: React.FC = () => {
                                                     Delete Account
                                                 </Button>
                                             </Popconfirm>
+                                            <Button type="primary"
+                                                    onClick={copyData}
+                                                    disabled={!hasSelected} loading={loadingCopy}>Copy
+                                                Data</Button>
                                             <span style={{color: "#f6e9e9"}}>
                                               {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
                                             </span>
