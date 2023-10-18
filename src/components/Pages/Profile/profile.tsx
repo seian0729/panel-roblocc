@@ -35,7 +35,7 @@ interface CustomizedFormProps {
 function ProfileComponent() {
     const {user} = useStore(({app}) => app);
     const {id, username, role, siginKey, dateExpired} = user.unwrap();
-    const whitelistAccounts = ["Hanei","k7ndz","huy8481"];
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
     const [ showKey, setShowKey ] = useState(false)
     const data = [
         {

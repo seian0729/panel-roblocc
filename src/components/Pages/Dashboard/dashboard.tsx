@@ -44,7 +44,7 @@ const Dashboard: React.FC = () => {
 
     let { dateExpired, username } = user.unwrap()
 
-    const whitelistAccounts = ["Hanei","k7ndz","huy8481"];
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
     //console.log(whitelistAccounts.find((element) => element == username))
 
