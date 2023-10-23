@@ -239,9 +239,9 @@ function DataCompoment() {
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
                     bfData.map((key: any) => {
-                        if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                        if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard'|| key === 'Mammoth')) {
                             specaiCData += key + ' - '
-                        } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                        } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
                             specaiCData += key.Name + ' - '
                         }
                     })
@@ -613,6 +613,9 @@ function DataCompoment() {
                             <Option value="Leopard" label="Leopard">
                                 Leopard
                             </Option>
+                            <Option value="Mammoth" label="Mammoth">
+                                Mammoth
+                            </Option>
                             <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
                                 Cursed Dual Katana
                             </Option>
@@ -646,9 +649,9 @@ function DataCompoment() {
                 let WGataB = descriptionB['Inventory']['Wear']
 
                 bfDataA.map((key: any) => {
-                    if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                    if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard' || key === 'Mammoth')) {
                         objSortA.push(key)
-                    } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                    } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
                         objSortA.push(key.Name)
                     }
 
@@ -749,16 +752,17 @@ function DataCompoment() {
                     ['Valkyrie Helm']: 'VH',
                     ['Dough']: 'Dough',
                     ['Leopard']: 'Leopard',
+                    ['Mammoth']: 'Mammoth'
                 }
 
 
                 return (
                     <>
                         {bfData.map((key: any) => {
-                            if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                            if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard' || key === 'Mammoth')) {
                                 //strRender += key + ' / '
                                 specialRender.push(key)
-                            } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                            } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
                                 //strRender += key + ' / '
                                 specialRender.push(key.Name)
                             }
@@ -1069,9 +1073,9 @@ function DataCompoment() {
             const specialList: any[] = [];
 
             bfData.map((key: any) => {
-                if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
+                if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard' || key === 'Mammoth')) {
                     specialList.push(key)
-                } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
                     specialList.push(key.Name)
                 }
 
