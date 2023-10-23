@@ -393,8 +393,8 @@ function DataCompoment() {
             width: '15%',
             filters: [
                 {
-                    text: 'Level 2450',
-                    value: '2450',
+                    text: 'Level 2550',
+                    value: '2550',
 
                 },
                 {
@@ -409,12 +409,12 @@ function DataCompoment() {
             onFilter: (value: any, record) => {
                 let description = JSON.parse(record.Description);
                 let dataList = description.Data
-                if (value == '2450') {
-                    return dataList.Level === 2450
+                if (value == '2550') {
+                    return dataList.Level === 2550
                 } else if (value == '1000-1500') {
                     return dataList.Level >= 1000 && dataList.Level <= 1500
                 } else if (value == '1500-2449') {
-                    return dataList.Level >= 1500 && dataList.Level < 2450
+                    return dataList.Level >= 1500 && dataList.Level < 2550
                 } else {
                     return false
                 }
