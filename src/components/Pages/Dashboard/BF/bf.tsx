@@ -402,8 +402,8 @@ function DataCompoment() {
                     value: '1000-1500',
                 },
                 {
-                    text: '1500-2449',
-                    value: '1500-2449',
+                    text: '1500-2549',
+                    value: '1500-2549',
                 }
             ],
             onFilter: (value: any, record) => {
