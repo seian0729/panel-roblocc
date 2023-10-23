@@ -413,7 +413,7 @@ function DataCompoment() {
                     return dataList.Level === 2550
                 } else if (value == '1000-1500') {
                     return dataList.Level >= 1000 && dataList.Level <= 1500
-                } else if (value == '1500-2449') {
+                } else if (value == '1500-2549') {
                     return dataList.Level >= 1500 && dataList.Level < 2550
                 } else {
                     return false
