@@ -200,7 +200,11 @@ const Dashboard: React.FC = () => {
     return (
         <>
             {contextHolder}
-
+            <Alert
+                message="Panel ChimOvO now discontinued (i'll close this website soon). みんな，ありがとうございます"
+                type="error"
+                banner={true}
+            />
         <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
                    collapsedWidth="0"
