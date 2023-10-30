@@ -7,7 +7,22 @@ import {
     TableOutlined,
     DashboardOutlined, CloseCircleOutlined, DotChartOutlined
 } from '@ant-design/icons';
-import {Layout, Menu, theme, Typography, message, Card, Row, Col, Button, notification, Alert, Space} from 'antd';
+import {
+    Layout,
+    Menu,
+    theme,
+    Typography,
+    message,
+    Card,
+    Row,
+    Col,
+    Button,
+    notification,
+    Alert,
+    Space,
+    Tag,
+    Tooltip
+} from 'antd';
 import type {MenuProps} from 'antd';
 import {Link, useLocation, useParams} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
@@ -183,7 +198,14 @@ const Dashboard: React.FC = () => {
                 setTimeout(() =>{
                     apiNotification.open({
                         message: 'Account',
-                        description: 'Your access is  expire '+ moment(dateExpired*1000).fromNow(),
+                        description: <>
+                            Your access is  expire
+                                <Tooltip title={moment(dateExpired*1000).format('MMMM Do YYYY, h:mm:ss a')}>
+                                    <Tag style={{marginLeft: 4}}>
+                                        {moment(dateExpired*1000).fromNow()}
+                                    </Tag>
+                                </Tooltip>
+                            </>,
                         duration: 10,
                         icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
                     })
