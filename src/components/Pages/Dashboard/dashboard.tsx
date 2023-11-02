@@ -222,18 +222,6 @@ const Dashboard: React.FC = () => {
     return (
         <>
             {contextHolder}
-            <Alert
-                message={
-                <>
-                    Panel ChimOvO now discontinued (This website will be close
-                    <Tooltip title={moment('2023-11-19').format('MMMM Do YYYY, h:mm:ss a')}>
-                        <Tag color={'red'} style={{marginLeft: 4}}>{moment('2023-11-19').fromNow()}</Tag>
-                    </Tooltip>). みんな，ありがとうございます
-                </>
-                }
-                type="error"
-                banner={true}
-            />
         <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
                    collapsedWidth="0"

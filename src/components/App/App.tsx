@@ -1,5 +1,5 @@
 import React from 'react';
-import {ConfigProvider, Layout, MenuProps, message, Row, Spin, theme} from 'antd';
+import {Alert, ConfigProvider, Layout, MenuProps, message, Row, Spin, Tag, theme, Tooltip} from 'antd';
 import {Link, Navigate, Outlet, Route, RouteProps, Routes} from 'react-router-dom';
 
 import './App.css';
@@ -26,6 +26,7 @@ import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
 import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
+import moment from "moment/moment";
 
 
 //Theme ne
@@ -139,7 +140,18 @@ function App() {
 
     return (
         <ConfigProvider theme={themeConfig}>
-
+            <Alert
+                message={
+                    <>
+                        Panel ChimOvO now discontinued (This website will be close
+                        <Tooltip title={moment('2023-11-19').format('MMMM Do YYYY, h:mm:ss a')}>
+                            <Tag color={'red'} style={{marginLeft: 4}}>{moment('2023-11-19').fromNow()}</Tag>
+                        </Tooltip>). みんな，ありがとうございます
+                    </>
+                }
+                type="error"
+                banner={true}
+            />
             <Layout style={{minHeight: "100vh"}}>
 
                 {
