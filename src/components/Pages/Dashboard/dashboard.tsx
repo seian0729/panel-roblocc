@@ -223,7 +223,14 @@ const Dashboard: React.FC = () => {
         <>
             {contextHolder}
             <Alert
-                message="Panel ChimOvO now discontinued (This website will be close on 11/19/2023). みんな，ありがとうございます"
+                message={
+                <>
+                    Panel ChimOvO now discontinued (This website will be close
+                    <Tooltip title={moment('2023-11-19').format('MMMM Do YYYY, h:mm:ss a')}>
+                        <Tag color={'red'} style={{marginLeft: 4}}>{moment('2023-11-19').fromNow()}</Tag>
+                    </Tooltip>). みんな，ありがとうございます
+                </>
+                }
                 type="error"
                 banner={true}
             />
