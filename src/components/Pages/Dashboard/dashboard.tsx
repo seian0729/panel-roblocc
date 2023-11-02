@@ -223,7 +223,7 @@ const Dashboard: React.FC = () => {
         <>
             {contextHolder}
             <Alert
-                message="Panel ChimOvO now discontinued (i'll close this website soon). みんな，ありがとうございます"
+                message="Panel ChimOvO now discontinued (This website will be close on 11/19/2023). みんな，ありがとうございます"
                 type="error"
                 banner={true}
             />
