@@ -141,6 +141,11 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig}>
             <Alert
+                message={"Server Back-end down because host got suspended (i having issues with hosting service)"}
+                type="error"
+                banner={true}
+            />
+            <Alert
                 message={
                     <>
                         Panel ChimOvO now discontinued (This website will be close
