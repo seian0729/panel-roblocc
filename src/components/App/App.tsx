@@ -207,9 +207,8 @@ async function load() {
 
 
 function UserOnlyRoute({
-                           userIsLogged
-                       }: { userIsLogged: boolean } & RouteProps) {
-
+       userIsLogged
+   }: { userIsLogged: boolean } & RouteProps) {
     if (!userIsLogged) {
         return <Navigate to="/login"/>;
     }
@@ -217,8 +216,8 @@ function UserOnlyRoute({
 }
 
 function GuestOnlyRoute({
-                            userIsLogged
-                        }: { userIsLogged: boolean } & RouteProps) {
+        userIsLogged
+    }: { userIsLogged: boolean } & RouteProps) {
     if (userIsLogged) {
         return <Navigate to="/"/>;
     }
@@ -227,9 +226,9 @@ function GuestOnlyRoute({
 
 // admin only route
 function AdminOnlyRoute({
-                            userIsLogged,
-                            isAdmin
-                        }: { userIsLogged: boolean, isAdmin: boolean } & RouteProps) {
+        userIsLogged,
+        isAdmin
+    }: { userIsLogged: boolean, isAdmin: boolean } & RouteProps) {
     if (!userIsLogged || !isAdmin) {
         return <Navigate to="/"/>;
 

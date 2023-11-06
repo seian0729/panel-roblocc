@@ -179,7 +179,6 @@ const Dashboard: React.FC = () => {
         setCurrent(current.substring(10, current.length))
     }
 
-
     const onClick: MenuProps['onClick'] = (e) => {
         setCurrent(e.key);
     };
@@ -191,7 +190,7 @@ const Dashboard: React.FC = () => {
 
 
     useEffect(() => {
-        if (moment().unix() - dateExpired > -86400 &&
+        if (moment().unix() - dateExpired > -604800 &&
             moment().unix() - dateExpired < 0
         ){
             if (tempCountNoti <= 1){
