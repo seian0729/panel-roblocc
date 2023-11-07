@@ -25,7 +25,8 @@ import {
     Progress,
     Typography,
     Tooltip,
-    Dropdown
+    Dropdown,
+    Alert
 } from 'antd';
 import {
     CaretRightOutlined, DownOutlined,
@@ -489,14 +490,19 @@ function DataCompoment() {
 
                 return (
                     <>
-                        {fightingStyle.map(() => {
+                        {fightingStyle.map((str: string) => {
+                            console.log(str)
                             if (fightingStyle.length === 6) {
                                 fstext = 'Godhuman';
                                 fscolor = 'blue';
                             } else if (fightingStyle.length > 2) {
                                 fstext = '3-5 Melee';
                                 fscolor = 'volcano';
-                            } else {
+                            } else if (str == 'Fighting Style Data Not Found') {
+                                fstext = 'Fighting Style Data Not Found';
+                                fscolor = 'red';
+                            }
+                            else {
                                 fstext = '0-2 Melee';
                                 fscolor = 'red';
                             }
@@ -1156,6 +1162,11 @@ function DataCompoment() {
         <div>
             {contextHolder}
             {ModalcontextHolder}
+            <Alert
+                message={"Got some bug in data, i'll fix soon!"}
+                type="warning"
+                banner={true}
+            />
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
