@@ -329,7 +329,7 @@ function DataCompoment() {
                     refreshData()
                 }
                 if (file.status === 'error') {
-                    console.log(file.response)
+                    //console.log(file.response)
                     file.response = file.response.message
                     messageApi.error(`Failed to upload ${file.name}! - ${file.response}`)
                     refreshData()
@@ -491,7 +491,7 @@ function DataCompoment() {
                 return (
                     <>
                         {fightingStyle.map((str: string) => {
-                            console.log(str)
+                            //console.log(str)
                             if (fightingStyle.length === 6) {
                                 fstext = 'Godhuman';
                                 fscolor = 'blue';
