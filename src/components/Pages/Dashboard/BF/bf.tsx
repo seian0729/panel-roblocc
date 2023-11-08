@@ -42,7 +42,7 @@ import type {ColumnsType} from 'antd/es/table';
 import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
-import type { MenuProps } from 'antd';
+import type { MenuProps, SelectProps } from 'antd';
 
 const { Text } = Typography;
 const {Option} = Select
@@ -96,9 +96,48 @@ function DataCompoment() {
         setDataValue(val.value)
     }
 
-    //Filter Specical
+    //Filter Specical / Mythical Fruits
 
     const [filteredSpecial, setFilteredSpecial] = useState(false)
+
+    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth']);
+
+    const mythicalItems = [
+        'Cursed Dual Katana',
+        'Soul Guitar',
+        'Mirror Fractal',
+        'Valkyrie Helm'
+    ]
+
+    const optionsMythical: SelectProps['options'] = [];
+    const optionsMythicalFruits: SelectProps['options'] = [];
+    const optionsMythicalItems: SelectProps['options'] = [];
+
+    // Insert Mythical Items 
+
+    mythicalItems.forEach((item) => {
+        optionsMythicalItems.push({
+            value: item,
+            label: item
+        })
+    })
+
+    // Insert Mythical Fruits
+    mythicalFruits.forEach((fruits) => {
+        optionsMythicalFruits.push({
+            value: fruits,
+            label: fruits
+        })
+    })
+
+    optionsMythical.push({
+        label: "Mythical Fruits",
+        options: optionsMythicalFruits
+    },{
+        label: "Mythical Items",
+        options: optionsMythicalItems
+    })
+
 
     //Hidename
     const [hidename, setHidename] = useState(false)
@@ -240,41 +279,31 @@ function DataCompoment() {
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
                     bfData.map((key: any) => {
-                        if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard'|| key === 'Mammoth')) {
-                            specaiCData += key + ' - '
-                        } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
+                        if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
                             specaiCData += key.Name + ' - '
                         }
                     })
 
                     sData.map((key: any) => {
-                        if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
-                            specaiCData += key + ' - '
-                        } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                             specaiCData += key.Name + ' - '
                         }
                     })
 
                     GData.map((key: any) => {
-                        if (typeof (key) == 'string' && key === 'Soul Guitar') {
-                            specaiCData += key + ' - '
-                        } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                             specaiCData += key.Name + ' - '
                         }
                     })
 
                     MGata.map((key: any) => {
-                        if (typeof (key) == 'string' && key === 'Mirror Fractal') {
-                            specaiCData += key + ' - '
-                        } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                             specaiCData += key.Name + ' - '
                         }
                     })
 
                     WGata.map((key: any) => {
-                        if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
-                            specaiCData += key + ' - '
-                        } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                             specaiCData += key.Name + ' - '
                         }
                     })
@@ -289,8 +318,7 @@ function DataCompoment() {
                         }
                     })
 
-                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + '/'
-                        + itemDescript['Awakened Abilities'] + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }
             })
 
@@ -582,13 +610,20 @@ function DataCompoment() {
                 return (
                     <>
 
-                        {awakened.map((key: any) => {
-                            return (
-                                <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
-                                    {key.length > 10 ? 'None' : key}
-                                </Tag>
-                            );
-                        })}
+                        {
+                            awakened.includes('V') ? 
+                            <Tag color={"green"} key={'full'} style={{margin: 4}}>
+                                {'Full'}
+                            </Tag> : 
+                            awakened.map((key: any) => {
+
+                                return (
+                                    <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
+                                        {key.length > 10 ? 'None' : key}
+                                    </Tag>
+                                );
+                            })
+                        }
                     </>
 
                 )
@@ -596,7 +631,7 @@ function DataCompoment() {
 
         },
         {
-            title: 'Special',
+            title: 'Mythical Items / Fruits',
             dataIndex: 'special',
             width: '15%',
             filterIcon: () => (
@@ -608,32 +643,12 @@ function DataCompoment() {
                         <Select
                             key="cac"
                             mode="multiple"
-                            placeholder="Search Special (Multiple)"
+                            placeholder="Search Mythical Items/Fruits (Multiple)"
                             optionLabelProp="label"
                             onChange={handleSpecialFilter}
                             style={{width: 310, marginBottom: 8, display: 'block'}}
+                            options={optionsMythical}
                         >
-                            <Option value="Dough" label="Dough">
-                                Dough
-                            </Option>
-                            <Option value="Leopard" label="Leopard">
-                                Leopard
-                            </Option>
-                            <Option value="Mammoth" label="Mammoth">
-                                Mammoth
-                            </Option>
-                            <Option value="Cursed Dual Katana" label="Cursed Dual Katana">
-                                Cursed Dual Katana
-                            </Option>
-                            <Option value="Soul Guitar" label="Soul Guitar">
-                                Soul Guitar
-                            </Option>
-                            <Option value="Mirror Fractal" label="Mirror Fractal">
-                                Mirror Fractal
-                            </Option>
-                            <Option value="Valkyrie Helm" label="Valkyrie Helm">
-                                Valkyrie Helm
-                            </Option>
                         </Select>
                     </div>
                 )
@@ -655,84 +670,62 @@ function DataCompoment() {
                 let WGataB = descriptionB['Inventory']['Wear']
 
                 bfDataA.map((key: any) => {
-                    if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard' || key === 'Mammoth')) {
-                        objSortA.push(key)
-                    } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
+                    if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
                         objSortA.push(key.Name)
                     }
-
                 })
 
                 sDataA.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
-                        objSortA.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortA.push(key.Name)
                     }
                 })
 
                 GDataA.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Soul Guitar') {
-                        objSortA.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortA.push(key.Name)
                     }
                 })
 
                 MGataA.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Mirror Fractal') {
-                        objSortA.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortA.push(key.Name)
                     }
                 })
 
                 WGataA.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
-                        objSortA.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortA.push(key.Name)
                     }
                 })
 
 
                 bfDataB.map((key: any) => {
-                    if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard')) {
-                        objSortB.push(key)
-                    } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard')) {
+                    if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
                         objSortB.push(key.Name)
                     }
-
                 })
 
                 sDataB.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
-                        objSortB.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortB.push(key.Name)
                     }
                 })
 
                 GDataB.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Soul Guitar') {
-                        objSortB.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortB.push(key.Name)
                     }
                 })
 
                 MGataB.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Mirror Fractal') {
-                        objSortB.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortB.push(key.Name)
                     }
                 })
 
                 WGataB.map((key: any) => {
-                    if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
-                        objSortB.push(key)
-                    } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                         objSortB.push(key.Name)
                     }
                 })
@@ -756,6 +749,7 @@ function DataCompoment() {
                     ['Soul Guitar']: 'SG',
                     ['Mirror Fractal']: 'MF',
                     ['Valkyrie Helm']: 'VH',
+                    ['Dragon']: 'Dragon',
                     ['Dough']: 'Dough',
                     ['Leopard']: 'Leopard',
                     ['Mammoth']: 'Mammoth'
@@ -765,52 +759,31 @@ function DataCompoment() {
                 return (
                     <>
                         {bfData.map((key: any) => {
-                            if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard' || key === 'Mammoth')) {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
-                            } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
-                                //strRender += key + ' / '
+                            if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
                                 specialRender.push(key.Name)
                             }
                         })}
 
                         {sData.map((key: any) => {
-                            if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
-                            } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
-                                //strRender += key + ' / '
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                                 specialRender.push(key.Name)
                             }
                         })}
 
                         {GData.map((key: any) => {
-                            if (typeof (key) == 'string' && key === 'Soul Guitar') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
-                            } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
-                                //strRender += key + ' / '
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                                 specialRender.push(key.Name)
                             }
                         })}
 
                         {MGata.map((key: any) => {
-                            if (typeof (key) == 'string' && key === 'Mirror Fractal') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
-                            } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
-                                //strRender += key + ' / '
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                                 specialRender.push(key.Name)
                             }
-
                         })}
 
                         {WGata.map((key: any) => {
-                            if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
-                                //strRender += key + ' / '
-                                specialRender.push(key)
-                            } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
-                                //strRender += key + ' / '
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                                 specialRender.push(key.Name)
                             }
                         })}
@@ -1079,42 +1052,32 @@ function DataCompoment() {
             const specialList: any[] = [];
 
             bfData.map((key: any) => {
-                if (typeof (key) == 'string' && (key === 'Dough' || key === 'Leopard' || key === 'Mammoth')) {
-                    specialList.push(key)
-                } else if (typeof (key) == 'object' && (key.Name === 'Dough' || key.Name === 'Leopard' || key.Name === 'Mammoth')) {
+                if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
                     specialList.push(key.Name)
                 }
 
             })
 
             sData.map((key: any) => {
-                if (typeof (key) == 'string' && key === 'Cursed Dual Katana') {
-                    specialList.push(key)
-                } else if (typeof (key) == 'object' && key.Name === 'Cursed Dual Katana') {
+                if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                     specialList.push(key.Name)
                 }
             })
 
             GData.map((key: any) => {
-                if (typeof (key) == 'string' && key === 'Soul Guitar') {
-                    specialList.push(key)
-                } else if (typeof (key) == 'object' && key.Name === 'Soul Guitar') {
+                if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                     specialList.push(key.Name)
                 }
             })
 
             MGata.map((key: any) => {
-                if (typeof (key) == 'string' && key === 'Mirror Fractal') {
-                    specialList.push(key)
-                } else if (typeof (key) == 'object' && key.Name === 'Mirror Fractal') {
+                if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                     specialList.push(key.Name)
                 }
             })
 
             WGata.map((key: any) => {
-                if (typeof (key) == 'string' && key === 'Valkyrie Helm') {
-                    specialList.push(key)
-                } else if (typeof (key) == 'object' && key.Name === 'Valkyrie Helm') {
+                if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
                     specialList.push(key.Name)
                 }
             })
@@ -1269,7 +1232,7 @@ function DataCompoment() {
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
                     <Card size="small" title="Accounts Status">
                         <Row gutter={[16, 16]}>
-                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                                 <Card size="small" hoverable={true}>
                                     <Statistic
                                         title="Active Accounts"
@@ -1279,7 +1242,7 @@ function DataCompoment() {
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                                 <Card size="small" hoverable={true}>
                                     <Statistic
                                         title="Inactive Accounts"
@@ -1289,7 +1252,7 @@ function DataCompoment() {
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                                 <Card size="small" hoverable={true}>
                                     <Statistic
                                         title="Total Accounts"
@@ -1299,7 +1262,7 @@ function DataCompoment() {
                                     />
                                 </Card>
                             </Col>
-                            <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                            <Col xs={24} sm={24} md={24} lg={12} xl={24}>
                                 <Card size="small" hoverable={true}>
                                     <Space direction={"vertical"} style={{width: '100%'}}>
                                         <Text type="secondary">Limit Account</Text>
@@ -1499,6 +1462,7 @@ function DataCompoment() {
                         rowKey={(record) => record.UsernameRoblocc}
                         loading={loadingTable}
                         size={"small"}
+                        scroll={{x: true}}
                         pagination={{
                             total: newRender ? totalPage : dataApiSpecialFilter.length,
                             pageSizeOptions: [10, 50, 100, 500, 1000, 2000, 5000],
