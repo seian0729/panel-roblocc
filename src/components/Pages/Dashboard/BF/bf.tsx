@@ -1163,7 +1163,7 @@ function DataCompoment() {
             {contextHolder}
             {ModalcontextHolder}
             <Alert
-                message={"Got some bug in data, i'll fix soon!"}
+                message={"Warning! If you use emulator, the script maybe not performent to send data into server (missing some data)"}
                 type="warning"
                 banner={true}
             />
