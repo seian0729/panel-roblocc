@@ -50,7 +50,7 @@ const {Panel} = Collapse;
 const { Dragger } = Upload;
 
 
-function DataCompoment() {
+const BloccFruit: React.FC = () => {
 
     const {token} = theme.useToken();
 
@@ -60,6 +60,10 @@ function DataCompoment() {
         borderRadius: token.borderRadiusLG,
         border: 'none',
     };
+
+    const {user} = useStore(({app}) => app);
+
+    const {username} = user.unwrap();
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -73,6 +77,11 @@ function DataCompoment() {
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [loadingReload, setLoadingReload] = useState(false);
     const [loadingCopy, setLoadingCopy] = useState(false);
+
+    // loading - special
+    const [loadingDeleteAccounntHaveCookie, setLoadingDeleteAccounntHaveCookie] = useState(false);
+    const [loadingCopyAccounntHaveCookie, setLoadingCopyAccounntHaveCookie] = useState(false);
+
 
     // data
     const [dataApi, setDataApi] = useState([]);
@@ -92,6 +101,10 @@ function DataCompoment() {
 
     //Active
     const [active, setActive] = useState(false);
+
+    //whitelist account
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
     }
@@ -327,6 +340,106 @@ function DataCompoment() {
             setSelectedRowKeys([]);
             setLoadingCopy(false);
         }, 500)
+    }
+
+    const getAmountAccountHaveCookie = () => {
+        let tempCount = 0
+        dataApiSpecialFilter.forEach((item: DataType) => {
+            if (item.Cookie != null){
+                tempCount++
+            }
+        })
+        return tempCount
+    }
+
+    const copyDataHaveCookieAccount = () => {
+        setLoadingCopyAccounntHaveCookie(true);
+        setTimeout(() => {
+            let text = '';
+            dataApiSpecialFilter.forEach((item: DataType) => {
+                // if item in has cookie
+                if (item.Cookie != null){
+                    const itemDescript = JSON.parse(item.Description)
+                    let dataList = itemDescript.Data
+                    let fightingStyle = itemDescript['Fighting Style']
+                    let bfData = itemDescript['Inventory']['Blox Fruit']
+                    let sData = itemDescript['Inventory']['Sword']
+                    let GData = itemDescript['Inventory']['Gun']
+                    let MGata = itemDescript['Inventory']['Material']
+                    let WGata = itemDescript['Inventory']['Wear']
+                    let specaiCData = '';
+                    let fullyCData = '';
+
+                    fullyCData += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
+                    fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
+                    fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
+
+                    bfData.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
+
+                    sData.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
+
+                    GData.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
+
+                    MGata.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
+
+                    WGata.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
+                            specaiCData += key.Name + ' - '
+                        }
+                    })
+
+                    fightingStyle.map(() => {
+                        if (fightingStyle.length === 6) {
+                            fstext = 'Godhuman';
+                        } else if (fightingStyle.length > 2) {
+                            fstext = '3-5 Melee';
+                        } else {
+                            fstext = '0-2 Melee';
+                        }
+                    })
+
+                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                }
+            })
+
+            navigator.clipboard.writeText(text);
+            messageApi.success(`Copied ${getAmountAccountHaveCookie()} account into clipboard <3`);
+            setLoadingCopyAccounntHaveCookie(false);
+        }, 500)
+    }
+
+    const deleteHaveCookieAccount = () => {
+        let tempListAccount: string[] = []
+        dataApiSpecialFilter.forEach((item: DataType) => {
+            // if item in has cookie
+            if (item.Cookie != null) {
+                tempListAccount.push(item.UsernameRoblocc)
+            }
+        })
+        setLoadingDeleteAccounntHaveCookie(true);
+        deleteData(tempListAccount).then((res) => {
+            setTimeout(() => {
+                messageApi.success(`Deleted: ${getAmountAccountHaveCookie()} account !`);
+                setLoadingDeleteAccounntHaveCookie(false);
+                refreshData()
+            },500)
+        })
     }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
@@ -1102,8 +1215,6 @@ function DataCompoment() {
         setSpecialFilter(value)
     }
 
-    const {user} = useStore(({app}) => app);
-
     const limitacc = Number(user.unwrap().limitacc);
 
     const [modal, ModalcontextHolder] = Modal.useModal();
@@ -1162,8 +1273,47 @@ function DataCompoment() {
                                 <span style={{color: "#f6e9e9"}}>
                                   {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
                                 </span>
+
                             </Space>
+
+
                         </div>
+
+                        {
+                            whitelistAccounts.find((element) => element == username) != undefined ?
+                                <div style={{marginBottom: 16}}>
+                                    <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
+                                        <Space>
+                                            <Button type="primary"
+                                                    onClick={copyDataHaveCookieAccount}
+                                                    disabled={getAmountAccountHaveCookie() == 0}
+                                                    loading={loadingCopyAccounntHaveCookie}>
+                                                Copy Data Account
+                                            </Button>
+
+                                            <Popconfirm
+                                                placement="bottom"
+                                                title={'Are you sure to delete?'}
+                                                description={`${getAmountAccountHaveCookie()} account`}
+                                                onConfirm={deleteHaveCookieAccount}
+                                                okText="Yes"
+                                                cancelText="No"
+                                                icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            >
+                                                <Button type="primary"
+                                                        loading={loadingDeleteAccounntHaveCookie}
+                                                        disabled={getAmountAccountHaveCookie() == 0}
+                                                        danger>
+                                                    Delete Account
+                                                </Button>
+                                            </Popconfirm>
+                                        </Space>
+                                    </Card>
+                                </div>
+                                :
+                                <></>
+                        }
+
 
                         <div>
                             <Form>
@@ -1512,4 +1662,4 @@ function DataCompoment() {
     )
 }
 
-export default DataCompoment
+export default BloccFruit
