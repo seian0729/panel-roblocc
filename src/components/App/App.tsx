@@ -141,8 +141,8 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig}>
             <Alert
-                message={"Panel ChimOvO now back. All data has been wiped because i use new hosting service"}
-                type="success"
+                message={"SERVER API current down, i'll contact hosting service soon"}
+                type="error"
                 banner={true}
             />
             <Layout style={{minHeight: "100vh"}}>
