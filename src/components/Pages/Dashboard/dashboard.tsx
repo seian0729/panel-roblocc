@@ -24,7 +24,7 @@ import {
     Tooltip
 } from 'antd';
 import type {MenuProps} from 'antd';
-import {Link, Outlet, useLocation, useParams} from 'react-router-dom';
+import {Link, useLocation, useParams} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
 import {useStore} from "../../../state/storeHooks";
 import './dashboard.css'
@@ -37,8 +37,10 @@ import PetX from "./PetX/petx";
 import Page404 from "../404/404";
 import Profile from "../Profile/profile";
 import Bladeball from "./BladeBall/bladeball";
-
 //img
+import psxImg from '../../../img/psx.png';
+import bloxImg from '../../../img/bloxshut.png';
+import bladeballImg from "../../../img/5487b2557b4811e4c8431f9faa663749.png";
 
 
 const {Header, Sider, Content} = Layout;
@@ -64,7 +66,7 @@ const Dashboard: React.FC = () => {
     const dashboardItems: MenuProps['items'] = [
         {
             label: (
-                <Link to="./">
+                <Link to="../../dashboard">
                     <span>Dashboard</span>
                 </Link>
             ),
@@ -72,7 +74,7 @@ const Dashboard: React.FC = () => {
         },
         {
             label: (
-                <Link to="bloxfruit">
+                <Link to="../../dashboard/bloxfruit">
                     <span>Blox Fruits</span>
                 </Link>
             ),
@@ -80,7 +82,7 @@ const Dashboard: React.FC = () => {
         },
         {
             label: (
-                <Link to="petx">
+                <Link to="../../dashboard/petx">
                     <span>Pet Simulator X</span>
                 </Link>
             ),
@@ -105,7 +107,7 @@ const Dashboard: React.FC = () => {
             some: () => {
                 return {
                     label: (
-                        <span>Account Panel</span>
+                        <span>Dashboard</span>
                     ),
                     key: 'dashboard',
                     icon: <TableOutlined/>,
@@ -129,7 +131,7 @@ const Dashboard: React.FC = () => {
         // Profile
         items.push({
             label: (
-                <Link to="profile">
+                <Link to="../../dashboard/profile">
                     <span>Profile</span>
                 </Link>
             ),
@@ -159,7 +161,7 @@ const Dashboard: React.FC = () => {
         if (whitelistAccounts.find((element) => element == username) != undefined){
             dashboardItems.push({
                 label: (
-                    <Link to="bladeball">
+                    <Link to="../../dashboard/bladeball">
                         <span>Blade Ball</span>
                     </Link>
                 ),
@@ -252,7 +254,51 @@ const Dashboard: React.FC = () => {
                     }}
                 >
                     {
-                        <Outlet />
+                        params.dashboardName === undefined ?
+                            <div style={{color: "white", marginTop: 12}}>
+                                <Row gutter={[16, 16]}>
+                                    <Col>
+                                        <Card title="Blox Fruit"
+                                              hoverable
+                                              cover={<img style={{width: "100%"}} alt="example" src={bloxImg}/>}
+                                        >
+                                            <Link to={"bloxfruit"}>
+                                                <Button style={{width: "100%"}} type={"default"}> Blox Fruit </Button>
+                                            </Link>
+                                        </Card>
+                                    </Col>
+                                    <Col>
+                                        <Card title="Pet Simulator X"
+                                              hoverable
+                                              cover={<img alt="example" src={psxImg}/>}
+                                        >
+                                            <Link to={"petx"}>
+                                                <Button style={{width: "100%"}} type={"default"}> Pet Simulator
+                                                    X </Button>
+                                            </Link>
+                                        </Card>
+                                    </Col>
+                                    {
+                                        whitelistAccounts.find((element) => element == username) != undefined ?
+                                            <Col>
+                                                <Card title="Blade Ball"
+                                                      hoverable
+                                                      cover={<img style={{width: 225}} alt="example" src={bladeballImg}/>}
+                                                >
+                                                    <Link to={"bladeball"}>
+                                                        <Button style={{width: "100%"}} type={"default"}> Blade Ball </Button>
+                                                    </Link>
+                                                </Card>
+                                            </Col>
+                                            : <></>
+                                    }
+                                </Row>
+                            </div> :
+                            params.dashboardName === 'bloxfruit' ? <View/> :
+                                params.dashboardName === 'petx' ? <PetX/> :
+                                    params.dashboardName === 'profile' ? <Profile/> :
+                                        params.dashboardName === 'bladeball' && whitelistAccounts.find((element) => element == username) != undefined ? <Bladeball/>:
+                                        <Page404/>
                     }
                 </Content>
                 <Layout.Footer style={{textAlign: 'center'}}>Roblox Panel by PaulVoid and Hanei</Layout.Footer>
