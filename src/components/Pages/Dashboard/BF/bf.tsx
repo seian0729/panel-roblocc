@@ -126,7 +126,7 @@ const BloccFruit: React.FC = () => {
     const optionsMythicalFruits: SelectProps['options'] = [];
     const optionsMythicalItems: SelectProps['options'] = [];
 
-    // Insert Mythical Items 
+    // Insert Mythical Items
 
     mythicalItems.forEach((item) => {
         optionsMythicalItems.push({
@@ -651,10 +651,10 @@ const BloccFruit: React.FC = () => {
 
                         {
                             fightingStyle.map((str: string, index: number) => {
-                                items?.push({
-                                    key: index,
-                                    label: `${index +  1}. ${str}`,
-                                })
+                                    items?.push({
+                                        key: index,
+                                        label: `${index +  1}. ${str}`,
+                                    })
                                 }
                             )
                         }
@@ -724,18 +724,18 @@ const BloccFruit: React.FC = () => {
                     <>
 
                         {
-                            awakened.includes('V') ? 
-                            <Tag color={"green"} key={'full'} style={{margin: 4}}>
-                                {'Full'}
-                            </Tag> : 
-                            awakened.map((key: any) => {
+                            awakened.includes('V') ?
+                                <Tag color={"green"} key={'full'} style={{margin: 4}}>
+                                    {'Full'}
+                                </Tag> :
+                                awakened.map((key: any) => {
 
-                                return (
-                                    <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
-                                        {key.length > 10 ? 'None' : key}
-                                    </Tag>
-                                );
-                            })
+                                    return (
+                                        <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
+                                            {key.length > 10 ? 'None' : key}
+                                        </Tag>
+                                    );
+                                })
                         }
                     </>
 
