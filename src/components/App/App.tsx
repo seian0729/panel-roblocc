@@ -18,10 +18,6 @@ import Page404 from "../Pages/404/404"
 
 //Dashboard
 import Dashboard from "../Pages/Dashboard/dashboard"
-import DashboardHome from "../Pages/Dashboard/DashboardHome/DashboardHome";
-import BloccFruit from "../Pages/Dashboard/BF/bf";
-import Bladeball from "../Pages/Dashboard/BladeBall/bladeball"
-import PetX from "../Pages/Dashboard/PetX/petx";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
@@ -30,7 +26,7 @@ import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
 import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
-import Profile from "../Pages/Profile/profile";
+import moment from "moment/moment";
 
 
 //Theme ne
@@ -50,7 +46,6 @@ const themeConfig = {
 
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
     const userIsLogged = user.isSome();
 
@@ -58,11 +53,6 @@ function App() {
         none: () => false,
         some: (user) => user.role === 'Admin'
     });
-
-    const isWhitelisted = user.match({
-        none: () => false,
-        some: (user) => whitelistAccounts.indexOf(user.username) != -1
-    })
 
     if (loading) {
         return (
@@ -150,7 +140,11 @@ function App() {
 
     return (
         <ConfigProvider theme={themeConfig}>
-
+            <Alert
+                message={"SERVER API current down, i'll contact hosting service soon"}
+                type="error"
+                banner={true}
+            />
             <Layout style={{minHeight: "100vh"}}>
 
                 {
@@ -166,19 +160,8 @@ function App() {
                         <Route path="/" element={<Landing/>}/>
                         <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
                             <Route path="dashboard">
-                                <Route path={"/dashboard"} element={<Dashboard/>}>
-                                    <Route index element={<DashboardHome/>}/>
-                                    <Route path={"bloxfruit"} element={<BloccFruit/>}/>
-                                    <Route path={"petx"} element={<PetX/>}/>
-                                    <Route path={"profile"} element={<Profile/>}/>
-                                    <Route path={"bladeball"} element={<WhitelistOnlyRoute userIsLogged={userIsLogged} isWhitelisted={isWhitelisted}/>}/>
-                                    <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
-                                        <Route path="admin">
-                                            <Route path={"users"} element={<Admin/>}/>
-                                            <Route path="*" element={<Page404/>}/>
-                                        </Route>
-                                    </Route>
-                                </Route>
+                                <Route index element={<Dashboard/>}/>
+                                <Route path={":dashboardName"} element={<Dashboard/>}/>
                                 <Route path={"*"} element={<Page404/>}/>
                             </Route>
                         </Route>
@@ -187,6 +170,12 @@ function App() {
                         </Route>
                         <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
                             <Route path="/register" element={<Register/>}/>
+                        </Route>
+                        <Route element={<AdminOnlyRoute userIsLogged={userIsLogged} isAdmin={isAdmin}/>}>
+                            <Route path="admin">
+                                <Route index element={<Admin/>}/>
+                                <Route path="*" element={<Page404/>}/>
+                            </Route>
                         </Route>
                         <Route path="*" element={<Page404/>}/>
                     </Routes>
@@ -246,17 +235,5 @@ function AdminOnlyRoute({
     }
     return <Outlet/>
 }
-
-function WhitelistOnlyRoute({
-        userIsLogged,
-        isWhitelisted
-    }: { userIsLogged: boolean, isWhitelisted: boolean } & RouteProps) {
-    if (!userIsLogged || !isWhitelisted) {
-        return <Navigate to="/"/>;
-
-    }
-    return <Bladeball/>
-}
-
 
 export default App;
