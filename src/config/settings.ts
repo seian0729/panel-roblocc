@@ -1,5 +1,5 @@
 export default {
-    baseApiUrl: 'https://api.chimovo.com/v1/',
+    baseApiUrl: 'https://sv1.chimovo.com/v1/',
 };
 
 
