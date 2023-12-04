@@ -103,7 +103,7 @@ const BloccFruit: React.FC = () => {
     const [active, setActive] = useState(false);
 
     //whitelist account
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841","phuoc123123","bipvanhai"];
 
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
