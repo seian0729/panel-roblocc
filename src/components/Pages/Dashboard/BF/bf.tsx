@@ -331,7 +331,7 @@ const BloccFruit: React.FC = () => {
                         }
                     })
 
-                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }
             })
 
