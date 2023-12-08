@@ -242,7 +242,7 @@ const BloccFruit: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update > 500) {
+            if (moment().unix() - update > 900) {
                 temp++
             }
         })
@@ -956,9 +956,9 @@ const BloccFruit: React.FC = () => {
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 600
+                    return moment().unix() - moment(record.updatedAt).unix() < 900
                 } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 600
+                    return moment().unix() - moment(record.updatedAt).unix() >= 900
                 } else {
                     return false
                 }

@@ -141,8 +141,8 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig}>
             <Alert
-                message={"SERVER API DOWN - I'LL FIX SOON (TONIGHT MAYBE)"}
-                type="error"
+                message={"Server back, mark account inactive if not update data > 15 min"}
+                type="success"
                 banner={true}
             />
             <Layout style={{minHeight: "100vh"}}>
