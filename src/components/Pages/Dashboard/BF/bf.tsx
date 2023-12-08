@@ -1237,8 +1237,8 @@ const BloccFruit: React.FC = () => {
             {contextHolder}
             {ModalcontextHolder}
             <Alert
-                message={"Warning! If you use emulator, the script maybe not performent to send data into server (missing some data)"}
-                type="warning"
+                message={"Got some error with timezone (hosting services issues not me) so Active & Inactive now will showing wrong data"}
+                type="error"
                 banner={true}
             />
             <Row justify={'start'}>

@@ -141,7 +141,7 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig}>
             <Alert
-                message={"Server back, mark account inactive if not update data > 15 min"}
+                message={"Server back"}
                 type="success"
                 banner={true}
             />
