@@ -204,7 +204,7 @@ const BloccFruit: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 600) {
+            if (moment().unix() - update <= 900) {
                 temp++
             }
         })
@@ -230,7 +230,7 @@ const BloccFruit: React.FC = () => {
         dataApi.forEach((item: DataType) => {
             const note = item.Note
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 600) {
+            if (moment().unix() - update <= 900) {
                 temp.find((item: DrawerProps) => item.note === note)!.online++
             }
         })
@@ -933,7 +933,7 @@ const BloccFruit: React.FC = () => {
                 return (
                     <>
                         {
-                            moment(record.updatedAt).fromNow()
+                            moment(moment(record.updatedAt).unix() * 1000 + 600000).fromNow()
                         }
                     </>
                 )
@@ -983,7 +983,7 @@ const BloccFruit: React.FC = () => {
                         seaHubBFRender.map((key) => {
                             const labelKey = key[1]
                             const labelKeyB: string = labelKey as string;
-                            if (moment().unix() - moment(record.updatedAt).unix() <= 600){
+                            if (moment().unix() - moment(record.updatedAt).unix() <= 900){
                                 items?.push(
                                     {
                                         key: key[0],
@@ -1021,10 +1021,10 @@ const BloccFruit: React.FC = () => {
                         <>
                             <Dropdown menu={{ items }}>
                                 <Badge
-                                    status={moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'error' : 'success'}
+                                    status={moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'error' : 'success'}
                                     text={
                                         <Space>
-                                            {moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'Inactive' : 'Active'}
+                                            {moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'Inactive' : 'Active'}
                                             <DownOutlined />
                                         </Space>
                                     }/>
@@ -1037,8 +1037,8 @@ const BloccFruit: React.FC = () => {
                     return (
                         <>
                             <Badge
-                                status={moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'error' : 'success'}
-                                text={moment().unix() - moment(record.updatedAt).unix() >= 600 ? 'Inactive' : 'Active'}/>
+                                status={moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'error' : 'success'}
+                                text={moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'Inactive' : 'Active'}/>
                         </>
                     )
                 }
