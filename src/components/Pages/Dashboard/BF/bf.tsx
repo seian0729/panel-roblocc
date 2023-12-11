@@ -933,7 +933,7 @@ const BloccFruit: React.FC = () => {
                 return (
                     <>
                         {
-                            moment(moment(record.updatedAt).unix() * 1000 + 600000).fromNow()
+                            moment(record.updatedAt).fromNow()
                         }
                     </>
                 )
@@ -1237,8 +1237,8 @@ const BloccFruit: React.FC = () => {
             {contextHolder}
             {ModalcontextHolder}
             <Alert
-                message={"Got some error with timezone (hosting services issues not me) so Active & Inactive now will showing wrong data"}
-                type="error"
+                message={"Our service now working normal"}
+                type="success"
                 banner={true}
             />
             <Row justify={'start'}>
