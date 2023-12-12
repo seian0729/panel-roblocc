@@ -20,10 +20,9 @@ export async function login(username: string, password: string): Promise<Result<
 export async function loginKey(key: string): Promise<Result<User, GenericErrors>> {
     try {
         const {data} = await axios.post('users/loginKey', {key});
-        console.log('data', data);
+        //console.log('data', data);
         return Ok(guard(object({user: userDecoder}))(data).user);
-    } catch ({response: {data}}) {
-        console.log('data', data);
+    } catch ({response:{data}}) {
         return Err(guard(object({errors: genericErrorsDecoder}))(data).errors);
     }
 }
