@@ -865,7 +865,8 @@ const BloccFruit: React.FC = () => {
                     ['Dragon']: 'Dragon',
                     ['Dough']: 'Dough',
                     ['Leopard']: 'Leopard',
-                    ['Mammoth']: 'Mammoth'
+                    ['Mammoth']: 'Mammoth',
+                    ['Kitsune']: 'Kitsune'
                 }
 
 
