@@ -113,7 +113,7 @@ const BloccFruit: React.FC = () => {
 
     const [filteredSpecial, setFilteredSpecial] = useState(false)
 
-    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth']);
+    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune']);
 
     const mythicalItems = [
         'Cursed Dual Katana',
