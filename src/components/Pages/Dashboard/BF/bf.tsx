@@ -113,7 +113,7 @@ const BloccFruit: React.FC = () => {
 
     const [filteredSpecial, setFilteredSpecial] = useState(false)
 
-    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune','T']);
+    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune','T-Rex']);
 
     const mythicalItems = [
         'Cursed Dual Katana',
@@ -139,7 +139,7 @@ const BloccFruit: React.FC = () => {
     mythicalFruits.forEach((fruits) => {
         optionsMythicalFruits.push({
             value: fruits,
-            label: fruits == "T" ? "T-Rex" : fruits,
+            label: fruits,
         })
     })
 
@@ -853,7 +853,7 @@ const BloccFruit: React.FC = () => {
                 let GData = description['Inventory']['Gun']
                 let MGata = description['Inventory']['Material']
                 let WGata = description['Inventory']['Wear']
-                
+
                 const specialRender: any[] = [];
 
                 const specialRenderShortname: any = {
@@ -866,10 +866,9 @@ const BloccFruit: React.FC = () => {
                     ['Leopard']: 'Leopard',
                     ['Mammoth']: 'Mammoth',
                     ['Kitsune']: 'Kitsune',
-                    ['T']: 'T-Rex',
+                    ['T-Rex']: 'T-Rex',
                 }
-
-
+                
                 return (
                     <>
                         {bfData.map((key: any) => {
@@ -1473,8 +1472,8 @@ const BloccFruit: React.FC = () => {
                                                         } else if (typeof (key) == 'object') {
                                                             return (
                                                                 <Tag color={colorsInventory[key.Rarity]}
-                                                                     key={key.Name == "T" ? "T-Rex" : key.Name} style={{margin: 4}}>
-                                                                    {key.Name == "T" ? "T-Rex" : key.Name}
+                                                                     key={key.Name} style={{margin: 4}}>
+                                                                    {key.Name}
                                                                 </Tag>
                                                             );
                                                         }
