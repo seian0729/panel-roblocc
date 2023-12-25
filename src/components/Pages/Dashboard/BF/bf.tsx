@@ -853,12 +853,7 @@ const BloccFruit: React.FC = () => {
                 let GData = description['Inventory']['Gun']
                 let MGata = description['Inventory']['Material']
                 let WGata = description['Inventory']['Wear']
-
-                bfData.map((key: any) => {
-                    console.log(key)
-                })
-
-
+                
                 const specialRender: any[] = [];
 
                 const specialRenderShortname: any = {
