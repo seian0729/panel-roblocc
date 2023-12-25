@@ -113,7 +113,7 @@ const BloccFruit: React.FC = () => {
 
     const [filteredSpecial, setFilteredSpecial] = useState(false)
 
-    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune']);
+    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune','T']);
 
     const mythicalItems = [
         'Cursed Dual Katana',
@@ -139,7 +139,7 @@ const BloccFruit: React.FC = () => {
     mythicalFruits.forEach((fruits) => {
         optionsMythicalFruits.push({
             value: fruits,
-            label: fruits
+            label: fruits == "T" ? "T-Rex" : fruits,
         })
     })
 
@@ -854,6 +854,10 @@ const BloccFruit: React.FC = () => {
                 let MGata = description['Inventory']['Material']
                 let WGata = description['Inventory']['Wear']
 
+                bfData.map((key: any) => {
+                    console.log(key)
+                })
+
 
                 const specialRender: any[] = [];
 
@@ -866,7 +870,8 @@ const BloccFruit: React.FC = () => {
                     ['Dough']: 'Dough',
                     ['Leopard']: 'Leopard',
                     ['Mammoth']: 'Mammoth',
-                    ['Kitsune']: 'Kitsune'
+                    ['Kitsune']: 'Kitsune',
+                    ['T']: 'T-Rex',
                 }
 
 
@@ -1473,8 +1478,8 @@ const BloccFruit: React.FC = () => {
                                                         } else if (typeof (key) == 'object') {
                                                             return (
                                                                 <Tag color={colorsInventory[key.Rarity]}
-                                                                     key={key.Name} style={{margin: 4}}>
-                                                                    {key.Name}
+                                                                     key={key.Name == "T" ? "T-Rex" : key.Name} style={{margin: 4}}>
+                                                                    {key.Name == "T" ? "T-Rex" : key.Name}
                                                                 </Tag>
                                                             );
                                                         }
