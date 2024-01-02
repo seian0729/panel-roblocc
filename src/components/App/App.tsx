@@ -141,8 +141,8 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig}>
             <Alert
-                message={"Server back, all service now working"}
-                type="success"
+                message={"New Version of website release soon, late Jan or Feb maybe"}
+                type="info"
                 banner={true}
             />
             <Layout style={{minHeight: "100vh"}}>
