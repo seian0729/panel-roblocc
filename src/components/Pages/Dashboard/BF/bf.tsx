@@ -1,4 +1,4 @@
-import type {CollapseProps, TableProps, UploadProps} from 'antd';
+import type {CollapseProps, TableProps, TabsProps, UploadProps} from 'antd';
 import {
     Badge,
     Button,
@@ -26,7 +26,7 @@ import {
     Typography,
     Tooltip,
     Dropdown,
-    Alert
+    Alert, Tabs
 } from 'antd';
 import {
     CaretRightOutlined, DownOutlined,
@@ -36,10 +36,12 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
+import { Bar } from '@ant-design/plots';
+
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
+import {deleteData, getData, getTotalAccount, getDataLimit, getOnlineEachNote} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps, SelectProps } from 'antd';
@@ -164,6 +166,9 @@ const BloccFruit: React.FC = () => {
     const onChangeRender = (e: CheckboxChangeEvent) => {
         setNewRender(e.target.checked)
     };
+
+    const [dataChartNote, setDataChartNote] = useState([]);
+
 
     //Online - Offline
     let ngu
@@ -446,6 +451,28 @@ const BloccFruit: React.FC = () => {
         //console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
+
+    const config = {
+        data: getOnlineForNote(),
+        xField: 'note',
+        yField: 'online',
+        legend: {
+            position: 'top-left',
+        },
+        barBackground: {
+            style: {
+                fill: 'rgba(0,0,0,0.1)',
+            },
+        },
+        interactions: [
+            {
+                type: 'active-region',
+                enable: false,
+            },
+        ],
+        theme: "dark"
+    };
+
 
     const rowSelection = {
         disable: true,
@@ -1231,18 +1258,11 @@ const BloccFruit: React.FC = () => {
         });
     }
 
-    return (
-
-        <div>
-            {contextHolder}
-            {ModalcontextHolder}
-            <Alert
-                message={"Our service now working normal"}
-                type="success"
-                banner={true}
-            />
-            <Row justify={'start'}>
-                <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
+    const itemsTabs: TabsProps['items'] = [
+        {
+            key: 'account-control',
+            label: 'Account Control',
+            children: <Row>
                 <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
                     <Card size="small" title="Account Control">
                         <div style={{marginBottom: 16}}>
@@ -1422,11 +1442,24 @@ const BloccFruit: React.FC = () => {
                                     </Space>
                                 </Card>
                             </Col>
+                            {
+
+                                <Col xs={24} sm={24} md={24} lg={12} xl={24}>
+                                    <Card size="small" title={"Note Active"}>
+                                        <Bar {...config} />
+                                    </Card>
+                                </Col>
+
+                            }
                         </Row>
                     </Card>
                 </Col>
-            </Row>
-            <Row>
+            </Row>,
+        },
+        {
+            key: 'account-tracking',
+            label: 'Account Tracking',
+            children: <>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
                     <Table
                         rowSelection={rowSelection}
@@ -1633,31 +1666,27 @@ const BloccFruit: React.FC = () => {
                     />
                     <FloatButton.BackTop/>
                 </Col>
+                </>,
+        },
+
+    ];
+
+    return (
+
+        <div>
+            {contextHolder}
+            {ModalcontextHolder}
+            <Row justify={'start'}>
+                <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
+                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 12}}>
+                    <Tabs
+                        defaultActiveKey="account-control"
+                        items={itemsTabs}
+                        indicatorSize={(origin) => origin - 16}
+                        animated={{inkBar: true, tabPane: true}}
+                    />
+                </Col>
             </Row>
-            <Drawer
-                title="Active từng Note"
-                placement="right"
-                closable={true}
-                onClose={() => {
-                    setOpenNoteDrawer(false)
-                }}
-                open={openNoteDrawer}
-                getContainer={false}>
-                <Table
-                    dataSource={getOnlineForNote()}
-                    columns={[
-                        {
-                            title: 'Note',
-                            dataIndex: 'note',
-                        },
-                        {
-                            title: 'Online',
-                            dataIndex: 'online',
-                        }
-                    ]}
-                    rowKey={(record) => record.note}
-                ></Table>
-            </Drawer>
         </div>
     )
 }

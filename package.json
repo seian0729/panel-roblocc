@@ -5,6 +5,7 @@
   "dependencies": {
     "@ant-design/dark-theme": "^2.0.2",
     "@ant-design/icons": "4.0.0",
+    "@ant-design/plots": "^2.1.5",
     "@hqoss/monads": "^0.5.0",
     "@react-spring/web": "^9.7.2",
     "@reduxjs/toolkit": "^1.9.1",
@@ -21,7 +22,7 @@
     "@types/react-redux": "^7.1.25",
     "@types/react-router-dom": "^5.3.3",
     "@types/react-syntax-highlighter": "^15.5.6",
-    "antd": "^5.6.1",
+    "antd": "^5.12.8",
     "axios": "^1.2.2",
     "decoders": "1.25.5",
     "enquire-js": "^0.2.1",

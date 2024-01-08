@@ -745,7 +745,6 @@ const PetX: React.FC = () => {
                 <Tabs defaultActiveKey={'account'} items={itemsAccount} animated={{inkBar: true, tabPane: true}}/>
             </Col>
 
-
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
