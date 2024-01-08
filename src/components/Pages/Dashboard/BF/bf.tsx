@@ -26,7 +26,7 @@ import {
     Typography,
     Tooltip,
     Dropdown,
-    Alert, Tabs
+    Tabs
 } from 'antd';
 import {
     CaretRightOutlined, DownOutlined,
@@ -41,7 +41,7 @@ import { Bar } from '@ant-design/plots';
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData, getTotalAccount, getDataLimit, getOnlineEachNote} from "../../../../services/data";
+import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps, SelectProps } from 'antd';

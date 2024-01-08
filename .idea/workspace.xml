@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="+ small change suck">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="+ Account Status / Tách vài thứ">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BF/bf.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BF/bf.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/PetX/petx.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/PetX/petx.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/data.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,7 +98,7 @@
       <workItem from="1704340635462" duration="614000" />
       <workItem from="1704430222281" duration="4000" />
       <workItem from="1704697273252" duration="2293000" />
-      <workItem from="1704699875490" duration="1107000" />
+      <workItem from="1704699875490" duration="1833000" />
     </task>
     <task id="LOCAL-00001" summary="+ Back">
       <option name="closed" value="true" />
@@ -218,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1704193270403</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="+ Account Status / Tách vài thứ">
+      <option name="closed" value="true" />
+      <created>1704701428087</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1704701428087</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,6 +246,7 @@
     <MESSAGE value="+ a b c" />
     <MESSAGE value="- Fixed timezone" />
     <MESSAGE value="+ small change suck" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ small change suck" />
+    <MESSAGE value="+ Account Status / Tách vài thứ" />
+    <option name="LAST_COMMIT_MESSAGE" value="+ Account Status / Tách vài thứ" />
   </component>
 </project>
