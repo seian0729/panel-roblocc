@@ -105,7 +105,7 @@ const BloccFruit: React.FC = () => {
     const [active, setActive] = useState(false);
 
     //whitelist account
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841","phuoc123123","bipvanhai"];
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
@@ -123,6 +123,10 @@ const BloccFruit: React.FC = () => {
         'Mirror Fractal',
         'Valkyrie Helm'
     ]
+
+    if (whitelistAccounts.find((element) => element == username) != undefined){
+        mythicalItems.push('True Triple Katana')
+    }
 
     const optionsMythical: SelectProps['options'] = [];
     const optionsMythicalFruits: SelectProps['options'] = [];
@@ -894,6 +898,7 @@ const BloccFruit: React.FC = () => {
                     ['Mammoth']: 'Mammoth',
                     ['Kitsune']: 'Kitsune',
                     ['T-Rex']: 'T-Rex',
+                    ['True Triple Katana']: 'TTK'
                 }
                 
                 return (
