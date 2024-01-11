@@ -209,6 +209,10 @@ const BloccFruit: React.FC = () => {
         }, 1000);
     };
 
+    const disabledFunction = () => {
+        messageApi.error('This function not available')
+    }
+
     const getOnline = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
@@ -1104,6 +1108,57 @@ const BloccFruit: React.FC = () => {
             filters: filtersNote,
             onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
             filterSearch: true,
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            width: '30%',
+            render: (_, record) => {
+                const items: MenuProps['items'] = [
+                    {
+                        label: `Username: ${record.UsernameRoblocc}`,
+                        key: '0',
+                        disabled: true
+                    },
+                    {
+                        type: 'divider',
+                      },
+                    {
+                      label: <a onClick={() => {
+                        //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                        disabledFunction()
+                    }}>Copy username/password</a>,
+                      key: '1',
+                    },
+                    {
+                      label: <a onClick={() => {
+                        //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                        disabledFunction()
+                    }}>Copy full data</a>,
+                      key: '2',
+                    },
+                    {
+                      type: 'divider',
+                    },
+                    {
+                      label: <a onClick={() => {
+                        //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                        disabledFunction()
+                    }}>Delete Account</a>,
+                      key: '3',
+                      danger: true
+                    },
+                  ];
+                  return(<Dropdown menu={{ items }} trigger={['click']}>
+                  <a onClick={(e) => e.preventDefault()}>
+                    <Space>
+                      Action
+                      <DownOutlined />
+                    </Space>
+                  </a>
+                </Dropdown>)
+            }
+            ,
         }
     ];
 
