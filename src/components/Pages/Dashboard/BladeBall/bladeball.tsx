@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import type {TabsProps} from 'antd';
-import {deleteData, getData, getOrder} from "../../../../services/data";
+import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {useStore} from "../../../../state/storeHooks";
@@ -84,7 +84,7 @@ const Bladeball: React.FC = () => {
     const deleteAccount = () => {
         setLoadingDelete(true);
         setTimeout(() => {
-            deleteData(selectedRowKeys as string[]).then((res) => {
+            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);

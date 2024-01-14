@@ -22,7 +22,14 @@ import {
     Tag
 } from 'antd'
 import {CheckboxChangeEvent} from "antd/es/checkbox";
-import {deleteData, getData, getOrder, getRate, sendDiamond} from "../../../../services/data";
+import {
+    deleteData,
+    bulkDeleteData,
+    getData,
+    getOrder,
+    getRate,
+    sendDiamond
+} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {
@@ -117,12 +124,12 @@ const PetX: React.FC = () => {
         }, 1000);
     }
 
-    //Delete account
+    //Bulk Delete account
 
-    const deleteAccount = () => {
+    const bulkDeleteAccount = () => {
         setLoadingDelete(true);
         setTimeout(() => {
-            deleteData(selectedRowKeys as string[]).then((res) => {
+            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
@@ -131,6 +138,7 @@ const PetX: React.FC = () => {
             refreshData()
         }, 1000);
     };
+
 
     // Get Online - Offline
 
@@ -511,7 +519,7 @@ const PetX: React.FC = () => {
                                             placement="bottom"
                                             title={'Are you sure to delete?'}
                                             description={`${selectedRowKeys.length} account`}
-                                            onConfirm={deleteAccount}
+                                            onConfirm={bulkDeleteAccount}
                                             okText="Yes"
                                             cancelText="No"
                                             icon={<QuestionCircleOutlined style={{color: 'red'}}/>}

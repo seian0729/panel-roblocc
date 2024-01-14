@@ -44,9 +44,16 @@ export async function getDataLimit(gameid: number, page: number, limit: number){
 }
 
 
-// deleteData
-export async function deleteData(username: string[]){
+// bulkDeleteData
+export async function bulkDeleteData(username: string[]){
     const { data } = await axios.post('data/bulkDeleteData', {Usernames: username})
+    return data
+}
+
+// deleteData
+
+export async function deleteData(username: string){
+    const { data } = await axios.post('data/deleteData', {Username: username})
     return data
 }
 

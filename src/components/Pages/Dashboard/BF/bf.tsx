@@ -7,7 +7,6 @@ import {
     Col,
     Collapse,
     Divider,
-    Drawer,
     FloatButton,
     Form,
     Input,
@@ -29,7 +28,7 @@ import {
     Tabs
 } from 'antd';
 import {
-    CaretRightOutlined, DownOutlined,
+    CaretRightOutlined, CopyOutlined, DeleteOutlined, DownOutlined,
     ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
@@ -41,14 +40,12 @@ import { Bar } from '@ant-design/plots';
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {deleteData, getData, getTotalAccount, getDataLimit} from "../../../../services/data";
+import {bulkDeleteData, getData, getTotalAccount, getDataLimit, deleteData} from "../../../../services/data";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps, SelectProps } from 'antd';
 
 const { Text } = Typography;
-const {Option} = Select
-const {Panel} = Collapse;
 const { Dragger } = Upload;
 
 
@@ -106,6 +103,8 @@ const BloccFruit: React.FC = () => {
 
     //whitelist account
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+
+
 
     const handleData = (val: { value: any }) => {
         setDataValue(val.value)
@@ -196,10 +195,10 @@ const BloccFruit: React.FC = () => {
         }, 1000);
     }
 
-    const deleteAccount = () => {
+    const bulkDeleteAccount = () => {
         setLoadingDelete(true);
         setTimeout(() => {
-            deleteData(selectedRowKeys as string[]).then((res) => {
+            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
                 //console.log(res);
             })
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
@@ -274,8 +273,6 @@ const BloccFruit: React.FC = () => {
                     text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '\n';
                 }
             })
-
-            navigator.clipboard.writeText(text);
             messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
             setSelectedRowKeys([]);
             setLoadingCopy(false);
@@ -305,46 +302,53 @@ const BloccFruit: React.FC = () => {
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
                     bfData.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     sData.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     GData.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     MGata.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     WGata.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     fightingStyle.map(() => {
                         if (fightingStyle.length === 6) {
-                            fstext = 'Godhuman';
+                            fsText = 'Godhuman';
                         } else if (fightingStyle.length > 2) {
-                            fstext = '3-5 Melee';
+                            fsText = '3-5 Melee';
                         } else {
-                            fstext = '0-2 Melee';
+                            fsText = '0-2 Melee';
                         }
                     })
 
-                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                    text +=
+                        item.UsernameRoblocc + '/' +
+                        item.Password + '/' +
+                        item.Cookie + '/' +
+                        fullyCData + '/' +
+                        itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']) + '/' +
+                        fsText + '/' +
+                        specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }
             })
 
@@ -388,46 +392,52 @@ const BloccFruit: React.FC = () => {
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
 
                     bfData.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     sData.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     GData.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     MGata.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     WGata.map((key: any) => {
-                        if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                            specaiCData += key.Name + ' - '
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
                         }
                     })
 
                     fightingStyle.map(() => {
                         if (fightingStyle.length === 6) {
-                            fstext = 'Godhuman';
+                            fsText = 'Godhuman';
                         } else if (fightingStyle.length > 2) {
-                            fstext = '3-5 Melee';
+                            fsText = '3-5 Melee';
                         } else {
-                            fstext = '0-2 Melee';
+                            fsText = '0-2 Melee';
                         }
                     })
 
-                    text += item.UsernameRoblocc + '-' + item.Password + '/' + item.Cookie + '/' + fullyCData + '/' + itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' + fstext + '/' + specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                    text += item.UsernameRoblocc + '-' +
+                        item.Password + '/' +
+                        item.Cookie + '/' +
+                        fullyCData + '/' +
+                        itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' +
+                        fsText + '/' +
+                        specaiCData.substring(0, specaiCData.length - 2) + "\n"
                 }
             })
 
@@ -446,7 +456,7 @@ const BloccFruit: React.FC = () => {
             }
         })
         setLoadingDeleteAccounntHaveCookie(true);
-        deleteData(tempListAccount).then((res) => {
+        bulkDeleteData(tempListAccount).then((res) => {
             setTimeout(() => {
                 messageApi.success(`Deleted: ${getAmountAccountHaveCookie()} account !`);
                 setLoadingDeleteAccounntHaveCookie(false);
@@ -454,6 +464,7 @@ const BloccFruit: React.FC = () => {
             },500)
         })
     }
+
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         //console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -535,8 +546,8 @@ const BloccFruit: React.FC = () => {
 
     // variable
 
-    let fstext = '';
-    let fscolor = '';
+    let fsText = '';
+    let fsColor = '';
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
@@ -669,20 +680,18 @@ const BloccFruit: React.FC = () => {
                         {fightingStyle.map((str: string) => {
                             //console.log(str)
                             if (fightingStyle.length === 6) {
-                                fstext = 'Godhuman';
-                                fscolor = 'blue';
+                                fsText = 'Godhuman';
+                                fsColor = 'blue';
                             } else if (fightingStyle.length > 2) {
-                                fstext = '3-5 Melee';
-                                fscolor = 'volcano';
-                            } else if (str == 'Fighting Style Data Not Found') {
-                                fstext = 'Fighting Style Data Not Found';
-                                fscolor = 'red';
+                                fsText = '3-5 Melee';
+                                fsColor = 'volcano';
                             }
                             else {
-                                fstext = '0-2 Melee';
-                                fscolor = 'red';
+                                fsText = '0-2 Melee';
+                                fsColor = 'red';
                             }
                         })}
+
 
                         {
                             fightingStyle.map((str: string, index: number) => {
@@ -694,9 +703,15 @@ const BloccFruit: React.FC = () => {
                             )
                         }
 
-                        <Dropdown menu={{ items }}>
-                            <Tag color={fscolor}>{fstext}</Tag>
-                        </Dropdown>
+                        {
+                            fightingStyle.includes('Fighting Style Data Not Found') == true ?
+                                <Text>-</Text> :
+                                <Dropdown menu={{ items }}>
+                                    <Tag color={fsColor}>{fsText}</Tag>
+                                </Dropdown>
+                        }
+
+
                     </>
                 )
             },
@@ -743,7 +758,12 @@ const BloccFruit: React.FC = () => {
             },
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
-                return <div>{description.Data.DevilFruit}</div>;
+                return <>
+                {
+                    description.Data.DevilFruit == '' ? "-" : description.Data.DevilFruit
+                }
+                </>
+
             },
         },
 
@@ -759,18 +779,19 @@ const BloccFruit: React.FC = () => {
                     <>
 
                         {
-                            awakened.includes('V') ?
-                                <Tag color={"green"} key={'full'} style={{margin: 4}}>
-                                    {'Full'}
-                                </Tag> :
-                                awakened.map((key: any) => {
-
-                                    return (
-                                        <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
-                                            {key.length > 10 ? 'None' : key}
-                                        </Tag>
-                                    );
-                                })
+                            awakened.includes('Awakened Abilities Data Not Found') ?
+                                <Text>-</Text> :
+                                awakened.includes('V') ?
+                                    <Tag color={"green"} key={'full'} style={{margin: 4}}>
+                                        {'Full'}
+                                    </Tag> :
+                                        awakened.map((key: any) => {
+                                            return (
+                                                <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
+                                                    {key.length > 10 ? 'None' : key}
+                                                </Tag>
+                                            );
+                                        })
                         }
                     </>
 
@@ -818,63 +839,63 @@ const BloccFruit: React.FC = () => {
                 let WGataB = descriptionB['Inventory']['Wear']
 
                 bfDataA.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
-                        objSortA.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                        objSortA.push(key['Name'])
                     }
                 })
 
                 sDataA.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortA.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortA.push(key['Name'])
                     }
                 })
 
                 GDataA.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortA.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortA.push(key['Name'])
                     }
                 })
 
                 MGataA.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortA.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortA.push(key['Name'])
                     }
                 })
 
                 WGataA.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortA.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortA.push(key['Name'])
                     }
                 })
 
 
                 bfDataB.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
-                        objSortB.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                        objSortB.push(key['Name'])
                     }
                 })
 
                 sDataB.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortB.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortB.push(key['Name'])
                     }
                 })
 
                 GDataB.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortB.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortB.push(key['Name'])
                     }
                 })
 
                 MGataB.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortB.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortB.push(key['Name'])
                     }
                 })
 
                 WGataB.map((key: any) => {
-                    if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                        objSortB.push(key.Name)
+                    if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                        objSortB.push(key['Name'])
                     }
                 })
 
@@ -908,26 +929,26 @@ const BloccFruit: React.FC = () => {
                 return (
                     <>
                         {bfData.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalFruits.indexOf(key.Name) !== -1) {
-                                specialRender.push(key.Name)
+                            if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                                specialRender.push(key['Name'])
                             }
                         })}
 
                         {sData.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                                specialRender.push(key.Name)
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                specialRender.push(key['Name'])
                             }
                         })}
 
                         {GData.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                                specialRender.push(key.Name)
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                specialRender.push(key['Name'])
                             }
                         })}
 
                         {MGata.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                                specialRender.push(key.Name)
+                            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                specialRender.push(key['Name'])
                             }
                         })}
 
@@ -941,9 +962,7 @@ const BloccFruit: React.FC = () => {
                         {
 
                             specialRender.length == 0 ?
-                                <Tag color="red" key={'none'} style={{margin: 4}}>
-                                    Special Item Not Found
-                                </Tag>
+                                <Text>-</Text>
                                 :
                                 specialRender.map((key: any) => {
                                     return (
@@ -1126,15 +1145,83 @@ const BloccFruit: React.FC = () => {
                     {
                       label: <a onClick={() => {
                         //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                        disabledFunction()
-                    }}>Copy username/password</a>,
+                          navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}`);
+                          messageApi.success(`Copied ${record.UsernameRoblocc}`)
+                    }}><CopyOutlined /> Copy username/password</a>,
                       key: '1',
                     },
                     {
                       label: <a onClick={() => {
                         //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                        disabledFunction()
-                    }}>Copy full data</a>,
+                          let text = ''
+                          const itemDescript = JSON.parse(record.Description)
+                          let dataList = itemDescript.Data
+                          let fightingStyle = itemDescript['Fighting Style']
+                          let bfData = itemDescript['Inventory']['Blox Fruit']
+                          let sData = itemDescript['Inventory']['Sword']
+                          let GData = itemDescript['Inventory']['Gun']
+                          let MGata = itemDescript['Inventory']['Material']
+                          let WGata = itemDescript['Inventory']['Wear']
+                          let specaiCData = '';
+                          let fullyCData = '';
+
+                          fullyCData += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
+                          fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
+                          fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
+
+                          bfData.map((key: any) => {
+                              if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                                  specaiCData += key['Name'] + ' - '
+                              }
+                          })
+
+                          sData.map((key: any) => {
+                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                  specaiCData += key['Name'] + ' - '
+                              }
+                          })
+
+                          GData.map((key: any) => {
+                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                  specaiCData += key['Name'] + ' - '
+                              }
+                          })
+
+                          MGata.map((key: any) => {
+                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                  specaiCData += key['Name'] + ' - '
+                              }
+                          })
+
+                          WGata.map((key: any) => {
+                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                                  specaiCData += key['Name'] + ' - '
+                              }
+                          })
+
+                          fightingStyle.map(() => {
+                              if (fightingStyle.length === 6) {
+                                  fsText = 'Godhuman';
+                              } else if (fightingStyle.length > 2) {
+                                  fsText = '3-5 Melee';
+                              } else {
+                                  fsText = '0-2 Melee';
+                              }
+                          })
+
+                          text +=
+                              record.UsernameRoblocc + '/' +
+                              record.Password + '/' +
+                              record.Cookie + '/' +
+                              fullyCData + '/' +
+                              itemDescript.Data['DevilFruit'] + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']) + '/' +
+                              fsText + '/' +
+                              specaiCData.substring(0, specaiCData.length - 2) + "\n"
+
+                          navigator.clipboard.writeText(text);
+                          messageApi.success(`Copied Data ${record.UsernameRoblocc}`)
+
+                    }}><CopyOutlined /> Copy full data</a>,
                       key: '2',
                     },
                     {
@@ -1143,8 +1230,11 @@ const BloccFruit: React.FC = () => {
                     {
                       label: <a onClick={() => {
                         //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                        disabledFunction()
-                    }}>Delete Account</a>,
+                          deleteData(record.UsernameRoblocc).then((res) => {
+                              messageApi.success(`Deleted account: ${record.UsernameRoblocc} !`);
+                              refreshData()
+                          })
+                    }}><DeleteOutlined /> Delete Account</a>,
                       key: '3',
                       danger: true
                     },
@@ -1340,7 +1430,7 @@ const BloccFruit: React.FC = () => {
                                     placement="bottom"
                                     title={'Are you sure to delete?'}
                                     description={`${selectedRowKeys.length} account`}
-                                    onConfirm={deleteAccount}
+                                    onConfirm={bulkDeleteAccount}
                                     okText="Yes"
                                     cancelText="No"
                                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
@@ -1360,13 +1450,13 @@ const BloccFruit: React.FC = () => {
                         </div>
 
                         {
-                            whitelistAccounts.find((element) => element == username) != undefined ?
+                            whitelistAccounts.find((element) => element === username) === undefined ?
                                 <div style={{marginBottom: 16}}>
                                     <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
                                         <Space>
                                             <Button type="primary"
                                                     onClick={copyDataHaveCookieAccount}
-                                                    disabled={getAmountAccountHaveCookie() == 0}
+                                                    disabled={getAmountAccountHaveCookie() === 0}
                                                     loading={loadingCopyAccounntHaveCookie}>
                                                 Copy Data Account
                                             </Button>
@@ -1382,7 +1472,7 @@ const BloccFruit: React.FC = () => {
                                             >
                                                 <Button type="primary"
                                                         loading={loadingDeleteAccounntHaveCookie}
-                                                        disabled={getAmountAccountHaveCookie() == 0}
+                                                        disabled={getAmountAccountHaveCookie() === 0}
                                                         danger>
                                                     Delete Account
                                                 </Button>
@@ -1542,11 +1632,11 @@ const BloccFruit: React.FC = () => {
                                         'magenta',
                                         'error',
                                     ]
-                                    recordFruits.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                    recordSwords.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                    recordGuns.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                    recordWears.sort((a: any, b: any) => b.Rarity - a.Rarity);
-                                    recordMaterials.sort((a: any, b: any) => b.Rarity - a.Rarity);
+                                    recordFruits.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                    recordSwords.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                    recordGuns.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                    recordWears.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                    recordMaterials.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
                                     // (recordInventory)
 
                                     const collapseItems: CollapseProps['items'] = [
@@ -1564,9 +1654,9 @@ const BloccFruit: React.FC = () => {
                                                             );
                                                         } else if (typeof (key) == 'object') {
                                                             return (
-                                                                <Tag color={colorsInventory[key.Rarity]}
-                                                                     key={key.Name} style={{margin: 4}}>
-                                                                    {key.Name}
+                                                                <Tag color={colorsInventory[key['Rarity']]}
+                                                                     key={key['Name']} style={{margin: 4}}>
+                                                                    {key['Name']}
                                                                 </Tag>
                                                             );
                                                         }
@@ -1592,9 +1682,9 @@ const BloccFruit: React.FC = () => {
                                                                 );
                                                             } else if (typeof (key) == 'object') {
                                                                 return (
-                                                                    <Tag color={colorsInventory[key.Rarity]}
-                                                                         key={key.Name} style={{margin: 4}}>
-                                                                        {key.Name}
+                                                                    <Tag color={colorsInventory[key['Rarity']]}
+                                                                         key={key['Name']} style={{margin: 4}}>
+                                                                        {key['Name']}
                                                                     </Tag>
                                                                 );
                                                             }
@@ -1620,9 +1710,9 @@ const BloccFruit: React.FC = () => {
                                                                 );
                                                             } else if (typeof (key) == 'object') {
                                                                 return (
-                                                                    <Tag color={colorsInventory[key.Rarity]}
-                                                                         key={key.Name} style={{margin: 4}}>
-                                                                        {key.Name}
+                                                                    <Tag color={colorsInventory[key['Rarity']]}
+                                                                         key={key['Name']} style={{margin: 4}}>
+                                                                        {key['Name']}
                                                                     </Tag>
                                                                 );
                                                             }
@@ -1648,9 +1738,9 @@ const BloccFruit: React.FC = () => {
                                                                 );
                                                             } else if (typeof (key) == 'object') {
                                                                 return (
-                                                                    <Tag color={colorsInventory[key.Rarity]}
-                                                                         key={key.Name} style={{margin: 4}}>
-                                                                        {key.Name}
+                                                                    <Tag color={colorsInventory[key['Rarity']]}
+                                                                         key={key['Name']} style={{margin: 4}}>
+                                                                        {key['Name']}
                                                                     </Tag>
                                                                 );
                                                             }
@@ -1676,9 +1766,9 @@ const BloccFruit: React.FC = () => {
                                                                 );
                                                             } else if (typeof (key) == 'object') {
                                                                 return (
-                                                                    <Tag color={colorsInventory[key.Rarity]}
-                                                                         key={key.Name} style={{margin: 4}}>
-                                                                        {key.Name}
+                                                                    <Tag color={colorsInventory[key['Rarity']]}
+                                                                         key={key['Name']} style={{margin: 4}}>
+                                                                        {key['Name']}
                                                                     </Tag>
                                                                 );
                                                             }

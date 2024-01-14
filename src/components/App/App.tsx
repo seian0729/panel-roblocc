@@ -95,6 +95,8 @@ function App() {
 
     ];
 
+    let {username} = user.unwrap();
+
     // logout button
     function logout() {
         message.success('Logout Success')
@@ -104,7 +106,6 @@ function App() {
     }
 
     if (user.isSome()) {
-        let {username} = user.unwrap();
         items.push({
             label: (
                 <Link to="/profile">
@@ -137,14 +138,24 @@ function App() {
 
     }
 
+    const cookList = ['phuoc123123','hai123123']
+
 
     return (
         <ConfigProvider theme={themeConfig}>
-            <Alert
-                message={"New Version of website release soon, late Jan or Feb maybe"}
-                type="info"
-                banner={true}
-            />
+            {
+                cookList.includes(username) ?
+                    <Alert
+                        message={"Hoàng Công Kỳ cút"}
+                        type="error"
+                        banner={true}
+                /> :
+                    <Alert
+                    message={"New Version of website release soon, late Jan or Feb maybe"}
+                    type="info"
+                    banner={true}
+                />
+            }
             <Layout style={{minHeight: "100vh"}}>
 
                 {
