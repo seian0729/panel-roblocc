@@ -95,7 +95,7 @@ function App() {
 
     ];
 
-    let {username} = user.unwrap();
+
 
     // logout button
     function logout() {
@@ -109,7 +109,7 @@ function App() {
         items.push({
             label: (
                 <Link to="/profile">
-                    <span>{username}</span>
+                    <span>{user.unwrap().username}</span>
                 </Link>
             ),
             key: 'profile',
@@ -139,6 +139,12 @@ function App() {
     }
 
     const cookList = ['phuoc123123','hai123123']
+
+    let username = ""
+
+    if (user.isSome()) {
+        username = user.unwrap().username
+    }
 
 
     return (
