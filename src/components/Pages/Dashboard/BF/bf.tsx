@@ -25,7 +25,7 @@ import {
     Typography,
     Tooltip,
     Dropdown,
-    Tabs
+    Tabs, Drawer
 } from 'antd';
 import {
     CaretRightOutlined, CopyOutlined, DeleteOutlined, DownOutlined,
@@ -1441,6 +1441,9 @@ const BloccFruit: React.FC = () => {
                                                 Delete Account
                                             </Button>
                                         </Popconfirm>
+                                        <Button type="primary" onClick={() => {
+                                            setOpenNoteDrawer(true)
+                                        }}>Note Active</Button>
                                         <span style={{color: "#f6e9e9"}}>
                                         {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
                                         </span>
@@ -1805,6 +1808,30 @@ const BloccFruit: React.FC = () => {
                     </Row>,
                 </Col>
             </Row>
+            <Drawer
+                title="Active per Note"
+                placement="right"
+                closable={true}
+                onClose={() => {
+                    setOpenNoteDrawer(false)
+                }}
+                open={openNoteDrawer}
+                getContainer={false}>
+                <Table
+                    dataSource={getOnlineForNote()}
+                    columns={[
+                        {
+                            title: 'Note',
+                            dataIndex: 'note',
+                        },
+                        {
+                            title: 'Online',
+                            dataIndex: 'online',
+                        }
+                    ]}
+                    rowKey={(record) => record.note}
+                ></Table>
+            </Drawer>
         </div>
     )
 }
