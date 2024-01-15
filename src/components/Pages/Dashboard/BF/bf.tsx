@@ -1408,419 +1408,6 @@ const BloccFruit: React.FC = () => {
         });
     }
 
-    const itemsTabs: TabsProps['items'] = [
-        {
-            key: 'account-control',
-            label: 'Account Control',
-            children: <Row>
-                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                    <Card size="small" title="Account Control">
-                        <div style={{marginBottom: 16}}>
-                            <Space wrap>
-                                <Button type="primary"
-                                        onClick={openModal}
-                                        disabled={!hasSelected} loading={loadingCopy}>Copy
-                                    Data</Button>
-
-                                <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
-                                <Button type="primary" onClick={() => {
-                                    setOpenNoteDrawer(true)
-                                }}>Note Active</Button>
-                                <Popconfirm
-                                    placement="bottom"
-                                    title={'Are you sure to delete?'}
-                                    description={`${selectedRowKeys.length} account`}
-                                    onConfirm={bulkDeleteAccount}
-                                    okText="Yes"
-                                    cancelText="No"
-                                    icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                    disabled={!hasSelected}
-                                >
-                                    <Button type="primary" disabled={!hasSelected} loading={loadingDelete} danger>
-                                        Delete Account
-                                    </Button>
-                                </Popconfirm>
-                                <span style={{color: "#f6e9e9"}}>
-                                  {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
-                                </span>
-
-                            </Space>
-
-
-                        </div>
-
-                        {
-                            whitelistAccounts.find((element) => element == username) != undefined ?
-                                <div style={{marginBottom: 16}}>
-                                    <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
-                                        <Space>
-                                            <Button type="primary"
-                                                    onClick={copyDataHaveCookieAccount}
-                                                    disabled={getAmountAccountHaveCookie() === 0}
-                                                    loading={loadingCopyAccounntHaveCookie}>
-                                                Copy Data Account
-                                            </Button>
-
-                                            <Popconfirm
-                                                placement="bottom"
-                                                title={'Are you sure to delete?'}
-                                                description={`${getAmountAccountHaveCookie()} account`}
-                                                onConfirm={deleteHaveCookieAccount}
-                                                okText="Yes"
-                                                cancelText="No"
-                                                icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                            >
-                                                <Button type="primary"
-                                                        loading={loadingDeleteAccounntHaveCookie}
-                                                        disabled={getAmountAccountHaveCookie() === 0}
-                                                        danger>
-                                                    Delete Account
-                                                </Button>
-                                            </Popconfirm>
-                                        </Space>
-                                    </Card>
-                                </div>
-                                :
-                                <></>
-                        }
-
-
-                        <div>
-                            <Form>
-                                <Form.Item label="Sort Data">
-                                    <Select
-                                        labelInValue
-                                        defaultValue={{value: 'Level', label: 'Level'}}
-                                        style={{width: 120}}
-                                        onChange={handleData}
-                                        options={[
-                                            {
-                                                value: 'Level',
-                                                label: 'Level',
-                                            },
-                                            {
-                                                value: 'Fragments',
-                                                label: 'Fragments',
-                                            },
-                                            {
-                                                value: 'Beli',
-                                                label: 'Beli',
-                                            }
-                                        ]}
-                                    />
-                                </Form.Item>
-                            </Form>
-                        </div>
-                        <div>
-                            <Form>
-                                <Form.Item>
-                                    <Dragger {...props}>
-                                        <p className="ant-upload-drag-icon">
-                                            <InboxOutlined />
-                                        </p>
-                                        <p className="ant-upload-text">Click or drag file to this area to upload account into panel</p>
-                                        <p className="ant-upload-hint">
-                                            {"Supported only .txt file and formatted file accounts => username/password/cookie"}
-                                        </p>
-                                    </Dragger>
-
-                                </Form.Item>
-                            </Form>
-                        </div>
-
-                        <div style={{marginTop: 12}}>
-                            <Form>
-                                <Form.Item label="Hide Name (optional)*">
-                                    <Checkbox onChange={onChangeHidename}/>
-                                </Form.Item>
-                            </Form>
-                        </div>
-
-                        { /*
-                        <div style={{marginTop: 12}}>
-                            <Form>
-                                <Form.Item label="New Render Method (optional)*">
-                                    <Checkbox onChange={onChangeRender}/>
-                                </Form.Item>
-                            </Form>
-                        </div>
-                        */
-                        }
-
-                    </Card>
-                </Col>
-                <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                    <Card size="small" title="Accounts Status">
-                        <Row gutter={[16, 16]}>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                <Card size="small" hoverable={true}>
-                                    <Statistic
-                                        title="Active Accounts"
-                                        value={getOnline()}
-                                        valueStyle={{color: '#6abe39'}}
-                                        prefix={<UserOutlined/>}
-                                    />
-                                </Card>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                <Card size="small" hoverable={true}>
-                                    <Statistic
-                                        title="Inactive Accounts"
-                                        value={getOffline()}
-                                        valueStyle={{color: '#e84749'}}
-                                        prefix={<UserOutlined/>}
-                                    />
-                                </Card>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                <Card size="small" hoverable={true}>
-                                    <Statistic
-                                        title="Total Accounts"
-                                        value={getOffline() + getOnline()}
-                                        valueStyle={{color: '#535dff'}}
-                                        prefix={<UserOutlined/>}
-                                    />
-                                </Card>
-                            </Col>
-                            <Col xs={24} sm={24} md={24} lg={12} xl={24}>
-                                <Card size="small" hoverable={true}>
-                                    <Space direction={"vertical"} style={{width: '100%'}}>
-                                        <Text type="secondary">Limit Account</Text>
-                                        <Tooltip title={countAccount + " / " + limitacc + " accounts"}>
-                                            <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small"  status={countAccount*(100/limitacc) >= 100 ? "exception" : "success"}/>
-                                        </Tooltip>
-                                    </Space>
-                                </Card>
-                            </Col>
-                            {
-
-                                <Col xs={24} sm={24} md={24} lg={12} xl={24}>
-                                    <Card size="small" title={"Note Active"}>
-                                        <Bar {...config} />
-                                    </Card>
-                                </Col>
-
-                            }
-                        </Row>
-                    </Card>
-                </Col>
-            </Row>,
-        },
-        {
-            key: 'account-tracking',
-            label: 'Account Tracking',
-            children: <>
-                <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
-                    <Table
-                        rowSelection={rowSelection}
-                        columns={columns}
-                        expandable={
-                            {
-                                expandedRowRender: (record, index) => {
-
-                                    let recordInventory = JSON.parse(record.Description)['Inventory']
-                                    let recordFruits = recordInventory['Blox Fruit']
-                                    let recordSwords = recordInventory['Sword']
-                                    let recordGuns = recordInventory['Gun']
-                                    let recordWears = recordInventory['Wear']
-                                    let recordMaterials = recordInventory['Material']
-
-                                    const colorsInventory = [
-                                        'default',
-                                        'processing',
-                                        'purple',
-                                        'magenta',
-                                        'error',
-                                    ]
-                                    recordFruits.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                    recordSwords.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                    recordGuns.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                    recordWears.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                    recordMaterials.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                    // (recordInventory)
-
-                                    const collapseItems: CollapseProps['items'] = [
-                                        {
-                                            key: 'bloxfruit',
-                                            label: 'Blox Fruit',
-                                            children: <>
-                                                {
-                                                    recordFruits.map((key: any) => {
-                                                        if (typeof (key) == 'string') {
-                                                            return (
-                                                                <Tag color="geekblue" key={key} style={{margin: 4}}>
-                                                                    {key}
-                                                                </Tag>
-                                                            );
-                                                        } else if (typeof (key) == 'object') {
-                                                            return (
-                                                                <Tag color={colorsInventory[key['Rarity']]}
-                                                                     key={key['Name']} style={{margin: 4}}>
-                                                                    {key['Name']}
-                                                                </Tag>
-                                                            );
-                                                        }
-                                                    })
-                                                }
-                                            </>,
-                                            style: panelStyle
-                                        },
-                                        {
-                                            key: 'sword',
-                                            label: 'Sword',
-                                            children: <>
-                                                {
-                                                    recordSwords.length === 0 ?
-                                                        <Tag color="red">Sword Data Not Found</Tag> :
-                                                        recordSwords.map((key: any) => {
-                                                            if (typeof (key) == 'string') {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}
-                                                                         style={{margin: 4}}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            } else if (typeof (key) == 'object') {
-                                                                return (
-                                                                    <Tag color={colorsInventory[key['Rarity']]}
-                                                                         key={key['Name']} style={{margin: 4}}>
-                                                                        {key['Name']}
-                                                                    </Tag>
-                                                                );
-                                                            }
-                                                        })
-                                                }
-                                            </>,
-                                            style: panelStyle
-                                        },
-                                        {
-                                            key: 'gun',
-                                            label: 'Gun',
-                                            children: <>
-                                                {
-                                                    recordGuns.length === 0 ?
-                                                        <Tag color="red">Gun Data Not Found</Tag> :
-                                                        recordGuns.map((key: any) => {
-                                                            if (typeof (key) == 'string') {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}
-                                                                         style={{margin: 4}}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            } else if (typeof (key) == 'object') {
-                                                                return (
-                                                                    <Tag color={colorsInventory[key['Rarity']]}
-                                                                         key={key['Name']} style={{margin: 4}}>
-                                                                        {key['Name']}
-                                                                    </Tag>
-                                                                );
-                                                            }
-                                                        })
-                                                }
-                                            </>,
-                                            style: panelStyle
-                                        },
-                                        {
-                                            key: 'wear',
-                                            label: 'Wear',
-                                            children: <>
-                                                {
-                                                    recordWears.length === 0 ?
-                                                        <Tag color="red">Wear Data Not Found</Tag> :
-                                                        recordWears.map((key: any) => {
-                                                            if (typeof (key) == 'string') {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}
-                                                                         style={{margin: 4}}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            } else if (typeof (key) == 'object') {
-                                                                return (
-                                                                    <Tag color={colorsInventory[key['Rarity']]}
-                                                                         key={key['Name']} style={{margin: 4}}>
-                                                                        {key['Name']}
-                                                                    </Tag>
-                                                                );
-                                                            }
-                                                        })
-                                                }
-                                            </>,
-                                            style: panelStyle
-                                        },
-                                        {
-                                            key: 'materials',
-                                            label: 'Material',
-                                            children: <>
-                                                {
-                                                    recordMaterials.length === 0 ?
-                                                        <Tag color="red">Material Data Not Found</Tag> :
-                                                        recordMaterials.map((key: any) => {
-                                                            if (typeof (key) == 'string') {
-                                                                return (
-                                                                    <Tag color="geekblue" key={key}
-                                                                         style={{margin: 4}}>
-                                                                        {key}
-                                                                    </Tag>
-                                                                );
-                                                            } else if (typeof (key) == 'object') {
-                                                                return (
-                                                                    <Tag color={colorsInventory[key['Rarity']]}
-                                                                         key={key['Name']} style={{margin: 4}}>
-                                                                        {key['Name']}
-                                                                    </Tag>
-                                                                );
-                                                            }
-                                                        })
-                                                }
-                                            </>,
-                                            style: panelStyle
-                                        },
-                                    ]
-
-                                    return (
-                                        <Collapse
-                                            bordered={false}
-                                            defaultActiveKey={['1']}
-                                            items={collapseItems}
-                                            expandIcon={({isActive}) => <CaretRightOutlined
-                                                rotate={isActive ? 90 : 0}/>}/>
-                                    )
-                                },
-                            }
-
-                        }
-                        dataSource={dataApiSpecialFilter}
-                        rowKey={(record) => record.UsernameRoblocc}
-                        loading={loadingTable}
-                        size={"small"}
-                        scroll={{x: true}}
-                        pagination={{
-                            total: newRender ? totalPage : dataApiSpecialFilter.length,
-                            pageSizeOptions: [10, 50, 100, 500, 1000, 2000, 5000],
-                            showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
-                            position: ['topCenter'],
-                            defaultPageSize: 10,
-                            showSizeChanger: true,
-                            onChange: (page, pageSize) => {
-                                if (newRender) {
-                                    fetchDataLimit(page, pageSize)
-                                }
-                                else {
-                                    setPage(page);
-                                    setPageSize(pageSize);
-                                }
-                            },
-                        }}
-                    />
-                    <FloatButton.BackTop/>
-                </Col>
-                </>,
-        },
-
-    ];
-
     return (
 
         <div>
@@ -1829,12 +1416,393 @@ const BloccFruit: React.FC = () => {
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 12}}>
-                    <Tabs
-                        defaultActiveKey="account-control"
-                        items={itemsTabs}
-                        indicatorSize={(origin) => origin - 16}
-                        animated={{inkBar: true, tabPane: true}}
-                    />
+                    <Row>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
+                            <Card size="small" title="Account Control">
+                                <div style={{marginBottom: 16}}>
+                                    <Space wrap>
+                                    <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
+                                        <Button type="primary"
+                                                onClick={openModal}
+                                                disabled={!hasSelected} loading={loadingCopy}>Copy
+                                            Data</Button>
+
+                                        <Popconfirm
+                                            placement="bottom"
+                                            title={'Are you sure to delete?'}
+                                            description={`${selectedRowKeys.length} account`}
+                                            onConfirm={bulkDeleteAccount}
+                                            okText="Yes"
+                                            cancelText="No"
+                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            disabled={!hasSelected}
+                                        >
+                                            <Button type="primary" disabled={!hasSelected} loading={loadingDelete} danger>
+                                                Delete Account
+                                            </Button>
+                                        </Popconfirm>
+                                        <span style={{color: "#f6e9e9"}}>
+                                        {hasSelected ? `Selected ${selectedRowKeys.length} account` : ''}
+                                        </span>
+
+                                    </Space>
+
+
+                                </div>
+
+                                {
+                                    whitelistAccounts.find((element) => element == username) != undefined ?
+                                        <div style={{marginBottom: 16}}>
+                                            <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
+                                                <Space>
+                                                    <Button type="primary"
+                                                            onClick={copyDataHaveCookieAccount}
+                                                            disabled={getAmountAccountHaveCookie() === 0}
+                                                            loading={loadingCopyAccounntHaveCookie}>
+                                                        Copy Data Account
+                                                    </Button>
+
+                                                    <Popconfirm
+                                                        placement="bottom"
+                                                        title={'Are you sure to delete?'}
+                                                        description={`${getAmountAccountHaveCookie()} account`}
+                                                        onConfirm={deleteHaveCookieAccount}
+                                                        okText="Yes"
+                                                        cancelText="No"
+                                                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                                    >
+                                                        <Button type="primary"
+                                                                loading={loadingDeleteAccounntHaveCookie}
+                                                                disabled={getAmountAccountHaveCookie() === 0}
+                                                                danger>
+                                                            Delete Account
+                                                        </Button>
+                                                    </Popconfirm>
+                                                </Space>
+                                            </Card>
+                                        </div>
+                                        :
+                                        <></>
+                                }
+
+
+                                <div>
+                                    <Form>
+                                        <Form.Item label="Sort Data">
+                                            <Select
+                                                labelInValue
+                                                defaultValue={{value: 'Level', label: 'Level'}}
+                                                style={{width: 120}}
+                                                onChange={handleData}
+                                                options={[
+                                                    {
+                                                        value: 'Level',
+                                                        label: 'Level',
+                                                    },
+                                                    {
+                                                        value: 'Fragments',
+                                                        label: 'Fragments',
+                                                    },
+                                                    {
+                                                        value: 'Beli',
+                                                        label: 'Beli',
+                                                    }
+                                                ]}
+                                            />
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                                <div>
+                                    <Form>
+                                        <Form.Item>
+                                            <Dragger {...props}>
+                                                <p className="ant-upload-drag-icon">
+                                                    <InboxOutlined />
+                                                </p>
+                                                <p className="ant-upload-text">Click or drag file to this area to upload account into panel</p>
+                                                <p className="ant-upload-hint">
+                                                    {"Supported only .txt file and formatted file accounts => username/password/cookie"}
+                                                </p>
+                                            </Dragger>
+
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+
+                                <div style={{marginTop: 12}}>
+                                    <Form>
+                                        <Form.Item label="Hide Name (optional)*">
+                                            <Checkbox onChange={onChangeHidename}/>
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+
+                                { /*
+                                <div style={{marginTop: 12}}>
+                                    <Form>
+                                        <Form.Item label="New Render Method (optional)*">
+                                            <Checkbox onChange={onChangeRender}/>
+                                        </Form.Item>
+                                    </Form>
+                                </div>
+                                */
+                                }
+
+                            </Card>
+                        </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
+                                <Card size="small" title="Accounts Status">
+                                    <Row gutter={[16, 16]}>
+                                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                                            <Card size="small" hoverable={true}>
+                                                <Statistic
+                                                    title="Active Accounts"
+                                                    value={getOnline()}
+                                                    valueStyle={{color: '#6abe39'}}
+                                                    prefix={<UserOutlined/>}
+                                                />
+                                            </Card>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                                            <Card size="small" hoverable={true}>
+                                                <Statistic
+                                                    title="Inactive Accounts"
+                                                    value={getOffline()}
+                                                    valueStyle={{color: '#e84749'}}
+                                                    prefix={<UserOutlined/>}
+                                                />
+                                            </Card>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                                            <Card size="small" hoverable={true}>
+                                                <Statistic
+                                                    title="Total Accounts"
+                                                    value={getOffline() + getOnline()}
+                                                    valueStyle={{color: '#535dff'}}
+                                                    prefix={<UserOutlined/>}
+                                                />
+                                            </Card>
+                                        </Col>
+                                        <Col xs={24} sm={24} md={24} lg={12} xl={24}>
+                                            <Card size="small" hoverable={true}>
+                                                <Space direction={"vertical"} style={{width: '100%'}}>
+                                                    <Text type="secondary">Limit Account</Text>
+                                                    <Tooltip title={countAccount + " / " + limitacc + " accounts"}>
+                                                        <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small"  status={countAccount*(100/limitacc) >= 100 ? "exception" : "success"}/>
+                                                    </Tooltip>
+                                                </Space>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                </Card>
+                            </Col>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
+                                <Table
+                                    rowSelection={rowSelection}
+                                    columns={columns}
+                                    expandable={
+                                        {
+                                            expandedRowRender: (record, index) => {
+
+                                                let recordInventory = JSON.parse(record.Description)['Inventory']
+                                                let recordFruits = recordInventory['Blox Fruit']
+                                                let recordSwords = recordInventory['Sword']
+                                                let recordGuns = recordInventory['Gun']
+                                                let recordWears = recordInventory['Wear']
+                                                let recordMaterials = recordInventory['Material']
+
+                                                const colorsInventory = [
+                                                    'default',
+                                                    'processing',
+                                                    'purple',
+                                                    'magenta',
+                                                    'error',
+                                                ]
+                                                recordFruits.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                                recordSwords.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                                recordGuns.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                                recordWears.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                                recordMaterials.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+                                                // (recordInventory)
+
+                                                const collapseItems: CollapseProps['items'] = [
+                                                    {
+                                                        key: 'bloxfruit',
+                                                        label: 'Blox Fruit',
+                                                        children: <>
+                                                            {
+                                                                recordFruits.map((key: any) => {
+                                                                    if (typeof (key) == 'string') {
+                                                                        return (
+                                                                            <Tag color="geekblue" key={key} style={{margin: 4}}>
+                                                                                {key}
+                                                                            </Tag>
+                                                                        );
+                                                                    } else if (typeof (key) == 'object') {
+                                                                        return (
+                                                                            <Tag color={colorsInventory[key['Rarity']]}
+                                                                                key={key['Name']} style={{margin: 4}}>
+                                                                                {key['Name']}
+                                                                            </Tag>
+                                                                        );
+                                                                    }
+                                                                })
+                                                            }
+                                                        </>,
+                                                        style: panelStyle
+                                                    },
+                                                    {
+                                                        key: 'sword',
+                                                        label: 'Sword',
+                                                        children: <>
+                                                            {
+                                                                recordSwords.length === 0 ?
+                                                                    <Tag color="red">Sword Data Not Found</Tag> :
+                                                                    recordSwords.map((key: any) => {
+                                                                        if (typeof (key) == 'string') {
+                                                                            return (
+                                                                                <Tag color="geekblue" key={key}
+                                                                                    style={{margin: 4}}>
+                                                                                    {key}
+                                                                                </Tag>
+                                                                            );
+                                                                        } else if (typeof (key) == 'object') {
+                                                                            return (
+                                                                                <Tag color={colorsInventory[key['Rarity']]}
+                                                                                    key={key['Name']} style={{margin: 4}}>
+                                                                                    {key['Name']}
+                                                                                </Tag>
+                                                                            );
+                                                                        }
+                                                                    })
+                                                            }
+                                                        </>,
+                                                        style: panelStyle
+                                                    },
+                                                    {
+                                                        key: 'gun',
+                                                        label: 'Gun',
+                                                        children: <>
+                                                            {
+                                                                recordGuns.length === 0 ?
+                                                                    <Tag color="red">Gun Data Not Found</Tag> :
+                                                                    recordGuns.map((key: any) => {
+                                                                        if (typeof (key) == 'string') {
+                                                                            return (
+                                                                                <Tag color="geekblue" key={key}
+                                                                                    style={{margin: 4}}>
+                                                                                    {key}
+                                                                                </Tag>
+                                                                            );
+                                                                        } else if (typeof (key) == 'object') {
+                                                                            return (
+                                                                                <Tag color={colorsInventory[key['Rarity']]}
+                                                                                    key={key['Name']} style={{margin: 4}}>
+                                                                                    {key['Name']}
+                                                                                </Tag>
+                                                                            );
+                                                                        }
+                                                                    })
+                                                            }
+                                                        </>,
+                                                        style: panelStyle
+                                                    },
+                                                    {
+                                                        key: 'wear',
+                                                        label: 'Wear',
+                                                        children: <>
+                                                            {
+                                                                recordWears.length === 0 ?
+                                                                    <Tag color="red">Wear Data Not Found</Tag> :
+                                                                    recordWears.map((key: any) => {
+                                                                        if (typeof (key) == 'string') {
+                                                                            return (
+                                                                                <Tag color="geekblue" key={key}
+                                                                                    style={{margin: 4}}>
+                                                                                    {key}
+                                                                                </Tag>
+                                                                            );
+                                                                        } else if (typeof (key) == 'object') {
+                                                                            return (
+                                                                                <Tag color={colorsInventory[key['Rarity']]}
+                                                                                    key={key['Name']} style={{margin: 4}}>
+                                                                                    {key['Name']}
+                                                                                </Tag>
+                                                                            );
+                                                                        }
+                                                                    })
+                                                            }
+                                                        </>,
+                                                        style: panelStyle
+                                                    },
+                                                    {
+                                                        key: 'materials',
+                                                        label: 'Material',
+                                                        children: <>
+                                                            {
+                                                                recordMaterials.length === 0 ?
+                                                                    <Tag color="red">Material Data Not Found</Tag> :
+                                                                    recordMaterials.map((key: any) => {
+                                                                        if (typeof (key) == 'string') {
+                                                                            return (
+                                                                                <Tag color="geekblue" key={key}
+                                                                                    style={{margin: 4}}>
+                                                                                    {key}
+                                                                                </Tag>
+                                                                            );
+                                                                        } else if (typeof (key) == 'object') {
+                                                                            return (
+                                                                                <Tag color={colorsInventory[key['Rarity']]}
+                                                                                    key={key['Name']} style={{margin: 4}}>
+                                                                                    {key['Name']}
+                                                                                </Tag>
+                                                                            );
+                                                                        }
+                                                                    })
+                                                            }
+                                                        </>,
+                                                        style: panelStyle
+                                                    },
+                                                ]
+
+                                                return (
+                                                    <Collapse
+                                                        bordered={false}
+                                                        defaultActiveKey={['1']}
+                                                        items={collapseItems}
+                                                        expandIcon={({isActive}) => <CaretRightOutlined
+                                                            rotate={isActive ? 90 : 0}/>}/>
+                                                )
+                                            },
+                                        }
+
+                                    }
+                                    dataSource={dataApiSpecialFilter}
+                                    rowKey={(record) => record.UsernameRoblocc}
+                                    loading={loadingTable}
+                                    size={"small"}
+                                    scroll={{x: true}}
+                                    pagination={{
+                                        total: newRender ? totalPage : dataApiSpecialFilter.length,
+                                        pageSizeOptions: [10, 50, 100, 500, 1000, 2000, 5000],
+                                        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
+                                        position: ['topCenter'],
+                                        defaultPageSize: 10,
+                                        showSizeChanger: true,
+                                        onChange: (page, pageSize) => {
+                                            if (newRender) {
+                                                fetchDataLimit(page, pageSize)
+                                            }
+                                            else {
+                                                setPage(page);
+                                                setPageSize(pageSize);
+                                            }
+                                        },
+                                    }}
+                                />
+                                <FloatButton.BackTop/>
+                            </Col>
+                    </Row>,
                 </Col>
             </Row>
         </div>

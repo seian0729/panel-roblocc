@@ -149,19 +149,10 @@ function App() {
 
     return (
         <ConfigProvider theme={themeConfig}>
-            {
-                cookList.includes(username) ?
-                    <Alert
-                        message={"Hoàng Công Kỳ cút"}
-                        type="error"
-                        banner={true}
-                /> :
-                    <Alert
-                    message={"New Version of website release soon, late Jan or Feb maybe"}
-                    type="info"
-                    banner={true}
-                />
-            }
+            <Alert
+                message={"I'll maintenance this website on 00:00 - 1/21/24 for update some features, it's took 3-5 hours to complete"}
+                type="info"
+                banner={true}/>
             <Layout style={{minHeight: "100vh"}}>
 
                 {

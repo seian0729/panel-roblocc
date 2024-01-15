@@ -1,5 +1,15 @@
 import React, {useState} from 'react';
-import {Row, Col, Button, message, notification, Form, Input, Divider, Tabs} from 'antd';
+import {Row, 
+    Col, 
+    Button, 
+    message, 
+    notification, 
+    Form, 
+    Input, 
+    Divider, 
+    Tabs, 
+    Modal
+} from 'antd';
 import type { TabsProps } from 'antd';
 import {CloseCircleOutlined, CheckCircleOutlined, UserOutlined, LockOutlined} from '@ant-design/icons';
 import {useStoreWithInitializer} from "../../../state/storeHooks";
@@ -11,7 +21,12 @@ import {loadUserIntoApp} from "../../../types/user";
 
 export function Login() {
     const [apiNotification, contextHolder] = notification.useNotification();
-    const [messageApi, messcontextHolder] = message.useMessage();
+
+    const [modal, modalContextHolder] = Modal.useModal();
+
+    const [messageApi, messContextHolder] = message.useMessage();
+
+    const [loadingLogin, setLoadingLogin] = useState(false);
 
     const {errors, loginIn, user} = useStoreWithInitializer(({login}) => login, dispatchOnCall(initializeLogin()));
 
@@ -52,7 +67,7 @@ export function Login() {
                 </Form.Item>
 
                 <Form.Item>
-                    <Button type="primary" htmlType="submit">
+                    <Button type="primary" htmlType="submit"  loading={loadingLogin}>
                         Login
                     </Button>
                 </Form.Item>
@@ -84,7 +99,7 @@ export function Login() {
                     </Form.Item>
 
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
+                        <Button type="primary" htmlType="submit" loading={loadingLogin}>
                             Login
                         </Button>
                     </Form.Item>
@@ -95,7 +110,8 @@ export function Login() {
     return (
         <div>
             {contextHolder}
-            {messcontextHolder}
+            {messContextHolder}
+            {modalContextHolder}
             <Row justify="center" style={{display: "flex", alignItems: "center", justifyContent:"center", minHeight:"calc(100vh - 100px)"}}>
                 <Col span={8}>
                     <Divider orientation="left">Login Page</Divider>
@@ -107,6 +123,7 @@ export function Login() {
 
 
     async function signIn(ev: React.FormEvent) {
+        setLoadingLogin(true)
         if (store.getState().login.loginIn) return;
 
         const {username, password} = store.getState().login.user;
@@ -117,6 +134,8 @@ export function Login() {
         result.match({
                 ok: (user) => {
                     //console.log(user);
+
+                    /*
                     apiNotification.open({
                         message: 'Login',
                         description: 'Login Success',
@@ -129,15 +148,35 @@ export function Login() {
                             }, 500)
                         }
                     });
+                    */
+
+                    modal.success({
+                        title: 'Login',
+                        content: 'Login Success',
+                    })
+                    setTimeout(() => {
+                        window.location.href = 'dashboard'
+                        loadUserIntoApp(user);
+                    }, 1000)
+
                 },
                 err: (err) => {
                     //console.log(err.message);
+                    setLoadingLogin(false)
+                    /*
                     apiNotification.open({
                         message: 'Login',
                         description: err.message,
                         duration: 2,
                         icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
                     });
+                    */
+
+                    modal.error({
+                        title: 'Login',
+                        content: err.message,
+                    })
+
                     store.dispatch(updateErrors(err));
                 }
             },
@@ -145,6 +184,7 @@ export function Login() {
     }
 
     async function signInKey(ev: React.FormEvent){
+        setLoadingLogin(true)
         if (store.getState().login.loginIn) return;
 
         const { key } = store.getState().login.user;
