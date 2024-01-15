@@ -194,6 +194,7 @@ export function Login() {
         result.match({
                 ok: (user) => {
                     //console.log(user);
+                    /*
                     apiNotification.open({
                         message: 'Login',
                         description: 'Login Success',
@@ -206,9 +207,19 @@ export function Login() {
                             }, 500)
                         }
                     });
+                     */
+                    modal.success({
+                        title: 'Login',
+                        content: 'Login Success',
+                    })
+                    setTimeout(() => {
+                        window.location.href = 'dashboard'
+                        loadUserIntoApp(user);
+                    }, 1000)
                 },
                 err: (err) => {
                     //console.log(err.message);
+                    /*
                     apiNotification.open({
                         message: 'Login',
                         description: err.message,
@@ -216,6 +227,11 @@ export function Login() {
                         icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
                     });
                     store.dispatch(updateErrors(err));
+                     */
+                    modal.error({
+                        title: 'Login',
+                        content: err.message,
+                    })
                 }
             },
         );
