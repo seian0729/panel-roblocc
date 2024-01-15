@@ -1450,7 +1450,7 @@ const BloccFruit: React.FC = () => {
                         </div>
 
                         {
-                            whitelistAccounts.find((element) => element === username) === undefined ?
+                            whitelistAccounts.find((element) => element == username) != undefined ?
                                 <div style={{marginBottom: 16}}>
                                     <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
                                         <Space>
