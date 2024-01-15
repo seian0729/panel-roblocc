@@ -150,7 +150,7 @@ function App() {
     return (
         <ConfigProvider theme={themeConfig}>
             <Alert
-                message={"I'll maintenance this website on 00:00 - 1/21/24 for update some features, it's took 3-5 hours to complete"}
+                message={"I'll maintenance this website on 00:00 - 1/21/24 for update some features, it's take 3-5 hours or longer"}
                 type="info"
                 banner={true}/>
             <Layout style={{minHeight: "100vh"}}>
