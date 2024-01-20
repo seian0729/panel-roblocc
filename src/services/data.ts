@@ -9,7 +9,7 @@ axios.defaults.baseURL = settings.baseApiUrl;
 export async function login(username: string, password: string): Promise<Result<User, GenericErrors>> {
     try {
         const {data} = await axios.post('users/login', {username, password});
-        //console.log('data', data);
+        console.log('data', data);
         return Ok(guard(object({user: userDecoder}))(data).user);
     } catch ({response: {data}}) {
         return Err(guard(object({errors: genericErrorsDecoder}))(data).errors);
@@ -20,7 +20,7 @@ export async function login(username: string, password: string): Promise<Result<
 export async function loginKey(key: string): Promise<Result<User, GenericErrors>> {
     try {
         const {data} = await axios.post('users/loginKey', {key});
-        //console.log('data', data);
+        console.log('data', data);
         return Ok(guard(object({user: userDecoder}))(data).user);
     } catch ({response:{data}}) {
         return Err(guard(object({errors: genericErrorsDecoder}))(data).errors);
@@ -30,6 +30,11 @@ export async function loginKey(key: string): Promise<Result<User, GenericErrors>
 export async function getUser(): Promise<User> {
     const { data } = await axios.get('user');
     return guard(object({ user: userDecoder }))(data).user;
+}
+
+export async function getTransactions(){
+    const { data } = await axios.get('users/transactions')
+    return data;
 }
 
 // Get data - gameid

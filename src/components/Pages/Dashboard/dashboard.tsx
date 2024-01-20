@@ -5,7 +5,7 @@ import {
     UserOutlined,
     LogoutOutlined,
     TableOutlined,
-    DashboardOutlined, CloseCircleOutlined, DotChartOutlined
+    DashboardOutlined, CloseCircleOutlined, DotChartOutlined, HistoryOutlined
 } from '@ant-design/icons';
 import {
     Layout,
@@ -24,7 +24,7 @@ import {
     Tooltip
 } from 'antd';
 import type {MenuProps} from 'antd';
-import {Link, useLocation, useParams} from 'react-router-dom';
+import {Link, Outlet, useLocation, useParams} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
 import {useStore} from "../../../state/storeHooks";
 import './dashboard.css'
@@ -32,7 +32,7 @@ import moment from "moment";
 import 'moment-timezone';
 
 //pages
-import View from "./BF/bf"
+import View from "./BloxFruit/BloxFruit"
 import PetX from "./PetX/petx";
 import Page404 from "../404/404";
 import Profile from "../Profile/profile";
@@ -137,6 +137,15 @@ const Dashboard: React.FC = () => {
             ),
             key: 'profile',
             icon: <UserOutlined/>,
+        });
+        items.push({
+            label: (
+                <Link to="../../dashboard/transactions">
+                    <span>Transactions</span>
+                </Link>
+            ),
+            key: 'transactions',
+            icon: <HistoryOutlined/>,
         });
         // Admin
         if (user.unwrap().role === 'Admin') {
@@ -253,53 +262,7 @@ const Dashboard: React.FC = () => {
                         background: colorBgContainer,
                     }}
                 >
-                    {
-                        params.dashboardName === undefined ?
-                            <div style={{color: "white", marginTop: 12}}>
-                                <Row gutter={[16, 16]}>
-                                    <Col>
-                                        <Card title="Blox Fruit"
-                                              hoverable
-                                              cover={<img style={{width: "100%"}} alt="example" src={bloxImg}/>}
-                                        >
-                                            <Link to={"bloxfruit"}>
-                                                <Button style={{width: "100%"}} type={"default"}> Blox Fruit </Button>
-                                            </Link>
-                                        </Card>
-                                    </Col>
-                                    <Col>
-                                        <Card title="Pet Simulator X"
-                                              hoverable
-                                              cover={<img alt="example" src={psxImg}/>}
-                                        >
-                                            <Link to={"petx"}>
-                                                <Button style={{width: "100%"}} type={"default"}> Pet Simulator
-                                                    X </Button>
-                                            </Link>
-                                        </Card>
-                                    </Col>
-                                    {
-                                        whitelistAccounts.find((element) => element == username) != undefined ?
-                                            <Col>
-                                                <Card title="Blade Ball"
-                                                      hoverable
-                                                      cover={<img style={{width: 225}} alt="example" src={bladeballImg}/>}
-                                                >
-                                                    <Link to={"bladeball"}>
-                                                        <Button style={{width: "100%"}} type={"default"}> Blade Ball </Button>
-                                                    </Link>
-                                                </Card>
-                                            </Col>
-                                            : <></>
-                                    }
-                                </Row>
-                            </div> :
-                            params.dashboardName === 'bloxfruit' ? <View/> :
-                                params.dashboardName === 'petx' ? <PetX/> :
-                                    params.dashboardName === 'profile' ? <Profile/> :
-                                        params.dashboardName === 'bladeball' && whitelistAccounts.find((element) => element == username) != undefined ? <Bladeball/>:
-                                        <Page404/>
-                    }
+                    <Outlet/>
                 </Content>
                 <Layout.Footer style={{textAlign: 'center'}}>Roblox Panel by PaulVoid and Hanei</Layout.Footer>
 

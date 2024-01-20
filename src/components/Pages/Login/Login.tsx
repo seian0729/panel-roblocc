@@ -152,6 +152,7 @@ export function Login() {
 
                     modal.success({
                         title: 'Login',
+                        centered: true,
                         content: 'Login Success',
                     })
                     setTimeout(() => {
@@ -162,7 +163,6 @@ export function Login() {
                 },
                 err: (err) => {
                     //console.log(err.message);
-                    setLoadingLogin(false)
                     /*
                     apiNotification.open({
                         message: 'Login',
@@ -173,9 +173,12 @@ export function Login() {
                     */
 
                     modal.error({
-                        title: 'Login',
+                        title: err.title,
+                        centered: true,
                         content: err.message,
+
                     })
+                    setLoadingLogin(false)
 
                     store.dispatch(updateErrors(err));
                 }
@@ -210,6 +213,7 @@ export function Login() {
                      */
                     modal.success({
                         title: 'Login',
+                        centered: true,
                         content: 'Login Success',
                     })
                     setTimeout(() => {
@@ -229,9 +233,11 @@ export function Login() {
                     store.dispatch(updateErrors(err));
                      */
                     modal.error({
-                        title: 'Login',
+                        title: err.title,
+                        centered: true,
                         content: err.message,
                     })
+                    setLoadingLogin(false)
                 }
             },
         );

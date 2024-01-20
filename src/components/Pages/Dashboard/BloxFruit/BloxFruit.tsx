@@ -49,7 +49,7 @@ const { Text } = Typography;
 const { Dragger } = Upload;
 
 
-const BloccFruit: React.FC = () => {
+const BloxFruit: React.FC = () => {
 
     const {token} = theme.useToken();
 
@@ -469,27 +469,6 @@ const BloccFruit: React.FC = () => {
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         //console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
-    };
-
-    const config = {
-        data: getOnlineForNote(),
-        xField: 'note',
-        yField: 'online',
-        legend: {
-            position: 'top-left',
-        },
-        barBackground: {
-            style: {
-                fill: 'rgba(0,0,0,0.1)',
-            },
-        },
-        interactions: [
-            {
-                type: 'active-region',
-                enable: false,
-            },
-        ],
-        theme: "dark"
     };
 
 
@@ -1031,8 +1010,8 @@ const BloccFruit: React.FC = () => {
                         type: 'divider',
                     },
                 ];
-                if ('SeaHub BF' in description){
-                    let SeaHubBF = description['SeaHub BF'];
+                if ('SeaHub BloxFruit' in description){
+                    let SeaHubBF = description['SeaHub BloxFruit'];
                     if (typeof(SeaHubBF) == 'object' ) {
                         const seaHubBFRender = Object.entries(SeaHubBF)
                         seaHubBFRender.map((key) => {
@@ -1836,4 +1815,4 @@ const BloccFruit: React.FC = () => {
     )
 }
 
-export default BloccFruit
+export default BloxFruit

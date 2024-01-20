@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, ConfigProvider, Layout, MenuProps, message, Row, Spin, Tag, theme, Tooltip} from 'antd';
+import {Alert, ConfigProvider, Layout, MenuProps, message, Row, Spin, theme} from 'antd';
 import {Link, Navigate, Outlet, Route, RouteProps, Routes} from 'react-router-dom';
 
 import './App.css';
@@ -18,9 +18,15 @@ import Page404 from "../Pages/404/404"
 
 //Dashboard
 import Dashboard from "../Pages/Dashboard/dashboard"
-
+import DashboardIndex from "../Pages/Dashboard/DashboardIndex/DashboardIndex";
+import BloxFruit from "../Pages/Dashboard/BloxFruit/BloxFruit";
+import PetX from "../Pages/Dashboard/PetX/petx";
+import Bladeball from "../Pages/Dashboard/BladeBall/bladeball";
+import Profile from "../Pages/Profile/profile";
 //Admin
 import Admin from "../Pages/Admin/admin"
+//Transactions
+import Transactions from "../Pages/Transactions/Transactions";
 //LandingPage
 import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
@@ -44,6 +50,7 @@ const themeConfig = {
     algorithm: algorithmTheme,
 };
 
+
 function App() {
     const {loading, user} = useStoreWithInitializer(({app}) => app, load);
 
@@ -56,12 +63,10 @@ function App() {
 
     if (loading) {
         return (
-            <Row justify="center" align={"middle"}>
-
-                <Spin size="large"/>
-
+            <Row justify="center" style={{display: "flex", alignItems: "center", justifyContent:"center", minHeight:"calc(100vh - 100px)"}}>
+                <Spin size={"large"}>
+                </Spin>
             </Row>
-
         )
     }
 
@@ -156,7 +161,7 @@ function App() {
             <Layout style={{minHeight: "100vh"}}>
 
                 {
-                    userIsLogged === true && window.location.pathname != '/' ?
+                    userIsLogged && window.location.pathname != '/' ?
                         "" : <LandingHeader/>
 
                 }
@@ -167,11 +172,17 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Landing/>}/>
                         <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-                            <Route path="dashboard">
-                                <Route index element={<Dashboard/>}/>
-                                <Route path={":dashboardName"} element={<Dashboard/>}/>
+
+                            <Route path="dashboard" element={<Dashboard/>}>
+                                <Route index element={<DashboardIndex/>}/>
+                                <Route path={"bloxfruit"} element={<BloxFruit/>}/>
+                                <Route path={"petx"} element={<PetX/>}/>
+                                <Route path={"bladeball"} element={<Bladeball/>}/>
+                                <Route path={"profile"} element={<Profile/>}/>
+                                <Route path={"transactions"} element={<Transactions/>}/>
                                 <Route path={"*"} element={<Page404/>}/>
                             </Route>
+
                         </Route>
                         <Route element={<GuestOnlyRoute userIsLogged={userIsLogged}/>}>
                             <Route path="/login" element={<Login/>}/>
