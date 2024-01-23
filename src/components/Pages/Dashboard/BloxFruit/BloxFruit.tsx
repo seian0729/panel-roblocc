@@ -102,7 +102,7 @@ const BloxFruit: React.FC = () => {
     const [active, setActive] = useState(false);
 
     //whitelist account
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841","winyeubop"];
 
 
 
