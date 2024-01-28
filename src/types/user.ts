@@ -6,7 +6,7 @@ import {store} from "../state/store";
 export interface PublicUser {
     username: string;
     id: string;
-    limitacc: string,
+    limitacc: number,
     dateExpired: number,
     siginKey: string,
 }
@@ -18,7 +18,7 @@ export interface User extends PublicUser {
 
 export const userDecoder: Decoder<User> = object({
     username: string,
-    limitacc: string,
+    limitacc: number,
     id: string,
     token: string,
     role: string,
