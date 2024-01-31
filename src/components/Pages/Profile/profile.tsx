@@ -118,6 +118,13 @@ function ProfileComponent() {
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
 
+    const bloxfruitStringTrigon = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `"${siginKey}"` : id},
+    DelayUpdate = 300;
+    Note = "${username}"
+}
+loadstring(game:HttpGet("https://raw.githubusercontent.com/chimnguu/ngu/master/bulularchive.lua"))()`;
+
     const petxString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
     DelayUpdate = 60;
@@ -184,13 +191,25 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
                         key: '1',
                         label: 'Blox Fruit',
                         children: <>
+                            Another Exploit:
                             <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
                                 {bloxfruitString}
                             </SyntaxHighlighter>
-                            <Button type={"default"}
-                                    onClick={() => copyScript('Blox Fruit', bloxfruitString)}>
-                                Copy Script
-                            </Button>
+                            Trigon:
+                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                {bloxfruitStringTrigon}
+                            </SyntaxHighlighter>
+
+                            <Space>
+                                <Button type={"default"}
+                                        onClick={() => copyScript('Blox Fruit', bloxfruitString)}>
+                                    Copy Script
+                                </Button>
+                                <Button type={"default"}
+                                        onClick={() => copyScript('Blox Fruit [Trigon]', bloxfruitStringTrigon)}>
+                                    Copy Script [Trigon]
+                                </Button>
+                            </Space>
                         </>
                     }]} style={{marginTop: 6}}/>
                     <Collapse bordered={false} items={[{
