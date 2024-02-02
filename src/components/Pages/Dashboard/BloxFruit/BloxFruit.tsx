@@ -737,11 +737,11 @@ const BloxFruit: React.FC = () => {
             },
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
-                return <>
+                return <Tag color={"geekblue"}>
                 {
                     description.Data.DevilFruit == '' ? "-" : description.Data.DevilFruit
                 }
-                </>
+                </Tag>
 
             },
         },
