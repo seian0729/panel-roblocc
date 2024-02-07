@@ -197,7 +197,6 @@ const Pet99: React.FC = () => {
 
                 let Description = JSON.parse(record.Description)
                 if (moment().unix() - Description['Farming']['UTC'] <= 120){
-                    console.log(moment().unix() - Description['Farming']['UTC'])
                     return (
                         <Tag color={"green"}>
                             {
