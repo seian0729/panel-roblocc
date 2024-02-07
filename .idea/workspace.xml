@@ -4,9 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="+ Ma giáo">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="- Remove Notification, BF">
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Pet99/Pet99.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Profile/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Profile/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/DashboardHome/DashboardHome.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/DashboardHome/DashboardHome.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/DashboardIndex/DashboardIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/DashboardIndex/DashboardIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -125,7 +132,14 @@
       <workItem from="1706263165644" duration="180000" />
       <workItem from="1706429205007" duration="1531000" />
       <workItem from="1706434874089" duration="13000" />
-      <workItem from="1706677636863" duration="366000" />
+      <workItem from="1706677636863" duration="1619000" />
+      <workItem from="1706796876013" duration="12000" />
+      <workItem from="1706874848028" duration="425000" />
+      <workItem from="1706877441953" duration="168000" />
+      <workItem from="1706877635437" duration="674000" />
+      <workItem from="1707209276936" duration="5972000" />
+      <workItem from="1707216365069" duration="2929000" />
+      <workItem from="1707297616492" duration="2585000" />
     </task>
     <task id="LOCAL-00001" summary="+ Back">
       <option name="closed" value="true" />
@@ -335,7 +349,23 @@
       <option name="project" value="LOCAL" />
       <updated>1706430412513</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="+ Bulul Achip">
+      <option name="closed" value="true" />
+      <created>1706678037990</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1706678037990</updated>
+    </task>
+    <task id="LOCAL-00028" summary="- Remove Notification, BF">
+      <option name="closed" value="true" />
+      <created>1706878394762</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1706878394762</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -372,6 +402,8 @@
     <MESSAGE value="+ Major Updated" />
     <MESSAGE value="+ Add wl" />
     <MESSAGE value="+ Ma giáo" />
-    <option name="LAST_COMMIT_MESSAGE" value="+ Ma giáo" />
+    <MESSAGE value="+ Bulul Achip" />
+    <MESSAGE value="- Remove Notification, BF" />
+    <option name="LAST_COMMIT_MESSAGE" value="- Remove Notification, BF" />
   </component>
 </project>

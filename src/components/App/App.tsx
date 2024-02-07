@@ -23,6 +23,8 @@ import BloxFruit from "../Pages/Dashboard/BloxFruit/BloxFruit";
 import PetX from "../Pages/Dashboard/PetX/petx";
 import Bladeball from "../Pages/Dashboard/BladeBall/bladeball";
 import Profile from "../Pages/Profile/profile";
+import Pet99 from "../Pages/Dashboard/Pet99/Pet99"
+
 //Admin
 import Admin from "../Pages/Admin/admin"
 //Transactions
@@ -173,6 +175,7 @@ function App() {
                                 <Route index element={<DashboardIndex/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
                                 <Route path={"petx"} element={<PetX/>}/>
+                                <Route path={"pet99"} element={<Pet99/>}/>
                                 <Route path={"bladeball"} element={<Bladeball/>}/>
                                 <Route path={"profile"} element={<Profile/>}/>
                                 <Route path={"transactions"} element={<Transactions/>}/>

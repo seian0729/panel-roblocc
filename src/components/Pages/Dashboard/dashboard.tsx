@@ -178,6 +178,17 @@ const Dashboard: React.FC = () => {
             },)
         }
 
+        if (username == "Hanei"){
+            dashboardItems.push({
+                label: (
+                    <Link to="../../dashboard/pet99">
+                        <span>Pet Simulator 99</span>
+                    </Link>
+                ),
+                key: 'pet99',
+            },)
+        }
+
     }
 
 

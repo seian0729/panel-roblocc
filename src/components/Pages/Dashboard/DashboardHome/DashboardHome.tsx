@@ -9,7 +9,6 @@ const DashboardHome: React.FC = () => {
     const {user} = useStore(({app}) => app);
     let { dateExpired, username } = user.unwrap()
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
-
     return(
         <div style={{color: "white", marginTop: 12}}>
             <Row gutter={[16, 16]}>
@@ -34,6 +33,20 @@ const DashboardHome: React.FC = () => {
                         </Link>
                     </Card>
                 </Col>
+                {
+
+                    username == "Hanei" ? <Col>
+                        <Card title="Pet Simulator 99"
+                              hoverable
+                              cover={<img alt="example" src={psxImg}/>}
+                        >
+                            <Link to={"petx"}>
+                                <Button style={{width: "100%"}} type={"default"}> Pet Simulator
+                                    X </Button>
+                            </Link>
+                        </Card>
+                    </Col> : <></>
+                }
                 {
                     whitelistAccounts.indexOf(username) != -1 ?
                         <Col>
