@@ -153,9 +153,7 @@ const Pet99: React.FC = () => {
                     </Tag>
                 )
             },
-            sorter: (a, b) => {
-                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
-            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['Diamonds'],
         },
         {
             title: 'Diamond Gained',
@@ -169,9 +167,8 @@ const Pet99: React.FC = () => {
                     </Tag>
                 )
             },
-            sorter: (a, b) => {
-                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
-            },
+            sorter: (a: any, b: any) => (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) -
+                (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']),
         },
         {
             title: 'Diamond Per Min',
@@ -185,9 +182,10 @@ const Pet99: React.FC = () => {
                     </Tag>
                 )
             },
-            sorter: (a, b) => {
-                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
-            },
+            sorter: (a: any, b: any) => (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond'] /
+                    Math.floor(JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(a.Description)['Farming']['oldUTC']) ) -
+                (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond'] /
+                    Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC'])),
         },
         {
             title: 'Time Elapsed',
