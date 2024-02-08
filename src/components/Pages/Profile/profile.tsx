@@ -36,6 +36,7 @@ function ProfileComponent() {
     const {user} = useStore(({app}) => app);
     const {id, username, role, siginKey, dateExpired} = user.unwrap();
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz"];
     const [ showKey, setShowKey ] = useState(false)
     const data = [
         {
@@ -139,6 +140,13 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))(
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
 
+    const pet99String = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 60;
+    Note = '${username}'
+}
+loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/pet99'))()`;
+
     const [messageApi, contextHolder] = message.useMessage();
     const [title, setTitle] = useState('Info')
 
@@ -227,14 +235,30 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
                     }]} style={{marginTop: 6}}/>
                     {
                         whitelistAccounts.find((element) => element == username) != undefined ? <Collapse bordered={false} items={[{
-                            key: '4',
-                            label: 'Blade Ball',
+                                key: '4',
+                                label: 'Blade Ball',
+                                children: <>
+                                    <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                        {bladeBallString}
+                                    </SyntaxHighlighter>
+                                    <Button type={"default"}
+                                            onClick={() => copyScript('Blade Ball', bladeBallString)}>
+                                        Copy Script
+                                    </Button>
+                                </>
+                            }]} style={{marginTop: 6}}/>
+                            : <></>
+                    }
+                    {
+                        whitelistAccountsPet.find((element) => element == username) != undefined ? <Collapse bordered={false} items={[{
+                            key: '5',
+                            label: 'Pet Simulator 99',
                             children: <>
                                 <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
-                                    {bladeBallString}
+                                    {pet99String}
                                 </SyntaxHighlighter>
                                 <Button type={"default"}
-                                        onClick={() => copyScript('Blade Ball', bladeBallString)}>
+                                        onClick={() => copyScript('Pet Simulator 99', pet99String)}>
                                     Copy Script
                                 </Button>
                             </>

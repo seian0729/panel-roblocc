@@ -61,6 +61,8 @@ const Dashboard: React.FC = () => {
 
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
+    const whitelistAccountsPet = ["Hanei","Vanhxyz"];
+
     //console.log(whitelistAccounts.find((element) => element == username))
 
     const dashboardItems: MenuProps['items'] = [
@@ -178,7 +180,7 @@ const Dashboard: React.FC = () => {
             },)
         }
 
-        if (username == "Hanei"){
+        if (whitelistAccountsPet.find((element) => element == username) != undefined){
             dashboardItems.push({
                 label: (
                     <Link to="../../dashboard/pet99">
