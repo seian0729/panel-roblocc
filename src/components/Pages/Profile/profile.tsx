@@ -32,7 +32,7 @@ interface CustomizedFormProps {
     fields: FieldData[];
 }
 
-function ProfileComponent() {
+const Profile: React.FC = () => {
     const {user} = useStore(({app}) => app);
     const {id, username, role, siginKey, dateExpired} = user.unwrap();
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
@@ -43,11 +43,11 @@ function ProfileComponent() {
             key: 1,
             title: 'Access',
             value: <>Your access expires
-            <Tooltip title={moment(dateExpired*1000).format('MMMM Do YYYY, h:mm:ss a')}>
-                <Tag style={{marginLeft: 4}}>
-                    {moment(dateExpired*1000).fromNow()}
-                </Tag>
-            </Tooltip>
+                <Tooltip title={moment(dateExpired*1000).format('MMMM Do YYYY, h:mm:ss a')}>
+                    <Tag style={{marginLeft: 4}}>
+                        {moment(dateExpired*1000).fromNow()}
+                    </Tag>
+                </Tooltip>
             </>
         },
         {
@@ -64,16 +64,16 @@ function ProfileComponent() {
             key: 4,
             title: 'Tags',
             value: <>
-                    {
-                        username == 'Hanei' ? <>
-                            <Space size={[0, 8]} wrap>
-                                <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
-                                <Tag color={'volcano'}>Developer</Tag>
-                                <Tag color={'magenta'}>Tester</Tag>
-                                <Tag color={'orange'}>Lifetime Access</Tag>
-                            </Space>
-                        </> : <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
-                    }
+                {
+                    username == 'Hanei' ? <>
+                        <Space size={[0, 8]} wrap>
+                            <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
+                            <Tag color={'volcano'}>Developer</Tag>
+                            <Tag color={'magenta'}>Tester</Tag>
+                            <Tag color={'orange'}>Lifetime Access</Tag>
+                        </Space>
+                    </> : <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
+                }
 
             </>
         },
@@ -81,69 +81,69 @@ function ProfileComponent() {
             key: 5,
             title: 'Login Key',
             value: <>
-                    <Typography>
+                <Typography>
                         <pre>
                             {
                                 siginKey == '' ? 'Undefined' : showKey ? siginKey : ("*".repeat(siginKey.length))
                             }
                         </pre>
-                    </Typography>
-                    <Button onClick={() => {
+                </Typography>
+                <Button onClick={() => {
 
-                        setTimeout(() => {
-                            if (siginKey == '')
-                            {
-                                messageApi.error(`You don't have key`)
-                            }
-                            else {
-                                navigator.clipboard.writeText(siginKey);
-                                messageApi.success(`Copied Secret Key script to clipboard`)
-                            }
-                        }, 1000)
-                    }}>
-                        Copy Key
-                    </Button>
-                    <Button type="link" onClick={() => {
-                        setShowKey(! showKey)
-                    }}>
-                        {showKey ? 'Hide' : "Show"} Key
-                    </Button>
-                </>
+                    setTimeout(() => {
+                        if (siginKey == '')
+                        {
+                            messageApi.error(`You don't have key`)
+                        }
+                        else {
+                            navigator.clipboard.writeText(siginKey);
+                            messageApi.success(`Copied Secret Key script to clipboard`)
+                        }
+                    }, 1000)
+                }}>
+                    Copy Key
+                </Button>
+                <Button type="link" onClick={() => {
+                    setShowKey(! showKey)
+                }}>
+                    {showKey ? 'Hide' : "Show"} Key
+                </Button>
+            </>
         },
     ];
 
     const bloxfruitString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 300;
+    DelayUpdate = 300,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
 
     const bloxfruitStringTrigon = `getgenv().Setting = {
     UID = ${siginKey != '' ? `"${siginKey}"` : id},
-    DelayUpdate = 300;
+    DelayUpdate = 300,
     Note = "${username}"
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/chimnguu/ngu/master/bulularchive.lua"))()`;
 
     const petxString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 60;
+    DelayUpdate = 60,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))()`;
 
     const bladeBallString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 120;
+    DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
 
     const pet99String = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 60;
-    Note = '${username}';
+    DelayUpdate = 60,
+    Note = '${username}',
     ['Inventory'] = {
         'Magic Shard'
     }
@@ -254,18 +254,18 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/pet99'))(
                     }
                     {
                         whitelistAccountsPet.find((element) => element == username) != undefined ? <Collapse bordered={false} items={[{
-                            key: '5',
-                            label: 'Pet Simulator 99',
-                            children: <>
-                                <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
-                                    {pet99String}
-                                </SyntaxHighlighter>
-                                <Button type={"default"}
-                                        onClick={() => copyScript('Pet Simulator 99', pet99String)}>
-                                    Copy Script
-                                </Button>
-                            </>
-                        }]} style={{marginTop: 6}}/>
+                                key: '5',
+                                label: 'Pet Simulator 99',
+                                children: <>
+                                    <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                        {pet99String}
+                                    </SyntaxHighlighter>
+                                    <Button type={"default"}
+                                            onClick={() => copyScript('Pet Simulator 99', pet99String)}>
+                                        Copy Script
+                                    </Button>
+                                </>
+                            }]} style={{marginTop: 6}}/>
                             : <></>
                     }
                 </>,
@@ -292,4 +292,4 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/pet99'))(
     </div>
 }
 
-export default ProfileComponent
+export default Profile

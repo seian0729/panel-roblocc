@@ -35,7 +35,6 @@ import {
     UserOutlined,
 } from '@ant-design/icons';
 
-import { Bar } from '@ant-design/plots';
 
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
