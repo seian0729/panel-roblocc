@@ -181,7 +181,7 @@ const Pet99: React.FC = () => {
                 let Description = JSON.parse(record.Description)
                 return (
                     <Tag color={"blue"}>
-                        {Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / (Description['Farming']['UTC'] - Description['Farming']['oldUTC']))}
+                        {Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60))}
                     </Tag>
                 )
             },
