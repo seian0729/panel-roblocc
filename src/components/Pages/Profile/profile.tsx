@@ -143,7 +143,10 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
     const pet99String = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
     DelayUpdate = 60;
-    Note = '${username}'
+    Note = '${username}';
+    ['Inventory'] = {
+        'Magic Shard'
+    }
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/pet99'))()`;
 
