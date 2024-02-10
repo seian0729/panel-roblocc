@@ -100,27 +100,9 @@ const Pet99: React.FC = () => {
             },
         },
         {
-            title: 'Data',
-            dataIndex: 'Data',
-            width: '10%',
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return (
-                    <Space size={[8, 16]} wrap>
-                        <Tag color={"yellow"}>
-                            None
-                        </Tag>
-                    </Space>
-                )
-            },
-            sorter: (a, b) => {
-                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
-            },
-        },
-        {
             title: 'Inventory',
             dataIndex: 'Inventory',
-            width: '10%',
+            width: '20%',
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
@@ -136,9 +118,6 @@ const Pet99: React.FC = () => {
                         }
                     </>
                 )
-            },
-            sorter: (a, b) => {
-                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
             },
         },
         {
@@ -516,12 +495,96 @@ const Pet99: React.FC = () => {
                     scroll={{x: true}}
                     pagination={{
                         total: dataApi.length,
-                        pageSizeOptions: [10, 100, 200, 500, 1000, 2000, 5000],
+                        pageSizeOptions: [25, 100, 200, 500, 1000, 2000, 5000],
                         showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
                         position: ['topCenter'],
-                        defaultPageSize: 10,
+                        defaultPageSize: 25,
                         showSizeChanger: true,
                     }}
+                    summary={(dataApi) => {
+
+                        let totalDiamond = 0;
+                        let diamondGained = 0;
+                        let diamondPerMin = 0
+                        let timeElapsed = 0;
+
+                        let tempInventory: any [] = [];
+                        dataApi.forEach(({Description}) => {
+
+                            let Farming = JSON.parse(Description)['Farming']
+
+                            totalDiamond += Farming['Diamonds']
+
+                            diamondGained += Farming['Diamonds'] - Farming['oldDiamond']
+
+                            diamondPerMin += (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+
+                            timeElapsed += Farming['UTC'] - Farming['oldUTC']
+
+
+                            let Inventory = JSON.parse(Description)['Inventory']
+                            Inventory.map((key: any) => {
+                                const itemName = key['Name'];
+                                if (!tempInventory.find((key) => key['Name'] === itemName)){
+                                    tempInventory.push({Name: key['Name'], Count: 0})
+                                }
+                            })
+                        })
+
+                        dataApi.forEach(({Description}) => {
+                            let Inventory = JSON.parse(Description)['Inventory']
+                            Inventory.map((key: any) => {
+                                const itemName = key['Name'];
+                                const itemCount = key['Count'];
+                                tempInventory.find((keyFind) => keyFind['Name'] === itemName)!.Count += itemCount
+
+                            })
+                        })
+
+                        return(
+                            <Table.Summary fixed>
+                                <Table.Summary.Row>
+                                    <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={1}></Table.Summary.Cell>
+                                    <Table.Summary.Cell index={2}>
+                                        <>
+                                            {
+                                                tempInventory.map((key: any) => {
+                                                    return (
+                                                        <Tag color="red" key={key} style={{margin: 4}}>
+                                                            {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
+                                                        </Tag>
+                                                    );
+                                                })
+                                            }
+                                        </>
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={3}>
+                                        <Tag color={"red"}>
+                                            {new Intl.NumberFormat().format(totalDiamond)}
+                                        </Tag>
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={4}>
+                                        <Tag color={"red"}>
+                                            {new Intl.NumberFormat().format(diamondGained)}
+                                        </Tag>
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={5}>
+                                        <Tag color={"red"}>
+                                            {new Intl.NumberFormat().format(diamondPerMin)}
+                                        </Tag>
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={6}>
+                                        <Tag color={"red"}>
+                                            {formatDuration(1000 * timeElapsed)}
+                                        </Tag>
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={7}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={8}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={9}>-</Table.Summary.Cell>
+                                </Table.Summary.Row>
+                            </Table.Summary>)
+                        }}
                 />
                 <FloatButton.BackTop/>
             </Col>
