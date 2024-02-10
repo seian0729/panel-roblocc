@@ -161,10 +161,11 @@ const Pet99: React.FC = () => {
                     </Tag>
                 )
             },
-            sorter: (a: any, b: any) => (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond'] /
+            sorter: (a: any, b: any) => (
+                (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) /
                     Math.floor(JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(a.Description)['Farming']['oldUTC']) ) -
-                (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond'] /
-                    Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC'])),
+                (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']) /
+                    Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC']),
         },
         {
             title: 'Time Elapsed',
@@ -571,7 +572,7 @@ const Pet99: React.FC = () => {
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={5}>
                                         <Tag color={"red"}>
-                                            {new Intl.NumberFormat().format(diamondPerMin)}
+                                            {new Intl.NumberFormat().format(Math.floor(diamondPerMin))}
                                         </Tag>
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={6}>
