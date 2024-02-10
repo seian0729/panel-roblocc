@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Pet 99 | Fixed something bug">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Pet 99 | Fix bug on sort Diamond Per Min">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/DashboardIndex/DashboardIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/DashboardIndex/DashboardIndex.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Profile/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Profile/profile.tsx" afterDir="false" />
     </list>
@@ -59,6 +60,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/Project/panel-roblocc&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -136,7 +138,14 @@
       <workItem from="1707297616492" duration="2585000" />
       <workItem from="1707300938450" duration="338000" />
       <workItem from="1707322294573" duration="634000" />
-      <workItem from="1707376986562" duration="1086000" />
+      <workItem from="1707376986562" duration="1510000" />
+      <workItem from="1707386264387" duration="1141000" />
+      <workItem from="1707389834495" duration="1151000" />
+      <workItem from="1707485878817" duration="3826000" />
+      <workItem from="1707541612102" duration="39000" />
+      <workItem from="1707569747518" duration="55000" />
+      <workItem from="1707570078678" duration="228000" />
+      <workItem from="1707582227640" duration="107000" />
     </task>
     <task id="LOCAL-00001" summary="+ Back">
       <option name="closed" value="true" />
@@ -378,7 +387,63 @@
       <option name="project" value="LOCAL" />
       <updated>1707322335619</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="[+] Pet 99 | Script">
+      <option name="closed" value="true" />
+      <created>1707378537356</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1707378537356</updated>
+    </task>
+    <task id="LOCAL-00032" summary="[+] Pet 99 | Script">
+      <option name="closed" value="true" />
+      <created>1707386287779</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1707386287779</updated>
+    </task>
+    <task id="LOCAL-00033" summary="[*] Pet 99 - Blox Fruit| Components">
+      <option name="closed" value="true" />
+      <created>1707387393816</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1707387393816</updated>
+    </task>
+    <task id="LOCAL-00034" summary="[*] Pet 99 | Improved (diamond / min)">
+      <option name="closed" value="true" />
+      <created>1707390037885</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1707390037885</updated>
+    </task>
+    <task id="LOCAL-00035" summary="[*] Pet 99 | Improved (Sorter)">
+      <option name="closed" value="true" />
+      <created>1707390402631</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1707390402631</updated>
+    </task>
+    <task id="LOCAL-00036" summary="[+] Pet 99 | Summary (Item/v.v)">
+      <option name="closed" value="true" />
+      <created>1707541643511</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1707541643511</updated>
+    </task>
+    <task id="LOCAL-00037" summary="[*] Pet 99 | Fix bug on sort Diamond Per Min">
+      <option name="closed" value="true" />
+      <created>1707570273848</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1707570273848</updated>
+    </task>
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,10 +461,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="+ Back" />
-    <MESSAGE value="Revert &quot;Revert &quot;Merge remote-tracking branch 'origin/master'&quot;&quot;&#10;&#10;This reverts commit f45e56e6" />
-    <MESSAGE value="server" />
-    <MESSAGE value="+ Fixed copy" />
     <MESSAGE value="+ dm hosting" />
     <MESSAGE value="+ a b c" />
     <MESSAGE value="- Fixed timezone" />
@@ -419,6 +480,12 @@
     <MESSAGE value="- Remove Notification, BF" />
     <MESSAGE value="[+] Pet 99 (dev)" />
     <MESSAGE value="[*] Pet 99 | Fixed something bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Pet 99 | Fixed something bug" />
+    <MESSAGE value="[+] Pet 99 | Script" />
+    <MESSAGE value="[*] Pet 99 - Blox Fruit| Components" />
+    <MESSAGE value="[*] Pet 99 | Improved (diamond / min)" />
+    <MESSAGE value="[*] Pet 99 | Improved (Sorter)" />
+    <MESSAGE value="[+] Pet 99 | Summary (Item/v.v)" />
+    <MESSAGE value="[*] Pet 99 | Fix bug on sort Diamond Per Min" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Pet 99 | Fix bug on sort Diamond Per Min" />
   </component>
 </project>

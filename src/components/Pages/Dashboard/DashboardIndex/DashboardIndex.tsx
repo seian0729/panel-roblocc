@@ -12,6 +12,7 @@ const DashboardIndex: React.FC = () => {
     let { username } = user.unwrap()
 
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai"];
 
     return(
         <div style={{color: "white", marginTop: 12}}>
@@ -39,17 +40,19 @@ const DashboardIndex: React.FC = () => {
                 </Col>
 
                 {
-                    username == "Hanei" ? <Col>
-                        <Card title="Pet Simulator 99"
-                              hoverable
-                              cover={<img alt="example" src={psxImg}/>}
-                        >
-                            <Link to={"pet99"}>
-                                <Button style={{width: "100%"}} type={"default"}> Pet Simulator
-                                    99 </Button>
-                            </Link>
-                        </Card>
-                    </Col> : <></>
+                    whitelistAccounts.find((element) => element == username) != undefined ?
+                        <Col>
+                            <Card title="Pet Simulator 99"
+                                  hoverable
+                                  cover={<img alt="example" src={psxImg}/>}
+                            >
+                                <Link to={"pet99"}>
+                                    <Button style={{width: "100%"}} type={"default"}> Pet Simulator
+                                        99 </Button>
+                                </Link>
+                            </Card>
+                        </Col> :
+                        <></>
                 }
 
                 {

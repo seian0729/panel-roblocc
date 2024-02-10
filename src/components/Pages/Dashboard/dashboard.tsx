@@ -61,7 +61,7 @@ const Dashboard: React.FC = () => {
 
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
-    const whitelistAccountsPet = ["Hanei","Vanhxyz"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai"];
 
     //console.log(whitelistAccounts.find((element) => element == username))
 
