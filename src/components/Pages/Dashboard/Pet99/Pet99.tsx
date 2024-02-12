@@ -10,19 +10,13 @@ import {
     Form, MenuProps, message,
     Popconfirm,
     Row,
-    Select,
-    Skeleton,
     Space,
     Statistic, Table,
-    Tabs,
     Tag,
-    Tooltip
 } from "antd";
 import {
-    CopyOutlined,
     DeleteOutlined,
     DownOutlined,
-    InboxOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
@@ -102,7 +96,7 @@ const Pet99: React.FC = () => {
         {
             title: 'Inventory',
             dataIndex: 'Inventory',
-            width: '20%',
+            width: '30%',
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
@@ -110,11 +104,37 @@ const Pet99: React.FC = () => {
                         {
                             Description['Inventory'].map((key: any) => {
                                 return (
-                                    <Tag color="purple" key={key} style={{margin: 4}}>
+                                    <Tag color="purple" key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
                                         {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
                                     </Tag>
                                 );
                             })
+
+                        }
+                    </>
+                )
+            },
+        },
+        {
+            title: 'Huge',
+            dataIndex: 'Huge',
+            width: '15%',
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                const colorHuge = ['default','gold','red']
+                const subName = ['','[GOLDEN]','[RAINBOW]']
+                return (
+                    <>
+                        {
+                            Description['Huge'] == undefined ? <> - </> :
+                            Description['Huge'].map((key: any) => {
+                                return (
+                                    <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
+                                        {key['Name'] + " " + subName[key['pt']]}
+                                    </Tag>
+                                );
+                            })
+
                         }
                     </>
                 )
@@ -123,7 +143,7 @@ const Pet99: React.FC = () => {
         {
             title: 'Total Diamond',
             dataIndex: 'Diamond',
-            width: '10%',
+            width: '5%',
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
@@ -137,7 +157,7 @@ const Pet99: React.FC = () => {
         {
             title: 'Diamond Gained',
             dataIndex: 'DiamondGained',
-            width: '10%',
+            width: '5%',
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
@@ -152,7 +172,7 @@ const Pet99: React.FC = () => {
         {
             title: 'Diamond Per Min',
             dataIndex: 'DiamondPMin',
-            width: '10%',
+            width: '5%',
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return (
@@ -170,7 +190,7 @@ const Pet99: React.FC = () => {
         {
             title: 'Time Elapsed',
             dataIndex: 'timeElapsed',
-            width: '10%',
+            width: '5%',
             render: (_, record) => {
 
                 let Description = JSON.parse(record.Description)
@@ -538,7 +558,6 @@ const Pet99: React.FC = () => {
                                 const itemName = key['Name'];
                                 const itemCount = key['Count'];
                                 tempInventory.find((keyFind) => keyFind['Name'] === itemName)!.Count += itemCount
-
                             })
                         })
 
@@ -553,36 +572,37 @@ const Pet99: React.FC = () => {
                                                 tempInventory.map((key: any) => {
                                                     return (
                                                         <Tag color="red" key={key} style={{margin: 4}}>
-                                                            {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
+                                                            {`${key['Name']} [x${(key['Count'] ? new Intl.NumberFormat().format(key['Count']) : 0)}]`}
                                                         </Tag>
                                                     );
                                                 })
                                             }
                                         </>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={3}>
+                                    <Table.Summary.Cell index={3}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={4}>
                                         <Tag color={"red"}>
                                             {new Intl.NumberFormat().format(totalDiamond)}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={4}>
+                                    <Table.Summary.Cell index={5}>
                                         <Tag color={"red"}>
                                             {new Intl.NumberFormat().format(diamondGained)}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={5}>
+                                    <Table.Summary.Cell index={6}>
                                         <Tag color={"red"}>
                                             {new Intl.NumberFormat().format(Math.floor(diamondPerMin))}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={6}>
+                                    <Table.Summary.Cell index={7}>
                                         <Tag color={"red"}>
                                             {formatDuration(1000 * timeElapsed)}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={7}>-</Table.Summary.Cell>
                                     <Table.Summary.Cell index={8}>-</Table.Summary.Cell>
                                     <Table.Summary.Cell index={9}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={10}>-</Table.Summary.Cell>
                                 </Table.Summary.Row>
                             </Table.Summary>)
                         }}
