@@ -16,19 +16,20 @@ import 'moment-timezone';
 import {Login} from "../Pages/Login/Login";
 import Page404 from "../Pages/404/404"
 
-//Dashboard
-import Dashboard from "../Pages/Dashboard/dashboard"
-import DashboardIndex from "../Pages/Dashboard/DashboardIndex/DashboardIndex";
+//DashboardLayout
+import DashboardLayout from "../Pages/Dashboard/dashboardLayout"
+import Dashboard from "../Pages/Dashboard/Dashboard";
 import BloxFruit from "../Pages/Dashboard/BloxFruit/BloxFruit";
 import PetX from "../Pages/Dashboard/PetX/petx";
-import Bladeball from "../Pages/Dashboard/BladeBall/bladeball";
-import Profile from "../Pages/Profile/profile";
+import Profile from "../Pages/Dashboard/Profile/profile";
 import Pet99 from "../Pages/Dashboard/Pet99/Pet99"
+import Pet99Mail from "../Pages/Dashboard/Pet99/Pet99-mail";
+import ProfileScript from "../Pages/Dashboard/Profile/profile-script";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
 //Transactions
-import Transactions from "../Pages/Transactions/Transactions";
+import Transactions from "../Pages/Dashboard/Transactions/Transactions";
 //LandingPage
 import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
@@ -171,14 +172,21 @@ function App() {
                         <Route path="/" element={<Landing/>}/>
                         <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
 
-                            <Route path="dashboard" element={<Dashboard/>}>
-                                <Route index element={<DashboardIndex/>}/>
+                            <Route path="dashboard" element={<DashboardLayout/>}>
+                                <Route index element={<Dashboard/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
                                 <Route path={"petx"} element={<PetX/>}/>
-                                <Route path={"pet99"} element={<Pet99/>}/>
-                                <Route path={"bladeball"} element={<Bladeball/>}/>
-                                <Route path={"profile"} element={<Profile/>}/>
-                                <Route path={"transactions"} element={<Transactions/>}/>
+                                <Route path={"pet99"}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<Pet99/>}/>
+                                    <Route path="mail" element={<Pet99Mail/>}/>
+                                </Route>
+                                <Route path={"user"}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path={"profile"} element={<Profile/>}/>
+                                    <Route path={"script"} element={<ProfileScript/>}/>
+                                    <Route path={"transactions"} element={<Transactions/>}/>
+                                </Route>
                                 <Route path={"*"} element={<Page404/>}/>
                             </Route>
 

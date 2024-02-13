@@ -188,7 +188,7 @@ const Pet99: React.FC = () => {
                     Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC']),
         },
         {
-            title: 'Time Elapsed',
+            title: 'Elapsed',
             dataIndex: 'timeElapsed',
             width: '5%',
             render: (_, record) => {

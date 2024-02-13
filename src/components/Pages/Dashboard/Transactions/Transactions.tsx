@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {getTransactions} from "../../../services/data";
+import {getTransactions} from "../../../../services/data";
 import {ColumnsType} from "antd/es/table";
 import {Col, Divider, Row, Table, Tag, Tooltip} from "antd";
 import moment from "moment";
@@ -71,7 +71,7 @@ const Transactions: React.FC = () => {
             dataIndex: 'status',
             key:"Status",
             render: (_: any, record) => {
-                console.log(typeof record.status)
+                //console.log(typeof record.status)
                 return <Tag style={{marginLeft: 4}} color={record.status == '1' ? 'green' : 'red'}>
                     {record.status == '1' ? 'Success' : 'Unpaid'}
                 </Tag>

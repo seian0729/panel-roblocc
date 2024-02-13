@@ -73,7 +73,6 @@ export async function getTotalAccount(){
 export async function sendDiamond(uid: number,username: string, amount: number){
     const { data } = await axios.post('Petx/createData', {Uid: uid, UserReceive: username, Diamonds: Number(amount)})
     return data
-
 }
 
 // seller nhi - order history
@@ -87,5 +86,17 @@ export async function getOrder(){
 
 export async function getRate(){
     const { data } = await axios.get('Petx/getRate')
+    return data
+}
+
+// pet 99
+
+export async function createPet99Mail(username: string, details: string){
+    const { data } = await axios.post('Pet99/createOrder', {user: username, details: details})
+    return data
+}
+
+export async function getAllMail(){
+    const { data } = await axios.get('Pet99/getAllMail')
     return data
 }
