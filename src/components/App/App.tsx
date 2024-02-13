@@ -18,7 +18,7 @@ import Page404 from "../Pages/404/404"
 
 //DashboardLayout
 import DashboardLayout from "../Pages/Dashboard/dashboardLayout"
-import Dashboard from "../Pages/Dashboard/Dashboard";
+import DashboardIndex from "../Pages/Dashboard/dashboardIndex";
 import BloxFruit from "../Pages/Dashboard/BloxFruit/BloxFruit";
 import PetX from "../Pages/Dashboard/PetX/petx";
 import Profile from "../Pages/Dashboard/Profile/profile";
@@ -173,7 +173,7 @@ function App() {
                         <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
 
                             <Route path="dashboard" element={<DashboardLayout/>}>
-                                <Route index element={<Dashboard/>}/>
+                                <Route index element={<DashboardIndex/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
                                 <Route path={"petx"} element={<PetX/>}/>
                                 <Route path={"pet99"}>

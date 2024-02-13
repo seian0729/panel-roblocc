@@ -2,10 +2,9 @@ import {Button, Card, Col, Row} from "antd";
 import bloxImg from "../../../img/bloxshut.png";
 import {Link} from "react-router-dom";
 import psxImg from "../../../img/psx.png";
-import bladeballImg from "../../../img/5487b2557b4811e4c8431f9faa663749.png";
 import React from "react";
 import {useStore} from "../../../state/storeHooks";
-const Dashboard: React.FC = () => {
+const DashboardIndex: React.FC = () => {
 
     const {user} = useStore(({app}) => app);
 
@@ -76,4 +75,4 @@ const Dashboard: React.FC = () => {
     )
 }
 
-export default Dashboard
+export default DashboardIndex
