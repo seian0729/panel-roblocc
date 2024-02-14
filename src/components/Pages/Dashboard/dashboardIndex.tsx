@@ -11,7 +11,7 @@ const DashboardIndex: React.FC = () => {
     let { username } = user.unwrap()
 
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz"];
 
     return(
         <div style={{color: "white", marginTop: 12}}>

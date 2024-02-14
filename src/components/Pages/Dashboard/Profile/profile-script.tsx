@@ -10,7 +10,7 @@ const ProfileScript: React.FC = () => {
     const {user} = useStore(({app}) => app);
     const {id, username, siginKey} = user.unwrap();
 
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz"];
 
     const [messageApi, contextHolder] = message.useMessage();
     const [title, setTitle] = useState('Info')

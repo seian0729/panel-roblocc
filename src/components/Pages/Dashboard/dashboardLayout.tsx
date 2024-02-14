@@ -45,7 +45,7 @@ const DashboardLayout: React.FC = () => {
 
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz"];
 
     function getItem(
         label: React.ReactNode,
@@ -205,23 +205,30 @@ const DashboardLayout: React.FC = () => {
         }
          */
 
+        const pet99Child = [
+            getItem((
+                <Link to={"pet99/tracking"}>
+                    Tracking
+                </Link>
+            ),"pet99/tracking"),
+        ]
+
+        if (username !== "k7ndz"){
+            pet99Child.push(
+                getItem((
+                    <Link to={"pet99/mail"}>
+                        Mail Box
+                    </Link>
+                ),"pet99/mail"),
+            )
+        }
+
         if (whitelistAccountsPet.find((element) => element == username) != undefined){
             dashboardItems.push(getItem(
                 'Pet Simulator 99',
                 'pet99',
                 null,
-                [
-                    getItem((
-                        <Link to={"pet99/tracking"}>
-                            Tracking
-                        </Link>
-                    ),"pet99/tracking"),
-                    getItem((
-                        <Link to={"pet99/mail"}>
-                            Mail Box
-                        </Link>
-                    ),"pet99/mail"),
-                ],
+                pet99Child,
                 'group')
             )
         }

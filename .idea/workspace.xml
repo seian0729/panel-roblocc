@@ -4,7 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Pet 99 | Major Update (Mail Box, v.v)" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Pet 99 | Major Update (Mail Box, v.v)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -149,7 +156,8 @@
       <workItem from="1707738483581" duration="10959000" />
       <workItem from="1707760115963" duration="4532000" />
       <workItem from="1707803151376" duration="13744000" />
-      <workItem from="1707843815399" duration="277000" />
+      <workItem from="1707843815399" duration="1200000" />
+      <workItem from="1707846493756" duration="1636000" />
     </task>
     <task id="LOCAL-00001" summary="+ Back">
       <option name="closed" value="true" />
@@ -471,7 +479,15 @@
       <option name="project" value="LOCAL" />
       <updated>1707843909384</updated>
     </task>
-    <option name="localTasksCounter" value="41" />
+    <task id="LOCAL-00041" summary="[+] Pet 99 | Major Update (Mail Box, v.v)">
+      <option name="closed" value="true" />
+      <created>1707844431885</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1707844431885</updated>
+    </task>
+    <option name="localTasksCounter" value="42" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

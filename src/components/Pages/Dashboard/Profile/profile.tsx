@@ -23,8 +23,6 @@ import moment from "moment";
 const Profile: React.FC = () => {
     const {user} = useStore(({app}) => app);
     const {id, username, role, siginKey, dateExpired} = user.unwrap();
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai"];
     const [ showKey, setShowKey ] = useState(false)
     const data = [
         {

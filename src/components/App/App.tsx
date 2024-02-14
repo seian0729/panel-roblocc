@@ -146,13 +146,15 @@ function App() {
 
     }
 
-    const cookList = ['phuoc123123','hai123123']
-
     let username = ""
 
     if (user.isSome()) {
         username = user.unwrap().username
     }
+
+    const whitelistPet99 = [
+        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz"
+    ]
 
 
     return (
@@ -176,10 +178,10 @@ function App() {
                                 <Route index element={<DashboardIndex/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
                                 <Route path={"petx"} element={<PetX/>}/>
-                                <Route path={"pet99"}>
+                                <Route path={"pet99"} element={<UserPet99OnlyRoute userIsWhitelisted={whitelistPet99.find((element) => element == username) != undefined}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Pet99/>}/>
-                                    <Route path="mail" element={<Pet99Mail/>}/>
+                                    <Route path="mail" element={username == "k7ndz" ? <Page404/> : <Pet99Mail/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>
@@ -231,7 +233,6 @@ async function load() {
     }
 }
 
-
 function UserOnlyRoute({
        userIsLogged
    }: { userIsLogged: boolean } & RouteProps) {
@@ -241,6 +242,14 @@ function UserOnlyRoute({
     return <Outlet/>
 }
 
+function UserPet99OnlyRoute({
+       userIsWhitelisted
+   }: { userIsWhitelisted: boolean } & RouteProps) {
+    if (!userIsWhitelisted) {
+        return <Page404/>
+    }
+    return <Outlet/>
+}
 function GuestOnlyRoute({
         userIsLogged
     }: { userIsLogged: boolean } & RouteProps) {
