@@ -134,7 +134,6 @@ const Pet99Mail: React.FC = () => {
     }, []);
 
     const handleChange = (value: string) => {
-        console.log('changed')
         setUsername(value)
         const tempSendData = []
         const data = dataApi.find((key) => key['UsernameRoblocc'] == value)
