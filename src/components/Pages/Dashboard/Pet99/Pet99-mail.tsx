@@ -191,13 +191,11 @@ const Pet99Mail: React.FC = () => {
         {
             title: "#",
             dataIndex: "Id",
-            width: '1%',
             render: (text, record, index) => ( index + 1 )
         },
         {
             title: "Account",
             dataIndex: "userSend",
-            width: "10%",
             render: (_, record) => {
                 return record['user_send']
             }
@@ -205,7 +203,6 @@ const Pet99Mail: React.FC = () => {
         {
             title: "Mail Details",
             dataIndex: "details",
-            width: "30%",
             children: [
                 {
                     title: 'To Account',
@@ -222,7 +219,12 @@ const Pet99Mail: React.FC = () => {
                     key: 'message',
                     render: (_, record) => {
                         const {message} = JSON.parse(record['details'])
-                        return message == "" ? "-" : message
+                        return(
+                            message == "" ? "-" : <Tag>
+                                { message}
+                            </Tag>
+                        )
+
                     }
                 },
                 {
@@ -231,15 +233,25 @@ const Pet99Mail: React.FC = () => {
                     key: 'detail-details',
                     render: (_, record) => {
                         let details = JSON.parse(record.details)
+                        details['mailDetails'].sort((a: any,b: any) => {
+                            return a['quantity'] - b['quantity']
+                        })
+                        const colorTag: any = {
+                            ["Diamonds"]: "cyan",
+                            ["Bucket"]: "green",
+                            ["Bucket O' Magic"]: "purple",
+                            ["Magic Shard"]: "purple"
+                        }
                         return (
                             <>
                                 <Space direction="horizontal">
                                 {
                                     details['mailDetails'].map((key: any) => {
+                                        const itemName = key['item']['id']
                                         return (
-                                            <Text key={key['item']['id']}>
-                                                {`${key['item']['id']}: ${new Intl.NumberFormat().format(key.quantity)}`}
-                                            </Text>
+                                            <Tag key={key['item']['id']} color={colorTag[itemName] ? colorTag[itemName] : "default" }>
+                                                {`${key['item']['id']}: ${new Intl.NumberFormat().format(key['quantity'])}`}
+                                            </Tag>
                                         );
                                     })
                                 }
@@ -253,7 +265,6 @@ const Pet99Mail: React.FC = () => {
         {
             title: "Send Date",
             dataIndex: "createdAt",
-            width: "10%",
             render: (_, record) => {
                 return moment(record['createdAt']).calendar()
             }
@@ -261,7 +272,6 @@ const Pet99Mail: React.FC = () => {
         {
             title: "Completed Date",
             dataIndex: "updatedAt",
-            width: "10%",
             render: (_, record) => {
                 return moment(record['updatedAt']).unix() - moment(record['createdAt']).unix() <= 0 ? "-" : moment(record['updatedAt']).calendar()
             }
@@ -269,7 +279,6 @@ const Pet99Mail: React.FC = () => {
         {
             title: "Status",
             dataIndex: "status",
-            width: "10%",
             render: (_, record) => {
                 const status = JSON.parse(record['status'])
                 const colorStatus = [
