@@ -94,103 +94,128 @@ const Pet99: React.FC = () => {
             },
         },
         {
-            title: 'Inventory',
-            dataIndex: 'Inventory',
-            width: '30%',
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return (
-                    <>
-                        {
-                            Description['Inventory'].map((key: any) => {
-                                return (
-                                    <Tag color="purple" key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                        {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
-                                    </Tag>
-                                );
-                            })
+            title: "Data",
+            dataIndex: "data",
+            children: [
+                {
+                    title: 'Inventory',
+                    dataIndex: 'Inventory',
+                    key: "inventory",
+                    width: '30%',
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        return (
+                            <>
+                                {
+                                    Description['Inventory'].map((key: any) => {
+                                        return (
+                                            <Tag color="purple" key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
+                                                {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
+                                            </Tag>
+                                        );
+                                    })
 
-                        }
-                    </>
-                )
-            },
+                                }
+                            </>
+                        )
+                    },
+                },
+                {
+                    title: 'Huge',
+                    dataIndex: 'Huge',
+                    width: '15%',
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        const colorHuge = ['default','gold','red']
+                        const subName = ['','[GOLDEN]','[RAINBOW]']
+                        return (
+                            <>
+                                {
+                                    Description['Huge'] == undefined ? <> - </> :
+                                        Description['Huge'].map((key: any) => {
+                                            return (
+                                                <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
+                                                    {key['Name'] + " " + subName[key['pt']]}
+                                                </Tag>
+                                            );
+                                        })
+
+                                }
+                            </>
+                        )
+                    },
+                }
+            ]
         },
         {
-            title: 'Huge',
-            dataIndex: 'Huge',
-            width: '15%',
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                const colorHuge = ['default','gold','red']
-                const subName = ['','[GOLDEN]','[RAINBOW]']
-                return (
-                    <>
-                        {
-                            Description['Huge'] == undefined ? <> - </> :
-                            Description['Huge'].map((key: any) => {
-                                return (
-                                    <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                        {key['Name'] + " " + subName[key['pt']]}
-                                    </Tag>
-                                );
-                            })
-
-                        }
-                    </>
-                )
-            },
-        },
-        {
-            title: 'Total Diamond',
+            title: "Diamond",
             dataIndex: 'Diamond',
-            width: '5%',
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return (
-                    <Tag color={"cyan"}>
-                        {new Intl.NumberFormat().format(Description['Farming']['Diamonds'])}
-                    </Tag>
-                )
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['Diamonds'],
-        },
-        {
-            title: 'Diamond Gained',
-            dataIndex: 'DiamondGained',
-            width: '5%',
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return (
-                    <Tag color={"blue"}>
-                        {new Intl.NumberFormat().format(Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond'])}
-                    </Tag>
-                )
-            },
-            sorter: (a: any, b: any) => (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) -
-                (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']),
-        },
-        {
-            title: 'Diamond Per Min',
-            dataIndex: 'DiamondPMin',
-            width: '5%',
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return (
-                    <Tag color={"blue"}>
-                        {Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60))}
-                    </Tag>
-                )
-            },
-            sorter: (a: any, b: any) => (
-                (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) /
-                    Math.floor(JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(a.Description)['Farming']['oldUTC']) ) -
-                (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']) /
-                    Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC']),
+            width: '25%',
+            children: [
+                {
+                    title: 'Total',
+                    dataIndex: 'Diamond',
+                    key: 'total-diamond',
+                    width: "5%",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        return (
+                            <Tag color={"cyan"}>
+                                {new Intl.NumberFormat().format(Description['Farming']['Diamonds'])}
+                            </Tag>
+                        )
+                    },
+                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['Diamonds'],
+                },
+                {
+                    title: 'Gained',
+                    dataIndex: 'DiamondGained',
+                    key: 'diamond-gained',
+                    width: "5%",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        if (moment().unix() - Description['Farming']['UTC'] <= 120){
+                            return (
+                                <Tag color={"blue"}>
+                                    {new Intl.NumberFormat().format(Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond'])}
+                                </Tag>
+                            )
+                        }
+                        else return "-"
+                    },
+                    sorter: (a: any, b: any) => (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) -
+                        (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']),
+                },
+                {
+                    title: 'Per Min',
+                    dataIndex: 'DiamondPMin',
+                    key: 'diamond-per-min',
+                    width: "5%",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        if (moment().unix() - Description['Farming']['UTC'] <= 120){
+                            return (
+                                <Tag color={"blue"}>
+                                    {Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60))}
+                                </Tag>
+                            )
+                        }
+                        else return "-"
+
+
+                    },
+                    sorter: (a: any, b: any) => (
+                            (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) /
+                            Math.floor(JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(a.Description)['Farming']['oldUTC']) ) -
+                        (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']) /
+                        Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC']),
+                }
+            ]
         },
         {
             title: 'Elapsed',
             dataIndex: 'timeElapsed',
-            width: '5%',
+            width: '10%',
             render: (_, record) => {
 
                 let Description = JSON.parse(record.Description)
@@ -203,12 +228,8 @@ const Pet99: React.FC = () => {
                         </Tag>
                     )
                 }
-                else
-                    return (
-                        <Tag color={"red"}>
-                            Inactive
-                        </Tag>
-                    )
+                else return "-"
+
             },
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['UTC'],
         },
@@ -352,7 +373,7 @@ const Pet99: React.FC = () => {
             }).then(() => {
                 messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             }).catch((error) => {
-                messageApi.error('Got error while getting data');
+                messageApi.error('Got error while deleting account');
             }).finally(() => {
                 setSelectedRowKeys([]);
                 setLoadingDelete(false);
@@ -522,6 +543,7 @@ const Pet99: React.FC = () => {
                         defaultPageSize: 25,
                         showSizeChanger: true,
                     }}
+                    bordered
                     summary={(dataApi) => {
 
                         let totalDiamond = 0;
@@ -529,27 +551,34 @@ const Pet99: React.FC = () => {
                         let diamondPerMin = 0
                         let timeElapsed = 0;
 
+                        let countAccount = 0;
+
                         let tempInventory: any [] = [];
-                        dataApi.forEach(({Description}) => {
+                        dataApi.forEach((record) => {
 
-                            let Farming = JSON.parse(Description)['Farming']
+                            let Farming = JSON.parse(record.Description)['Farming']
 
-                            totalDiamond += Farming['Diamonds']
+                            if (moment().unix() - moment(record.updatedAt).unix() <= 120){
+                                totalDiamond += Farming['Diamonds']
 
-                            diamondGained += Farming['Diamonds'] - Farming['oldDiamond']
+                                diamondGained += Farming['Diamonds'] - Farming['oldDiamond']
 
-                            diamondPerMin += (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+                                diamondPerMin += (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
 
-                            timeElapsed += Farming['UTC'] - Farming['oldUTC']
+                                timeElapsed += Farming['UTC'] - Farming['oldUTC']
 
+                                countAccount++;
+                            }
 
-                            let Inventory = JSON.parse(Description)['Inventory']
+                            let Inventory = JSON.parse(record.Description)['Inventory']
                             Inventory.map((key: any) => {
                                 const itemName = key['Name'];
                                 if (!tempInventory.find((key) => key['Name'] === itemName)){
                                     tempInventory.push({Name: key['Name'], Count: 0})
                                 }
                             })
+
+
                         })
 
                         dataApi.forEach(({Description}) => {
@@ -597,7 +626,7 @@ const Pet99: React.FC = () => {
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={7}>
                                         <Tag color={"red"}>
-                                            {formatDuration(1000 * timeElapsed)}
+                                            {formatDuration(1000 * (timeElapsed / countAccount))}
                                         </Tag>
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={8}>-</Table.Summary.Cell>
