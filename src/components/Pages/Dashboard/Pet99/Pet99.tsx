@@ -259,11 +259,11 @@ const Pet99: React.FC = () => {
             },
             render: (_, record) => {
                 return (
-                    <>
+                    <Tag>
                         <Badge
                             status={moment().unix() - moment(record.updatedAt).unix() >= 120 ? 'error' : 'success'}
                             text={moment().unix() - moment(record.updatedAt).unix() >= 120 ? 'Inactive' : 'Active'}/>
-                    </>
+                    </Tag>
                 )
             },
         },
@@ -552,6 +552,7 @@ const Pet99: React.FC = () => {
                         let timeElapsed = 0;
 
                         let countAccount = 0;
+                        let countAccountInActive = 0
 
                         let tempInventory: any [] = [];
                         dataApi.forEach((record) => {
@@ -569,6 +570,7 @@ const Pet99: React.FC = () => {
 
                                 countAccount++;
                             }
+                            else countAccountInActive++;
 
                             let Inventory = JSON.parse(record.Description)['Inventory']
                             Inventory.map((key: any) => {
@@ -594,13 +596,13 @@ const Pet99: React.FC = () => {
                             <Table.Summary fixed>
                                 <Table.Summary.Row>
                                     <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
-                                    <Table.Summary.Cell index={1}></Table.Summary.Cell>
+                                    <Table.Summary.Cell index={1}> - </Table.Summary.Cell>
                                     <Table.Summary.Cell index={2}>
                                         <>
                                             {
                                                 tempInventory.map((key: any) => {
                                                     return (
-                                                        <Tag color="red" key={key} style={{margin: 4}}>
+                                                        <Tag color="red" key={key["Name"]+"total"} style={{margin: 4}}>
                                                             {`${key['Name']} [x${(key['Count'] ? new Intl.NumberFormat().format(key['Count']) : 0)}]`}
                                                         </Tag>
                                                     );
@@ -629,7 +631,20 @@ const Pet99: React.FC = () => {
                                             {formatDuration(1000 * (timeElapsed / countAccount))}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={8}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={8}>
+                                        <Tag>
+                                            <Badge
+                                                status={'success'}
+                                                text={countAccount}
+                                            />
+                                        </Tag>
+                                        <Tag>
+                                            <Badge
+                                                status={'error'}
+                                                text={countAccountInActive}
+                                            />
+                                        </Tag>
+                                    </Table.Summary.Cell>
                                     <Table.Summary.Cell index={9}>-</Table.Summary.Cell>
                                     <Table.Summary.Cell index={10}>-</Table.Summary.Cell>
                                 </Table.Summary.Row>
