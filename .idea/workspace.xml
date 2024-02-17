@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Pet 99 | Major Update (Mail Box, v.v)">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Pet 99 | Improved Summary (Status)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -157,7 +154,10 @@
       <workItem from="1707760115963" duration="4532000" />
       <workItem from="1707803151376" duration="13744000" />
       <workItem from="1707843815399" duration="1200000" />
-      <workItem from="1707846493756" duration="1636000" />
+      <workItem from="1707846493756" duration="6189000" />
+      <workItem from="1708104566452" duration="4437000" />
+      <workItem from="1708136667703" duration="165000" />
+      <workItem from="1708139917063" duration="103000" />
     </task>
     <task id="LOCAL-00001" summary="+ Back">
       <option name="closed" value="true" />
@@ -487,7 +487,47 @@
       <option name="project" value="LOCAL" />
       <updated>1707844431885</updated>
     </task>
-    <option name="localTasksCounter" value="42" />
+    <task id="LOCAL-00042" summary="[+/*] Pet 99 | Added a little security for page, fixed some bug">
+      <option name="closed" value="true" />
+      <created>1707880791193</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1707880791193</updated>
+    </task>
+    <task id="LOCAL-00043" summary="[*] Pet 99 | Fixed resize in table mail, v.v">
+      <option name="closed" value="true" />
+      <created>1707882430633</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1707882430633</updated>
+    </task>
+    <task id="LOCAL-00044" summary="[*] Pet 99 | Removing console">
+      <option name="closed" value="true" />
+      <created>1707882872919</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1707882872919</updated>
+    </task>
+    <task id="LOCAL-00045" summary="[*] Pet 99 | Improved Summary / Column Diamond">
+      <option name="closed" value="true" />
+      <created>1708106542064</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1708106542064</updated>
+    </task>
+    <task id="LOCAL-00046" summary="[*] Pet 99 | Improved Summary (Status)">
+      <option name="closed" value="true" />
+      <created>1708109121089</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1708109121089</updated>
+    </task>
+    <option name="localTasksCounter" value="47" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -505,11 +545,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="- Fixed timezone" />
-    <MESSAGE value="+ small change suck" />
-    <MESSAGE value="+ Account Status / Tách vài thứ" />
-    <MESSAGE value="+ Fixed something" />
-    <MESSAGE value="+ xam lon" />
     <MESSAGE value="+ Action / v.v" />
     <MESSAGE value="* Fixed user" />
     <MESSAGE value="* Fixed Copy" />
@@ -530,6 +565,11 @@
     <MESSAGE value="[*] Pet 99 | Fix bug on sort Diamond Per Min" />
     <MESSAGE value="[+] Pet 99 | Show Huge (Normal, Golden, Rainbow)" />
     <MESSAGE value="[+] Pet 99 | Major Update (Mail Box, v.v)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] Pet 99 | Major Update (Mail Box, v.v)" />
+    <MESSAGE value="[+/*] Pet 99 | Added a little security for page, fixed some bug" />
+    <MESSAGE value="[*] Pet 99 | Fixed resize in table mail, v.v" />
+    <MESSAGE value="[*] Pet 99 | Removing console" />
+    <MESSAGE value="[*] Pet 99 | Improved Summary / Column Diamond" />
+    <MESSAGE value="[*] Pet 99 | Improved Summary (Status)" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Pet 99 | Improved Summary (Status)" />
   </component>
 </project>

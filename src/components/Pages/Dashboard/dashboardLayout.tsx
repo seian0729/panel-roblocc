@@ -211,17 +211,12 @@ const DashboardLayout: React.FC = () => {
                     Tracking
                 </Link>
             ),"pet99/tracking"),
+            getItem((
+                <Link to={"pet99/mail"}>
+                    Mail Box
+                </Link>
+            ),"pet99/mail"),
         ]
-
-        if (username !== "k7ndz"){
-            pet99Child.push(
-                getItem((
-                    <Link to={"pet99/mail"}>
-                        Mail Box
-                    </Link>
-                ),"pet99/mail"),
-            )
-        }
 
         if (whitelistAccountsPet.find((element) => element == username) != undefined){
             dashboardItems.push(getItem(
