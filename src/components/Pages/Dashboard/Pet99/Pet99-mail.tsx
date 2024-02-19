@@ -1,7 +1,30 @@
 import React, {useEffect, useState} from "react";
-import {Select, Card, Col, Divider, Row, message, Typography, List, Form, Input, Button, Table, Space, Tag} from "antd";
+import {
+    Select,
+    Card,
+    Col,
+    Divider,
+    Row,
+    message,
+    Typography,
+    List,
+    Form,
+    Input,
+    Button,
+    Table,
+    Space,
+    Tag,
+    Tooltip, Alert
+} from "antd";
 import type { SelectProps } from 'antd';
-import {UserOutlined, MailOutlined, SyncOutlined, CloseCircleOutlined, CheckCircleOutlined} from "@ant-design/icons";
+import {
+    UserOutlined,
+    MailOutlined,
+    SyncOutlined,
+    CloseCircleOutlined,
+    CheckCircleOutlined,
+    InfoCircleOutlined
+} from "@ant-design/icons";
 import {getData, createPet99Mail, getAllMail} from "../../../../services/data";
 import {ColumnsType} from "antd/es/table";
 import moment from "moment";
@@ -46,13 +69,25 @@ function AccountData(account: any) {
 
 const Pet99Mail: React.FC = () => {
     const { Text } = Typography;
-    const options: SelectProps['options'] = [];
+    const options: SelectProps['options'] = [{
+        label: "ALL ACTIVE ACCOUNT (THIS OPTION IS IN DEV, COMING SOON)",
+        value: "ALL ACTIVE ACCOUNT",
+        disabled: true
+    }];
 
     const [messageApi, contextHolder] = message.useMessage();
 
     const [loadingMail, setLoadingMail] = useState(false);
 
     const [disableSend, setDisableSend] = useState(false)
+
+    const [loadingSend, setLoadingSend] = useState(false);
+
+    const [typeSend, setTypeSend] = useState("")
+
+    const [loadingBtnData, setLoadingBtnData] = useState(false);
+    const [loadingBtnMail, setLoadingBtnMail] = useState(false);
+
 
     //data
     const [dataApi, setDataApi] = useState([]);
@@ -89,15 +124,17 @@ const Pet99Mail: React.FC = () => {
             mailDetails: dataSend
         }
         const details = JSON.stringify(detailsObject)
-
+        setLoadingSend(true);
         createPet99Mail(username, details).then((res) => {
             setTimeout(() => {
                 messageApi.open({
                     key,
                     type: 'success',
                     content: res.message,
-                    onClose: refreshGetMail
                 })
+
+                setLoadingSend(false);
+                refreshMail()
             }, 1500);
         }).catch((err) => {
             messageApi.open({
@@ -105,6 +142,7 @@ const Pet99Mail: React.FC = () => {
                 type: 'error',
                 content: 'Got error while send mail into server'
             })
+            setLoadingSend(false);
         })
 
     };
@@ -118,59 +156,155 @@ const Pet99Mail: React.FC = () => {
             messageApi.success('All data has been loaded');
         })
     },[])
-
-    const refreshGetMail = () => {
+    const refreshMail = () => {
+        setLoadingBtnMail(true)
         getAllMail().then((res) => {
             setMailApi(res.data)
         }).catch((error) => {
             messageApi.error('Got error while getting mail');
         }).finally(() => {
             messageApi.success('All mail has been loaded');
+            setLoadingBtnMail(false)
         })
     }
 
     useEffect(() => {
-        refreshGetMail()
+        refreshMail()
     }, []);
+    const refreshData = () => {
+        setLoadingBtnData(true);
+        getData(3317771874).then((res) => {
+            setDataApi(res.data);
+        }).catch((error) => {
+            messageApi.error('Got error while getting data');
+        }).finally(() => {
+            messageApi.success('Refresh Success <3');
+            setLoadingBtnData(false);
+        })
+    }
+
+    const AutoRefreshData = () => {
+        refreshData()
+        messageApi.success(`Next refresh ${moment(Date.now() + 60000).fromNow() }`,10);
+        messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,15)
+    }
+
+    useEffect(() =>{
+        const intervalId = setInterval(AutoRefreshData, 60000);
+        return () => clearInterval(intervalId);
+    })
 
     const handleChange = (value: string) => {
         setUsername(value)
-        const tempSendData = []
-        const data = dataApi.find((key) => key['UsernameRoblocc'] == value)
-        if (data != undefined){
-            setDataAccount(data)
-            const Description = JSON.parse(data['Description'])
-            const {Diamonds} = Description['Farming']
-            const {Inventory} = Description
-            if (Inventory != undefined) {
-                Inventory.map((key: any) => {
-                    if(key.Count != 0){
-                        tempSendData.push({
-                            item: {id: key.Name},
-                            quantity: key.Count
+        if (value != "ALL ACTIVE ACCOUNT") {
+            const tempSendData = []
+            const data = dataApi.find((key) => key['UsernameRoblocc'] == value)
+            if (data != undefined) {
+                setDataAccount(data)
+                const Description = JSON.parse(data['Description'])
+                const {Diamonds} = Description['Farming']
+                const {Inventory} = Description
+                if (typeSend == "Both"){
+                    if (Inventory != undefined) {
+                        Inventory.map((key: any) => {
+                            if (key.Count != 0) {
+                                tempSendData.push({
+                                    item: {id: key.Name},
+                                    quantity: key.Count
+                                })
+                            }
                         })
                     }
-                })
-            }
-            tempSendData.push({
-                item: {Type: "Currency",id: "Diamonds"},
-                quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
-            })
+                    tempSendData.push({
+                        item: {Type: "Currency", id: "Diamonds"},
+                        quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
+                    })
+                }
+                else if (typeSend == 'Items'){
+                    if (Inventory != undefined) {
+                        Inventory.map((key: any) => {
+                            if (key.Count != 0) {
+                                tempSendData.push({
+                                    item: {id: key.Name},
+                                    quantity: key.Count
+                                })
+                            }
+                        })
+                    }
+                }
+                else{
+                    tempSendData.push({
+                        item: {Type: "Currency", id: "Diamonds"},
+                        quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
+                    })
+                }
 
-            if (Diamonds - ((tempSendData.length * 10000) + 10000) >= 0){
-                setDisableSend(false)
-                setDataSend(tempSendData)
+                if (Diamonds - ((tempSendData.length * 10000) + 10000) >= 0) {
+                    setDisableSend(false)
+                    setDataSend(tempSendData)
+                } else {
+                    setDisableSend(true)
+                    messageApi.error("Hey! don't try send if u don't enough diamond todo this action")
+                }
+
+                console.log(tempSendData)
             }
-            else {
-                setDisableSend(true)
-                messageApi.error("Hey! don't try send if u don't enough diamond todo this action")
-            }
+        }
+        else {
+            const allData: { username: never; details: { item: { id: any; } | { Type: string; id: string; } | { id: any; } | { Type: string; id: string; }; quantity: any; }[]; }[] = []
+            dataApi.forEach((key) => {
+                if (moment().unix() - moment(key['updatedAt']).unix() <= 120){
+                    const tempSendAccountData: { item: { id: any; } | { Type: string; id: string; } | { id: any; } | { Type: string; id: string; }; quantity: any; }[] = []
+                    const Description = JSON.parse(key['Description'])
+                    const {Diamonds} = Description['Farming']
+                    const {Inventory} = Description
+                    if (typeSend == "Both"){
+                        if (Inventory != undefined) {
+                            Inventory.map((key: any) => {
+                                if (key.Count != 0) {
+                                    tempSendAccountData.push({
+                                        item: {id: key.Name},
+                                        quantity: key.Count
+                                    })
+                                }
+                            })
+                        }
+                        tempSendAccountData.push({
+                            item: {Type: "Currency", id: "Diamonds"},
+                            quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
+                        })
+                    }
+                    else if (typeSend == 'items'){
+                        if (Inventory != undefined) {
+                            Inventory.map((key: any) => {
+                                if (key.Count != 0) {
+                                    tempSendAccountData.push({
+                                        item: {id: key.Name},
+                                        quantity: key.Count
+                                    })
+                                }
+                            })
+                        }
+                    }
+                    else{
+                        tempSendAccountData.push({
+                            item: {Type: "Currency", id: "Diamonds"},
+                            quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
+                        })
+                    }
+                    allData.push({
+                        username: key['UsernameRoblocc'],
+                        details: tempSendAccountData
+                    })
+                }
+            })
+            console.log("All data", allData)
         }
     };
 
+
     dataApi.forEach((item: any) => {
         const usernameRoblocc = item['UsernameRoblocc']
-        const Description = JSON.parse(item.Description)
         options.push({
             value: usernameRoblocc,
             label: usernameRoblocc
@@ -219,7 +353,7 @@ const Pet99Mail: React.FC = () => {
                     render: (_, record) => {
                         const {message} = JSON.parse(record['details'])
                         return(
-                            message == "" ? "-" : <Tag>
+                            message == "" || message == undefined ? "-" : <Tag>
                                 { message}
                             </Tag>
                         )
@@ -266,6 +400,9 @@ const Pet99Mail: React.FC = () => {
             dataIndex: "createdAt",
             render: (_, record) => {
                 return moment(record['createdAt']).calendar()
+            },
+            sorter: (a, b) => {
+                return moment(a['createdAt']).unix() - moment(b['createdAt']).unix()
             }
         },
         {
@@ -273,6 +410,9 @@ const Pet99Mail: React.FC = () => {
             dataIndex: "updatedAt",
             render: (_, record) => {
                 return moment(record['updatedAt']).unix() - moment(record['createdAt']).unix() <= 0 ? "-" : moment(record['updatedAt']).calendar()
+            },
+            sorter: (a, b) => {
+                return moment(a['updatedAt']).unix() - moment(b['updatedAt']).unix()
             }
         },
         {
@@ -303,72 +443,135 @@ const Pet99Mail: React.FC = () => {
             <Row style={{padding: 12}}>
                 <Col xs={24} sm={24} md={24}>
                     <Divider orientation="left">Pet 99 - Mail Box</Divider>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                            <Card size={"small"} title={"Select Account"}>
-                                <Select
-                                    onChange={handleChange}
-                                    style={{ width: "100%"}}
-                                    options={options}
-                                    showSearch={true}
-                                    placeholder={"Select your account"}
-                                />
-                            </Card>
+                    <Row gutter={[12, 12]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                            <Row gutter={[12, 12]}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <Card size={"small"} title={"Select Account"} >
+                                        <Select
+                                            onChange={handleChange}
+                                            style={{ width: "100%"}}
+                                            options={options}
+                                            showSearch={true}
+                                            placeholder={"Select your account"}
+                                        />
+                                    </Card>
+                                </Col>
 
-                            <Card size={"small"} title={"Send Into"} style={{marginTop: 16}}>
-                                {
-                                    dataAccount.length == 0 ? <> PLEASE SELECT ACCOUNT </> : <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish}>
-                                        <Form.Item
-                                            name="Username"
-                                            rules={[{ required: true, message: 'Please input your username!' }]}
-                                        >
-                                            <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Username" />
-                                        </Form.Item>
-                                        <Form.Item
-                                            name="Message"
-                                        >
-                                            <Input
-                                                prefix={<MailOutlined className="site-form-item-icon"/>}
-                                                type="Message"
-                                                placeholder="Message (optional)"
-                                            />
-                                        </Form.Item>
-                                        <Form.Item shouldUpdate>
-                                            {() => (
-                                                <Button
-                                                    type="primary"
-                                                    htmlType="submit"
-                                                    disabled={
-                                                        !clientReady ||
-                                                        !form.isFieldsTouched(true) ||
-                                                        !!form.getFieldsError().filter(({ errors }) => errors.length).length ||
-                                                        disableSend
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <Card size={"small"} title={"Select Detail"}>
+                                        <Select
+                                            onChange={(value) => {setTypeSend(value)}}
+                                            style={{ width: "100%"}}
+                                            defaultValue={"Diamond"}
+                                            options={[
+                                                { value: 'Diamond', label: 'Diamond' },
+                                                { value: 'Items', label: 'Items' },
+                                                { value: 'Both', label: 'Both' },
+                                            ]}
+                                            showSearch={true}
+                                            placeholder={"Select your details for mail"}
+                                        />
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Alert
+                                showIcon
+                                message="It will get your SELECTED account data in database and make a request to client do send mail action"
+                                style={{marginTop: 12}}
+                            />
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                            <Row gutter={[12, 12]}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={18}>
+                                    <Card size={"small"} title={"Send Into"} >
+                                        {
+                                            dataAccount.length == 0 ?
+                                                <> PLEASE SELECT ACCOUNT </> :
+                                                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} labelWrap={true}>
+                                                    <Form.Item
+                                                        name="Username"
+                                                        rules={[{ required: true, message: 'Please input your username!' }]}
+                                                        style={{ marginBottom: "6px" }}
+                                                    >
+                                                        <Input
+                                                            prefix={<UserOutlined className="site-form-item-icon" />}
+                                                            placeholder="Username"
+                                                        />
+                                                    </Form.Item>
+                                                    <Form.Item
+                                                        name="Message"
+                                                        style={{ marginBottom: "6px" }}
+                                                    >
+                                                        <Input
+                                                            prefix={<MailOutlined className="site-form-item-icon"/>}
+                                                            type="Message"
+                                                            placeholder="Message (optional)"
+                                                            suffix={
+                                                                <Tooltip title="Leave in blank if you want message is your receive username account">
+                                                                    <InfoCircleOutlined />
+                                                                </Tooltip>
+                                                            }
+                                                        />
+                                                    </Form.Item>
+                                                    {
+                                                        username != "ALL ACTIVE ACCOUNT" ?
+                                                            <Form.Item shouldUpdate style={{ marginBottom: "6px" }}>
+                                                                {() => (
+                                                                    <Button
+                                                                        type="primary"
+                                                                        htmlType="submit"
+                                                                        disabled={
+                                                                            !clientReady ||
+                                                                            !!form.getFieldsError().filter(({ errors }) => errors.length).length ||
+                                                                            disableSend
+                                                                        }
+                                                                        loading={loadingSend}
+                                                                    >
+                                                                        Send Request Mail
+                                                                    </Button>
+                                                                )}
+                                                            </Form.Item>
+                                                            :
+                                                            <>
+                                                                <Form.Item style={{ marginTop: "6px" }} >
+                                                                    <Button
+                                                                        type="primary"
+                                                                        onClick={() => {console.log('send all mail')}}
+                                                                        loading={loadingSend}
+                                                                    >
+                                                                        Send Mail (ALL ACTIVE ACCOUNT)
+                                                                    </Button>
+                                                                </Form.Item>
+                                                            </>
                                                     }
-                                                >
-                                                    Send Request Mail
-                                                </Button>
-                                            )}
-                                        </Form.Item>
-                                        <Form.Item>
+                                                </Form>
+                                        }
+                                    </Card>
+                                </Col>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={6}>
+                                    <Card size={"small"} title={"Data Action"}>
+                                        <Space wrap>
                                             <Button
-                                                type="primary"
-                                                onClick={refreshGetMail}
+                                                type={"primary"}
+                                                onClick={refreshData}
+                                                loading={loadingBtnData}
+                                            >
+                                                Refresh Data
+                                            </Button>
+
+                                            <Button
+                                                type={"primary"}
+                                                onClick={refreshMail}
+                                                loading={loadingBtnMail}
                                             >
                                                 Refresh Mail
                                             </Button>
-                                        </Form.Item>
-                                    </Form>
-                                }
-
-                            </Card>
-                        </Col>
-
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                            <Card size={"small"} title={`Account Info - ${username == "" ? "Username" : username.toUpperCase()}`}>
-                                {
-                                    dataAccount.length != 0 ? AccountData(dataAccount) : <> PLEASE SELECT ACCOUNT </>
-                                }
-                            </Card>
+                                        </Space>
+                                    </Card>
+                                </Col>
+                            </Row>
                         </Col>
                     </Row>
 
