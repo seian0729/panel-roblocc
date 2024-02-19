@@ -477,6 +477,12 @@ const Pet99Mail: React.FC = () => {
                             </Row>
                             <Alert
                                 showIcon
+                                message="SELECT DETAIL BEFORE SELECT ACCOUNT"
+                                style={{marginTop: 12}}
+                                type={"error"}
+                            />
+                            <Alert
+                                showIcon
                                 message="It will get your SELECTED account data in database and make a request to client do send mail action"
                                 style={{marginTop: 12}}
                             />
