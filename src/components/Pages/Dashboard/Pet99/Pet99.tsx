@@ -417,6 +417,8 @@ const Pet99: React.FC = () => {
 
     };
 
+   //console.log(selectedRowKeys)
+
     const getOnline = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
@@ -531,7 +533,7 @@ const Pet99: React.FC = () => {
                     columns={columnsData}
                     dataSource={dataApi}
                     rowSelection={rowSelection}
-                    rowKey={(record) => record.Id}
+                    rowKey={(record) => record.UsernameRoblocc}
                     loading={loadingTable}
                     size={"small"}
                     scroll={{x: true}}
