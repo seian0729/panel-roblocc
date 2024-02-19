@@ -643,7 +643,7 @@ const Pet99: React.FC = () => {
                                         <Tag>
                                             <Badge
                                                 status={'error'}
-                                                text={countAccountInActive}
+                                                text={countAccountInActive.toString()}
                                             />
                                         </Tag>
                                     </Table.Summary.Cell>
