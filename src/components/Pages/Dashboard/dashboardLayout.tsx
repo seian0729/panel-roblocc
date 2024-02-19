@@ -5,7 +5,9 @@ import {
     UserOutlined,
     LogoutOutlined,
     TableOutlined,
-    DashboardOutlined, CloseCircleOutlined, HistoryOutlined, HomeOutlined, FileOutlined
+    CloseCircleOutlined,
+    HistoryOutlined,
+    FileOutlined
 } from '@ant-design/icons';
 import {
     Layout,

@@ -5,7 +5,7 @@ import {
     Card,
     Checkbox,
     Col,
-    Divider, Dropdown,
+    Divider, Drawer, Dropdown,
     FloatButton,
     Form, MenuProps, message,
     Popconfirm,
@@ -62,6 +62,10 @@ const Pet99: React.FC = () => {
 
     //Hidename
     const [hidename, setHidename] = useState(false)
+
+    //
+
+    const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
 
     interface DataType {
         Id: number
@@ -419,6 +423,32 @@ const Pet99: React.FC = () => {
 
    //console.log(selectedRowKeys)
 
+    interface DrawerProps {
+        note: string,
+        online: number
+    }
+    const getOnlineForNote = () => {
+        // [ {note: 'note1', online: 0}, {note: 'note2', online: 0} ]
+        let temp: DrawerProps[] = []
+        // get all note
+        dataApi.forEach((item: DataType) => {
+            const note = item.Note
+            if (!temp.find((item: DrawerProps) => item.note === note)) {
+                temp.push({note: note, online: 0})
+            }
+        })
+        // get online for each note
+        dataApi.forEach((item: DataType) => {
+            const note = item.Note
+            const update = moment(item.updatedAt).unix()
+            if (moment().unix() - update <= 900) {
+                temp.find((item: DrawerProps) => item.note === note)!.online++
+            }
+        })
+        //console.log(temp)
+        return temp
+    }
+
     const getOnline = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
@@ -453,8 +483,14 @@ const Pet99: React.FC = () => {
                             <Button
                                 type="primary"
                                 onClick={refreshData}
-                                loading={loadingReload}
-                            >Refresh</Button>
+                                loading={loadingReload
+                            }>
+                                Refresh
+                            </Button>
+
+                            <Button type="primary" onClick={() => {
+                                setOpenNoteDrawer(true)
+                            }}>Note Active</Button>
 
                             <Popconfirm
                                 placement="bottom"
@@ -656,6 +692,32 @@ const Pet99: React.FC = () => {
                 <FloatButton.BackTop/>
             </Col>
         </Row>
+
+        <Drawer
+            title="Active per Note"
+            placement="right"
+            closable={true}
+            onClose={() => {
+                setOpenNoteDrawer(false)
+            }}
+            open={openNoteDrawer}
+            getContainer={false}>
+            <Table
+                dataSource={getOnlineForNote()}
+                columns={[
+                    {
+                        title: 'Note',
+                        dataIndex: 'note',
+                    },
+                    {
+                        title: 'Online',
+                        dataIndex: 'online',
+                    }
+                ]}
+                rowKey={(record) => record.note}
+            ></Table>
+        </Drawer>
+
     </div>);
 }
 
