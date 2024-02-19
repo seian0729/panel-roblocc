@@ -637,7 +637,7 @@ const Pet99: React.FC = () => {
                                         <Tag>
                                             <Badge
                                                 status={'success'}
-                                                text={countAccount}
+                                                text={countAccount.toString()}
                                             />
                                         </Tag>
                                         <Tag>
