@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Pet 99 | Improved Summary (Status)">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Pet 99 | More Note">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -157,23 +159,12 @@
       <workItem from="1707846493756" duration="6189000" />
       <workItem from="1708104566452" duration="4437000" />
       <workItem from="1708136667703" duration="165000" />
-      <workItem from="1708139917063" duration="103000" />
-    </task>
-    <task id="LOCAL-00001" summary="+ Back">
-      <option name="closed" value="true" />
-      <created>1701328910797</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1701328910797</updated>
-    </task>
-    <task id="LOCAL-00002" summary="Revert &quot;Revert &quot;Merge remote-tracking branch 'origin/master'&quot;&quot;&#10;&#10;This reverts commit f45e56e6">
-      <option name="closed" value="true" />
-      <created>1701330998205</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1701330998205</updated>
+      <workItem from="1708139917063" duration="167000" />
+      <workItem from="1708175906776" duration="549000" />
+      <workItem from="1708176915114" duration="6648000" />
+      <workItem from="1708319901496" duration="1019000" />
+      <workItem from="1708335080803" duration="4965000" />
+      <workItem from="1708348173523" duration="3659000" />
     </task>
     <task id="LOCAL-00003" summary="Revert &quot;Revert &quot;Merge remote-tracking branch 'origin/master'&quot;&quot;&#10;&#10;This reverts commit f45e56e6">
       <option name="closed" value="true" />
@@ -527,7 +518,47 @@
       <option name="project" value="LOCAL" />
       <updated>1708109121089</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="[*] Pet 99 | Fixed bug">
+      <option name="closed" value="true" />
+      <created>1708140031390</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1708140031390</updated>
+    </task>
+    <task id="LOCAL-00048" summary="[*] Pet 99 | Fixed delete bulk account">
+      <option name="closed" value="true" />
+      <created>1708320201122</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1708320201122</updated>
+    </task>
+    <task id="LOCAL-00049" summary="[*] Pet 99 | Fixed String in status">
+      <option name="closed" value="true" />
+      <created>1708339724675</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1708339724675</updated>
+    </task>
+    <task id="LOCAL-00050" summary="[+] Pet 99 | Mail Box, Select mail detail (item/diamond/both)">
+      <option name="closed" value="true" />
+      <created>1708349610898</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1708349610898</updated>
+    </task>
+    <task id="LOCAL-00051" summary="[*] Pet 99 | More Note">
+      <option name="closed" value="true" />
+      <created>1708351384882</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1708351384882</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -545,11 +576,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="+ Action / v.v" />
-    <MESSAGE value="* Fixed user" />
-    <MESSAGE value="* Fixed Copy" />
-    <MESSAGE value="+ Fixed suck, re-add drawer" />
-    <MESSAGE value="+ Login page" />
     <MESSAGE value="+ Major Updated" />
     <MESSAGE value="+ Add wl" />
     <MESSAGE value="+ Ma giáo" />
@@ -570,6 +596,11 @@
     <MESSAGE value="[*] Pet 99 | Removing console" />
     <MESSAGE value="[*] Pet 99 | Improved Summary / Column Diamond" />
     <MESSAGE value="[*] Pet 99 | Improved Summary (Status)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Pet 99 | Improved Summary (Status)" />
+    <MESSAGE value="[*] Pet 99 | Fixed bug" />
+    <MESSAGE value="[*] Pet 99 | Fixed delete bulk account" />
+    <MESSAGE value="[*] Pet 99 | Fixed String in status" />
+    <MESSAGE value="[+] Pet 99 | Mail Box, Select mail detail (item/diamond/both)" />
+    <MESSAGE value="[*] Pet 99 | More Note" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Pet 99 | More Note" />
   </component>
 </project>

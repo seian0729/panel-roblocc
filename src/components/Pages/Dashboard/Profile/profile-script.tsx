@@ -1,6 +1,5 @@
 import React, {useState} from "react";
-import {Alert, Button, Col, Collapse, Divider, List, message, Result, Row, Space} from "antd";
-import {useNavigate} from "react-router-dom";
+import {Alert, Button, Col, Collapse, Divider, message, Row, Space} from "antd";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {atomOneDark} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import {useStore} from "../../../../state/storeHooks";
@@ -10,7 +9,7 @@ const ProfileScript: React.FC = () => {
     const {user} = useStore(({app}) => app);
     const {id, username, siginKey} = user.unwrap();
 
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz"];
+    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1"];
 
     const [messageApi, contextHolder] = message.useMessage();
     const [title, setTitle] = useState('Info')

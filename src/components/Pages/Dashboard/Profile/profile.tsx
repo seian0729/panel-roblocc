@@ -1,22 +1,16 @@
 import React, {useState} from 'react';
-import type {TabsProps} from 'antd';
 import {
-    Alert,
     Button,
     Col,
-    Collapse,
     Divider,
     List,
     message,
     Row,
     Space,
-    Tabs,
     Tag, Tooltip,
     Typography
 } from 'antd';
 import {useStore} from "../../../../state/storeHooks";
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import {atomOneDark} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import moment from "moment";
 
 
