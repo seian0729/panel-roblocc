@@ -135,7 +135,7 @@ const Pet99: React.FC = () => {
                                         Description['Huge'].map((key: any) => {
                                             return (
                                                 <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                                    {key['Name'] + " " + subName[key['pt']]}
+                                                    {key['Name'] + " " +  (key['pt'] != undefined ? subName[key['pt']] : "")}
                                                 </Tag>
                                             );
                                         })
