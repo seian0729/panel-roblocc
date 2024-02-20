@@ -50,7 +50,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
         'Magic Shard'
     }
 }
-loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/pet99'))()`;
+repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/private/nuoi-thu-cung/pet99"))() end) wait(60) until HaneiDesu`;
 
 
     const copyScript = (scriptname: string, script: string) => {
