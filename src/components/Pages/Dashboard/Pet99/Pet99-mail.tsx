@@ -25,7 +25,7 @@ import {
     CheckCircleOutlined,
     InfoCircleOutlined
 } from "@ant-design/icons";
-import {getData, createPet99Mail, getAllMail} from "../../../../services/data";
+import {getData, createPet99Mail, getAllMail, createBulkPet99Mail} from "../../../../services/data";
 import {ColumnsType} from "antd/es/table";
 import moment from "moment";
 
@@ -72,14 +72,13 @@ const Pet99Mail: React.FC = () => {
     const options: SelectProps['options'] = [{
         label: "ALL ACTIVE ACCOUNT (THIS OPTION IS IN DEV, COMING SOON)",
         value: "ALL ACTIVE ACCOUNT",
-        disabled: true
     }];
 
     const [messageApi, contextHolder] = message.useMessage();
 
     const [loadingMail, setLoadingMail] = useState(false);
 
-    const [disableSend, setDisableSend] = useState(false)
+    const [disableSend, setDisableSend] = useState(true)
 
     const [loadingSend, setLoadingSend] = useState(false);
 
@@ -87,7 +86,6 @@ const Pet99Mail: React.FC = () => {
 
     const [loadingBtnData, setLoadingBtnData] = useState(false);
     const [loadingBtnMail, setLoadingBtnMail] = useState(false);
-
 
     //data
     const [dataApi, setDataApi] = useState([]);
@@ -97,10 +95,14 @@ const Pet99Mail: React.FC = () => {
     const [dataAccount, setDataAccount] = useState([]);
 
     const [dataSend, setDataSend] = useState([{}]);
+    const [allDataSend, setAllDataSend] = useState("");
 
     //username
 
     const [username, setUsername] = useState("");
+
+    const [usernameR, setUsernameR] = useState("");
+    const [messageSend, setMessageSend] = useState("");
 
     const [form] = Form.useForm();
     const [clientReady, setClientReady] = useState<boolean>(false);
@@ -109,6 +111,38 @@ const Pet99Mail: React.FC = () => {
     useEffect(() => {
         setClientReady(true);
     }, []);
+
+    const pushBulkMail = () => {
+        const key = 'notification-mail'
+        messageApi.open({
+            key,
+            type: 'loading',
+            content: 'Sent the mail to server...',
+            duration: 10
+        })
+        setLoadingSend(true);
+        createBulkPet99Mail(allDataSend).then((res) => {
+            console.log(res)
+            setTimeout(() => {
+                messageApi.open({
+                    key,
+                    type: 'success',
+                    content: res.message,
+                })
+
+                setLoadingSend(false);
+                refreshMail()
+            }, 1500);
+        }).catch((err) => {
+            messageApi.open({
+                key,
+                type: 'error',
+                content: 'Got error while send mail into server'
+            })
+            console.log(err)
+            setLoadingSend(false);
+        })
+    }
 
     const onFinish = (values: any) => {
         const key = 'notification-mail'
@@ -144,7 +178,6 @@ const Pet99Mail: React.FC = () => {
             })
             setLoadingSend(false);
         })
-
     };
 
     useEffect(() => {
@@ -246,15 +279,14 @@ const Pet99Mail: React.FC = () => {
                     setDisableSend(true)
                     messageApi.error("Hey! don't try send if u don't enough diamond todo this action")
                 }
-
                 console.log(tempSendData)
             }
         }
         else {
-            const allData: { username: never; details: { item: { id: any; } | { Type: string; id: string; } | { id: any; } | { Type: string; id: string; }; quantity: any; }[]; }[] = []
+            const allData: { usernameSend: never; details: { username: string; message: string; mailDetails: { item: { id: any; } | { Type: string; id: string; }; quantity: any; }[]; }; }[] = []
             dataApi.forEach((key) => {
                 if (moment().unix() - moment(key['updatedAt']).unix() <= 120){
-                    const tempSendAccountData: { item: { id: any; } | { Type: string; id: string; } | { id: any; } | { Type: string; id: string; }; quantity: any; }[] = []
+                    const tempSendAccountData: { item: { id: any; } | { Type: string; id: string; }; quantity: any; }[] = []
                     const Description = JSON.parse(key['Description'])
                     const {Diamonds} = Description['Farming']
                     const {Inventory} = Description
@@ -274,7 +306,7 @@ const Pet99Mail: React.FC = () => {
                             quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
                         })
                     }
-                    else if (typeSend == 'items'){
+                    else if (typeSend == 'Items'){
                         if (Inventory != undefined) {
                             Inventory.map((key: any) => {
                                 if (key.Count != 0) {
@@ -293,12 +325,17 @@ const Pet99Mail: React.FC = () => {
                         })
                     }
                     allData.push({
-                        username: key['UsernameRoblocc'],
-                        details: tempSendAccountData
+                        usernameSend: key['UsernameRoblocc'],
+                        details: {
+                            username: usernameR,
+                            message: messageSend,
+                            mailDetails: tempSendAccountData
+                        }
                     })
                 }
             })
-            console.log("All data", allData)
+            console.log("All data", JSON.stringify(allData))
+            setAllDataSend(JSON.stringify(allData))
         }
     };
 
@@ -446,117 +483,71 @@ const Pet99Mail: React.FC = () => {
                     <Row gutter={[12, 12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Row gutter={[12, 12]}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                                    <Card size={"small"} title={"Select Account"} >
-                                        <Select
-                                            onChange={handleChange}
-                                            style={{ width: "100%"}}
-                                            options={options}
-                                            showSearch={true}
-                                            placeholder={"Select your account"}
-                                        />
-                                    </Card>
-                                </Col>
-
-                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                                    <Card size={"small"} title={"Select Detail"}>
-                                        <Select
-                                            onChange={(value) => {setTypeSend(value)}}
-                                            style={{ width: "100%"}}
-                                            defaultValue={"Diamond"}
-                                            options={[
-                                                { value: 'Diamond', label: 'Diamond' },
-                                                { value: 'Items', label: 'Items' },
-                                                { value: 'Both', label: 'Both' },
-                                            ]}
-                                            showSearch={true}
-                                            placeholder={"Select your details for mail"}
-                                        />
-                                    </Card>
-                                </Col>
-                            </Row>
-                            <Alert
-                                showIcon
-                                message="SELECT DETAIL BEFORE SELECT ACCOUNT"
-                                style={{marginTop: 12}}
-                                type={"error"}
-                            />
-                            <Alert
-                                showIcon
-                                message="It will get your SELECTED account data in database and make a request to client do send mail action"
-                                style={{marginTop: 12}}
-                            />
-                        </Col>
-
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                            <Row gutter={[12, 12]}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={18}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={17}>
                                     <Card size={"small"} title={"Send Into"} >
-                                        {
-                                            dataAccount.length == 0 ?
-                                                <> PLEASE SELECT ACCOUNT </> :
-                                                <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} labelWrap={true}>
-                                                    <Form.Item
-                                                        name="Username"
-                                                        rules={[{ required: true, message: 'Please input your username!' }]}
-                                                        style={{ marginBottom: "6px" }}
-                                                    >
-                                                        <Input
-                                                            prefix={<UserOutlined className="site-form-item-icon" />}
-                                                            placeholder="Username"
-                                                        />
-                                                    </Form.Item>
-                                                    <Form.Item
-                                                        name="Message"
-                                                        style={{ marginBottom: "6px" }}
-                                                    >
-                                                        <Input
-                                                            prefix={<MailOutlined className="site-form-item-icon"/>}
-                                                            type="Message"
-                                                            placeholder="Message (optional)"
-                                                            suffix={
-                                                                <Tooltip title="Leave in blank if you want message is your receive username account">
-                                                                    <InfoCircleOutlined />
-                                                                </Tooltip>
-                                                            }
-                                                        />
-                                                    </Form.Item>
-                                                    {
-                                                        username != "ALL ACTIVE ACCOUNT" ?
-                                                            <Form.Item shouldUpdate style={{ marginBottom: "6px" }}>
-                                                                {() => (
-                                                                    <Button
-                                                                        type="primary"
-                                                                        htmlType="submit"
-                                                                        disabled={
-                                                                            !clientReady ||
-                                                                            !!form.getFieldsError().filter(({ errors }) => errors.length).length ||
-                                                                            disableSend
-                                                                        }
-                                                                        loading={loadingSend}
-                                                                    >
-                                                                        Send Request Mail
-                                                                    </Button>
-                                                                )}
-                                                            </Form.Item>
-                                                            :
-                                                            <>
-                                                                <Form.Item style={{ marginTop: "6px" }} >
-                                                                    <Button
-                                                                        type="primary"
-                                                                        onClick={() => {console.log('send all mail')}}
-                                                                        loading={loadingSend}
-                                                                    >
-                                                                        Send Mail (ALL ACTIVE ACCOUNT)
-                                                                    </Button>
-                                                                </Form.Item>
-                                                            </>
+                                        <Form form={form} name="horizontal_login" layout="inline" onFinish={onFinish} labelWrap={true}>
+                                            <Form.Item
+                                                name="Username"
+                                                rules={[{ required: true, message: 'Please input your username!' }]}
+                                                style={{ marginBottom: "6px" }}
+                                            >
+                                                <Input
+                                                    prefix={<UserOutlined className="site-form-item-icon" />}
+                                                    placeholder="Username"
+                                                    onChange = {(e) => setUsernameR(e.target.value)}
+                                                />
+                                            </Form.Item>
+                                            <Form.Item
+                                                name="Message"
+                                                style={{ marginBottom: "6px" }}
+                                            >
+                                                <Input
+                                                    prefix={<MailOutlined className="site-form-item-icon"/>}
+                                                    type="Message"
+                                                    placeholder="Message (optional)"
+                                                    onChange = {(e) => setMessageSend(e.target.value)}
+                                                    suffix={
+                                                        <Tooltip title="Leave in blank if you want message is your receive username account">
+                                                            <InfoCircleOutlined />
+                                                        </Tooltip>
                                                     }
-                                                </Form>
-                                        }
+                                                />
+                                            </Form.Item>
+                                            {
+                                                username != "ALL ACTIVE ACCOUNT" ?
+                                                    <Form.Item shouldUpdate style={{ marginBottom: "6px" }}>
+                                                        {() => (
+                                                            <Button
+                                                                type="primary"
+                                                                htmlType="submit"
+                                                                disabled={
+                                                                    !clientReady ||
+                                                                    !!form.getFieldsError().filter(({ errors }) => errors.length).length ||
+                                                                    disableSend
+                                                                }
+                                                                loading={loadingSend}
+                                                            >
+                                                                Send Mail
+                                                            </Button>
+                                                        )}
+                                                    </Form.Item>
+                                                    :
+                                                    <>
+                                                        <Form.Item style={{ marginBottom: "6px" }} >
+                                                            <Button
+                                                                type="primary"
+                                                                onClick={pushBulkMail}
+                                                                loading={loadingSend}
+                                                            >
+                                                                Send Mail (ALL ACTIVE ACCOUNT)
+                                                            </Button>
+                                                        </Form.Item>
+                                                    </>
+                                            }
+                                        </Form>
                                     </Card>
                                 </Col>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={6}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={7}>
                                     <Card size={"small"} title={"Data Action"}>
                                         <Space wrap>
                                             <Button
@@ -575,6 +566,57 @@ const Pet99Mail: React.FC = () => {
                                                 Refresh Mail
                                             </Button>
                                         </Space>
+                                    </Card>
+                                </Col>
+                            </Row>
+                            <Alert
+                                showIcon
+                                message="VUI LÒNG CHỌN NHẬP USERNAME ACC NHẬN TRƯỚC KHI CHỌN ALL ACTIVE ACCOUNT (LÀM SAI MẤT DỮ LIỆU KHÔNG CHỊU TRÁCH NHIỆM)"
+                                style={{marginTop: 12}}
+                                type={"error"}
+                            />
+                            <Alert
+                                showIcon
+                                message="CHỌN DETAIL TRƯỚC KHI CHỌN ACCOUNT ĐỂ TRÁNH LỖI"
+                                style={{marginTop: 12}}
+                                type={"error"}
+                            />
+                            <Alert
+                                showIcon
+                                message="It will get your SELECTED account data in database and make a request to client do send mail action"
+                                style={{marginTop: 12}}
+                            />
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                            <Row gutter={[12, 12]}>
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <Card size={"small"} title={"Select Account"} >
+                                        <Select
+                                            onChange={handleChange}
+                                            style={{ width: "100%"}}
+                                            options={options}
+                                            showSearch={true}
+                                            placeholder={"Select your account"}
+                                            disabled={usernameR == ""}
+                                        />
+                                    </Card>
+                                </Col>
+
+                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                                    <Card size={"small"} title={"Select Detail"}>
+                                        <Select
+                                            onChange={(value) => {setTypeSend(value)}}
+                                            style={{ width: "100%"}}
+                                            defaultValue={"Diamond"}
+                                            options={[
+                                                { value: 'Diamond', label: 'Diamond' },
+                                                { value: 'Items', label: 'Items' },
+                                                { value: 'Both', label: 'Both' },
+                                            ]}
+                                            showSearch={true}
+                                            placeholder={"Select your details for mail"}
+                                        />
                                     </Card>
                                 </Col>
                             </Row>

@@ -96,6 +96,11 @@ export async function createPet99Mail(username: string, details: string){
     return data
 }
 
+export async function createBulkPet99Mail(details: string){
+    const { data } = await axios.post('Pet99/bulkCreateMail', {details: details})
+    return data
+}
+
 export async function getAllMail(){
     const { data } = await axios.get('Pet99/getAllMail')
     return data
