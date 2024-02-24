@@ -21,12 +21,12 @@ const ProfileScript: React.FC = () => {
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
 
-    const bloxfruitStringTrigon = `getgenv().Setting = {
+    const bloxfruitStringAll = `getgenv().Setting = {
     UID = ${siginKey != '' ? `"${siginKey}"` : id},
     DelayUpdate = 300,
     Note = "${username}"
 }
-loadstring(game:HttpGet("https://raw.githubusercontent.com/chimnguu/ngu/master/bulularchive.lua"))()`;
+loadstring(http_request({Url = 'https://cdn.chimovo.com/private/blocc-trai-cay/panelv1', Method = "GET"})['Body'])()`;
 
     const petxString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
@@ -70,13 +70,13 @@ repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/
                         key: '1',
                         label: 'Blox Fruit',
                         children: <>
-                            Another Exploit:
+                            Fluxus:
                             <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
                                 {bloxfruitString}
                             </SyntaxHighlighter>
-                            Trigon:
+                            Another Exploit:
                             <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
-                                {bloxfruitStringTrigon}
+                                {bloxfruitStringAll}
                             </SyntaxHighlighter>
 
                             <Space>
@@ -85,8 +85,8 @@ repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/
                                     Copy Script
                                 </Button>
                                 <Button type={"default"}
-                                        onClick={() => copyScript('Blox Fruit [Trigon]', bloxfruitStringTrigon)}>
-                                    Copy Script [Trigon]
+                                        onClick={() => copyScript('Blox Fruit [Another Exploit]', bloxfruitStringAll)}>
+                                    Copy Script [Another Exploit]
                                 </Button>
                             </Space>
                         </>
