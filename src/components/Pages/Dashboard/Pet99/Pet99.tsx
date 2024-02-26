@@ -26,6 +26,7 @@ import {ColumnsType} from "antd/es/table";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
 import formatDuration from "format-duration";
+import CountUp from "react-countup";
 
 function formatNumber(num: number, precision: number) {
     const map = [
@@ -200,7 +201,9 @@ const Pet99: React.FC = () => {
                         if (moment().unix() - Description['Farming']['UTC'] <= 120){
                             return (
                                 <Tag color={"blue"}>
-                                    {Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60))}
+                                    {isNaN(Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60)))
+                                        ? 0
+                                        : Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60))}
                                 </Tag>
                             )
                         }
@@ -471,6 +474,7 @@ const Pet99: React.FC = () => {
         return temp
     }
 
+    const formatter = (value: number) => <CountUp end={value} separator="," duration={5} />;
 
     return (<div>
         {contextHolder}
@@ -524,7 +528,6 @@ const Pet99: React.FC = () => {
                     </div>
                 </Card>
             </Col>
-
             <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
                 <Card size="small" title="Accounts Status">
                     <Row gutter={[16, 16]}>
@@ -561,8 +564,8 @@ const Pet99: React.FC = () => {
                     </Row>
                 </Card>
             </Col>
-
         </Row>
+
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
                 <Table
@@ -602,7 +605,7 @@ const Pet99: React.FC = () => {
 
                                 diamondGained += Farming['Diamonds'] - Farming['oldDiamond']
 
-                                diamondPerMin += (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+                                diamondPerMin += isNaN((Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
 
                                 timeElapsed += Farming['UTC'] - Farming['oldUTC']
 
