@@ -449,7 +449,7 @@ const Pet99: React.FC = () => {
         dataApi.forEach((item: DataType) => {
             const note = item.Note
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 900) {
+            if (moment().unix() - update <= 120) {
                 temp.find((item: DrawerProps) => item.note === note)!.online++
             }
         })
@@ -461,7 +461,7 @@ const Pet99: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 900) {
+            if (moment().unix() - update <= 120) {
                 temp++
             }
         })
@@ -472,7 +472,7 @@ const Pet99: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update > 900) {
+            if (moment().unix() - update > 120) {
                 temp++
             }
         })
