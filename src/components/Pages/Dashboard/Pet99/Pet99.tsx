@@ -15,8 +15,9 @@ import {
     Tag,
 } from "antd";
 import {
+    ArrowUpOutlined, BankOutlined,
     DeleteOutlined,
-    DownOutlined,
+    DownOutlined, LineChartOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
@@ -67,6 +68,10 @@ const Pet99: React.FC = () => {
     //
 
     const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
+
+    // Diamond Static
+    const [totalDiamond, setTotalDiamond] = useState(0);
+    const [totalDiamondPerMinute, setTotalDiamondPerMinute] = useState(0);
 
     interface DataType {
         Id: number
@@ -474,95 +479,157 @@ const Pet99: React.FC = () => {
         return temp
     }
 
-    const formatter = (value: number) => <CountUp end={value} separator="," duration={5} />;
+    const getTotalDiamond = () => {
+        let totalDiamond = 0;
+        dataApi.forEach((item: DataType) => {
+            let Farming = JSON.parse(item.Description)['Farming']
+            totalDiamond += Farming['Diamonds']
+        })
+        return totalDiamond
+    }
+
+    const getTotalDiamondPerHour = () => {
+        let diamondPerMin = 0
+        dataApi.forEach((item: DataType) => {
+            let Farming = JSON.parse(item.Description)['Farming']
+
+            if (moment().unix() - moment(item.updatedAt).unix() <= 120){
+
+                diamondPerMin += isNaN((Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+
+            }
+        })
+        return diamondPerMin * 60
+    }
+
+    const formatter = (value: number) => <CountUp end={value} separator=","/>;
 
     return (<div>
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Pet Simulator 99</Divider>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                <Card size="small" title="Account Control">
-                    <div style={{marginBottom: 16}}>
-                        <Space wrap>
-                            <Button
-                                type="primary"
-                                onClick={refreshData}
-                                loading={loadingReload
-                            }>
-                                Refresh
-                            </Button>
+            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+                <Card bordered={false} title={"Account Overview"} size={"small"}>
+                    <Row gutter={[12,12]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                            <Card size="small" title="Account Control">
+                                <div style={{marginBottom: 16}}>
+                                    <Space wrap>
+                                        <Button
+                                            type="primary"
+                                            onClick={refreshData}
+                                            loading={loadingReload
+                                            }>
+                                            Refresh
+                                        </Button>
 
-                            <Button type="primary" onClick={() => {
-                                setOpenNoteDrawer(true)
-                            }}>Note Active</Button>
+                                        <Button type="primary" onClick={() => {
+                                            setOpenNoteDrawer(true)
+                                        }}>Note Active</Button>
 
-                            <Popconfirm
-                                placement="bottom"
-                                title={'Are you sure to delete?'}
-                                description={`${selectedRowKeys.length} account`}
-                                onConfirm={bulkDeleteAccount}
-                                okText="Yes"
-                                cancelText="No"
-                                icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                disabled={!hasSelected}
-                            >
-                                <Button
-                                    type="primary"
-                                    disabled={!hasSelected}
-                                    loading={loadingDelete}
-                                    danger>
-                                    Delete Account
-                                </Button>
-                            </Popconfirm>
-                        </Space>
-                    </div>
+                                        <Popconfirm
+                                            placement="bottom"
+                                            title={'Are you sure to delete?'}
+                                            description={`${selectedRowKeys.length} account`}
+                                            onConfirm={bulkDeleteAccount}
+                                            okText="Yes"
+                                            cancelText="No"
+                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                            disabled={!hasSelected}
+                                        >
+                                            <Button
+                                                type="primary"
+                                                disabled={!hasSelected}
+                                                loading={loadingDelete}
+                                                danger>
+                                                Delete Account
+                                            </Button>
+                                        </Popconfirm>
+                                    </Space>
+                                </div>
 
-                    <div style={{marginTop: 12}}>
-                        <Form>
-                            <Form.Item label="Hide Name (optional)*">
-                                <Checkbox
-                                    onChange={onChangeHidename}
-                                />
-                            </Form.Item>
-                        </Form>
-                    </div>
+                                <div style={{marginTop: 12}}>
+                                    <Checkbox
+                                        onChange={onChangeHidename}>
+                                        Hide name (optional)
+                                    </Checkbox>
+                                </div>
+                            </Card>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                            <Card size="small" title="Accounts Status">
+                                <Row gutter={[12, 12]}>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                                        <Card size="small" hoverable={true}>
+                                            <Statistic
+                                                title="Active Accounts"
+                                                value={getOnline()}
+                                                valueStyle={{color: '#6abe39'}}
+                                                prefix={<UserOutlined/>}
+                                            />
+                                        </Card>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                                        <Card size="small" hoverable={true}>
+                                            <Statistic
+                                                title="Inactive Accounts"
+                                                value={getOffline()}
+                                                valueStyle={{color: '#e84749'}}
+                                                prefix={<UserOutlined/>}
+                                            />
+                                        </Card>
+                                    </Col>
+                                    <Col xs={24} sm={24} md={24} lg={12} xl={8}>
+                                        <Card size="small" hoverable={true}>
+                                            <Statistic
+                                                title="Total Accounts"
+                                                value={getOffline() + getOnline()}
+                                                valueStyle={{color: '#535dff'}}
+                                                prefix={<UserOutlined/>}
+                                            />
+                                        </Card>
+                                    </Col>
+                                </Row>
+                            </Card>
+
+                        </Col>
+
+                    </Row>
+
                 </Card>
             </Col>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                <Card size="small" title="Accounts Status">
-                    <Row gutter={[16, 16]}>
-                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                            <Card size="small" hoverable={true}>
+
+            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+                <Card bordered={false} title={"Diamonds Overview"} size={"small"}>
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Card>
                                 <Statistic
-                                    title="Active Accounts"
-                                    value={getOnline()}
-                                    valueStyle={{color: '#6abe39'}}
-                                    prefix={<UserOutlined/>}
+                                    title="Total Diamonds (All account)"
+                                    value={getTotalDiamond()}
+                                    //@ts-ignore
+                                    formatter={formatter}
+                                    prefix={<BankOutlined />}
+                                    valueStyle={{color: '#5487ff'}}
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                            <Card size="small" hoverable={true}>
+                        <Col span={12}>
+                            <Card>
                                 <Statistic
-                                    title="Inactive Accounts"
-                                    value={getOffline()}
-                                    valueStyle={{color: '#e84749'}}
-                                    prefix={<UserOutlined/>}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                            <Card size="small" hoverable={true}>
-                                <Statistic
-                                    title="Total Accounts"
-                                    value={getOffline() + getOnline()}
-                                    valueStyle={{color: '#535dff'}}
-                                    prefix={<UserOutlined/>}
+                                    title="Total Diamonds per Hour (All active account)"
+                                    value={getTotalDiamondPerHour()}
+                                    //@ts-ignore
+                                    formatter={formatter}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#34eb80'}}
                                 />
                             </Card>
                         </Col>
                     </Row>
                 </Card>
+
             </Col>
         </Row>
 
@@ -611,7 +678,10 @@ const Pet99: React.FC = () => {
 
                                 countAccount++;
                             }
-                            else countAccountInActive++;
+                            else {
+                                totalDiamond += Farming['Diamonds']
+                                countAccountInActive++;
+                            }
 
                             let Inventory = JSON.parse(record.Description)['Inventory']
                             Inventory.map((key: any) => {
