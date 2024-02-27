@@ -208,7 +208,7 @@ const Pet99: React.FC = () => {
                                 <Tag color={"blue"}>
                                     {isNaN(Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60)))
                                         ? 0
-                                        : Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60))}
+                                        : new Intl.NumberFormat().format(Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60)))}
                                 </Tag>
                             )
                         }
