@@ -602,8 +602,8 @@ const Pet99: React.FC = () => {
 
             <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
                 <Card bordered={false} title={"Diamonds Overview"} size={"small"}>
-                    <Row gutter={16}>
-                        <Col span={12}>
+                    <Row gutter={[12,12]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Card>
                                 <Statistic
                                     title="Total Diamonds (All account)"
@@ -615,7 +615,7 @@ const Pet99: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col span={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Card>
                                 <Statistic
                                     title="Total Diamonds per Hour (All active account)"
@@ -646,8 +646,7 @@ const Pet99: React.FC = () => {
                     pagination={{
                         total: dataApi.length,
                         pageSizeOptions: [25, 100, 200, 500, 1000, 2000, 5000],
-                        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
-                        position: ['topCenter'],
+                        position: ['topRight'],
                         defaultPageSize: 25,
                         showSizeChanger: true,
                     }}
@@ -743,18 +742,20 @@ const Pet99: React.FC = () => {
                                         </Tag>
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={8}>
-                                        <Tag>
-                                            <Badge
-                                                status={'success'}
-                                                text={countAccount.toString()}
-                                            />
-                                        </Tag>
-                                        <Tag>
-                                            <Badge
-                                                status={'error'}
-                                                text={countAccountInActive.toString()}
-                                            />
-                                        </Tag>
+                                        <Space>
+                                            <Tag>
+                                                <Badge
+                                                    status={'success'}
+                                                    text={countAccount.toString()}
+                                                />
+                                            </Tag>
+                                            <Tag>
+                                                <Badge
+                                                    status={'error'}
+                                                    text={countAccountInActive.toString()}
+                                                />
+                                            </Tag>
+                                        </Space>
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={9}>-</Table.Summary.Cell>
                                     <Table.Summary.Cell index={10}>-</Table.Summary.Cell>
