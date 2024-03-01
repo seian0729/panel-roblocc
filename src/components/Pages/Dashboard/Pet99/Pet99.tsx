@@ -225,88 +225,107 @@ const Pet99: React.FC = () => {
             ]
         },
         {
-            title: 'Elapsed',
-            dataIndex: 'timeElapsed',
-            width: '10%',
-            render: (_, record) => {
+          title: 'Status',
+          key: 'gb-status',
+          children: [
+              {
+                  title: 'Elapsed',
+                  dataIndex: 'timeElapsed',
+                  width: '5%',
+                  render: (_, record) => {
 
-                let Description = JSON.parse(record.Description)
-                if (moment().unix() - Description['Farming']['UTC'] <= 120){
-                    return (
-                        <Tag color={"green"}>
-                            {
-                                formatDuration(1000 * (Description['Farming']['UTC'] - Description['Farming']['oldUTC']))
-                            }
-                        </Tag>
-                    )
-                }
-                else return "-"
+                      let Description = JSON.parse(record.Description)
+                      if (moment().unix() - Description['Farming']['UTC'] <= 120){
+                          return (
+                              <Tag color={"green"}>
+                                  {
+                                      formatDuration(1000 * (Description['Farming']['UTC'] - Description['Farming']['oldUTC']))
+                                  }
+                              </Tag>
+                          )
+                      }
+                      else return "-"
 
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['UTC'],
-        },
-        {
-            title: 'Status',
-            dataIndex: 'accountStatus',
-            width: '10%',
-            filters: [
-                {
-                    text: 'Active',
-                    value: 'Active',
-                },
-                {
-                    text: 'Inactive',
-                    value: 'Inactive',
-                },
-            ],
-            onFilter: (value: any, record) => {
-                if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 120
-                } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 120
-                } else {
-                    return false
-                }
+                  },
+                  sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['UTC'],
+              },
+              {
+                  title: 'Last Updated',
+                  dataIndex: 'lastUpdated',
+                  width: '10%',
+                  render: (_, record) => {
 
-            },
-            render: (_, record) => {
-                return (
-                    <Tag>
-                        <Badge
-                            status={moment().unix() - moment(record.updatedAt).unix() >= 120 ? 'error' : 'success'}
-                            text={moment().unix() - moment(record.updatedAt).unix() >= 120 ? 'Inactive' : 'Active'}/>
-                    </Tag>
-                )
-            },
-        },
-        {
-            title: 'Note',
-            dataIndex: 'Note',
-            width: '10%',
-            render: (_, record) => {
-                {
-                    filtersNoteT.push({
-                        text: record.Note,
-                        value: record.Note,
-                    })
+                      let Description = JSON.parse(record.Description)
 
-                    for (var index = 0; index < filtersNoteT.length; index++) {
-                        if (!filtersNote.find(a => a.text === filtersNoteT[index].text)) {
-                            filtersNote.push(filtersNoteT[index])
-                        }
-                    }
-                }
+                      return moment(Description['Farming']['UTC']*1000).fromNow()
 
-                return (
-                    <>
-                        {record.Note}
-                    </>
-                )
-            },
+                  },
+                  sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['UTC'],
+              },
+              {
+                  title: 'Status',
+                  dataIndex: 'accountStatus',
+                  width: '10%',
+                  filters: [
+                      {
+                          text: 'Active',
+                          value: 'Active',
+                      },
+                      {
+                          text: 'Inactive',
+                          value: 'Inactive',
+                      },
+                  ],
+                  onFilter: (value: any, record) => {
+                      if (value === 'Active') {
+                          return moment().unix() - moment(record.updatedAt).unix() < 120
+                      } else if (value === 'Inactive') {
+                          return moment().unix() - moment(record.updatedAt).unix() >= 120
+                      } else {
+                          return false
+                      }
 
-            filters: filtersNote,
-            onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
-            filterSearch: true,
+                  },
+                  render: (_, record) => {
+                      return (
+                          <Tag>
+                              <Badge
+                                  status={moment().unix() - moment(record.updatedAt).unix() >= 120 ? 'error' : 'success'}
+                                  text={moment().unix() - moment(record.updatedAt).unix() >= 120 ? 'Inactive' : 'Active'}/>
+                          </Tag>
+                      )
+                  },
+              },
+              {
+                  title: 'Note',
+                  dataIndex: 'Note',
+                  width: '10%',
+                  render: (_, record) => {
+                      {
+                          filtersNoteT.push({
+                              text: record.Note,
+                              value: record.Note,
+                          })
+
+                          for (var index = 0; index < filtersNoteT.length; index++) {
+                              if (!filtersNote.find(a => a.text === filtersNoteT[index].text)) {
+                                  filtersNote.push(filtersNoteT[index])
+                              }
+                          }
+                      }
+
+                      return (
+                          <>
+                              {record.Note}
+                          </>
+                      )
+                  },
+
+                  filters: filtersNote,
+                  onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
+                  filterSearch: true,
+              },
+          ]
         },
         {
             title: 'Action',
