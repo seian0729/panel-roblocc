@@ -626,9 +626,7 @@ const Pet99: React.FC = () => {
                             <Card>
                                 <Statistic
                                     title="Total Diamonds (All account)"
-                                    value={getTotalDiamond()}
-                                    //@ts-ignore
-                                    formatter={formatter}
+                                    value={formatNumber(getTotalDiamond(), 3)}
                                     prefix={<BankOutlined />}
                                     valueStyle={{color: '#5487ff'}}
                                 />
@@ -638,9 +636,7 @@ const Pet99: React.FC = () => {
                             <Card>
                                 <Statistic
                                     title="Total Diamonds per Hour (All active account)"
-                                    value={getTotalDiamondPerHour()}
-                                    //@ts-ignore
-                                    formatter={formatter}
+                                    value={formatNumber(getTotalDiamondPerHour(),3)}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#34eb80'}}
                                 />
