@@ -14,7 +14,7 @@ import {
     Table,
     Space,
     Tag,
-    Tooltip, Alert
+    Tooltip, Alert, Slider, InputNumber
 } from "antd";
 import type { SelectProps } from 'antd';
 import {
@@ -106,6 +106,15 @@ const Pet99Mail: React.FC = () => {
 
     const [form] = Form.useForm();
     const [clientReady, setClientReady] = useState<boolean>(false);
+
+    const [diamondAboveAmount, setDiamondAboveAmount] = useState(2e6);
+
+    const onChangeSlider = (value: number) => {
+        if (isNaN(value)) {
+            return;
+        }
+        setDiamondAboveAmount(value);
+    };
 
     // type
 
@@ -252,10 +261,12 @@ const Pet99Mail: React.FC = () => {
                             }
                         })
                     }
-                    tempSendData.push({
-                        item: {Type: "Currency", id: "Diamonds"},
-                        quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
-                    })
+                    if (Diamonds > diamondAboveAmount){
+                        tempSendData.push({
+                            item: {Type: "Currency", id: "Diamonds"},
+                            quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
+                        })
+                    }
                 }
                 else if (typeSend == 'Items'){
                     if (Inventory != undefined) {
@@ -270,10 +281,16 @@ const Pet99Mail: React.FC = () => {
                     }
                 }
                 else{
-                    tempSendData.push({
-                        item: {Type: "Currency", id: "Diamonds"},
-                        quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
-                    })
+                    if (Diamonds > diamondAboveAmount){
+                        tempSendData.push({
+                            item: {Type: "Currency", id: "Diamonds"},
+                            quantity: Diamonds - ((tempSendData.length * 10000) + 10000)
+                        })
+                    }
+                }
+
+                if (tempSendData.length == 0){
+                    messageApi.error(`Not enough diamond, because u set Above ${diamondAboveAmount}`)
                 }
 
                 if (Diamonds - ((tempSendData.length * 10000) + 10000) >= 0) {
@@ -328,14 +345,16 @@ const Pet99Mail: React.FC = () => {
                             quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
                         })
                     }
-                    allData.push({
-                        usernameSend: key['UsernameRoblocc'],
-                        details: {
-                            username: usernameR,
-                            message: messageSend,
-                            mailDetails: tempSendAccountData
-                        }
-                    })
+                    if (Diamonds > diamondAboveAmount){
+                        allData.push({
+                            usernameSend: key['UsernameRoblocc'],
+                            details: {
+                                username: usernameR,
+                                message: messageSend,
+                                mailDetails: tempSendAccountData
+                            }
+                        })
+                    }
                 }
             })
             console.log("All data", JSON.stringify(allData))
@@ -478,6 +497,7 @@ const Pet99Mail: React.FC = () => {
         }
     ]
 
+    // @ts-ignore
     return(
         <>
             {contextHolder}
@@ -592,44 +612,16 @@ const Pet99Mail: React.FC = () => {
 
                     <Row style={{marginTop: 12}} gutter={[12, 12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={8}>
-                            <Card size={"small"} title={"Select Type"} >
+                            <Card size={"small"} title={"Select Account"} >
                                 <Select
-                                    onChange={(value) => {setType(value)}}
-                                    defaultValue={"Account"}
+                                    onChange={handleChange}
                                     style={{ width: "100%"}}
-                                    options={[
-                                        { value: 'Account', label: 'Account' },
-                                        { value: 'Note', label: 'Note' },
-                                    ]}
+                                    options={options}
+                                    showSearch={true}
+                                    placeholder={"Select your account"}
+                                    disabled={usernameR == ""}
                                 />
                             </Card>
-                        </Col>
-
-                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
-                            {
-                                type == "Account" ?
-                                    <Card size={"small"} title={"Select Account"} >
-                                        <Select
-                                            onChange={handleChange}
-                                            style={{ width: "100%"}}
-                                            options={options}
-                                            showSearch={true}
-                                            placeholder={"Select your account"}
-                                            disabled={usernameR == ""}
-                                        />
-                                    </Card>
-                                    :
-                                    <Card size={"small"} title={"Select Note"} >
-                                        <Select
-                                            onChange={handleChange}
-                                            style={{ width: "100%"}}
-                                            options={options}
-                                            showSearch={true}
-                                            placeholder={"Select your account"}
-                                            disabled={usernameR == ""}
-                                        />
-                                    </Card>
-                            }
                         </Col>
 
                         <Col xs={24} sm={24} md={24} lg={24} xl={8}>
@@ -646,6 +638,31 @@ const Pet99Mail: React.FC = () => {
                                     showSearch={true}
                                     placeholder={"Select your details for mail"}
                                 />
+                            </Card>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                            <Card size={"small"} title={"Optional - Diamond Above Amount"}>
+                                <Row>
+                                    <Col xs={12} sm={20} md={18} lg={20}>
+                                        <Slider
+                                            min={0}
+                                            max={10000000}
+                                            onChange={onChangeSlider}
+                                            value={typeof diamondAboveAmount === 'number' ? diamondAboveAmount : 0}
+                                        />
+                                    </Col>
+                                    <Col span={4}>
+                                        <InputNumber
+                                            min={0}
+                                            max={10000000}
+                                            style={{ margin: '0 16px' }}
+                                            value={diamondAboveAmount}
+                                            //@ts-ignore
+                                            onChange={onChangeSlider}
+                                        />
+                                    </Col>
+                                </Row>
                             </Card>
                         </Col>
                     </Row>
