@@ -153,7 +153,7 @@ function App() {
     }
 
     const whitelistPet99 = [
-        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1"
+        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1", "Manke"
     ]
 
 

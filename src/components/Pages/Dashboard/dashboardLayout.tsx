@@ -48,7 +48,7 @@ const DashboardLayout: React.FC = () => {
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
     const whitelistAccountsPet = [
-        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1"
+        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1","Manke"
     ];
 
     function getItem(

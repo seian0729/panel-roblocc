@@ -107,6 +107,10 @@ const Pet99Mail: React.FC = () => {
     const [form] = Form.useForm();
     const [clientReady, setClientReady] = useState<boolean>(false);
 
+    // type
+
+    const [type, setType] = useState("")
+
     // To disable submit button at the beginning.
     useEffect(() => {
         setClientReady(true);
@@ -569,28 +573,41 @@ const Pet99Mail: React.FC = () => {
                                     </Card>
                                 </Col>
                             </Row>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Alert
                                 showIcon
                                 message="VUI LÒNG CHỌN NHẬP USERNAME ACC NHẬN TRƯỚC KHI CHỌN ALL ACTIVE ACCOUNT (LÀM SAI MẤT DỮ LIỆU KHÔNG CHỊU TRÁCH NHIỆM)"
-                                style={{marginTop: 12}}
                                 type={"error"}
                             />
                             <Alert
                                 showIcon
                                 message="CHỌN DETAIL TRƯỚC KHI CHỌN ACCOUNT ĐỂ TRÁNH LỖI"
-                                style={{marginTop: 12}}
                                 type={"error"}
-                            />
-                            <Alert
-                                showIcon
-                                message="It will get your SELECTED account data in database and make a request to client do send mail action"
-                                style={{marginTop: 12}}
+                                style={{marginTop: 6}}
                             />
                         </Col>
+                    </Row>
 
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                            <Row gutter={[12, 12]}>
-                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                    <Row style={{marginTop: 12}} gutter={[12, 12]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                            <Card size={"small"} title={"Select Type"} >
+                                <Select
+                                    onChange={(value) => {setType(value)}}
+                                    defaultValue={"Account"}
+                                    style={{ width: "100%"}}
+                                    options={[
+                                        { value: 'Account', label: 'Account' },
+                                        { value: 'Note', label: 'Note' },
+                                    ]}
+                                />
+                            </Card>
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                            {
+                                type == "Account" ?
                                     <Card size={"small"} title={"Select Account"} >
                                         <Select
                                             onChange={handleChange}
@@ -601,25 +618,35 @@ const Pet99Mail: React.FC = () => {
                                             disabled={usernameR == ""}
                                         />
                                     </Card>
-                                </Col>
-
-                                <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                                    <Card size={"small"} title={"Select Detail"}>
+                                    :
+                                    <Card size={"small"} title={"Select Note"} >
                                         <Select
-                                            onChange={(value) => {setTypeSend(value)}}
+                                            onChange={handleChange}
                                             style={{ width: "100%"}}
-                                            defaultValue={"Diamond"}
-                                            options={[
-                                                { value: 'Diamond', label: 'Diamond' },
-                                                { value: 'Items', label: 'Items' },
-                                                { value: 'Both', label: 'Both' },
-                                            ]}
+                                            options={options}
                                             showSearch={true}
-                                            placeholder={"Select your details for mail"}
+                                            placeholder={"Select your account"}
+                                            disabled={usernameR == ""}
                                         />
                                     </Card>
-                                </Col>
-                            </Row>
+                            }
+                        </Col>
+
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                            <Card size={"small"} title={"Select Detail"}>
+                                <Select
+                                    onChange={(value) => {setTypeSend(value)}}
+                                    style={{ width: "100%"}}
+                                    defaultValue={"Diamond"}
+                                    options={[
+                                        { value: 'Diamond', label: 'Diamond' },
+                                        { value: 'Items', label: 'Items' },
+                                        { value: 'Both', label: 'Both' },
+                                    ]}
+                                    showSearch={true}
+                                    placeholder={"Select your details for mail"}
+                                />
+                            </Card>
                         </Col>
                     </Row>
 

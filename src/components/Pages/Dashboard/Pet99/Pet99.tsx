@@ -725,13 +725,14 @@ const Pet99: React.FC = () => {
                                     <Table.Summary.Cell index={2}>
                                         <>
                                             {
+                                                tempInventory.length != 0 ?
                                                 tempInventory.map((key: any) => {
                                                     return (
                                                         <Tag color="red" key={key["Name"]+"total"} style={{margin: 4}}>
                                                             {`${key['Name']} [x${(key['Count'] ? new Intl.NumberFormat().format(key['Count']) : 0)}]`}
                                                         </Tag>
                                                     );
-                                                })
+                                                }) : "-"
                                             }
                                         </>
                                     </Table.Summary.Cell>
@@ -753,7 +754,7 @@ const Pet99: React.FC = () => {
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={7}>
                                         <Tag color={"red"}>
-                                            {formatDuration(1000 * (timeElapsed / countAccount))}
+                                            {timeElapsed == 0 && countAccount == 0 ? "-" : formatDuration(1000 * (timeElapsed / countAccount))}
                                         </Tag>
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={8}>
@@ -774,6 +775,7 @@ const Pet99: React.FC = () => {
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={9}>-</Table.Summary.Cell>
                                     <Table.Summary.Cell index={10}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={11}>-</Table.Summary.Cell>
                                 </Table.Summary.Row>
                             </Table.Summary>)
                         }}
