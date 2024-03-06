@@ -161,6 +161,8 @@ function App() {
         <ConfigProvider theme={themeConfig}>
             <Layout style={{minHeight: "100vh"}}>
 
+                <Alert type={"error"} message={"MAI WEB CÒN SẬP NỮA THÌ T ĐÓNG WEB LUÔN, CHÔN VI-EN [TỐI MAI HOẶC MỐT NẾU WEB CÓ TÌNH TRẠNG CHẬP CHỜN SẬP LÊN SẬP XUỐNG THÌ T SẼ NÂNG CẤP SERVER, THỜI GIAN BẢO TRÌ BÁO SAU]"} showIcon banner/>
+
                 {
                     userIsLogged && window.location.pathname != '/' ?
                         "" : <LandingHeader/>
