@@ -15,6 +15,7 @@ import 'moment-timezone';
 //Pages
 import {Login} from "../Pages/Login/Login";
 import Page404 from "../Pages/404/404"
+import Maintenance from "../Pages/Maintenance/Maintenance";
 
 //DashboardLayout
 import DashboardLayout from "../Pages/Dashboard/dashboardLayout"
@@ -182,8 +183,8 @@ function App() {
                                 <Route path={"petx"} element={<PetX/>}/>
                                 <Route path={"pet99"} element={<UserPet99OnlyRoute userIsWhitelisted={whitelistPet99.find((element) => element == username) != undefined}/>}>
                                     <Route index element={<Page404/>}/>
-                                    <Route path="tracking" element={<Pet99/>}/>
-                                    <Route path="mail" element={<Pet99Mail/>} />
+                                    <Route path="tracking" element={<Maintenance/>}/>
+                                    <Route path="mail" element={<Maintenance/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>
