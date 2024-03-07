@@ -708,7 +708,6 @@ const Pet99: React.FC = () => {
                             }
 
                             let Inventory = JSON.parse(record.Description)['Inventory']
-                            console.log(Inventory)
                             if (typeof Inventory != "boolean" && Inventory != undefined) {
                                 Inventory.map((key: any) => {
                                     const itemName = key['Name'];
