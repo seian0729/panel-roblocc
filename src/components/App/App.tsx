@@ -183,8 +183,8 @@ function App() {
                                 <Route path={"petx"} element={<PetX/>}/>
                                 <Route path={"pet99"} element={<UserPet99OnlyRoute userIsWhitelisted={whitelistPet99.find((element) => element == username) != undefined}/>}>
                                     <Route index element={<Page404/>}/>
-                                    <Route path="tracking" element={<Maintenance/>}/>
-                                    <Route path="mail" element={<Maintenance/>} />
+                                    <Route path="tracking" element={<Pet99/>}/>
+                                    <Route path="mail" element={<Pet99Mail/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {
+    Alert,
     Badge,
     Button,
     Card,
@@ -114,20 +115,24 @@ const Pet99: React.FC = () => {
                     width: '30%',
                     render: (_, record) => {
                         let Description = JSON.parse(record.Description)
-                        return (
-                            <>
-                                {
-                                    Description['Inventory'].map((key: any) => {
-                                        return (
-                                            <Tag color="purple" key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                                {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
-                                            </Tag>
-                                        );
-                                    })
 
-                                }
-                            </>
-                        )
+                        if (typeof  Description['Inventory'] != "boolean" &&  Description['Inventory'] != undefined){
+                            return (
+                                <>
+                                    {
+                                        Description['Inventory'].map((key: any) => {
+                                            return (
+                                                <Tag color="purple" key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
+                                                    {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
+                                                </Tag>
+                                            );
+                                        })
+
+                                    }
+                                </>
+                            )
+                        }
+                        else return <Tag color={"error"}>Data not found</Tag>
                     },
                 },
                 {
@@ -138,21 +143,25 @@ const Pet99: React.FC = () => {
                         let Description = JSON.parse(record.Description)
                         const colorHuge = ['default','gold','red']
                         const subName = ['','[GOLDEN]','[RAINBOW]']
-                        return (
-                            <>
-                                {
-                                    Description['Huge'] == undefined ? <> - </> :
-                                        Description['Huge'].map((key: any) => {
-                                            return (
-                                                <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                                    {key['Name'] + " " +  (key['pt'] != undefined ? subName[key['pt']] : "")}
-                                                </Tag>
-                                            );
-                                        })
+                        if (typeof  Description['Huge'] != "boolean" &&  Description['Huge'] != undefined){
+                            return (
+                                <>
+                                    {
+                                        Description['Huge'] == undefined ? <> - </> :
+                                            Description['Huge'].map((key: any) => {
+                                                return (
+                                                    <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
+                                                        {key['Name'] + " " +  (key['pt'] != undefined ? subName[key['pt']] : "")}
+                                                    </Tag>
+                                                );
+                                            })
 
-                                }
-                            </>
-                        )
+                                    }
+                                </>
+                            )
+                        }
+                        else return <Tag color={"error"}>Data not found</Tag>
+
                     },
                 }
             ]
@@ -524,6 +533,7 @@ const Pet99: React.FC = () => {
     const formatter = (value: number) => <CountUp end={value} separator=","/>;
 
     return (<div>
+        <Alert message={"Got some eror with script so data inventory and huge now is null, PLEASE CLOSE ALL CLIENT AND RE-EXECUTE SCRIPT!!!"} type={"error"} banner/>
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Pet Simulator 99</Divider>
@@ -698,23 +708,28 @@ const Pet99: React.FC = () => {
                             }
 
                             let Inventory = JSON.parse(record.Description)['Inventory']
-                            Inventory.map((key: any) => {
-                                const itemName = key['Name'];
-                                if (!tempInventory.find((key) => key['Name'] === itemName)){
-                                    tempInventory.push({Name: key['Name'], Count: 0})
-                                }
-                            })
+                            console.log(Inventory)
+                            if (typeof Inventory != "boolean" && Inventory != undefined) {
+                                Inventory.map((key: any) => {
+                                    const itemName = key['Name'];
+                                    if (!tempInventory.find((key) => key['Name'] === itemName)){
+                                        tempInventory.push({Name: key['Name'], Count: 0})
+                                    }
+                                })
+                            }
 
 
                         })
 
                         dataApi.forEach(({Description}) => {
                             let Inventory = JSON.parse(Description)['Inventory']
-                            Inventory.map((key: any) => {
-                                const itemName = key['Name'];
-                                const itemCount = key['Count'];
-                                tempInventory.find((keyFind) => keyFind['Name'] === itemName)!.Count += itemCount
-                            })
+                            if (typeof Inventory != "boolean" && Inventory != undefined) {
+                                Inventory.map((key: any) => {
+                                    const itemName = key['Name'];
+                                    const itemCount = key['Count'];
+                                    tempInventory.find((keyFind) => keyFind['Name'] === itemName)!.Count += itemCount
+                                })
+                            }
                         })
 
                         return(
