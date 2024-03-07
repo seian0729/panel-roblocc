@@ -358,6 +358,90 @@ const BloxFruit: React.FC = () => {
         }, 500)
     }
 
+    const copyFullyDataAllFruit = () => {
+        setLoadingCopy(true);
+        setTimeout(() => {
+            let text = '';
+            dataApiSpecialFilter.forEach((item: DataType) => {
+                // if item in selectedRowKeys
+                if (selectedRowKeys.includes(item.UsernameRoblocc)) {
+                    const itemDescript = JSON.parse(item.Description)
+                    let dataList = itemDescript.Data
+                    let fightingStyle = itemDescript['Fighting Style']
+                    let bfData = itemDescript['Inventory']['Blox Fruit']
+                    let sData = itemDescript['Inventory']['Sword']
+                    let GData = itemDescript['Inventory']['Gun']
+                    let MGata = itemDescript['Inventory']['Material']
+                    let WGata = itemDescript['Inventory']['Wear']
+                    let specaiCData = '';
+                    let fullyCData = '';
+                    let fullFruits = '';
+
+                    bfData.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
+
+                    fullyCData += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
+                    fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
+                    fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
+
+                    bfData.map((key: any) => {
+                        if (typeof (key) == 'object') {
+                            fullFruits += key['Name'] + ' - '
+                        }
+                    })
+
+                    sData.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
+                        }
+                    })
+
+                    GData.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
+                        }
+                    })
+
+                    MGata.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
+                        }
+                    })
+
+                    WGata.map((key: any) => {
+                        if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                            specaiCData += key['Name'] + ' - '
+                        }
+                    })
+
+                    fightingStyle.map(() => {
+                        if (fightingStyle.length === 6) {
+                            fsText = 'Godhuman';
+                        } else if (fightingStyle.length > 2) {
+                            fsText = '3-5 Melee';
+                        } else {
+                            fsText = '0-2 Melee';
+                        }
+                    })
+
+                    text +=
+                        item.UsernameRoblocc + '/' +
+                        item.Password + '/' +
+                        item.Cookie + '/' +
+                        fullyCData + '/' +
+                        itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']) + '/' +
+                        fsText + '/' +
+                        fullFruits.substring(0, fullFruits.length - 2) + '/' +
+                        specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                }
+            })
+
+            navigator.clipboard.writeText(text);
+            messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
+            setSelectedRowKeys([]);
+            setLoadingCopy(false);
+        }, 500)
+    }
+
     const getAmountAccountHaveCookie = () => {
         let tempCount = 0
         dataApiSpecialFilter.forEach((item: DataType) => {
@@ -1379,11 +1463,13 @@ const BloxFruit: React.FC = () => {
             title: 'Copy Data',
             icon: <ExclamationCircleOutlined/>,
             content: 'Select method copy data',
-            okText: 'Fully Data',
-            cancelText: 'Basic Data',
-            onOk: copyFullyData,
-            onCancel: copyData
+            cancelText: 'Fully Data',
+            okText: 'Fully Data (All Fruit)',
+            onOk: copyFullyDataAllFruit,
+            onCancel: copyFullyData
+
         });
+
     }
 
     return (
