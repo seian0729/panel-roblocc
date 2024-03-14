@@ -162,7 +162,7 @@ function App() {
         <ConfigProvider theme={themeConfig}>
             <Layout style={{minHeight: "100vh"}}>
 
-                <Alert type={"error"} message={"MAI WEB CÒN SẬP NỮA THÌ T ĐÓNG WEB LUÔN, CHÔN VI-EN [TỐI MAI HOẶC MỐT NẾU WEB CÓ TÌNH TRẠNG CHẬP CHỜN SẬP LÊN SẬP XUỐNG THÌ T SẼ NÂNG CẤP SERVER, THỜI GIAN BẢO TRÌ BÁO SAU]"} showIcon banner/>
+                <Alert type={"error"} message={"DỰ KIẾN TỐI NAY WEBSITE SẼ BẢO TRÌ ĐỂ NÂNG CẤP SERVER, THỜI GIAN DỰ TÍNH 3-5H BẮT ĐẦU TỪ 0H NGÀY 15/3/2024"} showIcon banner/>
 
                 {
                     userIsLogged && window.location.pathname != '/' ?
