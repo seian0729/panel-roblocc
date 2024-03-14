@@ -734,8 +734,7 @@ const Pet99: React.FC = () => {
                         return(
                             <Table.Summary fixed>
                                 <Table.Summary.Row>
-                                    <Table.Summary.Cell index={0}>Summary</Table.Summary.Cell>
-                                    <Table.Summary.Cell index={1}> - </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={0} colSpan={2}> Summary </Table.Summary.Cell>
                                     <Table.Summary.Cell index={2}>
                                         <>
                                             {
@@ -793,6 +792,7 @@ const Pet99: React.FC = () => {
                                 </Table.Summary.Row>
                             </Table.Summary>)
                         }}
+                    sticky={{ offsetHeader: 0 }}
                 />
                 <FloatButton.BackTop/>
             </Col>
