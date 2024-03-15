@@ -533,7 +533,7 @@ const Pet99: React.FC = () => {
     const formatter = (value: number) => <CountUp end={value} separator=","/>;
 
     return (<div>
-        <Alert message={"Got some eror with script so data inventory and huge now is null, PLEASE CLOSE ALL CLIENT AND RE-EXECUTE SCRIPT!!!"} type={"error"} banner/>
+        <Alert message={"TẠM THỜI TẮT UPDATE DATA CỦA PET ĐỂ SỬA LỖI VÀ TỐI ƯU SERVER, HẸN GẶP LẠI VÀO TRƯA 18/3/2024"} type={"error"} banner/>
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Pet Simulator 99</Divider>

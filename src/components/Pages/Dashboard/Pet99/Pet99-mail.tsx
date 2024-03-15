@@ -70,8 +70,8 @@ function AccountData(account: any) {
 const Pet99Mail: React.FC = () => {
     const { Text } = Typography;
     const options: SelectProps['options'] = [{
-        label: "ALL ACTIVE ACCOUNT (THIS OPTION IS IN DEV, COMING SOON)",
-        value: "ALL ACTIVE ACCOUNT",
+        label: "ALL ACCOUNT (THIS OPTION IS IN DEV, COMING SOON)",
+        value: "ALL ACCOUNT",
     }];
 
     const [messageApi, contextHolder] = message.useMessage();
@@ -242,7 +242,7 @@ const Pet99Mail: React.FC = () => {
 
     const handleChange = (value: string) => {
         setUsername(value)
-        if (value != "ALL ACTIVE ACCOUNT") {
+        if (value != "ALL ACCOUNT") {
             const tempSendData = []
             const data = dataApi.find((key) => key['UsernameRoblocc'] == value)
             if (data != undefined) {
@@ -306,55 +306,53 @@ const Pet99Mail: React.FC = () => {
         else {
             const allData: { usernameSend: never; details: { username: string; message: string; mailDetails: { item: { id: any; } | { Type: string; id: string; }; quantity: any; }[]; }; }[] = []
             dataApi.forEach((key) => {
-                if (moment().unix() - moment(key['updatedAt']).unix() <= 120){
-                    const tempSendAccountData: { item: { id: any; } | { Type: string; id: string; }; quantity: any; }[] = []
-                    const Description = JSON.parse(key['Description'])
-                    const {Diamonds} = Description['Farming']
-                    const {Inventory} = Description
-                    if (typeSend == "Both"){
-                        if (Inventory != undefined) {
-                            Inventory.map((key: any) => {
-                                if (key.Count != 0) {
-                                    tempSendAccountData.push({
-                                        item: {id: key.Name},
-                                        quantity: key.Count
-                                    })
-                                }
-                            })
-                        }
-                        tempSendAccountData.push({
-                            item: {Type: "Currency", id: "Diamonds"},
-                            quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
-                        })
-                    }
-                    else if (typeSend == 'Items'){
-                        if (Inventory != undefined) {
-                            Inventory.map((key: any) => {
-                                if (key.Count != 0) {
-                                    tempSendAccountData.push({
-                                        item: {id: key.Name},
-                                        quantity: key.Count
-                                    })
-                                }
-                            })
-                        }
-                    }
-                    else{
-                        tempSendAccountData.push({
-                            item: {Type: "Currency", id: "Diamonds"},
-                            quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
-                        })
-                    }
-                    if (Diamonds > diamondAboveAmount){
-                        allData.push({
-                            usernameSend: key['UsernameRoblocc'],
-                            details: {
-                                username: usernameR,
-                                message: messageSend,
-                                mailDetails: tempSendAccountData
+                const tempSendAccountData: { item: { id: any; } | { Type: string; id: string; }; quantity: any; }[] = []
+                const Description = JSON.parse(key['Description'])
+                const {Diamonds} = Description['Farming']
+                const {Inventory} = Description
+                if (typeSend == "Both"){
+                    if (Inventory != undefined) {
+                        Inventory.map((key: any) => {
+                            if (key.Count != 0) {
+                                tempSendAccountData.push({
+                                    item: {id: key.Name},
+                                    quantity: key.Count
+                                })
                             }
                         })
                     }
+                    tempSendAccountData.push({
+                        item: {Type: "Currency", id: "Diamonds"},
+                        quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
+                    })
+                }
+                else if (typeSend == 'Items'){
+                    if (Inventory != undefined) {
+                        Inventory.map((key: any) => {
+                            if (key.Count != 0) {
+                                tempSendAccountData.push({
+                                    item: {id: key.Name},
+                                    quantity: key.Count
+                                })
+                            }
+                        })
+                    }
+                }
+                else{
+                    tempSendAccountData.push({
+                        item: {Type: "Currency", id: "Diamonds"},
+                        quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
+                    })
+                }
+                if (Diamonds > diamondAboveAmount){
+                    allData.push({
+                        usernameSend: key['UsernameRoblocc'],
+                        details: {
+                            username: usernameR,
+                            message: messageSend,
+                            mailDetails: tempSendAccountData
+                        }
+                    })
                 }
             })
             console.log("All data", JSON.stringify(allData))
