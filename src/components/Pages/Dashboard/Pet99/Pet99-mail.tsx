@@ -357,7 +357,6 @@ const Pet99Mail: React.FC = () => {
             })
             console.log("All data", JSON.stringify(allData))
             setAllDataSend(JSON.stringify(allData))
-            setDisableSend(false)
         }
     };
 
@@ -540,7 +539,7 @@ const Pet99Mail: React.FC = () => {
                                                 />
                                             </Form.Item>
                                             {
-                                                username != "ALL ACTIVE ACCOUNT" ?
+                                                username != "ALL ACCOUNT" ?
                                                     <Form.Item shouldUpdate style={{ marginBottom: "6px" }}>
                                                         {() => (
                                                             <Button
