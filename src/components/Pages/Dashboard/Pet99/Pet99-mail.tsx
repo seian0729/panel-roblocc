@@ -439,12 +439,15 @@ const Pet99Mail: React.FC = () => {
                                 <Space direction="horizontal">
                                 {
                                     details['mailDetails'].map((key: any) => {
-                                        const itemName = key['item']['id']
-                                        return (
-                                            <Tag key={key['item']['id']} color={colorTag[itemName] ? colorTag[itemName] : "default" }>
-                                                {`${key['item']['id']}: ${new Intl.NumberFormat().format(key['quantity'])}`}
-                                            </Tag>
-                                        );
+                                        if (Object.keys(key).length > 0){
+                                            const itemName = key['item']['id']
+                                            return (
+                                                <Tag key={key['item']['id']} color={colorTag[itemName] ? colorTag[itemName] : "default" }>
+                                                    {`${key['item']['id']}: ${new Intl.NumberFormat().format(key['quantity'])}`}
+                                                </Tag>
+                                            );
+                                        }
+                                        else return "-"
                                     })
                                 }
                                 </Space>
