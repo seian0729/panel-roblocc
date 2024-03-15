@@ -357,6 +357,7 @@ const Pet99Mail: React.FC = () => {
             })
             console.log("All data", JSON.stringify(allData))
             setAllDataSend(JSON.stringify(allData))
+            setDisableSend(false)
         }
     };
 
