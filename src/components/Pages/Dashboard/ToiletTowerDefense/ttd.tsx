@@ -11,8 +11,8 @@ import {
     Card,
     Checkbox,
     Col,
-    Divider, Drawer,
-    Form,
+    Divider, Drawer, Dropdown,
+    Form, MenuProps,
     message,
     Popconfirm,
     Row,
@@ -21,7 +21,14 @@ import {
     Table,
     Tabs, Tag
 } from "antd";
-import {BankOutlined, LineChartOutlined, QuestionCircleOutlined, UserOutlined} from "@ant-design/icons";
+import {
+    BankOutlined,
+    DeleteOutlined,
+    DownOutlined,
+    LineChartOutlined,
+    QuestionCircleOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 const Bladeball: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
@@ -70,31 +77,18 @@ const Bladeball: React.FC = () => {
         setLoadingReload(true);
         setLoadingTable(true);
         // ajax request after empty completing
-        setTimeout(() => {
-            getData(4777817887).then((res) => {
-                setDataApi(res.data);
-            })
+        getData(4778845442).then((res) => {
+            setDataApi(res.data);
+        }).then(() =>{
             messageApi.success('Refresh Success <3');
+        }).catch((error) => {
+            messageApi.error('Got error while getting data');
+        }).finally(() => {
             setSelectedRowKeys([]);
             setLoadingReload(false);
             setLoadingTable(false)
-        }, 1000);
+        })
     }
-
-    //Delete account
-
-    const deleteAccount = () => {
-        setLoadingDelete(true);
-        setTimeout(() => {
-            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
-                //console.log(res);
-            })
-            messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
-            setSelectedRowKeys([]);
-            setLoadingDelete(false);
-            refreshData()
-        }, 1000);
-    };
 
     const bulkDeleteAccount = () => {
         setLoadingDelete(true);
@@ -111,6 +105,46 @@ const Bladeball: React.FC = () => {
                 refreshData()
             })
 
+        }, 1000);
+    };
+
+    useEffect(() => {
+        getData(4778845442).then((res) => {
+            setDataApi(res.data);
+        }).then(() =>{
+            messageApi.success('Refresh Success <3');
+        }).catch((error) => {
+            messageApi.error('Got error while getting data');
+        }).finally(() => {
+            setSelectedRowKeys([]);
+            setLoadingReload(false);
+            setLoadingTable(false)
+        })
+    },[])
+
+    const AutoRefreshData = () => {
+        refreshData()
+        messageApi.success(`Next refresh ${moment(Date.now() + 60000).fromNow() }`,10);
+        messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,15)
+    }
+
+    useEffect(() =>{
+        const intervalId = setInterval(AutoRefreshData, 60000);
+        return () => clearInterval(intervalId);
+    })
+
+    //Delete account
+
+    const deleteAccount = () => {
+        setLoadingDelete(true);
+        setTimeout(() => {
+            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
+                //console.log(res);
+            })
+            messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
+            setSelectedRowKeys([]);
+            setLoadingDelete(false);
+            refreshData()
         }, 1000);
     };
 
@@ -361,17 +395,47 @@ const Bladeball: React.FC = () => {
             filters: filtersNote,
             onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
             filterSearch: true,
+        },
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => {
+                const items: MenuProps['items'] = [
+                    {
+                        label: `Username: ${record.UsernameRoblocc}`,
+                        key: '0',
+                        disabled: true
+                    },
+                    {
+                        type: 'divider',
+                    },
+                    {
+                        type: 'divider',
+                    },
+                    {
+                        label: <a onClick={() => {
+                            //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                            deleteData(record.UsernameRoblocc).then((res) => {
+                                messageApi.success(`Deleted account: ${record.UsernameRoblocc} !`);
+                                refreshData()
+                            })
+                        }}><DeleteOutlined/> Delete Account</a>,
+                        key: '1',
+                        danger: true
+                    },
+                ];
+                return (<Dropdown menu={{items}} trigger={['click']}>
+                    <a onClick={(e) => e.preventDefault()}>
+                        <Space>
+                            Action
+                            <DownOutlined/>
+                        </Space>
+                    </a>
+                </Dropdown>)
+            }
+            ,
         }
     ]
-
-    useEffect(() => {
-        getData(4778845442).then((res) => {
-            console.log(res)
-            setDataApi(res.data);
-            setLoadingTable(false)
-            sLoadingSkeTable(false)
-        })
-    }, [])
 
     return (<div>
         {contextHolder}
