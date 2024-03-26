@@ -51,6 +51,10 @@ const DashboardLayout: React.FC = () => {
         "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1","Manke"
     ];
 
+    const whitelistTTD = [
+        "Hanei"
+    ]
+
     function getItem(
         label: React.ReactNode,
         key: React.Key,
@@ -228,6 +232,20 @@ const DashboardLayout: React.FC = () => {
                 'pet99',
                 null,
                 pet99Child,
+                'group')
+            )
+        }
+
+        if (whitelistTTD.find((element) => element == username) != undefined){
+            dashboardItems.push(getItem(
+                'Toilet Tower Defense',
+                'ttd',
+                null,
+                [getItem((
+                    <Link to={"toilet-tower-defense/tracking"}>
+                        Tracking
+                    </Link>
+                ),"toilet-tower-defense/tracking")],
                 'group')
             )
         }

@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Pet 99 | Format Number">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Pet99 - Mail | Fixed again">
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/ToiletTowerDefense/ttd.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Pet99/Pet99-mail.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Pet99/Pet99-mail.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Pet99/Pet99.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Pet99/Pet99.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -180,119 +177,26 @@
       <workItem from="1709140880731" duration="1686000" />
       <workItem from="1709211698634" duration="1793000" />
       <workItem from="1709271886780" duration="3465000" />
-      <workItem from="1709386707681" duration="598000" />
-    </task>
-    <task id="LOCAL-00017" summary="+ xam lon">
-      <option name="closed" value="true" />
-      <created>1704801960924</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1704801960924</updated>
-    </task>
-    <task id="LOCAL-00018" summary="+ Action / v.v">
-      <option name="closed" value="true" />
-      <created>1705256236977</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1705256236977</updated>
-    </task>
-    <task id="LOCAL-00019" summary="* Fixed user">
-      <option name="closed" value="true" />
-      <created>1705256566237</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1705256566237</updated>
-    </task>
-    <task id="LOCAL-00020" summary="* Fixed Copy">
-      <option name="closed" value="true" />
-      <created>1705293878821</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1705293878821</updated>
-    </task>
-    <task id="LOCAL-00021" summary="+ Fixed suck, re-add drawer">
-      <option name="closed" value="true" />
-      <created>1705326458960</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1705326458960</updated>
-    </task>
-    <task id="LOCAL-00022" summary="+ Login page">
-      <option name="closed" value="true" />
-      <created>1705339897923</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1705339897923</updated>
-    </task>
-    <task id="LOCAL-00023" summary="+ Login page">
-      <option name="closed" value="true" />
-      <created>1705341330327</created>
-      <option name="number" value="00023" />
-      <option name="presentableId" value="LOCAL-00023" />
-      <option name="project" value="LOCAL" />
-      <updated>1705341330327</updated>
-    </task>
-    <task id="LOCAL-00024" summary="+ Major Updated">
-      <option name="closed" value="true" />
-      <created>1705773538020</created>
-      <option name="number" value="00024" />
-      <option name="presentableId" value="LOCAL-00024" />
-      <option name="project" value="LOCAL" />
-      <updated>1705773538020</updated>
-    </task>
-    <task id="LOCAL-00025" summary="+ Add wl">
-      <option name="closed" value="true" />
-      <created>1706011261906</created>
-      <option name="number" value="00025" />
-      <option name="presentableId" value="LOCAL-00025" />
-      <option name="project" value="LOCAL" />
-      <updated>1706011261906</updated>
-    </task>
-    <task id="LOCAL-00026" summary="+ Ma giáo">
-      <option name="closed" value="true" />
-      <created>1706430412513</created>
-      <option name="number" value="00026" />
-      <option name="presentableId" value="LOCAL-00026" />
-      <option name="project" value="LOCAL" />
-      <updated>1706430412513</updated>
-    </task>
-    <task id="LOCAL-00027" summary="+ Bulul Achip">
-      <option name="closed" value="true" />
-      <created>1706678037990</created>
-      <option name="number" value="00027" />
-      <option name="presentableId" value="LOCAL-00027" />
-      <option name="project" value="LOCAL" />
-      <updated>1706678037990</updated>
-    </task>
-    <task id="LOCAL-00028" summary="- Remove Notification, BF">
-      <option name="closed" value="true" />
-      <created>1706878394762</created>
-      <option name="number" value="00028" />
-      <option name="presentableId" value="LOCAL-00028" />
-      <option name="project" value="LOCAL" />
-      <updated>1706878394762</updated>
-    </task>
-    <task id="LOCAL-00029" summary="[+] Pet 99 (dev)">
-      <option name="closed" value="true" />
-      <created>1707300992535</created>
-      <option name="number" value="00029" />
-      <option name="presentableId" value="LOCAL-00029" />
-      <option name="project" value="LOCAL" />
-      <updated>1707300992535</updated>
-    </task>
-    <task id="LOCAL-00030" summary="[*] Pet 99 | Fixed something bug">
-      <option name="closed" value="true" />
-      <created>1707322335619</created>
-      <option name="number" value="00030" />
-      <option name="presentableId" value="LOCAL-00030" />
-      <option name="project" value="LOCAL" />
-      <updated>1707322335619</updated>
+      <workItem from="1709386707681" duration="1839000" />
+      <workItem from="1709415834046" duration="1987000" />
+      <workItem from="1709535636727" duration="695000" />
+      <workItem from="1709702419209" duration="2079000" />
+      <workItem from="1709787908276" duration="598000" />
+      <workItem from="1709794131681" duration="3459000" />
+      <workItem from="1709808994294" duration="877000" />
+      <workItem from="1709812237899" duration="599000" />
+      <workItem from="1709826381793" duration="386000" />
+      <workItem from="1709830004481" duration="2248000" />
+      <workItem from="1709899173056" duration="125000" />
+      <workItem from="1709921688304" duration="599000" />
+      <workItem from="1710329594771" duration="699000" />
+      <workItem from="1710400913767" duration="441000" />
+      <workItem from="1710401812444" duration="1269000" />
+      <workItem from="1710515711678" duration="3827000" />
+      <workItem from="1710774716304" duration="441000" />
+      <workItem from="1711310278137" duration="127000" />
+      <workItem from="1711310497133" duration="598000" />
+      <workItem from="1711460724258" duration="2209000" />
     </task>
     <task id="LOCAL-00031" summary="[+] Pet 99 | Script">
       <option name="closed" value="true" />
@@ -574,7 +478,119 @@
       <option name="project" value="LOCAL" />
       <updated>1709274655390</updated>
     </task>
-    <option name="localTasksCounter" value="66" />
+    <task id="LOCAL-00066" summary="[+] Whitelist | Manke">
+      <option name="closed" value="true" />
+      <created>1709387346596</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1709387346597</updated>
+    </task>
+    <task id="LOCAL-00067" summary="[+] Pet 99 Mail | Added Diamond Above Amount">
+      <option name="closed" value="true" />
+      <created>1709417316595</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1709417316595</updated>
+    </task>
+    <task id="LOCAL-00068" summary="[+] Important Notification | Close Web">
+      <option name="closed" value="true" />
+      <created>1709718381892</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1709718381892</updated>
+    </task>
+    <task id="LOCAL-00069" summary="[+] Maintenance | maintenance pet99 / pet99-mailbox">
+      <option name="closed" value="true" />
+      <created>1709795293257</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1709795293257</updated>
+    </task>
+    <task id="LOCAL-00070" summary="[*] Pet99 | Fixed due error">
+      <option name="closed" value="true" />
+      <created>1709797043437</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1709797043437</updated>
+    </task>
+    <task id="LOCAL-00071" summary="[*] BF | Copy Full Data (All Fruit)">
+      <option name="closed" value="true" />
+      <created>1709809781385</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1709809781385</updated>
+    </task>
+    <task id="LOCAL-00072" summary="[*] Pet99 | Fixed due error">
+      <option name="closed" value="true" />
+      <created>1709826509069</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1709826509069</updated>
+    </task>
+    <task id="LOCAL-00073" summary="[*] Web | Noti Upgrade server">
+      <option name="closed" value="true" />
+      <created>1710401001433</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1710401001433</updated>
+    </task>
+    <task id="LOCAL-00074" summary="[*] Web | Noti Upgrade server">
+      <option name="closed" value="true" />
+      <created>1710401056178</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1710401056178</updated>
+    </task>
+    <task id="LOCAL-00075" summary="[+] Pet99 | Fixed Header / Summary">
+      <option name="closed" value="true" />
+      <created>1710402499785</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1710402499785</updated>
+    </task>
+    <task id="LOCAL-00076" summary="[+] Pet99 | New notification &#10;[*] Pet99 - Mail | All active account =&gt; all account">
+      <option name="closed" value="true" />
+      <created>1710515945075</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1710515945076</updated>
+    </task>
+    <task id="LOCAL-00077" summary="[*] Pet99 - Mail | Fixed suck">
+      <option name="closed" value="true" />
+      <created>1710516170840</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1710516170840</updated>
+    </task>
+    <task id="LOCAL-00078" summary="[*] Pet99 - Mail | Fixed bug">
+      <option name="closed" value="true" />
+      <created>1710517413648</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1710517413648</updated>
+    </task>
+    <task id="LOCAL-00079" summary="[*] Pet99 - Mail | Fixed again">
+      <option name="closed" value="true" />
+      <created>1710517757097</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1710517757097</updated>
+    </task>
+    <option name="localTasksCounter" value="80" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -592,18 +608,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[+] Pet 99 | Show Huge (Normal, Golden, Rainbow)" />
-    <MESSAGE value="[+] Pet 99 | Major Update (Mail Box, v.v)" />
-    <MESSAGE value="[+/*] Pet 99 | Added a little security for page, fixed some bug" />
-    <MESSAGE value="[*] Pet 99 | Fixed resize in table mail, v.v" />
-    <MESSAGE value="[*] Pet 99 | Removing console" />
-    <MESSAGE value="[*] Pet 99 | Improved Summary / Column Diamond" />
-    <MESSAGE value="[*] Pet 99 | Improved Summary (Status)" />
-    <MESSAGE value="[*] Pet 99 | Fixed delete bulk account" />
-    <MESSAGE value="[*] Pet 99 | Fixed String in status" />
-    <MESSAGE value="[+] Pet 99 | Mail Box, Select mail detail (item/diamond/both)" />
-    <MESSAGE value="[*] Pet 99 | More Note" />
-    <MESSAGE value="[*] Pet 99 | More Whitelist" />
     <MESSAGE value="[*] Pet 99 | Fixed bug" />
     <MESSAGE value="[*] Pet 99 | Fixed Display Huge" />
     <MESSAGE value="[+] Pet 99 | Online each note" />
@@ -617,6 +621,18 @@
     <MESSAGE value="[*] Pet 99 | Fixed responsive on mb device" />
     <MESSAGE value="[+] Pet 99 | Last Updated" />
     <MESSAGE value="[+] Pet 99 | Format Number" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] Pet 99 | Format Number" />
+    <MESSAGE value="[+] Whitelist | Manke" />
+    <MESSAGE value="[+] Pet 99 Mail | Added Diamond Above Amount" />
+    <MESSAGE value="[+] Important Notification | Close Web" />
+    <MESSAGE value="[+] Maintenance | maintenance pet99 / pet99-mailbox" />
+    <MESSAGE value="[*] BF | Copy Full Data (All Fruit)" />
+    <MESSAGE value="[*] Pet99 | Fixed due error" />
+    <MESSAGE value="[*] Web | Noti Upgrade server" />
+    <MESSAGE value="[+] Pet99 | Fixed Header / Summary" />
+    <MESSAGE value="[+] Pet99 | New notification &#10;[*] Pet99 - Mail | All active account =&gt; all account" />
+    <MESSAGE value="[*] Pet99 - Mail | Fixed suck" />
+    <MESSAGE value="[*] Pet99 - Mail | Fixed bug" />
+    <MESSAGE value="[*] Pet99 - Mail | Fixed again" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Pet99 - Mail | Fixed again" />
   </component>
 </project>

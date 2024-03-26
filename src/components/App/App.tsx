@@ -26,6 +26,7 @@ import Profile from "../Pages/Dashboard/Profile/profile";
 import Pet99 from "../Pages/Dashboard/Pet99/Pet99"
 import Pet99Mail from "../Pages/Dashboard/Pet99/Pet99-mail";
 import ProfileScript from "../Pages/Dashboard/Profile/profile-script";
+import Ttd from "../Pages/Dashboard/ToiletTowerDefense/ttd";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
@@ -36,8 +37,6 @@ import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
 import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
-import moment from "moment/moment";
-
 
 //Theme ne
 const tokenTheme = {
@@ -157,6 +156,10 @@ function App() {
         "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1", "Manke"
     ]
 
+    const whitelistTTD = [
+        "Hanei"
+    ]
+
 
     return (
         <ConfigProvider theme={themeConfig}>
@@ -185,6 +188,10 @@ function App() {
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Pet99/>}/>
                                     <Route path="mail" element={<Pet99Mail/>} />
+                                </Route>
+                                <Route path={"toilet-tower-defense"} element={<UserPet99OnlyRoute userIsWhitelisted={whitelistTTD.find((element) => element == username) != undefined}/>}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<Ttd/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>
