@@ -553,7 +553,7 @@ const Bladeball: React.FC = () => {
                                     value={getTotalGems()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#5487ff'}}
-                                    suffix={`(${new Intl.NumberFormat().format(getTotalEggs()/2)})`}
+                                    suffix={`(${new Intl.NumberFormat().format(getTotalEggs()/4)})`}
                                 />
                             </Card>
                         </Col>
