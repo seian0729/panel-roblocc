@@ -376,7 +376,7 @@ const Bladeball: React.FC = () => {
     return (<div>
         {contextHolder}
         <Row justify={'start'}>
-            <Divider orientation="left">Roblocc Panel - Blade Ball</Divider>
+            <Divider orientation="left">Roblocc Panel - Toilet Tower Defense</Divider>
             <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
