@@ -165,8 +165,6 @@ function App() {
         <ConfigProvider theme={themeConfig}>
             <Layout style={{minHeight: "100vh"}}>
 
-                <Alert type={"error"} message={"WEBSITE SẼ BẢO TRÌ ĐỂ NÂNG CẤP SERVER, THỜI GIAN DỰ TÍNH 3-5H BẮT ĐẦU TỪ 0H NGÀY 18/3/2024"} showIcon banner/>
-
                 {
                     userIsLogged && window.location.pathname != '/' ?
                         "" : <LandingHeader/>

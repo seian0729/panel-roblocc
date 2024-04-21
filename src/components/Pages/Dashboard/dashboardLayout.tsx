@@ -17,15 +17,16 @@ import {
     message,
     notification,
     Tag,
-    Tooltip
+    Tooltip, Modal
 } from 'antd';
 import type {MenuProps} from 'antd';
-import {Link, Outlet, useLocation, useParams} from 'react-router-dom';
+import {Link, Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
 import {useStore} from "../../../state/storeHooks";
 import './dashboard.css'
 import moment from "moment";
 import 'moment-timezone';
+import {getUnpaidInvoice} from "../../../services/data";
 type MenuItem = Required<MenuProps>['items'][number];
 
 
@@ -34,6 +35,10 @@ const {Text} = Typography;
 let tempCountNoti = 0
 
 const DashboardLayout: React.FC = () => {
+
+    let navigate = useNavigate();
+
+    const [modal, contextHolderModal] = Modal.useModal();
 
     const [apiNotification, contextHolder] = notification.useNotification();
 
@@ -45,6 +50,8 @@ const DashboardLayout: React.FC = () => {
 
     let { dateExpired, username } = user.unwrap()
 
+    const [unpaidInvoice, setUnpaidInvoice] = useState([]);
+
     const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
 
     const whitelistAccountsPet = [
@@ -54,6 +61,8 @@ const DashboardLayout: React.FC = () => {
     const whitelistTTD = [
         "Hanei"
     ]
+
+    const [countNoti, setCountNoti] = useState(0);
 
     function getItem(
         label: React.ReactNode,
@@ -302,33 +311,52 @@ const DashboardLayout: React.FC = () => {
         if (moment().unix() - dateExpired > -604800 &&
             moment().unix() - dateExpired < 0
         ){
-            if (tempCountNoti <= 1){
-                setTimeout(() =>{
-                    apiNotification.open({
-                        message: 'Account',
-                        description: <>
-                            Your access is  expire
-                                <Tooltip title={moment(dateExpired*1000).format('MMMM Do YYYY, h:mm:ss a')}>
-                                    <Tag style={{marginLeft: 4}}>
-                                        {moment(dateExpired*1000).fromNow()}
-                                    </Tag>
-                                </Tooltip>
-                            </>,
-                        duration: 10,
-                        icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
-                    })
-                },1000)
-                tempCountNoti++;
-            }
+            setTimeout(() =>{
+                apiNotification.open({
+                    message: 'Account',
+                    description: <>
+                        Your access is expires
+                        <Tooltip title={moment(dateExpired*1000).format('MMMM Do YYYY, h:mm:ss a')}>
+                            <Tag style={{marginLeft: 4}}>
+                                {moment(dateExpired*1000).fromNow()}
+                            </Tag>
+                        </Tooltip>
+                    </>,
+                    duration: 10,
+                    icon: <CloseCircleOutlined style={{color: '#ff4d4f'}}/>,
+                })
+            },1000)
         }
         else if (moment().unix() - dateExpired > 0) {
             logout()
         }
     })
 
+    useEffect(() => {
+        getUnpaidInvoice().then((res) => {
+            setUnpaidInvoice(res.data)
+        })
+    },[])
+
+    {
+        if (unpaidInvoice.length > 0 && countNoti == 0) {
+            console.log(countNoti);
+            setCountNoti(1)
+            modal.warning({
+                title:'User have an unpaid invoice',
+                content:"You have an unpaid invoice. Pay it now or i'll remove your access (after 3 days GL)",
+                onOk: () => {
+                    navigate('user/transactions', { replace: true });
+                }
+            })
+        }
+    }
+
+
 
     return (
         <>
+            {contextHolderModal}
             {contextHolder}
         <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}

@@ -62,6 +62,25 @@ const Transactions: React.FC = () => {
                     </Tooltip>
                 )
             },
+            filters: [
+                {
+                    text: 'Expires',
+                    value: 'Expires',
+                },
+                {
+                    text: 'Expired',
+                    value: 'Expired',
+                },
+            ],
+            onFilter: (value: any, record) => {
+                if (value === 'Expires') {
+                    return moment().unix() - moment(record.dateExpired).unix()  < 0
+                } else if (value === 'Expired') {
+                    return moment().unix() - moment(record.dateExpired).unix()  >= 0
+                } else {
+                    return false
+                }
+            },
             sorter: (a,b) => {
                 return moment(a.dateExpired).unix() - moment(b.dateExpired).unix()
             },
@@ -73,8 +92,27 @@ const Transactions: React.FC = () => {
             render: (_: any, record) => {
                 //console.log(typeof record.status)
                 return <Tag style={{marginLeft: 4}} color={record.status == '1' ? 'green' : 'red'}>
-                    {record.status == '1' ? 'Success' : 'Unpaid'}
+                    {record.status == '1' ? 'Paid' : 'Unpaid'}
                 </Tag>
+            },
+            filters: [
+                {
+                    text: 'Paid',
+                    value: 'Paid',
+                },
+                {
+                    text: 'Unpaid',
+                    value: 'Unpaid',
+                },
+            ],
+            onFilter: (value: any, record) => {
+                if (value === 'Paid') {
+                    return record.status == "1"
+                } else if (value === 'Unpaid') {
+                    return record.status == "0"
+                } else {
+                    return false
+                }
             },
             sorter: (a,b) => {
                 return moment(a.dateExpired).unix() - moment(b.dateExpired).unix()
@@ -84,11 +122,9 @@ const Transactions: React.FC = () => {
             title: "Note",
             dataIndex: 'Note',
             key:"Note",
+            width: '40%',
             render: (_: any, record) => {
                 return record.note
-            },
-            sorter: (a,b) => {
-                return moment(a.dateExpired).unix() - moment(b.dateExpired).unix()
             },
         }
     ]

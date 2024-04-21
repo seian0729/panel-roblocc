@@ -37,6 +37,11 @@ export async function getTransactions(){
     return data;
 }
 
+export async function getUnpaidInvoice() {
+    const { data } = await axios.get('users/getUnpaidInvoice')
+    return data;
+}
+
 // Get data - gameid
 export async function getData(gameid: any){
     const { data } = await axios.get(`data/getData?gameId=${gameid}`)
