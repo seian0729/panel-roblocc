@@ -340,7 +340,6 @@ const DashboardLayout: React.FC = () => {
 
     {
         if (unpaidInvoice.length > 0 && countNoti == 0) {
-            console.log(countNoti);
             setCountNoti(1)
             modal.warning({
                 title:'User have an unpaid invoice',
