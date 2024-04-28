@@ -8,10 +8,13 @@ const DashboardIndex: React.FC = () => {
 
     const {user} = useStore(({app}) => app);
 
-    let { username } = user.unwrap()
+    const {access} = user.unwrap();
 
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1","Manke"];
+    const decodeAccess = JSON.parse(access);
+
+    const checkAccess = (accessVal: string) => {
+        return decodeAccess.find((element: any) => element == accessVal) != undefined
+    }
 
     return(
         <div style={{color: "white", marginTop: 12}}>
@@ -39,7 +42,7 @@ const DashboardIndex: React.FC = () => {
                 </Col>
 
                 {
-                    whitelistAccountsPet.find((element) => element == username) != undefined ?
+                    checkAccess("pet99") ?
                         <Col>
                             <Card title="Pet Simulator 99"
                                   hoverable

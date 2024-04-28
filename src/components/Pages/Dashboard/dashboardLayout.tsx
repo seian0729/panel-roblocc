@@ -52,17 +52,15 @@ const DashboardLayout: React.FC = () => {
 
     const [unpaidInvoice, setUnpaidInvoice] = useState([]);
 
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+    const {access} = user.unwrap();
 
-    const whitelistAccountsPet = [
-        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1","Manke"
-    ];
-
-    const whitelistTTD = [
-        "Hanei"
-    ]
+    const decodeAccess = JSON.parse(access);
 
     const [countNoti, setCountNoti] = useState(0);
+
+    const checkAccess = (accessVal: string) => {
+        return decodeAccess.find((element: any) => element == accessVal) != undefined
+    }
 
     function getItem(
         label: React.ReactNode,
@@ -235,7 +233,7 @@ const DashboardLayout: React.FC = () => {
             ),"pet99/mail"),
         ]
 
-        if (whitelistAccountsPet.find((element) => element == username) != undefined){
+        if (checkAccess("pet99")){
             dashboardItems.push(getItem(
                 'Pet Simulator 99',
                 'pet99',
@@ -245,7 +243,7 @@ const DashboardLayout: React.FC = () => {
             )
         }
 
-        if (whitelistTTD.find((element) => element == username) != undefined){
+        if (checkAccess("ttd")){
             dashboardItems.push(getItem(
                 'Toilet Tower Defense',
                 'ttd',
@@ -357,7 +355,8 @@ const DashboardLayout: React.FC = () => {
         <>
             {contextHolderModal}
             {contextHolder}
-        <Layout style={{ minHeight: "100vh" }}>
+
+            <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
                    collapsedWidth="0"
                    style={{background: "rgb(24, 24, 24)", color: "white"}}>

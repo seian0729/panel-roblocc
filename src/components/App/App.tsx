@@ -152,13 +152,13 @@ function App() {
         username = user.unwrap().username
     }
 
-    const whitelistPet99 = [
-        "Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1", "Manke"
-    ]
+    const {access} = user.unwrap();
 
-    const whitelistTTD = [
-        "Hanei"
-    ]
+    const decodeAccess = JSON.parse(access);
+
+    const checkAccess = (accessVal: string) => {
+        return decodeAccess.find((element: any) => element == accessVal) != undefined
+    }
 
 
     return (
@@ -182,12 +182,12 @@ function App() {
                                 <Route index element={<DashboardIndex/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
                                 <Route path={"petx"} element={<PetX/>}/>
-                                <Route path={"pet99"} element={<UserPet99OnlyRoute userIsWhitelisted={whitelistPet99.find((element) => element == username) != undefined}/>}>
+                                <Route path={"pet99"} element={<UserPet99OnlyRoute userIsWhitelisted={checkAccess("pet99")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Pet99/>}/>
                                     <Route path="mail" element={<Pet99Mail/>} />
                                 </Route>
-                                <Route path={"toilet-tower-defense"} element={<UserPet99OnlyRoute userIsWhitelisted={whitelistTTD.find((element) => element == username) != undefined}/>}>
+                                <Route path={"toilet-tower-defense"} element={<UserPet99OnlyRoute userIsWhitelisted={checkAccess("ttd")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Ttd/>} />
                                 </Route>
