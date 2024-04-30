@@ -64,6 +64,15 @@ function App() {
         some: (user) => user.role === 'Admin'
     });
 
+    const username = user.isSome()!? user.unwrap().username : "";
+    const access = user.isSome()!? user.unwrap().access : '[]';
+
+    const decodeAccess = JSON.parse(access);
+
+    const checkAccess = (accessVal: string) => {
+        return decodeAccess.find((element: any) => element == accessVal) != undefined
+    }
+
     if (loading) {
         return (
             <Row justify="center" style={{display: "flex", alignItems: "center", justifyContent:"center", minHeight:"calc(100vh - 100px)"}}>
@@ -117,7 +126,7 @@ function App() {
         items.push({
             label: (
                 <Link to="/profile">
-                    <span>{user.unwrap().username}</span>
+                    <span>{username}</span>
                 </Link>
             ),
             key: 'profile',
@@ -144,20 +153,6 @@ function App() {
             icon: <LogoutOutlined/>,
         });
 
-    }
-
-    let username = ""
-
-    if (user.isSome()) {
-        username = user.unwrap().username
-    }
-
-    const {access} = user.unwrap();
-
-    const decodeAccess = JSON.parse(access);
-
-    const checkAccess = (accessVal: string) => {
-        return decodeAccess.find((element: any) => element == accessVal) != undefined
     }
 
 
