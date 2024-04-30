@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Col, Result, Row} from 'antd';
 import {useNavigate} from 'react-router-dom';
 
-const NotFoundPage: React.FC = () => {
+const Page404: React.FC = () => {
     const navigate = useNavigate();
     return (
         <Row justify="center" style={{display: "flex", alignItems: "center", justifyContent:"center", minHeight:"calc(100vh - 164px)"}}>
@@ -22,4 +22,4 @@ const NotFoundPage: React.FC = () => {
     );
 };
 
-export default NotFoundPage;
+export default Page404;

@@ -12,10 +12,15 @@ import {getUser} from "../../services/data";
 import {logoutFromApp} from "../../types/user";
 import 'moment-timezone';
 
-//Pages
+//Pages / Login
 import {Login} from "../Pages/Login/Login";
-import Page404 from "../Pages/404/404"
-import Maintenance from "../Pages/Maintenance/Maintenance";
+
+//Results Page
+
+import Page404 from "../Pages/Results/404/404"
+import Page500 from '../Pages/Results/500/500';
+import Maintenance from "../Pages/Results/Maintenance/Maintenance";
+
 
 //DashboardLayout
 import DashboardLayout from "../Pages/Dashboard/dashboardLayout"
@@ -112,8 +117,6 @@ function App() {
 
     ];
 
-
-
     // logout button
     function logout() {
         message.success('Logout Success')
@@ -155,7 +158,6 @@ function App() {
 
     }
 
-
     return (
         <ConfigProvider theme={themeConfig}>
             <Layout style={{minHeight: "100vh"}}>
@@ -177,12 +179,12 @@ function App() {
                                 <Route index element={<DashboardIndex/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
                                 <Route path={"petx"} element={<PetX/>}/>
-                                <Route path={"pet99"} element={<UserPet99OnlyRoute userIsWhitelisted={checkAccess("pet99")}/>}>
+                                <Route path={"pet99"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("pet99")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Pet99/>}/>
                                     <Route path="mail" element={<Pet99Mail/>} />
                                 </Route>
-                                <Route path={"toilet-tower-defense"} element={<UserPet99OnlyRoute userIsWhitelisted={checkAccess("ttd")}/>}>
+                                <Route path={"toilet-tower-defense"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("ttd")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Ttd/>} />
                                 </Route>
@@ -245,11 +247,11 @@ function UserOnlyRoute({
     return <Outlet/>
 }
 
-function UserPet99OnlyRoute({
+function PageAccessOnlyRoute({
        userIsWhitelisted
    }: { userIsWhitelisted: boolean } & RouteProps) {
     if (!userIsWhitelisted) {
-        return <Page404/>
+        return <Page500/>
     }
     return <Outlet/>
 }
