@@ -119,7 +119,8 @@ const BloxFruit: React.FC = () => {
         'Cursed Dual Katana',
         'Soul Guitar',
         'Mirror Fractal',
-        'Valkyrie Helm'
+        'Valkyrie Helm',
+        'Shark Anchor'
     ]
 
     if (whitelistAccounts.find((element) => element == username) != undefined){
