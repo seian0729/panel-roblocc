@@ -986,7 +986,8 @@ const BloxFruit: React.FC = () => {
                     ['Mammoth']: 'Mammoth',
                     ['Kitsune']: 'Kitsune',
                     ['T-Rex']: 'T-Rex',
-                    ['True Triple Katana']: 'TTK'
+                    ['True Triple Katana']: 'TTK',
+                    ['Shark Anchor']: 'Shark Anchor'
                 }
                 
                 return (
