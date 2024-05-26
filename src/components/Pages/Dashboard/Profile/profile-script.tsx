@@ -9,7 +9,14 @@ const ProfileScript: React.FC = () => {
     const {user} = useStore(({app}) => app);
     const {id, username, siginKey} = user.unwrap();
 
-    const whitelistAccountsPet = ["Hanei","Vanhxyz","tunakhanhv3","luciusdepzai","tvk1308","k7ndz", "huy8841","leminh","hau1","Manke"];
+    const access = user.isSome()!? user.unwrap().access : '[]';
+
+    const decodeAccess = JSON.parse(access);
+
+    const checkAccess = (accessVal: string) => {
+        return decodeAccess.find((element: any) => element == accessVal) != undefined
+    }
+
 
     const [messageApi, contextHolder] = message.useMessage();
     const [title, setTitle] = useState('Info')
@@ -51,6 +58,13 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
     }
 }
 repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/private/nuoi-thu-cung/pet99"))() end) wait(60) until HaneiDesu`;
+
+const toiletString = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120,
+    Note = '${username}'
+}
+loadstring(http_request({Url = 'https://cdn.chimovo.com/private/gia-lap-phong-thu-bon-cau/panel', Method = "GET"})['Body'])()`;
 
 
     const copyScript = (scriptname: string, script: string) => {
@@ -123,7 +137,7 @@ repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/
                          */
                     }
                     {
-                        whitelistAccountsPet.find((element) => element == username) != undefined ? <Collapse bordered={false} items={[{
+                        checkAccess("pet99") ? <Collapse bordered={false} items={[{
                                 key: '5',
                                 label: 'Pet Simulator 99',
                                 children: <>
@@ -132,6 +146,22 @@ repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/
                                     </SyntaxHighlighter>
                                     <Button type={"default"}
                                             onClick={() => copyScript('Pet Simulator 99', pet99String)}>
+                                        Copy Script
+                                    </Button>
+                                </>
+                            }]} style={{marginTop: 6}}/>
+                            : <></>
+                    }
+                    {
+                        checkAccess("ttd") ? <Collapse bordered={false} items={[{
+                                key: '6',
+                                label: 'Toilet Tower Defense Simulator',
+                                children: <>
+                                    <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                        {toiletString}
+                                    </SyntaxHighlighter>
+                                    <Button type={"default"}
+                                            onClick={() => copyScript('Pet Simulator 99', toiletString)}>
                                         Copy Script
                                     </Button>
                                 </>
