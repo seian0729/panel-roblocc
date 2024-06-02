@@ -66,6 +66,13 @@ const toiletString = `getgenv().Setting = {
 }
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/gia-lap-phong-thu-bon-cau/panel', Method = "GET"})['Body'])()`;
 
+const adString = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120,
+    Note = '${username}'
+}
+loadstring(http_request({Url = 'https://cdn.chimovo.com/private/anime-phong-thu/client.lua', Method = "GET"})['Body'])()`;
+
 
     const copyScript = (scriptname: string, script: string) => {
         navigator.clipboard.writeText(script);
@@ -161,7 +168,23 @@ loadstring(http_request({Url = 'https://cdn.chimovo.com/private/gia-lap-phong-th
                                         {toiletString}
                                     </SyntaxHighlighter>
                                     <Button type={"default"}
-                                            onClick={() => copyScript('Pet Simulator 99', toiletString)}>
+                                            onClick={() => copyScript('Toilet Tower Defense Simulator', toiletString)}>
+                                        Copy Script
+                                    </Button>
+                                </>
+                            }]} style={{marginTop: 6}}/>
+                            : <></>
+                    }
+                    {
+                        checkAccess("ad") ? <Collapse bordered={false} items={[{
+                                key: '7',
+                                label: 'Anime Defender',
+                                children: <>
+                                    <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                        {adString}
+                                    </SyntaxHighlighter>
+                                    <Button type={"default"}
+                                            onClick={() => copyScript('Anime Defender', adString)}>
                                         Copy Script
                                     </Button>
                                 </>

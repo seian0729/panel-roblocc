@@ -257,6 +257,20 @@ const DashboardLayout: React.FC = () => {
             )
         }
 
+        if (checkAccess("ad")){
+            dashboardItems.push(getItem(
+                'Anime Defender',
+                'ad',
+                null,
+                [getItem((
+                    <Link to={"anime-defender/tracking"}>
+                        Tracking
+                    </Link>
+                ),"anime-defender/tracking")],
+                'group')
+            )
+        }
+
     }
 
     dashboardItems.push(getItem(
