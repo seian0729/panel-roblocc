@@ -29,6 +29,7 @@ import {
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
+import { number } from "decoders";
 const AnimeDefender: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
@@ -213,7 +214,11 @@ const AnimeDefender: React.FC = () => {
         let totalCrystals = 0;
         dataApi.forEach((item: DataType) => {
             let Items = JSON.parse(item.Description)['Items']
-            totalCrystals += Items['Trait Crystal']
+
+            if(Items['Trait Crystal'] != undefined && Items['Trait Crystal'] != null){
+                totalCrystals += Items['Trait Crystal']
+            }
+
         })
         return totalCrystals
     }
@@ -283,7 +288,7 @@ const AnimeDefender: React.FC = () => {
                     render: (_, record) => {
                         let Description = JSON.parse(record.Description)
                         return <Tag color={"purple"}>
-                            {new Intl.NumberFormat().format(Description['Items']['Trait Crystal'])}
+                            {new Intl.NumberFormat().format(Description['Items']['Trait Crystal'] == undefined ? 0 : Description['Items']['Trait Crystal'])}
                         </Tag>
                     },
                     sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Trait Crystal'] - JSON.parse(b.Description)['Items']['Trait Crystal'],
