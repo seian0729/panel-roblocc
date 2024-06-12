@@ -114,19 +114,25 @@ const HeaderLanding: React.FC = () => {
     }
 
     return (
-        <Header style={{background: "#181818"}}>
-            <Row justify={"center"}>
-                <Col xs={20} sm={20} md={12} lg={18} xl={18} xxl={20}>
-                    <Link to="">
-                        <Typography.Text strong={true}>
-                            CHIMOVO
-                        </Typography.Text>
-                    </Link>
-                </Col>
-                <Col xs={4} sm={4} md={12} lg={6} xl={6} xxl={4}>
-                    <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
-                </Col>
-            </Row>
+        <Header style={{
+            background: "#181818",
+            position: 'sticky',
+            top: 0,
+            zIndex: 1,
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            }}>
+            <Col xxl={20} xl={19} lg={18} md={18}>
+                <Link to="">
+                    <Typography.Text strong={true}>
+                        CHIMOVO
+                    </Typography.Text>
+                </Link>
+            </Col>
+            <Col flex={"auto"}>
+                <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={items}/>
+            </Col>
         </Header>
     );
 };
