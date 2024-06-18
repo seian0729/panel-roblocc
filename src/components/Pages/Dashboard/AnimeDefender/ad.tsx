@@ -12,24 +12,22 @@ import {
     Checkbox,
     Col,
     Divider, Drawer, Dropdown,
-    Form, MenuProps,
+    MenuProps,
     message,
     Popconfirm,
     Row,
     Space,
     Statistic,
     Table,
-    Tabs, Tag
+    Tag
 } from "antd";
 import {
-    BankOutlined,
     DeleteOutlined,
     DownOutlined,
     LineChartOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import { number } from "decoders";
 const AnimeDefender: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
@@ -38,20 +36,15 @@ const AnimeDefender: React.FC = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     // main loading
-    const [loadingSkeTable, sLoadingSkeTable] = useState(true);
     const [loadingTable, setLoadingTable] = useState(true);
 
     //loading
     const [loadingReload, setLoadingReload] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
-    const [loadingCopy, setLoadingCopy] = useState(false);
 
     //data
     const [dataApi, setDataApi] = useState([]);
 
-    // page pagination
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
 
     //Hidename
     const [hidename, setHidename] = useState(false)
@@ -210,6 +203,7 @@ const AnimeDefender: React.FC = () => {
         return totalGems
     }
 
+
     const getTotalCrystal = () => {
         let totalCrystals = 0;
         dataApi.forEach((item: DataType) => {
@@ -221,6 +215,19 @@ const AnimeDefender: React.FC = () => {
 
         })
         return totalCrystals
+    }
+
+    const getTotalRiskyDice = () => {
+        let totalRiskyDice = 0;
+        dataApi.forEach((item: DataType) => {
+            let Items = JSON.parse(item.Description)['Items']
+
+            if(Items['Trait Crystal'] != undefined && Items['Risky Dice'] != null){
+                totalRiskyDice += Items['Risky Dice']
+            }
+
+        })
+        return totalRiskyDice
     }
 
     const hasSelected = selectedRowKeys.length > 0;
@@ -239,7 +246,7 @@ const AnimeDefender: React.FC = () => {
         {
             title: 'Roblox Username',
             dataIndex: 'UsernameRoblocc',
-            width: '20%',
+            width: '10%',
             render: (_, record) => {
                 let UsernameRoblocc = record.UsernameRoblocc
                 // console.log(UsernameRoblocc.length/100*30, UsernameRoblocc.length)
@@ -292,13 +299,25 @@ const AnimeDefender: React.FC = () => {
                         </Tag>
                     },
                     sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Trait Crystal'] - JSON.parse(b.Description)['Items']['Trait Crystal'],
+                },
+                {
+                    title: 'Risky Dice',
+                    dataIndex: 'data-risky-dice',
+                    key: "data-risky-dice",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        return <Tag color={"red"}>
+                            {new Intl.NumberFormat().format(Description['Items']['Risky Dice'] == undefined ? 0 : Description['Items']['Risky Dice'])}
+                        </Tag>
+                    },
+                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
                 }
             ]
         },
         {
             title: 'Last Update',
             dataIndex: 'lastUpdate',
-            width: '15%',
+            width: '10%',
             render: (_, record) => {
                 return (
                     <>
@@ -417,7 +436,7 @@ const AnimeDefender: React.FC = () => {
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Anime Defenders</Divider>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+            <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
@@ -503,16 +522,14 @@ const AnimeDefender: React.FC = () => {
                             </Card>
 
                         </Col>
-
                     </Row>
-
                 </Card>
             </Col>
 
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+            <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Data Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                             <Card>
                                 <Statistic
                                     title="Total Crystal (All account)"
@@ -522,13 +539,23 @@ const AnimeDefender: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                             <Card>
                                 <Statistic
                                     title="Total Gems (All account)"
                                     value={getTotalGems()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#5487ff'}}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Card>
+                                <Statistic
+                                    title="Total Risky Dice (All account)"
+                                    value={getTotalRiskyDice()}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#eb4034'}}
                                 />
                             </Card>
                         </Col>
@@ -546,6 +573,7 @@ const AnimeDefender: React.FC = () => {
                     rowKey={(record) => record.UsernameRoblocc}
                     loading={loadingTable}
                     size={"small"}
+                    scroll={{x: true}}
                     bordered
                     pagination={{
                         total: dataApi.length,
@@ -554,6 +582,87 @@ const AnimeDefender: React.FC = () => {
                         defaultPageSize: 25,
                         showSizeChanger: true,
                     }}
+                    summary={
+                        (dataApi) => {
+
+                            //Data
+                            let totalGems = 0;
+                            let totalCrystals = 0;
+                            let totalRiskyDice = 0
+
+
+                            //Status account
+                            let countAccount = 0;
+                            let countAccountInActive = 0
+
+                            dataApi.forEach((record) => {
+                                let Description = JSON.parse(record.Description)
+                                
+                                if (moment().unix() - moment(record.updatedAt).unix() < 300){
+                                    countAccount++;
+                                }
+                                else {
+                                    countAccountInActive++;
+                                }
+                                totalGems += Description['Gems']
+
+                                let Items = Description['Items']
+
+                                if(Items['Trait Crystal'] != undefined && Items['Trait Crystal'] != null){
+                                    totalCrystals += Items['Trait Crystal']
+                                }
+
+                                if(Items['Risky Dice'] != undefined && Items['Risky Dice'] != null){
+                                    totalRiskyDice += Items['Risky Dice']
+                                }
+
+                            })
+
+                            return (
+                                <Table.Summary fixed>
+                                    <Table.Summary.Row>
+                                        <Table.Summary.Cell index={0} colSpan={2}> Summary </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={1}> - </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={2}>
+                                            <Tag color={"red"}>
+                                                {new Intl.NumberFormat().format(totalGems)}
+                                            </Tag>
+                                        </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={3}>
+                                            <Tag color={"red"}>
+                                                {new Intl.NumberFormat().format(totalCrystals)}
+                                            </Tag>
+                                        </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={4}>
+                                            <Tag color={"red"}>
+                                                {new Intl.NumberFormat().format(totalRiskyDice)}
+                                            </Tag>
+                                        </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={5}> - </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={6}>
+                                        <Space>
+                                            <Tag>
+                                                <Badge
+                                                    status={'success'}
+                                                    text={countAccount.toString()}
+                                                />
+                                            </Tag>
+                                            <Tag>
+                                                <Badge
+                                                    status={'error'}
+                                                    text={countAccountInActive.toString()}
+                                                />
+                                            </Tag>
+                                        </Space>
+                                    </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={7}> - </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={8}> - </Table.Summary.Cell>
+                                    </Table.Summary.Row>
+                                </Table.Summary>
+                            )
+                        }
+                    }
+                    sticky={{ offsetHeader: 0 }}
                 />
             </Col>
         </Row>
