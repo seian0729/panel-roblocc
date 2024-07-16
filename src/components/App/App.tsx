@@ -21,6 +21,8 @@ import Page404 from "../Pages/Results/404/404"
 import Page500 from '../Pages/Results/500/500';
 import Maintenance from "../Pages/Results/Maintenance/Maintenance";
 
+import Choida from '../Pages/Choida/app';
+
 
 //DashboardLayout
 import DashboardLayout from "../Pages/Dashboard/dashboardLayout"
@@ -215,6 +217,7 @@ function App() {
                                 <Route path="*" element={<Page404/>}/>
                             </Route>
                         </Route>
+                        <Route path="/choida" element={<Choida/>}/>
                         <Route path="*" element={<Page404/>}/>
                     </Routes>
 

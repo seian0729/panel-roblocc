@@ -11,6 +11,7 @@ import {
     Card,
     Checkbox,
     Col,
+    Descriptions,
     Divider, Drawer, Dropdown,
     MenuProps,
     message,
@@ -311,6 +312,39 @@ const AnimeDefender: React.FC = () => {
                         </Tag>
                     },
                     sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
+                },
+                {
+                    title: 'Portal',
+                    dataIndex: 'data-portal',
+                    key: "data-portal",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        let Item = Description.Items
+
+                        return (<>
+                            {
+                                !record.Description.includes("Portal") ? "-" :
+                                Object.keys(Item).map((key: any) => {
+                                    if (key.includes('Portal')){
+                                        return (
+                                            <Tag color={
+                                                key.includes('Secret') ? "red" : 
+                                                key.includes('Mythical') ? "volcano" :
+                                                key.includes('Lengendary') ? "yellow" :
+                                                key.includes('Epic') ? "purple" : "blue"
+                                            } key={key}>
+                                                {key} [{Item[key]}]
+                                            </Tag>
+                                        )
+                                    }
+                                })
+
+                            }
+                        </>
+                            
+                        )
+
+                    },
                 }
             ]
         },
@@ -639,7 +673,8 @@ const AnimeDefender: React.FC = () => {
                                             </Tag>
                                         </Table.Summary.Cell>
                                         <Table.Summary.Cell index={5}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={6}>
+                                        <Table.Summary.Cell index={6}> - </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={7}>
                                         <Space>
                                             <Tag>
                                                 <Badge
@@ -655,8 +690,8 @@ const AnimeDefender: React.FC = () => {
                                             </Tag>
                                         </Space>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={7}> - </Table.Summary.Cell>
                                     <Table.Summary.Cell index={8}> - </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={9}> - </Table.Summary.Cell>
                                     </Table.Summary.Row>
                                 </Table.Summary>
                             )

@@ -70,7 +70,6 @@ const ToiletTowerDefense: React.FC = () => {
         disable: true,
         selectedRowKeys,
         onChange: onSelectChange,
-
     };
 
     const refreshData = () => {
