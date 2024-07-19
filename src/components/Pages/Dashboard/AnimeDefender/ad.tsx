@@ -30,6 +30,7 @@ import {
     UserOutlined
 } from "@ant-design/icons";
 const AnimeDefender: React.FC = () => {
+
     //message
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -51,6 +52,10 @@ const AnimeDefender: React.FC = () => {
     const [hidename, setHidename] = useState(false)
 
     const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
+
+    const {user} = useStore(({app}) => app);
+
+    const {limitacc} = user.unwrap();
 
     const onChangeHidename = (e: CheckboxChangeEvent) => {
         setHidename(e.target.checked)
@@ -549,6 +554,7 @@ const AnimeDefender: React.FC = () => {
                                                 value={getOffline() + getOnline()}
                                                 valueStyle={{color: '#535dff'}}
                                                 prefix={<UserOutlined/>}
+                                                suffix={`/ ${limitacc}`}
                                             />
                                         </Card>
                                     </Col>
