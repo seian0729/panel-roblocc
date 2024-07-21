@@ -267,91 +267,86 @@ const AnimeDefender: React.FC = () => {
             },
         },
         {
-            title: "Data",
-            dataIndex: "data",
-            children: [
-                {
-                    title: 'Level',
-                    dataIndex: 'data-level',
-                    key: "data-level",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        return <Tag color={"orange"}>
-                            {new Intl.NumberFormat().format(Description['Level'])}
-                        </Tag>
-                    },
-                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Level'] - JSON.parse(b.Description)['Level'],
-                },
-                {
-                    title: 'Gems',
-                    dataIndex: 'data-gems',
-                    key: "data-gems",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        return <Tag color={"blue"}>
-                            {new Intl.NumberFormat().format(Description['Gems'])}
-                        </Tag>
-                    },
-                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Gems'] - JSON.parse(b.Description)['Gems'],
-                },
-                {
-                    title: 'Trait Crystal',
-                    dataIndex: 'data-trait-crystal',
-                    key: "data-trait-crystal",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        return <Tag color={"purple"}>
-                            {new Intl.NumberFormat().format(Description['Items']['Trait Crystal'] == undefined ? 0 : Description['Items']['Trait Crystal'])}
-                        </Tag>
-                    },
-                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Trait Crystal'] - JSON.parse(b.Description)['Items']['Trait Crystal'],
-                },
-                {
-                    title: 'Risky Dice',
-                    dataIndex: 'data-risky-dice',
-                    key: "data-risky-dice",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        return <Tag color={"red"}>
-                            {new Intl.NumberFormat().format(Description['Items']['Risky Dice'] == undefined ? 0 : Description['Items']['Risky Dice'])}
-                        </Tag>
-                    },
-                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
-                },
-                {
-                    title: 'Portal',
-                    dataIndex: 'data-portal',
-                    key: "data-portal",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        let Item = Description.Items
+            title: 'Level',
+            dataIndex: 'data-level',
+            key: "data-level",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return <Tag color={"orange"}>
+                    {new Intl.NumberFormat().format(Description['Level'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Level'] - JSON.parse(b.Description)['Level'],
+        },
+        {
+            title: 'Gems',
+            dataIndex: 'data-gems',
+            key: "data-gems",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return <Tag color={"blue"}>
+                    {new Intl.NumberFormat().format(Description['Gems'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Gems'] - JSON.parse(b.Description)['Gems'],
+        },
+        {
+            title: 'Trait Crystal',
+            dataIndex: 'data-trait-crystal',
+            key: "data-trait-crystal",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return <Tag color={"purple"}>
+                    {new Intl.NumberFormat().format(Description['Items']['Trait Crystal'] == undefined ? 0 : Description['Items']['Trait Crystal'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Trait Crystal'] - JSON.parse(b.Description)['Items']['Trait Crystal'],
+        },
+        {
+            title: 'Risky Dice',
+            dataIndex: 'data-risky-dice',
+            key: "data-risky-dice",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return <Tag color={"red"}>
+                    {new Intl.NumberFormat().format(Description['Items']['Risky Dice'] == undefined ? 0 : Description['Items']['Risky Dice'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
+        },
+        {
+            title: 'Portal',
+            dataIndex: 'data-portal',
+            width: "15%",
+            key: "data-portal",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                let Item = Description.Items
 
-                        return (<>
-                            {
-                                !record.Description.includes("Portal") ? "-" :
-                                Object.keys(Item).map((key: any) => {
-                                    if (key.includes('Portal')){
-                                        return (
-                                            <Tag color={
-                                                key.includes('Secret') ? "red" : 
-                                                key.includes('Mythical') ? "volcano" :
-                                                key.includes('Lengendary') ? "yellow" :
-                                                key.includes('Epic') ? "purple" : "blue"
-                                            } key={key}>
-                                                {key} [{Item[key]}]
-                                            </Tag>
-                                        )
-                                    }
-                                })
-
+                return (<>
+                    {
+                        !record.Description.includes("Portal") ? "-" :
+                        Object.keys(Item).map((key: any) => {
+                            if (key.includes('Portal')){
+                                return (
+                                    <Tag color={
+                                        key.includes('Secret') ? "red" : 
+                                        key.includes('Mythical') ? "volcano" :
+                                        key.includes('Lengendary') ? "yellow" :
+                                        key.includes('Epic') ? "purple" : "blue"
+                                    } key={key} style={{margin: 4}}>
+                                        {key.substring(0,key.toString().indexOf("("))} [{Item[key]}]
+                                    </Tag>
+                                )
                             }
-                        </>
-                            
-                        )
+                        })
 
-                    },
-                }
-            ]
+                    }
+                </>
+                    
+                )
+
+            },
         },
         {
             title: 'Last Update',
