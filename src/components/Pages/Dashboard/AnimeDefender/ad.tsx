@@ -228,12 +228,25 @@ const AnimeDefender: React.FC = () => {
         dataApi.forEach((item: DataType) => {
             let Items = JSON.parse(item.Description)['Items']
 
-            if(Items['Trait Crystal'] != undefined && Items['Risky Dice'] != null){
+            if(Items['Risky Dice'] != undefined && Items['Risky Dice'] != null){
                 totalRiskyDice += Items['Risky Dice']
             }
 
         })
         return totalRiskyDice
+    }
+
+    const getTotalFrostBind = () => {
+        let totalFrostBind = 0;
+        dataApi.forEach((item: DataType) => {
+            let Items = JSON.parse(item.Description)['Items']
+
+            if(Items['Frost Bind'] != undefined && Items['Frost Bind'] != null){
+                totalFrostBind += Items['Frost Bind']
+            }
+
+        })
+        return totalFrostBind
     }
 
     const hasSelected = selectedRowKeys.length > 0;
@@ -313,6 +326,18 @@ const AnimeDefender: React.FC = () => {
                 </Tag>
             },
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
+        },
+        {
+            title: 'Frost Bind',
+            dataIndex: 'data-frost-bind',
+            key: "data-frost-bind",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return <Tag color={"blue"}>
+                    {new Intl.NumberFormat().format(Description['Items']['Frost Bind'] == undefined ? 0 : Description['Items']['Frost Bind'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Frost Bind'] - JSON.parse(b.Description)['Items']['Frost Bind'],
         },
         {
             title: 'Portal',
@@ -564,7 +589,7 @@ const AnimeDefender: React.FC = () => {
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Data Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Card>
                                 <Statistic
                                     title="Total Crystal (All account)"
@@ -574,7 +599,7 @@ const AnimeDefender: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Card>
                                 <Statistic
                                     title="Total Gems (All account)"
@@ -584,13 +609,23 @@ const AnimeDefender: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Card>
                                 <Statistic
                                     title="Total Risky Dice (All account)"
                                     value={getTotalRiskyDice()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#eb4034'}}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
+                            <Card>
+                                <Statistic
+                                    title="Total Forst Bind (All account)"
+                                    value={getTotalFrostBind()}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#4958fc'}}
                                 />
                             </Card>
                         </Col>
@@ -624,6 +659,7 @@ const AnimeDefender: React.FC = () => {
                             let totalGems = 0;
                             let totalCrystals = 0;
                             let totalRiskyDice = 0
+                            let totalFrostBind = 0
 
 
                             //Status account
@@ -651,6 +687,10 @@ const AnimeDefender: React.FC = () => {
                                     totalRiskyDice += Items['Risky Dice']
                                 }
 
+                                if(Items['Frost Bind'] != undefined && Items['Frost Bind'] != null){
+                                    totalFrostBind += Items['Frost Bind']
+                                }
+
                             })
 
                             return (
@@ -673,9 +713,14 @@ const AnimeDefender: React.FC = () => {
                                                 {new Intl.NumberFormat().format(totalRiskyDice)}
                                             </Tag>
                                         </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={5}> - </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={5}>
+                                            <Tag color={"red"}>
+                                                {new Intl.NumberFormat().format(totalFrostBind)}
+                                            </Tag>
+                                        </Table.Summary.Cell>
                                         <Table.Summary.Cell index={6}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={7}>
+                                        <Table.Summary.Cell index={7}> - </Table.Summary.Cell>
+                                        <Table.Summary.Cell index={8}>
                                         <Space>
                                             <Tag>
                                                 <Badge
@@ -691,8 +736,8 @@ const AnimeDefender: React.FC = () => {
                                             </Tag>
                                         </Space>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={8}> - </Table.Summary.Cell>
                                     <Table.Summary.Cell index={9}> - </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={10}> - </Table.Summary.Cell>
                                     </Table.Summary.Row>
                                 </Table.Summary>
                             )
