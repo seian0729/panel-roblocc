@@ -622,7 +622,7 @@ const AnimeDefender: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Card>
                                 <Statistic
-                                    title="Total Forst Bind (All account)"
+                                    title="Total Frost Bind (All account)"
                                     value={getTotalFrostBind()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#4958fc'}}
