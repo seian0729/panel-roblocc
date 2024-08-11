@@ -546,9 +546,12 @@ const Pet99Mail: React.FC = () => {
                                                                 type="primary"
                                                                 htmlType="submit"
                                                                 disabled={
+                                                                    /*
                                                                     !clientReady ||
                                                                     !!form.getFieldsError().filter(({ errors }) => errors.length).length ||
                                                                     disableSend
+                                                                    */
+                                                                   true
                                                                 }
                                                                 loading={loadingSend}
                                                             >

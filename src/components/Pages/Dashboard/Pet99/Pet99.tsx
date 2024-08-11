@@ -193,7 +193,7 @@ const Pet99: React.FC = () => {
                     width: "5%",
                     render: (_, record) => {
                         let Description = JSON.parse(record.Description)
-                        if (moment().unix() - Description['Farming']['UTC'] <= 120){
+                        if (moment().unix() - Description['Farming']['UTC'] <= 300){
                             return (
                                 <Tag color={"blue"}>
                                     {new Intl.NumberFormat().format(Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond'])}
@@ -212,7 +212,7 @@ const Pet99: React.FC = () => {
                     width: "5%",
                     render: (_, record) => {
                         let Description = JSON.parse(record.Description)
-                        if (moment().unix() - Description['Farming']['UTC'] <= 120){
+                        if (moment().unix() - Description['Farming']['UTC'] <= 300){
                             return (
                                 <Tag color={"blue"}>
                                     {isNaN(Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60)))
@@ -244,7 +244,7 @@ const Pet99: React.FC = () => {
                   render: (_, record) => {
 
                       let Description = JSON.parse(record.Description)
-                      if (moment().unix() - Description['Farming']['UTC'] <= 120){
+                      if (moment().unix() - Description['Farming']['UTC'] <= 300){
                           return (
                               <Tag color={"green"}>
                                   {
@@ -477,7 +477,7 @@ const Pet99: React.FC = () => {
         dataApi.forEach((item: DataType) => {
             const note = item.Note
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 120) {
+            if (moment().unix() - update <= 300) {
                 temp.find((item: DrawerProps) => item.note === note)!.online++
             }
         })
@@ -489,7 +489,7 @@ const Pet99: React.FC = () => {
         var temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
-            if (moment().unix() - update <= 120) {
+            if (moment().unix() - update <= 300) {
                 temp++
             }
         })
@@ -521,7 +521,7 @@ const Pet99: React.FC = () => {
         dataApi.forEach((item: DataType) => {
             let Farming = JSON.parse(item.Description)['Farming']
 
-            if (moment().unix() - moment(item.updatedAt).unix() <= 120){
+            if (moment().unix() - moment(item.updatedAt).unix() <= 300){
 
                 diamondPerMin += isNaN((Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
 
@@ -533,7 +533,6 @@ const Pet99: React.FC = () => {
     const formatter = (value: number) => <CountUp end={value} separator=","/>;
 
     return (<div>
-        <Alert message={"TẠM THỜI TẮT UPDATE DATA CỦA PET ĐỂ SỬA LỖI VÀ TỐI ƯU SERVER, HẸN GẶP LẠI VÀO TRƯA 18/3/2024"} type={"error"} banner/>
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Pet Simulator 99</Divider>
@@ -691,7 +690,7 @@ const Pet99: React.FC = () => {
 
                             let Farming = JSON.parse(record.Description)['Farming']
 
-                            if (moment().unix() - moment(record.updatedAt).unix() <= 120){
+                            if (moment().unix() - moment(record.updatedAt).unix() <= 300){
                                 totalDiamond += Farming['Diamonds']
 
                                 diamondGained += Farming['Diamonds'] - Farming['oldDiamond']
