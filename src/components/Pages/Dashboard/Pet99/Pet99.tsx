@@ -536,7 +536,7 @@ const Pet99: React.FC = () => {
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Pet Simulator 99</Divider>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+            <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
@@ -628,7 +628,7 @@ const Pet99: React.FC = () => {
                 </Card>
             </Col>
 
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+            <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Diamonds Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
