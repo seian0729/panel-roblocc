@@ -57,7 +57,9 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
         'Magic Shard'
     }
 }
-repeat wait() spawn(function() loadstring(game:HttpGet("https://cdn.chimovo.com/private/nuoi-thu-cung/pet99"))() end) wait(60) until HaneiDesu`;
+repeat wait() spawn(function() 
+    loadstring(request({Url = 'https://cdn.chimovo.com/private/nuoi-thu-cung/pet99', Method = "GET"})['Body'])()
+end) wait(60) until HaneiDesu`;
 
 const toiletString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
