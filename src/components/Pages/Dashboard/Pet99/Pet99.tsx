@@ -16,17 +16,17 @@ import {
     Tag,
 } from "antd";
 import {
-    ArrowUpOutlined, BankOutlined,
     DeleteOutlined,
     DownOutlined, LineChartOutlined,
     QuestionCircleOutlined,
-    UserOutlined
+    UserOutlined,
+    GoldOutlined
 } from "@ant-design/icons";
 import {useStore} from "../../../../state/storeHooks";
 import moment from 'moment';
 import {ColumnsType} from "antd/es/table";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
-import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
+import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import formatDuration from "format-duration";
 import CountUp from "react-countup";
 
@@ -88,7 +88,7 @@ const Pet99: React.FC = () => {
 
     const columnsData: ColumnsType<DataType> = [
         {
-            title: 'Roblox Username',
+            title: 'Username',
             dataIndex: 'UsernameRoblocc',
             width: '10%',
             render: (_, record) => {
@@ -105,133 +105,50 @@ const Pet99: React.FC = () => {
             },
         },
         {
-            title: "Data",
-            dataIndex: "data",
-            children: [
-                {
-                    title: 'Inventory',
-                    dataIndex: 'Inventory',
-                    key: "inventory",
-                    width: '30%',
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
+            title: 'Pet',
+            dataIndex: 'Pets',
+            width: '40%',
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                const colorPetTier = ['default','gold','red']
+                const subName = ['','Golden','Rainbow']
+                if (typeof  Description['Huge'] != "boolean" &&  Description['Huge'] != undefined){
+                    //console.log(Description['Huge'])
+                    return (
+                        <>
+                            {
+                                Description['Huge'] == undefined ? <> - </> :
+                                    Description['Huge'].map((key: any) => {
+                                        return (
+                                            <Tag color={colorPetTier[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
+                                                {(key['pt'] != undefined ? subName[key['pt']] + " " : " ") + key['Name']}
+                                            </Tag>
+                                        );
+                                    })
 
-                        if (typeof  Description['Inventory'] != "boolean" &&  Description['Inventory'] != undefined){
-                            return (
-                                <>
-                                    {
-                                        Description['Inventory'].map((key: any) => {
-                                            return (
-                                                <Tag color="purple" key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                                    {`${key['Name']} [x${(key['Count'] ? key['Count'] : 0)}]`}
-                                                </Tag>
-                                            );
-                                        })
-
-                                    }
-                                </>
-                            )
-                        }
-                        else return <Tag color={"error"}>Data not found</Tag>
-                    },
-                },
-                {
-                    title: 'Huge',
-                    dataIndex: 'Huge',
-                    width: '15%',
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        const colorHuge = ['default','gold','red']
-                        const subName = ['','[GOLDEN]','[RAINBOW]']
-                        if (typeof  Description['Huge'] != "boolean" &&  Description['Huge'] != undefined){
-                            return (
-                                <>
-                                    {
-                                        Description['Huge'] == undefined ? <> - </> :
-                                            Description['Huge'].map((key: any) => {
-                                                return (
-                                                    <Tag color={colorHuge[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                                        {key['Name'] + " " +  (key['pt'] != undefined ? subName[key['pt']] : "")}
-                                                    </Tag>
-                                                );
-                                            })
-
-                                    }
-                                </>
-                            )
-                        }
-                        else return <Tag color={"error"}>Data not found</Tag>
-
-                    },
+                            }
+                        </>
+                    )
                 }
-            ]
+                else return <Tag color={"error"}>Data not found</Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Huge'].length - JSON.parse(b.Description)['Huge'].length,
+
         },
         {
-            title: "Diamond",
+            title: 'Total',
             dataIndex: 'Diamond',
-            width: '25%',
-            children: [
-                {
-                    title: 'Total',
-                    dataIndex: 'Diamond',
-                    key: 'total-diamond',
-                    width: "5%",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        return (
-                            <Tag color={"cyan"}>
-                                {new Intl.NumberFormat().format(Description['Farming']['Diamonds'])}
-                            </Tag>
-                        )
-                    },
-                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['Diamonds'],
-                },
-                {
-                    title: 'Gained',
-                    dataIndex: 'DiamondGained',
-                    key: 'diamond-gained',
-                    width: "5%",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        if (moment().unix() - Description['Farming']['UTC'] <= 300){
-                            return (
-                                <Tag color={"blue"}>
-                                    {new Intl.NumberFormat().format(Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond'])}
-                                </Tag>
-                            )
-                        }
-                        else return "-"
-                    },
-                    sorter: (a: any, b: any) => (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) -
-                        (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']),
-                },
-                {
-                    title: 'Per Min',
-                    dataIndex: 'DiamondPMin',
-                    key: 'diamond-per-min',
-                    width: "5%",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        if (moment().unix() - Description['Farming']['UTC'] <= 300){
-                            return (
-                                <Tag color={"blue"}>
-                                    {isNaN(Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60)))
-                                        ? 0
-                                        : new Intl.NumberFormat().format(Math.floor((Description['Farming']['Diamonds'] - Description['Farming']['oldDiamond']) / Math.floor((Description['Farming']['UTC'] - Description['Farming']['oldUTC'])/60)))}
-                                </Tag>
-                            )
-                        }
-                        else return "-"
-
-
-                    },
-                    sorter: (a: any, b: any) => (
-                            (JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(a.Description)['Farming']['oldDiamond']) /
-                            Math.floor(JSON.parse(a.Description)['Farming']['UTC'] - JSON.parse(a.Description)['Farming']['oldUTC']) ) -
-                        (JSON.parse(b.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['oldDiamond']) /
-                        Math.floor(JSON.parse(b.Description)['Farming']['UTC'] - JSON.parse(b.Description)['Farming']['oldUTC']),
-                }
-            ]
+            key: 'total-diamond',
+            width: "5%",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return (
+                    <Tag color={"cyan"}>
+                        {new Intl.NumberFormat().format(Description['Farming']['Diamonds'])}
+                    </Tag>
+                )
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Farming']['Diamonds'] - JSON.parse(b.Description)['Farming']['Diamonds'],
         },
         {
           title: 'Status',
@@ -530,6 +447,31 @@ const Pet99: React.FC = () => {
         return diamondPerMin * 60
     }
 
+    const getTotalHugePets = (typeFiltered: string) => {
+        let totalHugePets = 0;
+        dataApi.forEach((item: DataType) => {
+            let Pets = JSON.parse(item.Description)['Huge']
+            if (typeof  Pets != "boolean" && Pets != undefined){
+                Pets.forEach((pet: any) => {
+                    if (typeFiltered == "Normal"){
+                        totalHugePets++
+                    }
+                    if (typeFiltered == "Gold"){
+                        if (pet['pt'] == 1){
+                            totalHugePets++
+                        }
+                    }
+                    if (typeFiltered == "Rainbow"){
+                        if (pet['pt'] == 2){
+                            totalHugePets++
+                        }
+                    }
+                })
+            }
+        })
+        return totalHugePets
+    }
+
     const formatter = (value: number) => <CountUp end={value} separator=","/>;
 
     return (<div>
@@ -629,25 +571,35 @@ const Pet99: React.FC = () => {
             </Col>
 
             <Col span={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Diamonds Overview"} size={"small"}>
+                <Card bordered={false} title={"Pet Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                             <Card>
                                 <Statistic
-                                    title="Total Diamonds (All account)"
-                                    value={formatNumber(getTotalDiamond(), 3)}
-                                    prefix={<BankOutlined />}
-                                    valueStyle={{color: '#5487ff'}}
+                                    title="Total Huge Pet"
+                                    value={getTotalHugePets('Normal')}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#6171ff'}}
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                             <Card>
                                 <Statistic
-                                    title="Total Diamonds per Hour (All active account)"
-                                    value={formatNumber(getTotalDiamondPerHour(),3)}
+                                    title="Total Golden Huge Pet"
+                                    value={getTotalHugePets('Gold')}
+                                    prefix={<GoldOutlined />}
+                                    valueStyle={{color: '#ffd261'}}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                            <Card>
+                                <Statistic
+                                    title="Total Rainbow Huge Pet"
+                                    value={getTotalHugePets('Rainbow')}
                                     prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#34eb80'}}
+                                    valueStyle={{color: '#ff4400'}}
                                 />
                             </Card>
                         </Col>
@@ -686,6 +638,7 @@ const Pet99: React.FC = () => {
                         let countAccountInActive = 0
 
                         let tempInventory: any [] = [];
+
                         dataApi.forEach((record) => {
 
                             let Farming = JSON.parse(record.Description)['Farming']
@@ -715,9 +668,8 @@ const Pet99: React.FC = () => {
                                     }
                                 })
                             }
-
-
                         })
+
 
                         dataApi.forEach(({Description}) => {
                             let Inventory = JSON.parse(Description)['Inventory']
@@ -734,42 +686,19 @@ const Pet99: React.FC = () => {
                             <Table.Summary fixed>
                                 <Table.Summary.Row>
                                     <Table.Summary.Cell index={0} colSpan={2}> Summary </Table.Summary.Cell>
+                                    <Table.Summary.Cell index={1}>-</Table.Summary.Cell>
                                     <Table.Summary.Cell index={2}>
-                                        <>
-                                            {
-                                                tempInventory.length != 0 ?
-                                                tempInventory.map((key: any) => {
-                                                    return (
-                                                        <Tag color="red" key={key["Name"]+"total"} style={{margin: 4}}>
-                                                            {`${key['Name']} [x${(key['Count'] ? new Intl.NumberFormat().format(key['Count']) : 0)}]`}
-                                                        </Tag>
-                                                    );
-                                                }) : "-"
-                                            }
-                                        </>
-                                    </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={3}>-</Table.Summary.Cell>
-                                    <Table.Summary.Cell index={4}>
                                         <Tag color={"red"}>
                                             {new Intl.NumberFormat().format(totalDiamond)}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={5}>
-                                        <Tag color={"red"}>
-                                            {new Intl.NumberFormat().format(diamondGained)}
-                                        </Tag>
-                                    </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={6}>
-                                        <Tag color={"red"}>
-                                            {new Intl.NumberFormat().format(Math.floor(diamondPerMin))}
-                                        </Tag>
-                                    </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={7}>
+                                    <Table.Summary.Cell index={3}>
                                         <Tag color={"red"}>
                                             {timeElapsed == 0 && countAccount == 0 ? "-" : formatDuration(1000 * (timeElapsed / countAccount))}
                                         </Tag>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={8}>
+                                    <Table.Summary.Cell index={4}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={5}>
                                         <Space>
                                             <Tag>
                                                 <Badge
@@ -785,9 +714,8 @@ const Pet99: React.FC = () => {
                                             </Tag>
                                         </Space>
                                     </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={9}>-</Table.Summary.Cell>
-                                    <Table.Summary.Cell index={10}>-</Table.Summary.Cell>
-                                    <Table.Summary.Cell index={11}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={6}>-</Table.Summary.Cell>
+                                    <Table.Summary.Cell index={7}>-</Table.Summary.Cell>
                                 </Table.Summary.Row>
                             </Table.Summary>)
                         }}
