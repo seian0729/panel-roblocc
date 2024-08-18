@@ -339,6 +339,7 @@ const AnimeDefender: React.FC = () => {
             },
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Frost Bind'] - JSON.parse(b.Description)['Items']['Frost Bind'],
         },
+        /*
         {
             title: 'Portal',
             dataIndex: 'data-portal',
@@ -373,6 +374,7 @@ const AnimeDefender: React.FC = () => {
 
             },
         },
+        */
         {
             title: 'Last Update',
             dataIndex: 'lastUpdate',
