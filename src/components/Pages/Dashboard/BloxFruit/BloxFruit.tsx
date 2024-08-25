@@ -414,15 +414,7 @@ const BloxFruit: React.FC = () => {
                         }
                     })
 
-                    fightingStyle.map(() => {
-                        if (fightingStyle.length === 6) {
-                            fsText = 'Godhuman';
-                        } else if (fightingStyle.length > 2) {
-                            fsText = '3-5 Melee';
-                        } else {
-                            fsText = '0-2 Melee';
-                        }
-                    })
+                    fsText = fightingStyle.length === 6 ? "Godhuman" : fightingStyle.length > 2 ? "3-5 Melee" : "0-2 Melee"
 
                     text +=
                         item.UsernameRoblocc + '/' +
@@ -505,15 +497,7 @@ const BloxFruit: React.FC = () => {
                         }
                     })
 
-                    fightingStyle.map(() => {
-                        if (fightingStyle.length === 6) {
-                            fsText = 'Godhuman';
-                        } else if (fightingStyle.length > 2) {
-                            fsText = '3-5 Melee';
-                        } else {
-                            fsText = '0-2 Melee';
-                        }
-                    })
+                    fsText = fightingStyle.length === 6 ? "Godhuman" : fightingStyle.length > 2 ? "3-5 Melee" : "0-2 Melee"
 
                     text += item.UsernameRoblocc + '-' +
                         item.Password + '/' +
@@ -590,6 +574,24 @@ const BloxFruit: React.FC = () => {
 
     const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
 
+    function formatNumber(num: number, precision: number) {
+        const map = [
+            {suffix: 'T', threshold: 1e12},
+            {suffix: 'B', threshold: 1e9},
+            {suffix: 'M', threshold: 1e6},
+            {suffix: 'K', threshold: 1e3},
+            {suffix: '', threshold: 1},
+        ];
+    
+        const found = map.find((x) => Math.abs(num) >= x.threshold);
+        if (found) {
+            const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
+            return formatted;
+        }
+    
+        return num;
+    }
+
     interface DataType {
         UID: number;
         UsernameRoblocc: string;
@@ -622,7 +624,7 @@ const BloxFruit: React.FC = () => {
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
         {
-            title: 'Roblox Username',
+            title: 'Account',
             dataIndex: 'UsernameRoblocc',
             width: '10%',
             render: (_, record) => {
@@ -638,202 +640,217 @@ const BloxFruit: React.FC = () => {
                 return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
             },
         },
+        ,
         {
             title: 'Data',
-            dataIndex: 'level',
-            width: '15%',
-            filters: [
+            dataIndex: 'Data',
+            width: '30%',
+            children: [
                 {
-                    text: 'Level 2550',
-                    value: '2550',
-
-                },
-                {
-                    text: '1000-1500',
-                    value: '1000-1500',
-                },
-                {
-                    text: '1500-2549',
-                    value: '1500-2549',
-                }
-            ],
-            onFilter: (value: any, record) => {
-                let description = JSON.parse(record.Description);
-                let dataList = description.Data
-                if (value == '2550') {
-                    return dataList.Level === 2550
-                } else if (value == '1000-1500') {
-                    return dataList.Level >= 1000 && dataList.Level <= 1500
-                } else if (value == '1500-2549') {
-                    return dataList.Level >= 1500 && dataList.Level < 2550
-                } else {
-                    return false
-                }
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description).Data[dataValue] - JSON.parse(b.Description).Data[dataValue],
-            render: (_, record) => {
-                let description = JSON.parse(record.Description);
-                let dataList = description.Data
-                return (<div>
-                    <Tag color='orange' style={{margin: 4}}>
-                        Level: {new Intl.NumberFormat().format(dataList.Level)}
-                    </Tag>
-                    <div>
-                        <Tag color='purple' style={{margin: 4}}>
-                            Fragments: {new Intl.NumberFormat().format(dataList.Fragments)}
-                        </Tag>
-                        <Tag color='green' style={{margin: 4}}>
-                            Beli: {new Intl.NumberFormat().format(dataList.Beli)}
-                        </Tag>
-                    </div>
-                </div>)
-            }
-
-        },
-
-        {
-            title: 'Fighting Style',
-            dataIndex: 'fightingStyle',
-            width: '10%',
-            filters: [
-                {
-                    text: '0-2 Melee',
-                    value: '<2'
-                },
-                {
-                    text: '3-5 Melee',
-                    value: '3-5'
-                },
-                {
-                    text: 'Godhuman',
-                    value: 'God'
-                }
-            ],
-            onFilter: (value: any, record) => {
-                let description = JSON.parse(record.Description);
-                let fsList = description['Fighting Style']
-
-                if (value === 'God') {
-                    return fsList.length === 6
-                } else if (value === '3-5') {
-                    return fsList.length < 6 && fsList.length > 2
-                } else if (value === '<2') {
-                    return fsList.length < 2
-                } else {
-                    return false
-                }
-
-            },
-            render: (_, record) => {
-                let description = JSON.parse(record.Description);
-                let fightingStyle = description['Fighting Style'];
-                const items: MenuProps['items'] = [
-                    {
-                        label: 'Fighting Style - List',
-                        key: 'list',
-                        disabled: true
-                    },
-                    {
-                        type: 'divider',
-                    },
-                ];
-
-                return (
-                    <>
-                        {fightingStyle.map((str: string) => {
-                            //console.log(str)
-                            if (fightingStyle.length === 6) {
-                                fsText = 'Godhuman';
-                                fsColor = 'blue';
-                            } else if (fightingStyle.length > 2) {
-                                fsText = '3-5 Melee';
-                                fsColor = 'volcano';
-                            }
-                            else {
-                                fsText = '0-2 Melee';
-                                fsColor = 'red';
-                            }
-                        })}
-
-
+                    title: 'Level',
+                    dataIndex: 'level',
+                    filters: [
                         {
-                            fightingStyle.map((str: string, index: number) => {
-                                    items?.push({
-                                        key: index,
-                                        label: `${index +  1}. ${str}`,
-                                    })
+                            text: 'Level 2550',
+                            value: '2550',
+        
+                        },
+                        {
+                            text: '1000-1500',
+                            value: '1000-1500',
+                        },
+                        {
+                            text: '1500-2549',
+                            value: '1500-2549',
+                        }
+                    ],
+                    onFilter: (value: any, record) => {
+                        let description = JSON.parse(record.Description);
+                        let dataList = description.Data
+                        if (value == '2550') {
+                            return dataList.Level === 2550
+                        } else if (value == '1000-1500') {
+                            return dataList.Level >= 1000 && dataList.Level <= 1500
+                        } else if (value == '1500-2549') {
+                            return dataList.Level >= 1500 && dataList.Level < 2550
+                        } else {
+                            return false
+                        }
+                    },
+                    sorter: (a: any, b: any) => JSON.parse(a.Description).Data['Level'] - JSON.parse(b.Description).Data['Level'],
+                    render: (_, record) => {
+                        let description = JSON.parse(record.Description);
+                        let dataList = description.Data
+                        return (
+                            <Tag color='orange' style={{margin: 4}}>
+                                {new Intl.NumberFormat().format(dataList.Level)}
+                            </Tag>
+                        )
+                    }
+                },
+                {
+                    title: 'Beli',
+                    dataIndex: 'beli',
+                    sorter: (a: any, b: any) => JSON.parse(a.Description).Data['Beli'] - JSON.parse(b.Description).Data['Beli'],
+                    render: (_, record) => {
+                        let description = JSON.parse(record.Description);
+                        let dataList = description.Data
+                        return (
+                            <Tag color='green' style={{margin: 4}}>
+                                {formatNumber(dataList.Beli, 3)}
+                            </Tag>
+                        )
+                    }
+                },
+                {
+                    title: 'Fragments',
+                    dataIndex: 'fragments',
+                    sorter: (a: any, b: any) => JSON.parse(a.Description).Data['Fragments'] - JSON.parse(b.Description).Data['Fragments'],
+                    render: (_, record) => {
+                        let description = JSON.parse(record.Description);
+                        let dataList = description.Data
+                        return (
+                            <Tag color='purple' style={{margin: 4}}>
+                                {formatNumber(dataList.Fragments, 1)}
+                            </Tag>
+                        )
+                    }
+                },
+                {
+                    title: 'Melee',
+                    dataIndex: 'fightingStyle',
+                    filters: [
+                        {
+                            text: '0-2 Melee',
+                            value: '<2'
+                        },
+                        {
+                            text: '3-5 Melee',
+                            value: '3-5'
+                        },
+                        {
+                            text: 'Godhuman',
+                            value: 'God'
+                        }
+                    ],
+                    onFilter: (value: any, record) => {
+                        let description = JSON.parse(record.Description);
+                        let fsList = description['Fighting Style']
+        
+                        if (value === 'God') {
+                            return fsList.length === 6
+                        } else if (value === '3-5') {
+                            return fsList.length < 6 && fsList.length > 2
+                        } else if (value === '<2') {
+                            return fsList.length < 2
+                        } else {
+                            return false
+                        }
+        
+                    },
+                    sorter: (a: any, b: any) => {
+                        return JSON.parse(a.Description)['Fighting Style'].length - JSON.parse(b.Description)['Fighting Style'].length
+                    },
+                    render: (_, record) => {
+                        let description = JSON.parse(record.Description);
+                        let fightingStyle = description['Fighting Style'];
+                        const items: MenuProps['items'] = [
+                            {
+                                label: 'Fighting Style - List',
+                                key: 'list',
+                                disabled: true
+                            },
+                            {
+                                type: 'divider',
+                            },
+                        ];
+        
+                        fsText = fightingStyle.length === 6 ? "Godhuman" : fightingStyle.length > 2 ? "3-5 Melee" : "0-2 Melee"
+                        fsColor = fightingStyle.length === 6 ? "blue" : fightingStyle.length > 2 ? "volcano" : "red"
+        
+        
+                        return (
+                            <>
+        
+                                {
+                                    fightingStyle.map((str: string, index: number) => {
+                                            items?.push({
+                                                key: index,
+                                                label: `${index +  1}. ${str}`,
+                                            })
+                                        }
+                                    )
                                 }
-                            )
-                        }
-
-                        {
-                            fightingStyle.includes('Fighting Style Data Not Found') == true ?
-                                <Text>-</Text> :
-                                <Dropdown menu={{ items }}>
-                                    <Tag color={fsColor}>{fsText}</Tag>
-                                </Dropdown>
-                        }
-
-
-                    </>
-                )
-            },
-        },
-
-        {
-            title: 'DF',
-            dataIndex: 'df',
-            width: '5%',
-            filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
-                <div style={{padding: 8}}>
-                    <Input
-                        placeholder="Search DF"
-                        value={selectedKeys[0]}
-                        onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                        onPressEnter={() => confirm()}
-                        style={{width: 188, marginBottom: 8, display: 'block'}}
-                    />
-                    <Button
-                        type="primary"
-                        onClick={() => confirm()}
-                        style={{width: 90, marginRight: 8}}
-                    >
-                        Search
-                    </Button>
-                    <Button
-                        onClick={() => clearFilters?.()}
-                        style={{width: 90}}
-                    >
-                        Reset
-                    </Button>
-                </div>
-            ),
-            filterIcon: (filtered: boolean) => (
-                <SearchOutlined style={{color: filtered ? '#729ddc' : undefined}}/>
-            ),
-            onFilter: (value, record) => {
-                let description = JSON.parse(record.Description);
-                return (
-                    typeof description.Data.DevilFruit === 'string' &&
-                    typeof value === 'string' &&
-                    description.Data.DevilFruit.toLowerCase().includes(value.toLowerCase())
-                );
-            },
-            render: (_, record) => {
-                let description = JSON.parse(record.Description);
-                return <Tag color={"geekblue"}>
+        
+                                {
+                                    fightingStyle.includes('Fighting Style Data Not Found') == true ?
+                                        <Text>-</Text> :
+                                        <Dropdown menu={{ items }}>
+                                            <Tag color={fsColor}>{fsText}</Tag>
+                                        </Dropdown>
+                                }
+        
+        
+                            </>
+                        )
+                    },
+                },
+        
                 {
-                    description.Data.DevilFruit == '' ? "-" : description.Data.DevilFruit
-                }
-                </Tag>
-
-            },
+                    title: 'DF',
+                    dataIndex: 'df',
+                    filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+                        <div style={{padding: 8}}>
+                            <Input
+                                placeholder="Search DF"
+                                value={selectedKeys[0]}
+                                onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                                onPressEnter={() => confirm()}
+                                style={{width: 188, marginBottom: 8, display: 'block'}}
+                            />
+                            <Button
+                                type="primary"
+                                onClick={() => confirm()}
+                                style={{width: 90, marginRight: 8}}
+                            >
+                                Search
+                            </Button>
+                            <Button
+                                onClick={() => clearFilters?.()}
+                                style={{width: 90}}
+                            >
+                                Reset
+                            </Button>
+                        </div>
+                    ),
+                    filterIcon: (filtered: boolean) => (
+                        <SearchOutlined style={{color: filtered ? '#729ddc' : undefined}}/>
+                    ),
+                    onFilter: (value, record) => {
+                        let description = JSON.parse(record.Description);
+                        return (
+                            typeof description.Data.DevilFruit === 'string' &&
+                            typeof value === 'string' &&
+                            description.Data.DevilFruit.toLowerCase().includes(value.toLowerCase())
+                        );
+                    },
+                    render: (_, record) => {
+                        let description = JSON.parse(record.Description);
+                        return <Tag color={"geekblue"}>
+                        {
+                            description.Data.DevilFruit == '' ? "-" : description.Data.DevilFruit
+                        }
+                        </Tag>
+        
+                    },
+                },        
+            ]
         },
 
         {
-            title: 'Awakened Abilities',
+            title: 'Awakened',
             dataIndex: 'awakened',
-            width: '10%',
+            width: '15%',
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Awakened Abilities'].length - JSON.parse(b.Description)['Awakened Abilities'].length,
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
@@ -850,7 +867,7 @@ const BloxFruit: React.FC = () => {
                                     </Tag> :
                                         awakened.map((key: any) => {
                                             return (
-                                                <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 4}}>
+                                                <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 2}}>
                                                     {key.length > 10 ? 'None' : key}
                                                 </Tag>
                                             );
@@ -863,7 +880,7 @@ const BloxFruit: React.FC = () => {
 
         },
         {
-            title: 'Mythical Items / Fruits',
+            title: 'Mythical - Items',
             dataIndex: 'special',
             width: '15%',
             filterIcon: () => (
@@ -1195,7 +1212,7 @@ const BloxFruit: React.FC = () => {
         {
             title: 'Action',
             key: 'action',
-            width: '30%',
+            width: '5%',
             render: (_, record) => {
                 const items: MenuProps['items'] = [
                     {
@@ -1554,33 +1571,6 @@ const BloxFruit: React.FC = () => {
                                         <></>
                                 }
 
-
-                                <div>
-                                    <Form>
-                                        <Form.Item label="Sort Data">
-                                            <Select
-                                                labelInValue
-                                                defaultValue={{value: 'Level', label: 'Level'}}
-                                                style={{width: 120}}
-                                                onChange={handleData}
-                                                options={[
-                                                    {
-                                                        value: 'Level',
-                                                        label: 'Level',
-                                                    },
-                                                    {
-                                                        value: 'Fragments',
-                                                        label: 'Fragments',
-                                                    },
-                                                    {
-                                                        value: 'Beli',
-                                                        label: 'Beli',
-                                                    }
-                                                ]}
-                                            />
-                                        </Form.Item>
-                                    </Form>
-                                </div>
                                 <div>
                                     <Form>
                                         <Form.Item>
@@ -1596,10 +1586,13 @@ const BloxFruit: React.FC = () => {
 
                                         </Form.Item>
                                     </Form>
+
                                 </div>
 
                                 <div style={{marginTop: 12}}>
+
                                     <Form>
+
                                         <Form.Item label="Hide Name (optional)*">
                                             <Checkbox onChange={onChangeHidename}/>
                                         </Form.Item>
@@ -1652,16 +1645,6 @@ const BloxFruit: React.FC = () => {
                                                 />
                                             </Card>
                                         </Col>
-                                        <Col xs={24} sm={24} md={24} lg={12} xl={24}>
-                                            <Card size="small" hoverable={true}>
-                                                <Space direction={"vertical"} style={{width: '100%'}}>
-                                                    <Text type="secondary">Limit Account</Text>
-                                                    <Tooltip title={countAccount + " / " + limitacc + " accounts"}>
-                                                        <Progress percent={countAccount*(100/limitacc)} format={percent => `${percent?.toFixed(0)}%`} size="small"  status={countAccount*(100/limitacc) >= 100 ? "exception" : "success"}/>
-                                                    </Tooltip>
-                                                </Space>
-                                            </Card>
-                                        </Col>
                                     </Row>
                                 </Card>
                             </Col>
@@ -1669,188 +1652,12 @@ const BloxFruit: React.FC = () => {
                                 <Table
                                     rowSelection={rowSelection}
                                     columns={columns}
-                                    expandable={
-                                        {
-                                            expandedRowRender: (record, index) => {
-
-                                                let recordInventory = JSON.parse(record.Description)['Inventory']
-                                                let recordFruits = recordInventory['Blox Fruit']
-                                                let recordSwords = recordInventory['Sword']
-                                                let recordGuns = recordInventory['Gun']
-                                                let recordWears = recordInventory['Wear']
-                                                let recordMaterials = recordInventory['Material']
-
-                                                const colorsInventory = [
-                                                    'default',
-                                                    'processing',
-                                                    'purple',
-                                                    'magenta',
-                                                    'error',
-                                                ]
-                                                recordFruits.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                                recordSwords.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                                recordGuns.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                                recordWears.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                                recordMaterials.sort((a: any, b: any) => b['Rarity'] - a['Rarity']);
-                                                // (recordInventory)
-
-                                                const collapseItems: CollapseProps['items'] = [
-                                                    {
-                                                        key: 'bloxfruit',
-                                                        label: 'Blox Fruit',
-                                                        children: <>
-                                                            {
-                                                                recordFruits.map((key: any) => {
-                                                                    if (typeof (key) == 'string') {
-                                                                        return (
-                                                                            <Tag color="geekblue" key={key} style={{margin: 4}}>
-                                                                                {key}
-                                                                            </Tag>
-                                                                        );
-                                                                    } else if (typeof (key) == 'object') {
-                                                                        return (
-                                                                            <Tag color={colorsInventory[key['Rarity']]}
-                                                                                key={key['Name']} style={{margin: 4}}>
-                                                                                {key['Name']}
-                                                                            </Tag>
-                                                                        );
-                                                                    }
-                                                                })
-                                                            }
-                                                        </>,
-                                                        style: panelStyle
-                                                    },
-                                                    {
-                                                        key: 'sword',
-                                                        label: 'Sword',
-                                                        children: <>
-                                                            {
-                                                                recordSwords.length === 0 ?
-                                                                    <Tag color="red">Sword Data Not Found</Tag> :
-                                                                    recordSwords.map((key: any) => {
-                                                                        if (typeof (key) == 'string') {
-                                                                            return (
-                                                                                <Tag color="geekblue" key={key}
-                                                                                    style={{margin: 4}}>
-                                                                                    {key}
-                                                                                </Tag>
-                                                                            );
-                                                                        } else if (typeof (key) == 'object') {
-                                                                            return (
-                                                                                <Tag color={colorsInventory[key['Rarity']]}
-                                                                                    key={key['Name']} style={{margin: 4}}>
-                                                                                    {key['Name']}
-                                                                                </Tag>
-                                                                            );
-                                                                        }
-                                                                    })
-                                                            }
-                                                        </>,
-                                                        style: panelStyle
-                                                    },
-                                                    {
-                                                        key: 'gun',
-                                                        label: 'Gun',
-                                                        children: <>
-                                                            {
-                                                                recordGuns.length === 0 ?
-                                                                    <Tag color="red">Gun Data Not Found</Tag> :
-                                                                    recordGuns.map((key: any) => {
-                                                                        if (typeof (key) == 'string') {
-                                                                            return (
-                                                                                <Tag color="geekblue" key={key}
-                                                                                    style={{margin: 4}}>
-                                                                                    {key}
-                                                                                </Tag>
-                                                                            );
-                                                                        } else if (typeof (key) == 'object') {
-                                                                            return (
-                                                                                <Tag color={colorsInventory[key['Rarity']]}
-                                                                                    key={key['Name']} style={{margin: 4}}>
-                                                                                    {key['Name']}
-                                                                                </Tag>
-                                                                            );
-                                                                        }
-                                                                    })
-                                                            }
-                                                        </>,
-                                                        style: panelStyle
-                                                    },
-                                                    {
-                                                        key: 'wear',
-                                                        label: 'Wear',
-                                                        children: <>
-                                                            {
-                                                                recordWears.length === 0 ?
-                                                                    <Tag color="red">Wear Data Not Found</Tag> :
-                                                                    recordWears.map((key: any) => {
-                                                                        if (typeof (key) == 'string') {
-                                                                            return (
-                                                                                <Tag color="geekblue" key={key}
-                                                                                    style={{margin: 4}}>
-                                                                                    {key}
-                                                                                </Tag>
-                                                                            );
-                                                                        } else if (typeof (key) == 'object') {
-                                                                            return (
-                                                                                <Tag color={colorsInventory[key['Rarity']]}
-                                                                                    key={key['Name']} style={{margin: 4}}>
-                                                                                    {key['Name']}
-                                                                                </Tag>
-                                                                            );
-                                                                        }
-                                                                    })
-                                                            }
-                                                        </>,
-                                                        style: panelStyle
-                                                    },
-                                                    {
-                                                        key: 'materials',
-                                                        label: 'Material',
-                                                        children: <>
-                                                            {
-                                                                recordMaterials.length === 0 ?
-                                                                    <Tag color="red">Material Data Not Found</Tag> :
-                                                                    recordMaterials.map((key: any) => {
-                                                                        if (typeof (key) == 'string') {
-                                                                            return (
-                                                                                <Tag color="geekblue" key={key}
-                                                                                    style={{margin: 4}}>
-                                                                                    {key}
-                                                                                </Tag>
-                                                                            );
-                                                                        } else if (typeof (key) == 'object') {
-                                                                            return (
-                                                                                <Tag color={colorsInventory[key['Rarity']]}
-                                                                                    key={key['Name']} style={{margin: 4}}>
-                                                                                    {key['Name']}
-                                                                                </Tag>
-                                                                            );
-                                                                        }
-                                                                    })
-                                                            }
-                                                        </>,
-                                                        style: panelStyle
-                                                    },
-                                                ]
-
-                                                return (
-                                                    <Collapse
-                                                        bordered={false}
-                                                        defaultActiveKey={['1']}
-                                                        items={collapseItems}
-                                                        expandIcon={({isActive}) => <CaretRightOutlined
-                                                            rotate={isActive ? 90 : 0}/>}/>
-                                                )
-                                            },
-                                        }
-
-                                    }
                                     dataSource={dataApiSpecialFilter}
                                     rowKey={(record) => record.UsernameRoblocc}
                                     loading={loadingTable}
                                     size={"small"}
                                     scroll={{x: true}}
+                                    bordered
                                     pagination={{
                                         total: newRender ? totalPage : dataApiSpecialFilter.length,
                                         pageSizeOptions: [10, 50, 100, 500, 1000, 2000, 5000],
