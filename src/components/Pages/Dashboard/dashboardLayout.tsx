@@ -271,6 +271,20 @@ const DashboardLayout: React.FC = () => {
             )
         }
 
+        if (checkAccess("av")){
+            dashboardItems.push(getItem(
+                'Anime Valorant',
+                'av',
+                null,
+                [getItem((
+                    <Link to={"anime-valorant/tracking"}>
+                        Tracking
+                    </Link>
+                ),"anime-valorant/tracking")],
+                'group')
+            )
+        }
+
     }
 
     dashboardItems.push(getItem(

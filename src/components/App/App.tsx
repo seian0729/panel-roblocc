@@ -35,6 +35,7 @@ import Pet99Mail from "../Pages/Dashboard/Pet99/Pet99-mail";
 import ProfileScript from "../Pages/Dashboard/Profile/profile-script";
 import Ttd from "../Pages/Dashboard/ToiletTowerDefense/ttd";
 import Ad from "../Pages/Dashboard/AnimeDefender/ad";
+import Av from "../Pages/Dashboard/AnimeValorant/av";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
@@ -194,6 +195,10 @@ function App() {
                                 <Route path={"anime-defender"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("ad")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Ad/>} />
+                                </Route>
+                                <Route path={"anime-valorant"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("av")}/>}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<Av/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>
