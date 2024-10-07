@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import type {DrawerProps, TabsProps} from 'antd';
+import {DrawerProps, Form, TabsProps, Upload, type UploadProps} from 'antd';
 import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
@@ -22,12 +22,17 @@ import {
     Tag
 } from "antd";
 import {
+    CopyOutlined,
     DeleteOutlined,
-    DownOutlined,
+    DownOutlined, InboxOutlined,
     LineChartOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
+
+
+const { Dragger } = Upload;
+
 const AnimeValorant: React.FC = () => {
 
     //message
@@ -41,6 +46,7 @@ const AnimeValorant: React.FC = () => {
 
     //loading
     const [loadingReload, setLoadingReload] = useState(false);
+    const [loadingCopy, setLoadingCopy] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
 
     //data
@@ -71,6 +77,21 @@ const AnimeValorant: React.FC = () => {
         onChange: onSelectChange,
 
     };
+
+    const copyFullData = () => {
+        setLoadingCopy(true);
+        setTimeout(() => {
+            let data = dataApi.filter((item: DataType) => selectedRowKeys.includes(item.UsernameRoblocc))
+            let dataCopy = data.map((item: DataType) => {
+                let Description = JSON.parse(item.Description)
+                return `${item.UsernameRoblocc}/${item.Password}/${item.Cookie}/${Description['Gems']}/${Description['TraitRerolls']}`
+            })
+            navigator.clipboard.writeText(dataCopy.join('\n'));
+            messageApi.success(`Copied ${selectedRowKeys.length} account !`);
+            setSelectedRowKeys([]);
+            setLoadingCopy(false);
+        }, 1000);
+    }
 
     const refreshData = () => {
         setLoadingReload(true);
@@ -225,15 +246,42 @@ const AnimeValorant: React.FC = () => {
     const hasSelected = selectedRowKeys.length > 0;
     interface DataType {
         UsernameRoblocc: string;
+        Password: string;
+        Cookie: string;
         Description: string;
         Note: string
         updatedAt: string;
         accountStatus: string;
     }
 
+    const props: UploadProps = {
+        name: 'file',
+        listType: 'text',
+        action: 'https://api.chimovo.com/v1/data/bulkUpdatePasswordAndCookie',
+        headers: {
+            "Authorization": "Bearer " + localStorage.getItem('token'),
+        },
+        accept:".txt",
+        onChange({file}) {
+            if (file.status !== 'uploading') {
+                // console.log(file.status, file, fileList);
+                if (file.status === 'done') {
+                    messageApi.success('The file has been upload successfully!')
+                    refreshData()
+                }
+                if (file.status === 'error') {
+                    //console.log(file.response)
+                    file.response = file.response.message
+                    messageApi.error(`Failed to upload ${file.name}! - ${file.response}`)
+                    refreshData()
+                }
+            }
+        },
+    }
+
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
-
+    
     const columnsData: ColumnsType<DataType> = [
         {
             title: 'Roblox Username',
@@ -379,7 +427,22 @@ const AnimeValorant: React.FC = () => {
                         type: 'divider',
                     },
                     {
-                        type: 'divider',
+                        label: <a onClick={() => {
+                            //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                            navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}`);
+                            messageApi.success(`Copied ${record.UsernameRoblocc}`)
+                        }}><CopyOutlined /> Copy username/password</a>,
+                        key: '1',
+                    },
+                    {
+                        label: <a onClick={() => {
+                            const data = JSON.parse(record.Description)
+                            console.log(data)
+                            //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                            navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}/${record.Cookie}/${data['Gems']}/${data['TraitRerolls']}`);
+                            messageApi.success(`Copied ${record.UsernameRoblocc}`)
+                        }}><CopyOutlined /> Copy full data</a>,
+                        key: '2',
                     },
                     {
                         label: <a onClick={() => {
@@ -389,7 +452,7 @@ const AnimeValorant: React.FC = () => {
                                 refreshData()
                             })
                         }}><DeleteOutlined/> Delete Account</a>,
-                        key: '1',
+                        key: '3',
                         danger: true
                     },
                 ];
@@ -429,6 +492,13 @@ const AnimeValorant: React.FC = () => {
                                             setOpenNoteDrawer(true)
                                         }}>Note Active</Button>
 
+                                        <Button
+                                            type="primary"
+                                            onClick={copyFullData}
+                                            disabled={!hasSelected} loading={loadingCopy}>
+                                            Copy Data
+                                        </Button>
+
                                         <Popconfirm
                                             placement="bottom"
                                             title={'Are you sure to delete?'}
@@ -456,6 +526,26 @@ const AnimeValorant: React.FC = () => {
                                         Hide name (optional)
                                     </Checkbox>
                                 </div>
+
+                                <div style={{marginTop: 12}}>
+                                    <Form>
+                                        <Form.Item>
+                                            <Dragger {...props}>
+                                                <p className="ant-upload-drag-icon">
+                                                    <InboxOutlined/>
+                                                </p>
+                                                <p className="ant-upload-text">Click or drag file to this area to upload
+                                                    account into panel</p>
+                                                <p className="ant-upload-hint">
+                                                    {"Supported only .txt file and formatted file accounts => username/password/cookie"}
+                                                </p>
+                                            </Dragger>
+
+                                        </Form.Item>
+                                    </Form>
+
+                                </div>
+
                             </Card>
                         </Col>
 
@@ -473,7 +563,7 @@ const AnimeValorant: React.FC = () => {
                                         </Card>
                                     </Col>
                                     <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                        <Card size="small" hoverable={true}>
+                                    <Card size="small" hoverable={true}>
                                             <Statistic
                                                 title="Inactive"
                                                 value={getOffline()}
