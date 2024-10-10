@@ -5,7 +5,6 @@ import {
     Card,
     Checkbox,
     Col,
-    Collapse,
     Divider,
     FloatButton,
     Form,
@@ -21,14 +20,12 @@ import {
     Tag,
     theme,
     Upload,
-    Progress,
     Typography,
-    Tooltip,
     Dropdown,
-    Tabs, Drawer
+    Drawer
 } from 'antd';
 import {
-    CaretRightOutlined, CopyOutlined, DeleteOutlined, DownOutlined,
+    CopyOutlined, DeleteOutlined, DownOutlined,
     ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
@@ -43,6 +40,7 @@ import {bulkDeleteData, getData, getTotalAccount, getDataLimit, deleteData} from
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps, SelectProps } from 'antd';
+import {Export} from "../Export/export";
 
 const { Text } = Typography;
 const { Dragger } = Upload;
@@ -1491,6 +1489,71 @@ const BloxFruit: React.FC = () => {
 
     }
 
+    const dataDefault = [
+        ['Username', 'Password', 'Cookie', 'Data', 'Fruit', 'Special'],
+    ]
+    dataApiSpecialFilter.forEach((item: DataType) => {
+
+        const itemDescript = JSON.parse(item.Description)
+        let fightingStyle = itemDescript['Fighting Style']
+        let bfData = itemDescript['Inventory']['Blox Fruit']
+        let sData = itemDescript['Inventory']['Sword']
+        let GData = itemDescript['Inventory']['Gun']
+        let MGata = itemDescript['Inventory']['Material']
+        let WGata = itemDescript['Inventory']['Wear']
+        let specaiCData = '';
+
+        bfData.map((key: any) => {
+            if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
+                specaiCData += key['Name'] + ' - '
+            }
+        })
+
+        sData.map((key: any) => {
+            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                specaiCData += key['Name'] + ' - '
+            }
+        })
+
+        GData.map((key: any) => {
+            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                specaiCData += key['Name'] + ' - '
+            }
+        })
+
+        MGata.map((key: any) => {
+            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                specaiCData += key['Name'] + ' - '
+            }
+        })
+
+        WGata.map((key: any) => {
+            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
+                specaiCData += key['Name'] + ' - '
+            }
+        })
+
+        fightingStyle.map(() => {
+            if (fightingStyle.length === 6) {
+                fsText = 'Godhuman';
+            } else if (fightingStyle.length > 2) {
+                fsText = '3-5 Melee';
+            } else {
+                fsText = '0-2 Melee';
+            }
+        })
+
+        dataDefault.push([
+            item.UsernameRoblocc,
+            item.Password,
+            item.Cookie,
+            `- Level: ${JSON.parse(item.Description).Data.Level} - Beli: ${JSON.parse(item.Description).Data.Beli} - Fragments: ${JSON.parse(item.Description).Data.Fragments}`,
+            itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']),
+            specaiCData.substring(0, specaiCData.length - 2) + "\n"
+        ])
+    })
+
+
     return (
 
         <div>
@@ -1501,7 +1564,10 @@ const BloxFruit: React.FC = () => {
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 12}}>
                     <Row>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                            <Card size="small" title="Account Control">
+                            <Card size="small" title="Account Control" extra={
+                                <Export data={dataDefault} gameName = {"BF"} />
+                            }>
+
                                 <div style={{marginBottom: 16}}>
                                     <Space wrap>
                                     <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>

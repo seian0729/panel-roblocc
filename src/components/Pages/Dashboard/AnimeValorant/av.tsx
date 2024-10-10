@@ -30,6 +30,8 @@ import {
     UserOutlined
 } from "@ant-design/icons";
 
+import {Export} from "../Export/export";
+
 
 const { Dragger } = Upload;
 
@@ -469,6 +471,24 @@ const AnimeValorant: React.FC = () => {
         }
     ]
 
+    const dataDefault = [
+        ['Username', 'Password', 'Cookie', 'Gems', 'Trait Rerolls']
+    ]
+
+    const dataBeforeSORT: any[][] = [
+
+    ]
+
+
+    dataApi.forEach((item: DataType) => {
+        let Description = JSON.parse(item.Description)
+        dataBeforeSORT.push([item.UsernameRoblocc, item.Password, item.Cookie, Description['Gems'], Description['TraitRerolls']])
+    })
+    dataBeforeSORT.sort((a, b) => b[3] - a[3])
+
+    dataDefault.push(...dataBeforeSORT)
+
+
     return (<div>
         {contextHolder}
         <Row justify={'start'}>
@@ -477,7 +497,9 @@ const AnimeValorant: React.FC = () => {
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                            <Card size="small" title="Account Control">
+                            <Card size="small" title="Account Control" extra={
+                                <Export data={dataDefault} gameName={'AV'} />
+                            }>
                                 <div style={{marginBottom: 16}}>
                                     <Space wrap>
                                         <Button
