@@ -285,6 +285,20 @@ const DashboardLayout: React.FC = () => {
             )
         }
 
+        if (checkAccess('pet-go')){
+            dashboardItems.push(getItem(
+                'Pet Go',
+                'pet-go',
+                null,
+                [getItem((
+                    <Link to={"pet-go/tracking"}>
+                        Tracking
+                    </Link>
+                ),"pet-go/tracking")],
+                'group')
+            )
+        }
+
     }
 
     dashboardItems.push(getItem(

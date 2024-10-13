@@ -36,6 +36,7 @@ import ProfileScript from "../Pages/Dashboard/Profile/profile-script";
 import Ttd from "../Pages/Dashboard/ToiletTowerDefense/ttd";
 import Ad from "../Pages/Dashboard/AnimeDefender/ad";
 import Av from "../Pages/Dashboard/AnimeValorant/av";
+import C from "../Pages/Dashboard/PetGo/petgo";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
@@ -46,6 +47,7 @@ import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
 import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
+import PetGo from "../Pages/Dashboard/PetGo/petgo";
 
 //Theme ne
 const tokenTheme = {
@@ -199,6 +201,10 @@ function App() {
                                 <Route path={"anime-valorant"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("av")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Av/>} />
+                                </Route>
+                                <Route path={"pet-go"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("pet-go")}/>}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<PetGo/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>

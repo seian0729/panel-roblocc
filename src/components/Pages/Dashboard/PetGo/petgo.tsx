@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
-import type {DrawerProps, TabsProps} from 'antd';
-import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
+
+import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {useStore} from "../../../../state/storeHooks";
@@ -11,8 +11,7 @@ import {
     Card,
     Checkbox,
     Col,
-    Descriptions,
-    Divider, Drawer, Dropdown,
+    Divider, Drawer, Dropdown, Form,
     MenuProps,
     message,
     Popconfirm,
@@ -23,14 +22,16 @@ import {
     Tag
 } from "antd";
 import {
+    CopyOutlined,
     DeleteOutlined,
-    DownOutlined,
+    DownOutlined, InboxOutlined,
     LineChartOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
-const AnimeDefender: React.FC = () => {
+import {Export} from "../Export/export";
 
+const PetGo: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -42,6 +43,7 @@ const AnimeDefender: React.FC = () => {
 
     //loading
     const [loadingReload, setLoadingReload] = useState(false);
+    const [loadingCopy, setLoadingCopy] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
 
     //data
@@ -77,7 +79,7 @@ const AnimeDefender: React.FC = () => {
         setLoadingReload(true);
         setLoadingTable(true);
         // ajax request after empty completing
-        getData(5836869368).then((res) => {
+        getData(6401952734).then((res) => {
             setDataApi(res.data);
         }).then(() =>{
             messageApi.success('Refresh Success <3');
@@ -109,7 +111,7 @@ const AnimeDefender: React.FC = () => {
     };
 
     useEffect(() => {
-        getData(5836869368).then((res) => {
+        getData(6401952734).then((res) => {
             setDataApi(res.data);
         }).then(() =>{
             messageApi.success('Refresh Success <3');
@@ -200,66 +202,35 @@ const AnimeDefender: React.FC = () => {
         return temp
     }
 
-    const getTotalGems = () => {
-        let totalGems = 0;
-        dataApi.forEach((item: DataType) => {
-            let Gems = JSON.parse(item.Description)['Gems']
-            totalGems += Gems
-        })
-        return totalGems
-    }
-
-
-    const getTotalCrystal = () => {
-        let totalCrystals = 0;
-        dataApi.forEach((item: DataType) => {
-            let Items = JSON.parse(item.Description)['Items']
-
-            if(Items['Trait Crystal'] != undefined && Items['Trait Crystal'] != null){
-                totalCrystals += Items['Trait Crystal']
-            }
-
-        })
-        return totalCrystals
-    }
-
-    const getTotalRiskyDice = () => {
-        let totalRiskyDice = 0;
-        dataApi.forEach((item: DataType) => {
-            let Items = JSON.parse(item.Description)['Items']
-
-            if(Items['Risky Dice'] != undefined && Items['Risky Dice'] != null){
-                totalRiskyDice += Items['Risky Dice']
-            }
-
-        })
-        return totalRiskyDice
-    }
-
-    const getTotalFrostBind = () => {
-        let totalFrostBind = 0;
-        dataApi.forEach((item: DataType) => {
-            let Items = JSON.parse(item.Description)['Items']
-
-            if(Items['Frost Bind'] != undefined && Items['Frost Bind'] != null){
-                totalFrostBind += Items['Frost Bind']
-            }
-
-        })
-        return totalFrostBind
-    }
-
     const hasSelected = selectedRowKeys.length > 0;
+
     interface DataType {
         UsernameRoblocc: string;
+        Password: string;
+        Cookie: string;
         Description: string;
         Note: string
         updatedAt: string;
         accountStatus: string;
     }
 
-    const filtersNote: any [] = [];
-    const filtersNoteT: any [] = [];
+    function formatNumber(num: number, precision: number) {
+        const map = [
+            {suffix: 'T', threshold: 1e12},
+            {suffix: 'B', threshold: 1e9},
+            {suffix: 'M', threshold: 1e6},
+            {suffix: 'K', threshold: 1e3},
+            {suffix: '', threshold: 1},
+        ];
+
+        const found = map.find((x) => Math.abs(num) >= x.threshold);
+        if (found) {
+            const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
+            return formatted;
+        }
+
+        return num;
+    }
 
     const columnsData: ColumnsType<DataType> = [
         {
@@ -292,165 +263,125 @@ const AnimeDefender: React.FC = () => {
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Level'] - JSON.parse(b.Description)['Level'],
         },
         {
-            title: 'Gems',
-            dataIndex: 'data-gems',
-            key: "data-gems",
+            title: 'Coins',
+            dataIndex: 'data-coins',
+            key: "data-coins",
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
-                return <Tag color={"blue"}>
-                    {new Intl.NumberFormat().format(Description['Gems'])}
+                return <Tag color={"yellow"}>
+                    {formatNumber(Description['Currency']['Coins'], 2)}
                 </Tag>
             },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Gems'] - JSON.parse(b.Description)['Gems'],
         },
         {
-            title: 'Trait Crystal',
-            dataIndex: 'data-trait-crystal',
-            key: "data-trait-crystal",
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return <Tag color={"purple"}>
-                    {new Intl.NumberFormat().format(Description['Items']['Trait Crystal'] == undefined ? 0 : Description['Items']['Trait Crystal'])}
-                </Tag>
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Trait Crystal'] - JSON.parse(b.Description)['Items']['Trait Crystal'],
-        },
-        {
-            title: 'Risky Dice',
-            dataIndex: 'data-risky-dice',
-            key: "data-risky-dice",
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return <Tag color={"red"}>
-                    {new Intl.NumberFormat().format(Description['Items']['Risky Dice'] == undefined ? 0 : Description['Items']['Risky Dice'])}
-                </Tag>
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
-        },
-        {
-            title: 'Frost Bind',
-            dataIndex: 'data-frost-bind',
-            key: "data-frost-bind",
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                return <Tag color={"blue"}>
-                    {new Intl.NumberFormat().format(Description['Items']['Frost Bind'] == undefined ? 0 : Description['Items']['Frost Bind'])}
-                </Tag>
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Frost Bind'] - JSON.parse(b.Description)['Items']['Frost Bind'],
-        },
-        /*
-        {
-            title: 'Portal',
-            dataIndex: 'data-portal',
-            width: "15%",
-            key: "data-portal",
-            render: (_, record) => {
-                let Description = JSON.parse(record.Description)
-                let Item = Description.Items
-
-                return (<>
-                    {
-                        !record.Description.includes("Portal") ? "-" :
-                        Object.keys(Item).map((key: any) => {
-                            if (key.includes('Portal')){
-                                return (
-                                    <Tag color={
-                                        key.includes('Secret') ? "red" : 
-                                        key.includes('Mythical') ? "volcano" :
-                                        key.includes('Lengendary') ? "yellow" :
-                                        key.includes('Epic') ? "purple" : "blue"
-                                    } key={key} style={{margin: 4}}>
-                                        {key.substring(0,key.toString().indexOf("("))} [{Item[key]}]
-                                    </Tag>
-                                )
-                            }
-                        })
-
-                    }
-                </>
-                    
-                )
-
-            },
-        },
-        */
-        {
-            title: 'Last Update',
-            dataIndex: 'lastUpdate',
-            width: '10%',
-            render: (_, record) => {
-                return (
-                    <>
-                        {
-                            moment(record.updatedAt).fromNow()
-                        }
-                    </>
-                )
-            },
-            sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
-        },
-        {
-            title: 'Status',
-            dataIndex: 'accountStatus',
-            width: '10%',
-            filters: [
+            title: 'Pets',
+            dataIndex: 'data-pets',
+            key: "data-pets",
+            children: [
                 {
-                    text: 'Active',
-                    value: 'Active',
+                    title: 'Highest Pet',
+                    dataIndex: 'data-highest-pet',
+                    key: "data-highest-pet",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        let HighestDifficultyPet = Description['Pets']['HighestDifficultyPet']
+                        return <Tag color={"blue"}>
+                            {`${HighestDifficultyPet['petName']} | ${formatNumber(HighestDifficultyPet['difficulty'],0)}` || 'N/A'}
+                        </Tag>
+                    },
                 },
                 {
-                    text: 'Inactive',
-                    value: 'Inactive',
+                    title: 'Huge Pet',
+                    dataIndex: 'data-huge-pet',
+                    key: "data-huge-pet",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        let HugePet = Description['Pets']['HugePet']
+
+                        return <>
+                            {
+                                HugePet.length > 0 ?
+                                    HugePet.map((item: any, index: number) => {
+                                        return <Tag key={index} color={"red"}>
+                                            {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
+                                        </Tag>
+                                    }) : <Tag>N/A</Tag>
+                            }
+                        </>
+                    },
+                },
+                {
+                    title: 'Pet Above 50M',
+                    dataIndex: 'data-pet-above-50m',
+                    key: "data-pet-above-50m",
+                    render: (_, record) => {
+                        let Description = JSON.parse(record.Description)
+                        let PetAbove50M = Description['Pets']['PetAbove50M']
+                        return <>
+                            {
+                                PetAbove50M.length > 0 ?
+                                PetAbove50M.map((item: any, index: number) => {
+                                    return <Tag key={index} color={"oranges"}>
+                                        {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
+                                    </Tag>
+                                }) : <Tag>N/A</Tag>
+                            }
+                        </>
+                    },
+                }
+            ]
+        },
+        {
+            title: 'Last Updated',
+            dataIndex: 'updatedAt',
+            key: 'updatedAt',
+            sorter: (a, b) => {
+                return moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
+            },
+            render: (_, record) => {
+                return moment(record.updatedAt).fromNow()
+            },
+        },
+        {
+            title: 'Account Status',
+            dataIndex: 'accountStatus',
+            key: 'accountStatus',
+            render: (_, record) => {
+                let updatedAt = moment(record.updatedAt).unix()
+                if (moment().unix() - updatedAt <= 300) {
+                    return <Badge status="success" text="Online"/>
+                } else {
+                    return <Badge status="error" text="Offline"/>
+                }
+            },
+            filters: [
+                {
+                    text: 'Online',
+                    value: 'Online',
+                },
+                {
+                    text: 'Offline',
+                    value: 'Offline',
                 },
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 300
+                    return moment().unix() - moment(record.updatedAt).unix() < 900
                 } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 300
+                    return moment().unix() - moment(record.updatedAt).unix() >= 900
                 } else {
                     return false
                 }
 
             },
-            render: (_, record) => {
-                return (
-                    <>
-                        <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
-                               text={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'Inactive' : 'Active'}/>
-                    </>
-                )
-            },
         },
         {
             title: 'Note',
             dataIndex: 'Note',
-            width: '15%',
+            key: 'Note',
             render: (_, record) => {
-                {
-                    filtersNoteT.push({
-                        text: record.Note,
-                        value: record.Note,
-                    })
-
-                    for (let index = 0; index < filtersNoteT.length; index++) {
-                        if (!filtersNote.find(a => a.text === filtersNoteT[index].text)) {
-                            filtersNote.push(filtersNoteT[index])
-                        }
-                    }
-                }
-
-                return (
-                    <>
-                        {record.Note}
-                    </>
-                )
+                return record.Note
             },
-
-            filters: filtersNote,
-            onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
-            filterSearch: true,
         },
         {
             title: 'Action',
@@ -486,14 +417,13 @@ const AnimeDefender: React.FC = () => {
                     </a>
                 </Dropdown>)
             }
-            ,
         }
     ]
 
     return (<div>
         {contextHolder}
         <Row justify={'start'}>
-            <Divider orientation="left">Roblocc Panel - Anime Defenders</Divider>
+            <Divider orientation="left">Roblocc Panel - Anime Valorant</Divider>
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
@@ -540,6 +470,7 @@ const AnimeDefender: React.FC = () => {
                                         Hide name (optional)
                                     </Checkbox>
                                 </div>
+
                             </Card>
                         </Col>
 
@@ -585,53 +516,33 @@ const AnimeDefender: React.FC = () => {
                 </Card>
             </Col>
 
-            <Col span={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Data Overview"} size={"small"}>
-                    <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Total Crystal (All account)"
-                                    value={getTotalCrystal()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#beb1ff'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Total Gems (All account)"
-                                    value={getTotalGems()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#5487ff'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Total Risky Dice (All account)"
-                                    value={getTotalRiskyDice()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#eb4034'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={6} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Total Frost Bind (All account)"
-                                    value={getTotalFrostBind()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#4958fc'}}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
-                </Card>
+            {/*<Col span={24} style={{padding: 6}}>*/}
+            {/*    <Card bordered={false} title={"Data Overview"} size={"small"}>*/}
+            {/*        <Row gutter={[12,12]}>*/}
+            {/*            <Col xs={24} sm={24} md={24} lg={12} xl={12}>*/}
+            {/*                <Card>*/}
+            {/*                    <Statistic*/}
+            {/*                        title="Total Gems (All account)"*/}
+            {/*                        value={0}*/}
+            {/*                        prefix={<LineChartOutlined />}*/}
+            {/*                        valueStyle={{color: '#5487ff'}}*/}
+            {/*                    />*/}
+            {/*                </Card>*/}
+            {/*            </Col>*/}
+            {/*            <Col xs={24} sm={24} md={24} lg={12} xl={12}>*/}
+            {/*                <Card>*/}
+            {/*                    <Statistic*/}
+            {/*                        title="Total Reroll (All account)"*/}
+            {/*                        value={0}*/}
+            {/*                        prefix={<LineChartOutlined />}*/}
+            {/*                        valueStyle={{color: '#beb1ff'}}*/}
+            {/*                    />*/}
+            {/*                </Card>*/}
+            {/*            </Col>*/}
+            {/*        </Row>*/}
+            {/*    </Card>*/}
 
-            </Col>
+            {/*</Col>*/}
         </Row>
         <Row>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
@@ -651,97 +562,6 @@ const AnimeDefender: React.FC = () => {
                         defaultPageSize: 25,
                         showSizeChanger: true,
                     }}
-                    summary={
-                        (dataApi) => {
-
-                            //Data
-                            let totalGems = 0;
-                            let totalCrystals = 0;
-                            let totalRiskyDice = 0
-                            let totalFrostBind = 0
-
-
-                            //Status account
-                            let countAccount = 0;
-                            let countAccountInActive = 0
-
-                            dataApi.forEach((record) => {
-                                let Description = JSON.parse(record.Description)
-                                
-                                if (moment().unix() - moment(record.updatedAt).unix() < 300){
-                                    countAccount++;
-                                }
-                                else {
-                                    countAccountInActive++;
-                                }
-                                totalGems += Description['Gems']
-
-                                let Items = Description['Items']
-
-                                if(Items['Trait Crystal'] != undefined && Items['Trait Crystal'] != null){
-                                    totalCrystals += Items['Trait Crystal']
-                                }
-
-                                if(Items['Risky Dice'] != undefined && Items['Risky Dice'] != null){
-                                    totalRiskyDice += Items['Risky Dice']
-                                }
-
-                                if(Items['Frost Bind'] != undefined && Items['Frost Bind'] != null){
-                                    totalFrostBind += Items['Frost Bind']
-                                }
-
-                            })
-
-                            return (
-                                <Table.Summary fixed>
-                                    <Table.Summary.Row>
-                                        <Table.Summary.Cell index={0} colSpan={2}> Summary </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={1}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={2}>
-                                            <Tag color={"red"}>
-                                                {new Intl.NumberFormat().format(totalGems)}
-                                            </Tag>
-                                        </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={3}>
-                                            <Tag color={"red"}>
-                                                {new Intl.NumberFormat().format(totalCrystals)}
-                                            </Tag>
-                                        </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={4}>
-                                            <Tag color={"red"}>
-                                                {new Intl.NumberFormat().format(totalRiskyDice)}
-                                            </Tag>
-                                        </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={5}>
-                                            <Tag color={"red"}>
-                                                {new Intl.NumberFormat().format(totalFrostBind)}
-                                            </Tag>
-                                        </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={6}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={7}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={8}>
-                                        <Space>
-                                            <Tag>
-                                                <Badge
-                                                    status={'success'}
-                                                    text={countAccount.toString()}
-                                                />
-                                            </Tag>
-                                            <Tag>
-                                                <Badge
-                                                    status={'error'}
-                                                    text={countAccountInActive.toString()}
-                                                />
-                                            </Tag>
-                                        </Space>
-                                    </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={9}> - </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={10}> - </Table.Summary.Cell>
-                                    </Table.Summary.Row>
-                                </Table.Summary>
-                            )
-                        }
-                    }
                     sticky={{ offsetHeader: 0 }}
                 />
             </Col>
@@ -773,6 +593,7 @@ const AnimeDefender: React.FC = () => {
         </Drawer>
 
     </div>);
+
 }
 
-export default AnimeDefender;
+export default PetGo;
