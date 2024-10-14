@@ -272,6 +272,19 @@ const PetGo: React.FC = () => {
                     {formatNumber(Description['Currency']['Coins'], 2)}
                 </Tag>
             },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Currency']['Coins'] - JSON.parse(b.Description)['Currency']['Coins'],
+        },
+        {
+            title: 'Total Rolls',
+            dataIndex: 'data-total-rolls',
+            key: "data-total-rolls",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                return <Tag color={"green"}>
+                    {new Intl.NumberFormat().format(Description['TotalRolls'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['TotalRolls'] - JSON.parse(b.Description)['TotalRolls'],
         },
         {
             title: 'Highest Pet',
@@ -281,7 +294,7 @@ const PetGo: React.FC = () => {
                 let Description = JSON.parse(record.Description)
                 let HighestDifficultyPet = Description['Pets']['HighestDifficultyPet']
                 return <Tag color={"blue"}>
-                    {`${HighestDifficultyPet['petName']} - ${formatNumber(HighestDifficultyPet['difficulty'],0)}` || 'N/A'}
+                    {`${HighestDifficultyPet['petName']} - ${formatNumber(HighestDifficultyPet['difficulty'],2)}` || 'N/A'}
                 </Tag>
             },
         },
