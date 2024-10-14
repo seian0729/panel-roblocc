@@ -286,7 +286,7 @@ const PetGo: React.FC = () => {
                         let Description = JSON.parse(record.Description)
                         let HighestDifficultyPet = Description['Pets']['HighestDifficultyPet']
                         return <Tag color={"blue"}>
-                            {`${HighestDifficultyPet['petName']} | ${formatNumber(HighestDifficultyPet['difficulty'],0)}` || 'N/A'}
+                            {`${HighestDifficultyPet['petName']} - ${formatNumber(HighestDifficultyPet['difficulty'],0)}` || 'N/A'}
                         </Tag>
                     },
                 },
