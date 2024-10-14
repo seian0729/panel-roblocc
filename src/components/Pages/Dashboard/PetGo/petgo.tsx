@@ -274,62 +274,55 @@ const PetGo: React.FC = () => {
             },
         },
         {
-            title: 'Pets',
-            dataIndex: 'data-pets',
-            key: "data-pets",
-            children: [
-                {
-                    title: 'Highest Pet',
-                    dataIndex: 'data-highest-pet',
-                    key: "data-highest-pet",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        let HighestDifficultyPet = Description['Pets']['HighestDifficultyPet']
-                        return <Tag color={"blue"}>
-                            {`${HighestDifficultyPet['petName']} - ${formatNumber(HighestDifficultyPet['difficulty'],0)}` || 'N/A'}
-                        </Tag>
-                    },
-                },
-                {
-                    title: 'Huge Pet',
-                    dataIndex: 'data-huge-pet',
-                    key: "data-huge-pet",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        let HugePet = Description['Pets']['HugePet']
+            title: 'Highest Pet',
+            dataIndex: 'data-highest-pet',
+            key: "data-highest-pet",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                let HighestDifficultyPet = Description['Pets']['HighestDifficultyPet']
+                return <Tag color={"blue"}>
+                    {`${HighestDifficultyPet['petName']} - ${formatNumber(HighestDifficultyPet['difficulty'],0)}` || 'N/A'}
+                </Tag>
+            },
+        },
+        {
+            title: 'Huge',
+            dataIndex: 'data-huge-pet',
+            key: "data-huge-pet",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                let HugePet = Description['Pets']['HugePet']
 
-                        return <>
-                            {
-                                HugePet.length > 0 ?
-                                    HugePet.map((item: any, index: number) => {
-                                        return <Tag key={index} color={"red"}>
-                                            {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
-                                        </Tag>
-                                    }) : <Tag>N/A</Tag>
-                            }
-                        </>
-                    },
-                },
-                {
-                    title: 'Pet Above 50M',
-                    dataIndex: 'data-pet-above-50m',
-                    key: "data-pet-above-50m",
-                    render: (_, record) => {
-                        let Description = JSON.parse(record.Description)
-                        let PetAbove50M = Description['Pets']['PetAbove50M']
-                        return <>
-                            {
-                                PetAbove50M.length > 0 ?
-                                PetAbove50M.map((item: any, index: number) => {
-                                    return <Tag key={index} color={"oranges"}>
-                                        {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
-                                    </Tag>
-                                }) : <Tag>N/A</Tag>
-                            }
-                        </>
-                    },
-                }
-            ]
+                return <>
+                    {
+                        HugePet.length > 0 ?
+                            HugePet.map((item: any, index: number) => {
+                                return <Tag key={index} color={"red"}>
+                                    {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
+                                </Tag>
+                            }) : <Tag>N/A</Tag>
+                    }
+                </>
+            },
+        },
+        {
+            title: '50M+',
+            dataIndex: 'data-pet-above-50m',
+            key: "data-pet-above-50m",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+                let PetAbove50M = Description['Pets']['PetAbove50M']
+                return <>
+                    {
+                        PetAbove50M.length > 0 ?
+                            PetAbove50M.map((item: any, index: number) => {
+                                return <Tag key={index} color={"oranges"}>
+                                    {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
+                                </Tag>
+                            }) : <Tag>N/A</Tag>
+                    }
+                </>
+            },
         },
         {
             title: 'Last Updated',
@@ -343,7 +336,7 @@ const PetGo: React.FC = () => {
             },
         },
         {
-            title: 'Account Status',
+            title: 'Status',
             dataIndex: 'accountStatus',
             key: 'accountStatus',
             render: (_, record) => {
