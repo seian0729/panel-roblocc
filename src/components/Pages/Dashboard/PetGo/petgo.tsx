@@ -317,7 +317,7 @@ const PetGo: React.FC = () => {
                         PetAbove50M.length > 0 ?
                             PetAbove50M.map((item: any, index: number) => {
                                 return <Tag key={index} color={"oranges"}>
-                                    {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
+                                    {`${item['petName']} | ${formatNumber(item['difficulty'],3)}`}
                                 </Tag>
                             }) : <Tag>N/A</Tag>
                     }

@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] PetGO" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] PetGO">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,12 +30,12 @@
     &quot;assignee&quot;: &quot;chimnguu&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/chimnguu/panel-roblocc.git",
-    "accountId": "aeab04fb-f7e9-41a6-a51a-35eeda1dd456"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/chimnguu/panel-roblocc.git&quot;,
+    &quot;accountId&quot;: &quot;aeab04fb-f7e9-41a6-a51a-35eeda1dd456&quot;
   }
-}]]></component>
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -217,14 +219,7 @@
       <workItem from="1728833839725" duration="37000" />
       <workItem from="1728833929382" duration="160000" />
       <workItem from="1728871402529" duration="171000" />
-    </task>
-    <task id="LOCAL-00036" summary="[+] Pet 99 | Summary (Item/v.v)">
-      <option name="closed" value="true" />
-      <created>1707541643511</created>
-      <option name="number" value="00036" />
-      <option name="presentableId" value="LOCAL-00036" />
-      <option name="project" value="LOCAL" />
-      <updated>1707541643511</updated>
+      <workItem from="1728878941781" duration="1911000" />
     </task>
     <task id="LOCAL-00037" summary="[*] Pet 99 | Fix bug on sort Diamond Per Min">
       <option name="closed" value="true" />
@@ -610,7 +605,15 @@
       <option name="project" value="LOCAL" />
       <updated>1728871550162</updated>
     </task>
-    <option name="localTasksCounter" value="85" />
+    <task id="LOCAL-00085" summary="[*] PetGO">
+      <option name="closed" value="true" />
+      <created>1728879070295</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1728879070295</updated>
+    </task>
+    <option name="localTasksCounter" value="86" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
