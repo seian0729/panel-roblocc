@@ -232,6 +232,28 @@ const PetGo: React.FC = () => {
         return num;
     }
 
+    const getColor = (difficulty: number) => {
+        if (difficulty >= 1e9) {
+            return "purple"
+        } else if (difficulty >= 1e8) {
+            return "cyan"
+        } else if (difficulty >= 55e6) {
+            return "yellow"
+        } else if (difficulty >= 1e7) {
+            return "magenta"
+        } else if (difficulty >= 55e4) {
+            return "red"
+        } else if (difficulty >= 5e4) {
+            return "orange"
+        } else if (difficulty >= 5555) {
+            return "blue"
+        } else if (difficulty >= 100) {
+            return "green"
+        } else {
+            return "default"
+        }
+    }
+
     const columnsData: ColumnsType<DataType> = [
         {
             title: 'Roblox Username',
@@ -275,6 +297,23 @@ const PetGo: React.FC = () => {
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Currency']['Coins'] - JSON.parse(b.Description)['Currency']['Coins'],
         },
         {
+            title: 'Diamonds',
+            dataIndex: 'data-diamonds',
+            key: "data-diamonds",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
+
+                if (Description['Currency']['Diamonds'] === undefined) {
+                    return <Tag color={"blue"}>
+                        -
+                    </Tag>
+                }
+                return <Tag color={"blue"}>
+                    {formatNumber(Description['Currency']['Diamonds'], 2)}
+                </Tag>
+            },
+        },
+        {
             title: 'Total Rolls',
             dataIndex: 'data-total-rolls',
             key: "data-total-rolls",
@@ -293,10 +332,13 @@ const PetGo: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 let HighestDifficultyPet = Description['Pets']['HighestDifficultyPet']
-                return <Tag color={"blue"}>
+                return <Tag color={
+                    getColor(HighestDifficultyPet['difficulty'])
+                }>
                     {`${HighestDifficultyPet['petName']} - ${formatNumber(HighestDifficultyPet['difficulty'],2)}` || 'N/A'}
                 </Tag>
             },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Pets']['HighestDifficultyPet']['difficulty'] - JSON.parse(b.Description)['Pets']['HighestDifficultyPet']['difficulty'],
         },
         {
             title: 'Huge',
@@ -310,8 +352,8 @@ const PetGo: React.FC = () => {
                     {
                         HugePet.length > 0 ?
                             HugePet.map((item: any, index: number) => {
-                                return <Tag key={index} color={"red"}>
-                                    {`${item['petName']} | ${formatNumber(item['difficulty'],0)}`}
+                                return <Tag key={index} color={"purple"}>
+                                    {`${item['petName']} | ${formatNumber(item['difficulty'],2)}`}
                                 </Tag>
                             }) : <Tag>N/A</Tag>
                     }
@@ -329,8 +371,10 @@ const PetGo: React.FC = () => {
                     {
                         PetAbove50M.length > 0 ?
                             PetAbove50M.map((item: any, index: number) => {
-                                return <Tag key={index} color={"oranges"}>
-                                    {`${item['petName']} | ${formatNumber(item['difficulty'],3)}`}
+                                return <Tag key={index} color={
+                                    getColor(item['difficulty'])
+                                }>
+                                    {`${item['petName']} | ${formatNumber(item['difficulty'],2)}`}
                                 </Tag>
                             }) : <Tag>N/A</Tag>
                     }
@@ -355,19 +399,19 @@ const PetGo: React.FC = () => {
             render: (_, record) => {
                 let updatedAt = moment(record.updatedAt).unix()
                 if (moment().unix() - updatedAt <= 300) {
-                    return <Badge status="success" text="Online"/>
+                    return <Badge status="success" text="Active"/>
                 } else {
-                    return <Badge status="error" text="Offline"/>
+                    return <Badge status="error" text="Inactive"/>
                 }
             },
             filters: [
                 {
-                    text: 'Online',
-                    value: 'Online',
+                    text: 'Active',
+                    value: 'Active',
                 },
                 {
-                    text: 'Offline',
-                    value: 'Offline',
+                    text: 'Inactive',
+                    value: 'Inactive',
                 },
             ],
             onFilter: (value: any, record) => {
