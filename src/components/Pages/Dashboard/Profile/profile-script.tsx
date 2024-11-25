@@ -94,7 +94,7 @@ const fischString = `getgenv().Setting = {
     DelayUpdate = 120,
     Note = '${username}'
 }
-loadstring(http_request({Url = 'https://cdn.chimovo.com/private/fisch/client.lua', Method = "GET"})['Body'])()`;
+loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/heads/master/cc-panel.lua'))()`;
 
 
     const copyScript = (scriptname: string, script: string) => {
