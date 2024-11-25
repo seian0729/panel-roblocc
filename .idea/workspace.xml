@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] PetGO" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Fisch, Added">
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/KingLegacy/KingLegacy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/AnimeValorant/av.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/AnimeValorant/av.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Profile/profile-script.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,7 +72,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;discord-application&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
     &quot;ts.external.directory.path&quot;: &quot;E:\\Projectt\\panel-roblocc\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -219,22 +227,19 @@
       <workItem from="1728871402529" duration="171000" />
       <workItem from="1728878941781" duration="1911000" />
       <workItem from="1728900263329" duration="29000" />
-    </task>
-    <task id="LOCAL-00038" summary="[*] Pet 99 | Fix bug on sort Diamond Per Min">
-      <option name="closed" value="true" />
-      <created>1707582344211</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1707582344212</updated>
-    </task>
-    <task id="LOCAL-00039" summary="[+] Pet 99 | Show Huge (Normal, Golden, Rainbow)">
-      <option name="closed" value="true" />
-      <created>1707761521709</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1707761521709</updated>
+      <workItem from="1728901056726" duration="305000" />
+      <workItem from="1728915016726" duration="3000" />
+      <workItem from="1728996341829" duration="3067000" />
+      <workItem from="1729070586552" duration="472000" />
+      <workItem from="1729159316266" duration="126000" />
+      <workItem from="1729327067882" duration="957000" />
+      <workItem from="1729753300232" duration="12000" />
+      <workItem from="1729841251442" duration="80000" />
+      <workItem from="1730198151801" duration="249000" />
+      <workItem from="1730199465968" duration="951000" />
+      <workItem from="1731126996774" duration="126000" />
+      <workItem from="1732532185546" duration="3994000" />
+      <workItem from="1732548925112" duration="1549000" />
     </task>
     <task id="LOCAL-00040" summary="[+] Pet 99 | Major Update (Mail Box, v.v)">
       <option name="closed" value="true" />
@@ -612,7 +617,23 @@
       <option name="project" value="LOCAL" />
       <updated>1728900281906</updated>
     </task>
-    <option name="localTasksCounter" value="87" />
+    <task id="LOCAL-00087" summary="[+] Pet GO | Added Total Roll, Re-formated number value pet">
+      <option name="closed" value="true" />
+      <created>1728901333364</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1728901333364</updated>
+    </task>
+    <task id="LOCAL-00088" summary="[+] Pet GO | Fixed 50m+ / Huge , haven't test">
+      <option name="closed" value="true" />
+      <created>1729000982636</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1729000982637</updated>
+    </task>
+    <option name="localTasksCounter" value="89" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -630,9 +651,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Profile-Script | Pet 99" />
-    <MESSAGE value="[+] Pet 99 | Release options all active account" />
-    <MESSAGE value="[+] Profile Script | Blox Fruit script" />
     <MESSAGE value="[*] Pet 99 | Fixed some error with NaN value" />
     <MESSAGE value="[+] Pet 99 | Improved UI, Added Diamonds overview :cool:" />
     <MESSAGE value="[*] Pet 99 | Fixed suck at DiamondPerMin" />
@@ -655,6 +673,9 @@
     <MESSAGE value="[+] TTD | Added" />
     <MESSAGE value="[*] TTD | Update zaza" />
     <MESSAGE value="[*] PetGO" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] PetGO" />
+    <MESSAGE value="[+] Pet GO | Added Total Roll, Re-formated number value pet" />
+    <MESSAGE value="[+] Pet GO | Fixed 50m+ / Huge , haven't test" />
+    <MESSAGE value="[+] Fisch, Added" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] Fisch, Added" />
   </component>
 </project>

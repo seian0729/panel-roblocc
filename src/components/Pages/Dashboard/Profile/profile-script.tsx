@@ -89,6 +89,13 @@ const pgString = `getgenv().Setting = {
 }
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/pet-go/client.lua', Method = "GET"})['Body'])()`;
 
+const fischString = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120,
+    Note = '${username}'
+}
+loadstring(http_request({Url = 'https://cdn.chimovo.com/private/fisch/client.lua', Method = "GET"})['Body'])()`;
+
 
     const copyScript = (scriptname: string, script: string) => {
         navigator.clipboard.writeText(script);
@@ -234,6 +241,23 @@ loadstring(http_request({Url = 'https://cdn.chimovo.com/private/pet-go/client.lu
                                     </SyntaxHighlighter>
                                     <Button type={"default"}
                                             onClick={() => copyScript('Pet Go', pgString)}>
+                                        Copy Script
+                                    </Button>
+                                </>
+                            }]} style={{marginTop: 6}}/>
+                            : <></>
+
+                    }
+                    {
+                        checkAccess("fisch") ? <Collapse bordered={false} items={[{
+                                key: '10',
+                                label: 'Fisch',
+                                children: <>
+                                    <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                        {fischString}
+                                    </SyntaxHighlighter>
+                                    <Button type={"default"}
+                                            onClick={() => copyScript('Fisch', fischString)}>
                                         Copy Script
                                     </Button>
                                 </>

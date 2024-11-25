@@ -299,6 +299,20 @@ const DashboardLayout: React.FC = () => {
             )
         }
 
+        if (checkAccess('fisch')){
+            dashboardItems.push(getItem(
+                'Fisch',
+                'fisch',
+                null,
+                [getItem((
+                    <Link to={"fisch/tracking"}>
+                        Tracking
+                    </Link>
+                ),"fisch/tracking")],
+                'group')
+            )
+        }
+
     }
 
     dashboardItems.push(getItem(

@@ -35,8 +35,7 @@ import {Export} from "../Export/export";
 
 const { Dragger } = Upload;
 
-const AnimeValorant: React.FC = () => {
-
+const Fisch: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -86,7 +85,12 @@ const AnimeValorant: React.FC = () => {
             let data = dataApi.filter((item: DataType) => selectedRowKeys.includes(item.UsernameRoblocc))
             let dataCopy = data.map((item: DataType) => {
                 let Description = JSON.parse(item.Description)
-                return `${item.UsernameRoblocc}/${item.Password}/${item.Cookie}/${Description['Gems']}/${Description['TraitRerolls']}`
+                let Rods = Description['Rods']
+                var RodSTR = ''
+                Rods.map((item: any, index: number) => {
+                    RodSTR += item + ' - '
+                })
+                return `${item.UsernameRoblocc}/${item.Password}/${item.Cookie}/${Description['PlayerInfo']['Level']}/${Description['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}`
             })
             navigator.clipboard.writeText(dataCopy.join('\n'));
             messageApi.success(`Copied ${selectedRowKeys.length} account !`);
@@ -99,7 +103,7 @@ const AnimeValorant: React.FC = () => {
         setLoadingReload(true);
         setLoadingTable(true);
         // ajax request after empty completing
-        getData(5578556129).then((res) => {
+        getData(5750914919).then((res) => {
             setDataApi(res.data);
         }).then(() =>{
             messageApi.success('Refresh Success <3');
@@ -131,7 +135,7 @@ const AnimeValorant: React.FC = () => {
     };
 
     useEffect(() => {
-        getData(5578556129).then((res) => {
+        getData(5750914919).then((res) => {
             setDataApi(res.data);
         }).then(() =>{
             messageApi.success('Refresh Success <3');
@@ -222,29 +226,6 @@ const AnimeValorant: React.FC = () => {
         return temp
     }
 
-    const getTotalGems = () => {
-        let totalGems = 0;
-        dataApi.forEach((item: DataType) => {
-            let Gems = JSON.parse(item.Description)['Gems']
-            totalGems += Gems
-        })
-        return totalGems
-    }
-
-
-    const getTotalReroll = () => {
-        let totalCrystals = 0;
-        dataApi.forEach((item: DataType) => {
-            let Description = JSON.parse(item.Description)
-
-            if(Description['TraitRerolls'] != undefined && Description['TraitRerolls'] != null){
-                totalCrystals += Description['TraitRerolls']
-            }
-
-        })
-        return totalCrystals
-    }
-
     const hasSelected = selectedRowKeys.length > 0;
     interface DataType {
         UsernameRoblocc: string;
@@ -283,7 +264,48 @@ const AnimeValorant: React.FC = () => {
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
-    
+
+    const getTotalTrident = () => {
+        var countTrident = 0
+        dataApi.forEach((item: DataType) => {
+            let Description = JSON.parse(item.Description)
+            const rods = Description['Rods']
+            rods.map((item: any, index: number) => {
+                if (item.search('Trident') > -1){
+                    countTrident++;
+                }
+            })
+        })
+        return countTrident
+    }
+
+    const getTotalRoD = () => {
+        var countRoD = 0
+        dataApi.forEach((item: DataType) => {
+            let Description = JSON.parse(item.Description)
+            const rods = Description['Rods']
+            rods.map((item: any, index: number) => {
+                if (item.search('Rod of the Depths') > -1){
+                    countRoD++;
+                }
+            })
+        })
+        return countRoD
+    }
+
+    const colorRods: {[index: string]:any} = {
+        ['Aurora Rod'] : 'blue',
+        ['Trident Rod']: 'yellow',
+        ['Rod of the Depths']: 'red'
+    }
+
+    const getColorRod = (rodName: string) => {
+        if (colorRods[rodName] != undefined){
+            return colorRods[rodName]
+        }
+        return "default"
+    }
+
     const columnsData: ColumnsType<DataType> = [
         {
             title: 'Roblox Username',
@@ -308,35 +330,57 @@ const AnimeValorant: React.FC = () => {
             key: "data-level",
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
+                return <Tag color={"yellow"}>
+                    {new Intl.NumberFormat().format(Description['PlayerInfo']['Level'])}
+                </Tag>
+            },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['PlayerInfo']['Level'] - JSON.parse(b.Description)['PlayerInfo']['Level'],
+        },
+        {
+            title: 'Coins',
+            dataIndex: 'data-coin',
+            key: "data-coin",
+            render: (_, record) => {
+                let Description = JSON.parse(record.Description)
                 return <Tag color={"orange"}>
-                    {new Intl.NumberFormat().format(Description['Level'])}
+                    {new Intl.NumberFormat().format(Description['PlayerInfo']['Coins'])}
                 </Tag>
             },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Level'] - JSON.parse(b.Description)['Level'],
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['PlayerInfo']['Coins'] - JSON.parse(b.Description)['PlayerInfo']['Coins'],
         },
         {
-            title: 'Gems',
-            dataIndex: 'data-gems',
-            key: "data-gems",
+            title: 'Rods',
+            dataIndex: 'data-rod',
+            key: "data-rod",
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
-                return <Tag color={"blue"}>
-                    {new Intl.NumberFormat().format(Description['Gems'])}
-                </Tag>
+                const Rods = Description['Rods'];
+
+                return <>
+                    {
+                        Rods.length > 0 ?
+                            Rods.map((item: any, index: number) => {
+                                return <Tag key={index} color={getColorRod(item)}>
+                                    {`${item}`}
+                                </Tag>
+                            })
+                            : <Tag>N/A</Tag>
+                    }
+                </>
             },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Gems'] - JSON.parse(b.Description)['Gems'],
         },
         {
-            title: 'Trait Reroll',
-            dataIndex: 'data-trait-reroll',
-            key: "data-trait-reroll",
+            title: "Enchant Relic",
+            dataIndex: 'data-enchant-relic',
+            key: 'data-enchant-relic',
+            width: '7%',
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
+                let Inventory = Description['Inventory']
                 return <Tag color={"purple"}>
-                    {new Intl.NumberFormat().format(Description['TraitRerolls'] == undefined ? 0 : Description['TraitRerolls'])}
+                    {Inventory['Enchant Relic']}
                 </Tag>
-            },
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['TraitRerolls'] - JSON.parse(b.Description)['TraitRerolls'],
+            }
         },
         {
             title: 'Last Update',
@@ -439,9 +483,13 @@ const AnimeValorant: React.FC = () => {
                     {
                         label: <a onClick={() => {
                             const data = JSON.parse(record.Description)
-                            console.log(data)
-                            //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                            navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}/${record.Cookie}/${data['Gems']}/${data['TraitRerolls']}`);
+                            let Rods = data['Rods']
+                            var RodSTR = ''
+                            Rods.map((item: any, index: number) => {
+                                RodSTR += item + ' - '
+                            })
+                            navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}/${record.Cookie}/${data['PlayerInfo']['Level']}/${data['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}`
+                        );
                             messageApi.success(`Copied ${record.UsernameRoblocc}`)
                         }}><CopyOutlined /> Copy full data</a>,
                         key: '2',
@@ -472,33 +520,45 @@ const AnimeValorant: React.FC = () => {
     ]
 
     const dataDefault = [
-        ['Username', 'Password', 'Cookie', 'Gems', 'Trait Rerolls']
+        ['Username', 'Password', 'Cookie', 'Data', 'Rods'],
     ]
 
     const dataBeforeSORT: any[][] = [
 
     ]
 
-
     dataApi.forEach((item: DataType) => {
         let Description = JSON.parse(item.Description)
-        dataBeforeSORT.push([item.UsernameRoblocc, item.Password, item.Cookie, Description['Gems'], Description['TraitRerolls']])
+        let rods = Description['Rods']
+        let RodSTR = ""
+        rods.map((item: any, index: number) => {
+            RodSTR += item + ' - '
+        })
+        dataBeforeSORT.push([
+            item.UsernameRoblocc,
+            item.Password,
+            item.Cookie,
+            `Level: ${Description['PlayerInfo']['Level']} - Beli: ${Description['PlayerInfo']['Coins']}`,
+            RodSTR.substring(0, RodSTR.length - 2)
+        ])
     })
-    dataBeforeSORT.sort((a, b) => b[3] - a[3])
+
+    dataBeforeSORT.sort((a, b) => b[3].length - a[3].length)
 
     dataDefault.push(...dataBeforeSORT)
 
+    // TODO: Export Data
 
     return (<div>
         {contextHolder}
         <Row justify={'start'}>
-            <Divider orientation="left">Roblocc Panel - Anime Valorant</Divider>
+            <Divider orientation="left">Roblocc Panel - Fisch</Divider>
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Card size="small" title="Account Control" extra={
-                                <Export data={dataDefault} gameName={'AV'} />
+                                <Export data={dataDefault} gameName={'Fisch'} />
                             }>
                                 <div style={{marginBottom: 16}}>
                                     <Space wrap>
@@ -585,7 +645,7 @@ const AnimeValorant: React.FC = () => {
                                         </Card>
                                     </Col>
                                     <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                    <Card size="small" hoverable={true}>
+                                        <Card size="small" hoverable={true}>
                                             <Statistic
                                                 title="Inactive"
                                                 value={getOffline()}
@@ -619,20 +679,20 @@ const AnimeValorant: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                             <Card>
                                 <Statistic
-                                    title="Total Gems (All account)"
-                                    value={getTotalGems()}
+                                    title="Trident"
+                                    value={getTotalTrident()}
                                     prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#5487ff'}}
+                                    valueStyle={{color: '#ffe28c'}}
                                 />
                             </Card>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={12} xl={12}>
                             <Card>
                                 <Statistic
-                                    title="Total Reroll (All account)"
-                                    value={getTotalReroll()}
+                                    title="Rod of the Depths"
+                                    value={getTotalRoD()}
                                     prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#beb1ff'}}
+                                    valueStyle={{color: '#ff6b6b'}}
                                 />
                             </Card>
                         </Col>
@@ -659,74 +719,6 @@ const AnimeValorant: React.FC = () => {
                         defaultPageSize: 25,
                         showSizeChanger: true,
                     }}
-                    summary={
-                        (dataApi) => {
-
-                            //Data
-                            let totalGems = 0;
-                            let totalCrystals = 0;
-
-
-                            //Status account
-                            let countAccount = 0;
-                            let countAccountInActive = 0
-
-                            dataApi.forEach((record) => {
-                                let Description = JSON.parse(record.Description)
-                                
-                                if (moment().unix() - moment(record.updatedAt).unix() < 300){
-                                    countAccount++;
-                                }
-                                else {
-                                    countAccountInActive++;
-                                }
-                                totalGems += Description['Gems']
-
-                                if(Description['TraitRerolls'] != undefined && Description['TraitRerolls'] != null){
-                                    totalCrystals += Description['TraitRerolls']
-                                }
-
-                            })
-
-                            return (
-                                <Table.Summary fixed>
-                                    <Table.Summary.Row>
-                                        <Table.Summary.Cell index={0} colSpan={2}> Summary </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={1}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={2}>
-                                            <Tag color={"red"}>
-                                                {new Intl.NumberFormat().format(totalGems)}
-                                            </Tag>
-                                        </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={3}>
-                                            <Tag color={"red"}>
-                                                {new Intl.NumberFormat().format(totalCrystals)}
-                                            </Tag>
-                                        </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={7}> - </Table.Summary.Cell>
-                                        <Table.Summary.Cell index={8}>
-                                        <Space>
-                                            <Tag>
-                                                <Badge
-                                                    status={'success'}
-                                                    text={countAccount.toString()}
-                                                />
-                                            </Tag>
-                                            <Tag>
-                                                <Badge
-                                                    status={'error'}
-                                                    text={countAccountInActive.toString()}
-                                                />
-                                            </Tag>
-                                        </Space>
-                                    </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={9}> - </Table.Summary.Cell>
-                                    <Table.Summary.Cell index={10}> - </Table.Summary.Cell>
-                                    </Table.Summary.Row>
-                                </Table.Summary>
-                            )
-                        }
-                    }
                     sticky={{ offsetHeader: 0 }}
                 />
             </Col>
@@ -758,6 +750,7 @@ const AnimeValorant: React.FC = () => {
         </Drawer>
 
     </div>);
+
 }
 
-export default AnimeValorant;
+export default Fisch
