@@ -90,7 +90,7 @@ const Fisch: React.FC = () => {
                 Rods.map((item: any, index: number) => {
                     RodSTR += item + ' - '
                 })
-                return `${item.UsernameRoblocc}/${item.Password}/${item.Cookie}/${Description['PlayerInfo']['Level']}/${Description['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}`
+                return `${item.UsernameRoblocc}/${item.Password}/${item.Cookie}/${Description['PlayerInfo']['Level']}/${Description['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}/${Description['Inventory']['Enchant Relic']}`
             })
             navigator.clipboard.writeText(dataCopy.join('\n'));
             messageApi.success(`Copied ${selectedRowKeys.length} account !`);
@@ -488,7 +488,7 @@ const Fisch: React.FC = () => {
                             Rods.map((item: any, index: number) => {
                                 RodSTR += item + ' - '
                             })
-                            navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}/${record.Cookie}/${data['PlayerInfo']['Level']}/${data['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}`
+                            navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}/${record.Cookie}/${data['PlayerInfo']['Level']}/${data['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}/${data['Inventory']['Enchant Relic']}`
                         );
                             messageApi.success(`Copied ${record.UsernameRoblocc}`)
                         }}><CopyOutlined /> Copy full data</a>,
@@ -520,7 +520,7 @@ const Fisch: React.FC = () => {
     ]
 
     const dataDefault = [
-        ['Username', 'Password', 'Cookie', 'Data', 'Rods'],
+        ['Username', 'Password', 'Cookie', 'Data', 'Rods', 'Relic'],
     ]
 
     const dataBeforeSORT: any[][] = [
@@ -539,7 +539,8 @@ const Fisch: React.FC = () => {
             item.Password,
             item.Cookie,
             `Level: ${Description['PlayerInfo']['Level']} - Beli: ${Description['PlayerInfo']['Coins']}`,
-            RodSTR.substring(0, RodSTR.length - 2)
+            RodSTR.substring(0, RodSTR.length - 2),
+            Description['Inventory']['Enchant Relic']
         ])
     })
 
