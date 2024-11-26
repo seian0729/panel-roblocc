@@ -296,7 +296,8 @@ const Fisch: React.FC = () => {
     const colorRods: {[index: string]:any} = {
         ['Aurora Rod'] : 'blue',
         ['Trident Rod']: 'yellow',
-        ['Rod of the Depths']: 'red'
+        ['Rod of the Depths']: 'red',
+        ['Sunken Rod']: 'green',
     }
 
     const getColorRod = (rodName: string) => {
