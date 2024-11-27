@@ -61,7 +61,13 @@ const Fisch: React.FC = () => {
 
     const {user} = useStore(({app}) => app);
 
-    const {limitacc} = user.unwrap();
+    const {username, limitacc} = user.unwrap();
+
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841"];
+
+    const [loadingCopyAccounntHaveCookie, setLoadingCopyAccounntHaveCookie] = useState(false)
+    const [loadingDeleteAccounntHaveCookie, setLoadingDeleteAccounntHaveCookie] = useState(false);
+
 
     const onChangeHidename = (e: CheckboxChangeEvent) => {
         setHidename(e.target.checked)
@@ -173,6 +179,55 @@ const Fisch: React.FC = () => {
             refreshData()
         }, 1000);
     };
+
+    const getAmountAccountHaveCookie = () => {
+        let tempCount = 0
+        dataApi.forEach((item: DataType) => {
+            if (item.Cookie != null){
+                tempCount++
+            }
+        })
+        return tempCount
+    }
+
+    const copyDataHaveCookieAccount = () => {
+        setLoadingCopyAccounntHaveCookie(true)
+        setTimeout(() => {
+            let text = ""
+            let dataCopy = dataApi.map((item: DataType) => {
+                if (item.Cookie != null){
+                    let Description = JSON.parse(item.Description)
+                    let Rods = Description['Rods']
+                    var RodSTR = ''
+                    Rods.map((item: any, index: number) => {
+                        RodSTR += item + ' - '
+                    })
+                    text +=`${item.UsernameRoblocc}/${item.Password}/${item.Cookie}/${Description['PlayerInfo']['Level']}/${Description['PlayerInfo']['Coins']}/${RodSTR.substring(0, RodSTR.length - 2)}/${Description['Inventory']['Enchant Relic']}\n`
+                }
+            })
+            navigator.clipboard.writeText(text);
+            messageApi.success(`Copied ${getAmountAccountHaveCookie()} account into clipboard <3`);
+            setLoadingCopyAccounntHaveCookie(false);
+        }, 1000);
+    }
+
+    const deleteHaveCookieAccount = () => {
+        let tempListAccount: string[] = []
+        dataApi.forEach((item: DataType) => {
+            // if item in has cookie
+            if (item.Cookie != null) {
+                tempListAccount.push(item.UsernameRoblocc)
+            }
+        })
+        setLoadingDeleteAccounntHaveCookie(true);
+        bulkDeleteData(tempListAccount).then((res) => {
+            setTimeout(() => {
+                messageApi.success(`Deleted: ${getAmountAccountHaveCookie()} account !`);
+                setLoadingDeleteAccounntHaveCookie(false);
+                refreshData()
+            },500)
+        })
+    }
 
     // Get Online - Offline
 
@@ -678,6 +733,41 @@ const Fisch: React.FC = () => {
                                     </Col>
                                 </Row>
                             </Card>
+
+                            {
+                                whitelistAccounts.find((element) => element == username) != undefined ?
+                                    <div style={{marginTop: 12}}>
+                                        <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
+                                            <Space>
+                                                <Button type="primary"
+                                                        onClick={copyDataHaveCookieAccount}
+                                                        disabled={getAmountAccountHaveCookie() === 0}
+                                                        loading={loadingCopyAccounntHaveCookie}>
+                                                    Copy Data Account
+                                                </Button>
+
+                                                <Popconfirm
+                                                    placement="bottom"
+                                                    title={'Are you sure to delete?'}
+                                                    description={`${getAmountAccountHaveCookie()} account`}
+                                                    onConfirm={deleteHaveCookieAccount}
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                    icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                                >
+                                                    <Button type="primary"
+                                                            loading={loadingDeleteAccounntHaveCookie}
+                                                            disabled={getAmountAccountHaveCookie() === 0}
+                                                            danger>
+                                                        Delete Account
+                                                    </Button>
+                                                </Popconfirm>
+                                            </Space>
+                                        </Card>
+                                    </div>
+                                    :
+                                    <></>
+                            }
 
                         </Col>
                     </Row>
