@@ -285,7 +285,7 @@ const Fisch: React.FC = () => {
             let Description = JSON.parse(item.Description)
             const rods = Description['Rods']
             rods.map((item: any, index: number) => {
-                if (item.search('Rod of the Depths') > -1){
+                if (item.search('Rod Of The Depths') > -1){
                     countRoD++;
                 }
             })
@@ -296,7 +296,7 @@ const Fisch: React.FC = () => {
     const colorRods: {[index: string]:any} = {
         ['Aurora Rod'] : 'blue',
         ['Trident Rod']: 'yellow',
-        ['Rod of the Depths']: 'red',
+        ['Rod Of The Depths']: 'error',
         ['Sunken Rod']: 'green',
     }
 
@@ -304,7 +304,7 @@ const Fisch: React.FC = () => {
         if (colorRods[rodName] != undefined){
             return colorRods[rodName]
         }
-        return "default"
+        else return "default"
     }
 
     const columnsData: ColumnsType<DataType> = [
@@ -356,19 +356,27 @@ const Fisch: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 const Rods = Description['Rods'];
+                const listRodShow = ['Trident Rod', 'Rod Of The Depths', 'Sunken Rod']
+                var listRender: any[] = [];
+
+                Rods.map((item: any, index: number) => {
+                    if (listRodShow.indexOf(item) !== -1){
+                        listRender.push(item)
+                    }
+                })
 
                 return <>
                     {
-                        Rods.length > 0 ?
-                            Rods.map((item: any, index: number) => {
-                                return <Tag key={index} color={getColorRod(item)}>
+                        listRender.length > 0 ?
+                            listRender.map((item, index) =>{
+                                return <Tag key={item} color={getColorRod(item)} style={{margin: 4}}>
                                     {`${item}`}
                                 </Tag>
-                            })
-                            : <Tag>N/A</Tag>
+                            }): <Tag>N/A</Tag>
                     }
                 </>
             },
+            sorter: (a: any, b: any) => JSON.parse(a.Description)['Rods'].length - JSON.parse(b.Description)['Rods'].length
         },
         {
             title: "Enchant Relic",
@@ -381,7 +389,8 @@ const Fisch: React.FC = () => {
                 return <Tag color={"purple"}>
                     {Inventory['Enchant Relic']}
                 </Tag>
-            }
+            },
+            sorter: (a, b) => JSON.parse(a.Description)['Inventory']['Enchant Relic'] - JSON.parse(b.Description)['Inventory']['Enchant Relic']
         },
         {
             title: 'Last Update',
