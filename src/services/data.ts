@@ -54,12 +54,6 @@ export async function getDataLimit(gameid: number, page: number, limit: number){
 }
 
 
-// bulkDeleteData
-export async function bulkDeleteData(username: string[]){
-    const { data } = await axios.post('data/bulkDeleteData', {Usernames: username})
-    return data
-}
-
 // deleteData
 
 export async function deleteData(username: string){
@@ -67,11 +61,32 @@ export async function deleteData(username: string){
     return data
 }
 
+// bulkDeleteData
+export async function bulkDeleteData(username: string[]){
+    const { data } = await axios.post('data/bulkDeleteData', {Usernames: username})
+    return data
+}
+
+
 // getTotalAccount
 export async function getTotalAccount(){
     const { data } = await axios.get('data/getTotalAccount')
     return data
 }
+
+// mark completed
+
+export async function markCompleted(username: string){
+    const { data } = await axios.post('data/markCompleted', {Username: username})
+    return data
+}
+
+// bulkMarkCompleted
+export async function bulkMarkCompleted(username: string[]){
+    const { data } = await axios.post('data/bulkMarkCompleted', {Usernames: username})
+    return data
+}
+
 
 
 // seller nhi - send dia

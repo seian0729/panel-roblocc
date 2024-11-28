@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from "react";
-import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
+import {
+    getData,
+    deleteData,
+    bulkDeleteData,
+    markCompleted,
+    bulkMarkCompleted,
+} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {useStore} from "../../../../state/storeHooks";
@@ -26,6 +32,7 @@ import {
     type UploadProps
 } from "antd";
 import {
+    CheckOutlined,
     CopyOutlined,
     DeleteOutlined,
     DownOutlined, ExclamationCircleFilled, InboxOutlined,
@@ -169,22 +176,6 @@ const Fisch: React.FC = () => {
         const intervalId = setInterval(AutoRefreshData, 60000);
         return () => clearInterval(intervalId);
     })
-
-    //Delete account
-
-    const deleteAccount = () => {
-        setLoadingDelete(true);
-        setTimeout(() => {
-            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
-                //console.log(res);
-            })
-            messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
-            setSelectedRowKeys([]);
-            setLoadingDelete(false);
-            refreshData()
-        }, 1000);
-    };
-
     const getAmountAccountHaveCookie = () => {
         let tempCount = 0
         dataApi.forEach((item: DataType) => {
@@ -379,15 +370,26 @@ const Fisch: React.FC = () => {
         {
             label: <a onClick={() => {
                 copyFullData()
-            }}><CopyOutlined /> Copy full data</a>,
+            }}><CopyOutlined /> Copy selected data</a>,
             key: '2',
         },
         {
             label: <a onClick={() => {
-                showConfirm()
-            }}><DeleteOutlined/> Delete Account</a>,
+                //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                bulkMarkCompleted(selectedRowKeys as string[]).then((res) => {
+                    console.log(res)
+                    messageApi.success(`Mark Completed: ${selectedRowKeys.length} account`);
+                    refreshData()
+                })
+            }}><CheckOutlined/> Mark Completed Account</a>,
             key: '3',
-            danger: true
+        },
+        {
+            label: <a onClick={() => {
+                showConfirm()
+            }}><DeleteOutlined /> Delete selected data</a>,
+            danger: true,
+            key: '4',
         },
     ];
 
@@ -608,12 +610,23 @@ const Fisch: React.FC = () => {
                     {
                         label: <a onClick={() => {
                             //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
+                            markCompleted(record.UsernameRoblocc).then((res) => {
+                                console.log(res)
+                                messageApi.success(`Account: ${record.UsernameRoblocc} is completed`);
+                                refreshData()
+                            })
+                        }}><CheckOutlined/> Mark Completed Account</a>,
+                        key: '3',
+                    },
+                    {
+                        label: <a onClick={() => {
+                            //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
                             deleteData(record.UsernameRoblocc).then((res) => {
                                 messageApi.success(`Deleted account: ${record.UsernameRoblocc} !`);
                                 refreshData()
                             })
                         }}><DeleteOutlined/> Delete Account</a>,
-                        key: '3',
+                        key: '4',
                         danger: true
                     },
                 ];
