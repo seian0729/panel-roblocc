@@ -548,7 +548,7 @@ const BloxFruit: React.FC = () => {
     const props: UploadProps = {
         name: 'file',
         listType: 'text',
-        action: 'https://api.chimovo.com/v1/data/bulkUpdatePasswordAndCookie',
+        action: 'https://sv1.chimovo.com/v1/data/bulkUpdatePasswordAndCookie?GameId=994732206',
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },

@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-import { Form, Upload, type UploadProps} from 'antd';
 import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
@@ -19,12 +18,17 @@ import {
     Space,
     Statistic,
     Table,
-    Tag
+    Tag,
+    Flex,
+    Form,
+    Upload,
+    Modal,
+    type UploadProps
 } from "antd";
 import {
     CopyOutlined,
     DeleteOutlined,
-    DownOutlined, InboxOutlined,
+    DownOutlined, ExclamationCircleFilled, InboxOutlined,
     LineChartOutlined,
     QuestionCircleOutlined,
     UserOutlined
@@ -38,6 +42,7 @@ const { Dragger } = Upload;
 const Fisch: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
+    const [modalApi, modalContextHolder] = Modal.useModal();
 
     //selected
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
@@ -295,7 +300,7 @@ const Fisch: React.FC = () => {
     const props: UploadProps = {
         name: 'file',
         listType: 'text',
-        action: 'https://api.chimovo.com/v1/data/bulkUpdatePasswordAndCookie',
+        action: 'https://sv1.chimovo.com/v1/data/bulkUpdatePasswordAndCookie?GameId=5750914919',
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
@@ -308,7 +313,7 @@ const Fisch: React.FC = () => {
                     refreshData()
                 }
                 if (file.status === 'error') {
-                    //console.log(file.response)
+                    // console.log(file.response)
                     file.response = file.response.message
                     messageApi.error(`Failed to upload ${file.name}! - ${file.response}`)
                     refreshData()
@@ -347,6 +352,44 @@ const Fisch: React.FC = () => {
         })
         return countRoD
     }
+
+    const showConfirm = () => {
+        modalApi.confirm({
+            title: `Do you want to DELETE ${selectedRowKeys.length} ACCOUNT`,
+            icon: <ExclamationCircleFilled />,
+            content: 'Data will be deleted permanently from database and CANT BE RESTORE',
+            centered: true,
+            okText: "Sure",
+            cancelText: "Nah",
+            onOk() {
+                bulkDeleteAccount()
+            },
+        });
+    };
+
+    const items: MenuProps['items'] = [
+        {
+            key: '1',
+            label: 'Action',
+            disabled: true,
+        },
+        {
+            type: 'divider',
+        },
+        {
+            label: <a onClick={() => {
+                copyFullData()
+            }}><CopyOutlined /> Copy full data</a>,
+            key: '2',
+        },
+        {
+            label: <a onClick={() => {
+                showConfirm()
+            }}><DeleteOutlined/> Delete Account</a>,
+            key: '3',
+            danger: true
+        },
+    ];
 
     const colorRods: {[index: string]:any} = {
         ['Aurora Rod'] : 'blue',
@@ -441,9 +484,12 @@ const Fisch: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 let Inventory = Description['Inventory']
-                return <Tag color={"purple"}>
-                    {Inventory['Enchant Relic']}
-                </Tag>
+                return <>{
+                    Inventory['Enchant Relic'] ?
+                    <Tag color={"purple"}>
+                        {Inventory['Enchant Relic']}
+                    </Tag> : "-"
+                } </>
             },
             sorter: (a, b) => JSON.parse(a.Description)['Inventory']['Enchant Relic'] - JSON.parse(b.Description)['Inventory']['Enchant Relic']
         },
@@ -617,6 +663,7 @@ const Fisch: React.FC = () => {
 
     return (<div>
         {contextHolder}
+        {modalContextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Fisch</Divider>
             <Col span={24} style={{padding: 6}}>
@@ -639,32 +686,6 @@ const Fisch: React.FC = () => {
                                         <Button type="primary" onClick={() => {
                                             setOpenNoteDrawer(true)
                                         }}>Note Active</Button>
-
-                                        <Button
-                                            type="primary"
-                                            onClick={copyFullData}
-                                            disabled={!hasSelected} loading={loadingCopy}>
-                                            Copy Data
-                                        </Button>
-
-                                        <Popconfirm
-                                            placement="bottom"
-                                            title={'Are you sure to delete?'}
-                                            description={`${selectedRowKeys.length} account`}
-                                            onConfirm={bulkDeleteAccount}
-                                            okText="Yes"
-                                            cancelText="No"
-                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                            disabled={!hasSelected}
-                                        >
-                                            <Button
-                                                type="primary"
-                                                disabled={!hasSelected}
-                                                loading={loadingDelete}
-                                                danger>
-                                                Delete Account
-                                            </Button>
-                                        </Popconfirm>
                                     </Space>
                                 </div>
 
@@ -803,7 +824,19 @@ const Fisch: React.FC = () => {
             </Col>
         </Row>
         <Row>
+
+
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
+                <Flex gap="small" justify={"flex-end"}>
+                    <Dropdown menu={{ items }}>
+                        <a onClick={(e) => e.preventDefault()}>
+                            <Button>
+                                Action
+                                <DownOutlined />
+                            </Button>
+                        </a>
+                    </Dropdown>
+                </Flex>
                 <Table
                     rowSelection={rowSelection}
                     columns={columnsData}

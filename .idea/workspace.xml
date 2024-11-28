@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Fisch, Added relic">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Fisch, special copy">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/AnimeValorant/av.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/AnimeValorant/av.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -233,39 +236,12 @@
       <workItem from="1730199465968" duration="951000" />
       <workItem from="1731126996774" duration="126000" />
       <workItem from="1732532185546" duration="3994000" />
-      <workItem from="1732548925112" duration="3694000" />
-    </task>
-    <task id="LOCAL-00042" summary="[+/*] Pet 99 | Added a little security for page, fixed some bug">
-      <option name="closed" value="true" />
-      <created>1707880791193</created>
-      <option name="number" value="00042" />
-      <option name="presentableId" value="LOCAL-00042" />
-      <option name="project" value="LOCAL" />
-      <updated>1707880791193</updated>
-    </task>
-    <task id="LOCAL-00043" summary="[*] Pet 99 | Fixed resize in table mail, v.v">
-      <option name="closed" value="true" />
-      <created>1707882430633</created>
-      <option name="number" value="00043" />
-      <option name="presentableId" value="LOCAL-00043" />
-      <option name="project" value="LOCAL" />
-      <updated>1707882430633</updated>
-    </task>
-    <task id="LOCAL-00044" summary="[*] Pet 99 | Removing console">
-      <option name="closed" value="true" />
-      <created>1707882872919</created>
-      <option name="number" value="00044" />
-      <option name="presentableId" value="LOCAL-00044" />
-      <option name="project" value="LOCAL" />
-      <updated>1707882872919</updated>
-    </task>
-    <task id="LOCAL-00045" summary="[*] Pet 99 | Improved Summary / Column Diamond">
-      <option name="closed" value="true" />
-      <created>1708106542064</created>
-      <option name="number" value="00045" />
-      <option name="presentableId" value="LOCAL-00045" />
-      <option name="project" value="LOCAL" />
-      <updated>1708106542064</updated>
+      <workItem from="1732548925112" duration="6056000" />
+      <workItem from="1732641175931" duration="759000" />
+      <workItem from="1732674098243" duration="1635000" />
+      <workItem from="1732724736833" duration="2722000" />
+      <workItem from="1732734784118" duration="1495000" />
+      <workItem from="1732766849461" duration="4421000" />
     </task>
     <task id="LOCAL-00046" summary="[*] Pet 99 | Improved Summary (Status)">
       <option name="closed" value="true" />
@@ -627,7 +603,39 @@
       <option name="project" value="LOCAL" />
       <updated>1732551701623</updated>
     </task>
-    <option name="localTasksCounter" value="91" />
+    <task id="LOCAL-00091" summary="[+] Fisch, fixed script">
+      <option name="closed" value="true" />
+      <created>1732553016793</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1732553016793</updated>
+    </task>
+    <task id="LOCAL-00092" summary="[+] Fisch, fixed script">
+      <option name="closed" value="true" />
+      <created>1732641382479</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1732641382479</updated>
+    </task>
+    <task id="LOCAL-00093" summary="[+] Fisch, fixed script">
+      <option name="closed" value="true" />
+      <created>1732727398957</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1732727398958</updated>
+    </task>
+    <task id="LOCAL-00094" summary="[+] Fisch, special copy">
+      <option name="closed" value="true" />
+      <created>1732735615920</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1732735615920</updated>
+    </task>
+    <option name="localTasksCounter" value="95" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -645,8 +653,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[+] Pet 99 | Improved UI, Added Diamonds overview :cool:" />
-    <MESSAGE value="[*] Pet 99 | Fixed suck at DiamondPerMin" />
     <MESSAGE value="[*] Pet 99 | Fixed detect inactive/active account" />
     <MESSAGE value="[*] Pet 99 | Fixed responsive on mb device" />
     <MESSAGE value="[+] Pet 99 | Last Updated" />
@@ -670,6 +676,20 @@
     <MESSAGE value="[+] Pet GO | Fixed 50m+ / Huge , haven't test" />
     <MESSAGE value="[+] Fisch, Added" />
     <MESSAGE value="[+] Fisch, Added relic" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] Fisch, Added relic" />
+    <MESSAGE value="[+] Fisch, fixed script" />
+    <MESSAGE value="[+] Fisch, special copy" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] Fisch, special copy" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx</url>
+          <line>355</line>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

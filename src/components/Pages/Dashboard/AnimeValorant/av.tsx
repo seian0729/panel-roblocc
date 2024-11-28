@@ -259,7 +259,7 @@ const AnimeValorant: React.FC = () => {
     const props: UploadProps = {
         name: 'file',
         listType: 'text',
-        action: 'https://api.chimovo.com/v1/data/bulkUpdatePasswordAndCookie',
+        action: 'https://sv1.chimovo.com/v1/data/bulkUpdatePasswordAndCookie?GameId=5578556129',
         headers: {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
