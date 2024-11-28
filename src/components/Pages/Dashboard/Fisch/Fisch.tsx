@@ -298,7 +298,6 @@ const Fisch: React.FC = () => {
         accept:".txt",
         onChange({file}) {
             if (file.status !== 'uploading') {
-                console.log(file.status, file);
                 if (file.status === 'done') {
                     messageApi.success('The file has been upload successfully!')
                     messageApi.success(file.response.message)
