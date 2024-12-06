@@ -350,7 +350,7 @@ const Fisch: React.FC = () => {
             let Description = JSON.parse(item.Description)
             const rods = Description['Rods']
             rods.map((item: any, index: number) => {
-                if (item.search('        No-Life Rod') > -1){
+                if (item.search('No-Life Rod') > -1){
                     countNoLifeRod++;
                 }
             })
@@ -410,7 +410,7 @@ const Fisch: React.FC = () => {
     const colorRods: {[index: string]:any} = {
         ['Aurora Rod'] : 'blue',
         ['Trident Rod']: 'yellow',
-        ['Rod Of The Depths']: 'red',
+        ['Rod Of The Depths']: 'magenta',
         ['Sunken Rod']: 'green',
         ['No-Life Rod']: 'error'
     }
@@ -421,6 +421,21 @@ const Fisch: React.FC = () => {
         }
         else return "default"
     }
+
+    const indexRods: {[index: string]:any} = {
+        ['Trident Rod']: 3,
+        ['Rod Of The Depths']: 1,
+        ['Sunken Rod']: 2,
+        ['No-Life Rod']: 0
+    }
+
+    const getIndexRod = (rodName: string) => {
+        if (indexRods[rodName] != undefined){
+            return indexRods[rodName]
+        }
+        return 4
+    }
+
 
     const columnsData: ColumnsType<DataType> = [
         {
@@ -473,11 +488,22 @@ const Fisch: React.FC = () => {
                 const Rods = Description['Rods'];
                 const listRodShow = ['Trident Rod', 'Rod Of The Depths', 'Sunken Rod', 'No-Life Rod']
                 var listRender: any[] = [];
+                var tempListRender: any [] = [];
 
                 Rods.map((item: any, index: number) => {
                     if (listRodShow.indexOf(item) !== -1){
-                        listRender.push(item)
+                        //listRender.push(item)
+                        tempListRender.push({
+                            rodIndex: getIndexRod(item),
+                            rodName: item
+                        })
                     }
+                })
+
+                tempListRender.sort((a, b) => a.rodIndex - b.rodIndex)
+
+                tempListRender.map((item) => {
+                    listRender.push(item.rodName)
                 })
 
                 return <>
