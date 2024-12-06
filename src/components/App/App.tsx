@@ -37,6 +37,8 @@ import Ttd from "../Pages/Dashboard/ToiletTowerDefense/ttd";
 import Ad from "../Pages/Dashboard/AnimeDefender/ad";
 import Av from "../Pages/Dashboard/AnimeValorant/av";
 import PetGo from "../Pages/Dashboard/PetGo/petgo";
+import Fisch from "../Pages/Dashboard/Fisch/Fisch";
+import KingLegacy from "../Pages/Dashboard/KingLegacy/KingLegacy";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
@@ -47,7 +49,6 @@ import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
 import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
-import Fisch from "../Pages/Dashboard/Fisch/Fisch";
 
 //Theme ne
 const tokenTheme = {
@@ -213,6 +214,10 @@ function App() {
                                 <Route path={"fisch"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("fisch")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Fisch/>} />
+                                </Route>
+                                <Route path={"vua-di-san"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("kl")}/>}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<KingLegacy/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>

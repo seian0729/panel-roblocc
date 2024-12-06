@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] BF/Fisch/AV | Improved Upload Account&#10;[*] Fisch | Improved action">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Fisch| remove log">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/data.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/KingLegacy/KingLegacy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/KingLegacy/KingLegacy.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -240,31 +241,9 @@
       <workItem from="1732674098243" duration="1635000" />
       <workItem from="1732724736833" duration="2722000" />
       <workItem from="1732734784118" duration="1495000" />
-      <workItem from="1732766849461" duration="8349000" />
-    </task>
-    <task id="LOCAL-00047" summary="[*] Pet 99 | Fixed bug">
-      <option name="closed" value="true" />
-      <created>1708140031390</created>
-      <option name="number" value="00047" />
-      <option name="presentableId" value="LOCAL-00047" />
-      <option name="project" value="LOCAL" />
-      <updated>1708140031390</updated>
-    </task>
-    <task id="LOCAL-00048" summary="[*] Pet 99 | Fixed delete bulk account">
-      <option name="closed" value="true" />
-      <created>1708320201122</created>
-      <option name="number" value="00048" />
-      <option name="presentableId" value="LOCAL-00048" />
-      <option name="project" value="LOCAL" />
-      <updated>1708320201122</updated>
-    </task>
-    <task id="LOCAL-00049" summary="[*] Pet 99 | Fixed String in status">
-      <option name="closed" value="true" />
-      <created>1708339724675</created>
-      <option name="number" value="00049" />
-      <option name="presentableId" value="LOCAL-00049" />
-      <option name="project" value="LOCAL" />
-      <updated>1708339724675</updated>
+      <workItem from="1732766849461" duration="14098000" />
+      <workItem from="1733308203083" duration="378000" />
+      <workItem from="1733323152906" duration="1584000" />
     </task>
     <task id="LOCAL-00050" summary="[+] Pet 99 | Mail Box, Select mail detail (item/diamond/both)">
       <option name="closed" value="true" />
@@ -634,7 +613,31 @@
       <option name="project" value="LOCAL" />
       <updated>1732771405755</updated>
     </task>
-    <option name="localTasksCounter" value="96" />
+    <task id="LOCAL-00096" summary="[*] Fisch| Mark Completed">
+      <option name="closed" value="true" />
+      <created>1732781805719</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1732781805719</updated>
+    </task>
+    <task id="LOCAL-00097" summary="[*] Fisch| Added count account after upload">
+      <option name="closed" value="true" />
+      <created>1732784291219</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1732784291219</updated>
+    </task>
+    <task id="LOCAL-00098" summary="[*] Fisch| remove log">
+      <option name="closed" value="true" />
+      <created>1732784612133</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1732784612133</updated>
+    </task>
+    <option name="localTasksCounter" value="99" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -652,9 +655,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Pet 99 | Fixed responsive on mb device" />
-    <MESSAGE value="[+] Pet 99 | Last Updated" />
-    <MESSAGE value="[+] Pet 99 | Format Number" />
     <MESSAGE value="[+] Whitelist | Manke" />
     <MESSAGE value="[+] Pet 99 Mail | Added Diamond Above Amount" />
     <MESSAGE value="[+] Important Notification | Close Web" />
@@ -677,6 +677,9 @@
     <MESSAGE value="[+] Fisch, fixed script" />
     <MESSAGE value="[+] Fisch, special copy" />
     <MESSAGE value="[*] BF/Fisch/AV | Improved Upload Account&#10;[*] Fisch | Improved action" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] BF/Fisch/AV | Improved Upload Account&#10;[*] Fisch | Improved action" />
+    <MESSAGE value="[*] Fisch| Mark Completed" />
+    <MESSAGE value="[*] Fisch| Added count account after upload" />
+    <MESSAGE value="[*] Fisch| remove log" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Fisch| remove log" />
   </component>
 </project>

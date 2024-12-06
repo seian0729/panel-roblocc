@@ -312,6 +312,19 @@ const DashboardLayout: React.FC = () => {
                 'group')
             )
         }
+        if (checkAccess('kl')){
+            dashboardItems.push(getItem(
+                'Vua di sản',
+                'vua-di-san',
+                null,
+                [getItem((
+                    <Link to={"vua-di-san/tracking"}>
+                        Tracking
+                    </Link>
+                ),"vua-di-san/tracking")],
+                'group')
+            )
+        }
 
     }
 

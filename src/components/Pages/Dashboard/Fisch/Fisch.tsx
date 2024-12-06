@@ -344,6 +344,20 @@ const Fisch: React.FC = () => {
         return countRoD
     }
 
+    const getTotalNoLife = () => {
+        var countNoLifeRod = 0
+        dataApi.forEach((item: DataType) => {
+            let Description = JSON.parse(item.Description)
+            const rods = Description['Rods']
+            rods.map((item: any, index: number) => {
+                if (item.search('        No-Life Rod') > -1){
+                    countNoLifeRod++;
+                }
+            })
+        })
+        return countNoLifeRod
+    }
+
     const showConfirm = () => {
         modalApi.confirm({
             title: `Do you want to DELETE ${selectedRowKeys.length} ACCOUNT`,
@@ -396,8 +410,9 @@ const Fisch: React.FC = () => {
     const colorRods: {[index: string]:any} = {
         ['Aurora Rod'] : 'blue',
         ['Trident Rod']: 'yellow',
-        ['Rod Of The Depths']: 'error',
+        ['Rod Of The Depths']: 'red',
         ['Sunken Rod']: 'green',
+        ['No-Life Rod']: 'error'
     }
 
     const getColorRod = (rodName: string) => {
@@ -456,7 +471,7 @@ const Fisch: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 const Rods = Description['Rods'];
-                const listRodShow = ['Trident Rod', 'Rod Of The Depths', 'Sunken Rod']
+                const listRodShow = ['Trident Rod', 'Rod Of The Depths', 'Sunken Rod', 'No-Life Rod']
                 var listRender: any[] = [];
 
                 Rods.map((item: any, index: number) => {
@@ -811,7 +826,7 @@ const Fisch: React.FC = () => {
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Data Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                             <Card>
                                 <Statistic
                                     title="Trident"
@@ -821,11 +836,21 @@ const Fisch: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={12} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
                             <Card>
                                 <Statistic
                                     title="Rod of the Depths"
                                     value={getTotalRoD()}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#ff6b6b'}}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
+                            <Card>
+                                <Statistic
+                                    title="No Life"
+                                    value={getTotalNoLife()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#ff6b6b'}}
                                 />
