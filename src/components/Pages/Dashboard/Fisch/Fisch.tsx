@@ -868,7 +868,7 @@ const Fisch: React.FC = () => {
                                     title="Rod of the Depths"
                                     value={getTotalRoD()}
                                     prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ff6b6b'}}
+                                    valueStyle={{color: '#e0529c'}}
                                 />
                             </Card>
                         </Col>
@@ -878,7 +878,7 @@ const Fisch: React.FC = () => {
                                     title="No Life"
                                     value={getTotalNoLife()}
                                     prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ff6b6b'}}
+                                    valueStyle={{color: '#ff2020'}}
                                 />
                             </Card>
                         </Col>
