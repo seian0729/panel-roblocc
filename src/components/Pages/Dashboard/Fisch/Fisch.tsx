@@ -408,8 +408,10 @@ const Fisch: React.FC = () => {
     ];
 
     const colorRods: {[index: string]:any} = {
+        ['Phoenix Rod']: 'volcano',
+        ['Scurvy Rod']: 'yellow',
         ['Aurora Rod'] : 'blue',
-        ['Trident Rod']: 'yellow',
+        ['Trident Rod']: 'gold',
         ['Rod Of The Depths']: 'magenta',
         ['Sunken Rod']: 'green',
         ['No-Life Rod']: 'error'
@@ -423,6 +425,9 @@ const Fisch: React.FC = () => {
     }
 
     const indexRods: {[index: string]:any} = {
+        ['Scurvy Rod']: 6,
+        ['Phoenix Rod']: 5,
+        ['Aurora Rod']: 4,
         ['Trident Rod']: 3,
         ['Rod Of The Depths']: 1,
         ['Sunken Rod']: 2,
@@ -486,7 +491,7 @@ const Fisch: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 const Rods = Description['Rods'];
-                const listRodShow = ['Trident Rod', 'Rod Of The Depths', 'Sunken Rod', 'No-Life Rod']
+                const listRodShow = ['Aurora Rod','Trident Rod', 'Rod Of The Depths', 'Sunken Rod', 'No-Life Rod', 'Phoenix Rod', 'Scurvy Rod']
                 var listRender: any[] = [];
                 var tempListRender: any [] = [];
 
@@ -703,7 +708,7 @@ const Fisch: React.FC = () => {
             item.UsernameRoblocc,
             item.Password,
             item.Cookie,
-            `Level: ${Description['PlayerInfo']['Level']} - Beli: ${Description['PlayerInfo']['Coins']}`,
+            `Level: ${Description['PlayerInfo']['Level']} - Coins: ${Description['PlayerInfo']['Coins']}`,
             RodSTR.substring(0, RodSTR.length - 2),
             Description['Inventory']['Enchant Relic']
         ])
