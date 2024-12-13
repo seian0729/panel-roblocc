@@ -294,7 +294,7 @@ const DashboardLayout: React.FC = () => {
                     <Link to={"pet-go/tracking"}>
                         Tracking
                     </Link>
-                ),"pet-go/tracking")],
+                ),"pet-go/tracking"),],
                 'group')
             )
         }
@@ -308,7 +308,13 @@ const DashboardLayout: React.FC = () => {
                     <Link to={"fisch/tracking"}>
                         Tracking
                     </Link>
-                ),"fisch/tracking")],
+                ),"fisch/tracking"),
+                    getItem((
+                        <Link to={"fisch/completed-account"}>
+                            Completed
+                        </Link>
+                    ),"fisch/completed-account")
+                ],
                 'group')
             )
         }

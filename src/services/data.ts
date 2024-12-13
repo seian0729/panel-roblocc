@@ -53,6 +53,11 @@ export async function getDataCompleted(gameId: any){
     return data
 }
 
+export async function getDataByUsernameAndGameId(username:any, gameId: any){
+    const { data } = await axios.get(`data/getDataByUsernameAndGameId?Username=${username}&GameId=${gameId}`)
+    return data
+}
+
 export async function getDataLimit(gameid: number, page: number, limit: number){
     const { data } = await axios.get(`data/getDataLimit?gameId=${gameid}&page=${page}&limit=${limit}`)
     return data

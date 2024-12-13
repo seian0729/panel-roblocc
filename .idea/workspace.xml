@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Fisch| remove log">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Misc | Change some suck get data">
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/FischCompleted.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Details/Fisch/showDetailFisch.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/KingLegacy/KingLegacy.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/KingLegacy/KingLegacy.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/data.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/data.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,30 +58,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Projectt/panel-roblocc&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;E:\\Projectt\\panel-roblocc\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "js.last.introduce.type": "LET",
+    "last_opened_file_path": "E:/Projectt/panel-roblocc/src/components/Pages/Dashboard/Fisch",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "yarn",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "ts.external.directory.path": "E:\\Projectt\\panel-roblocc\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Dashboard\Fisch" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Details\Fisch" />
+      <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Details" />
       <recent name="D:\Project\panel-roblocc\src\components\Pages\Dashboard" />
       <recent name="D:\Project\panel-roblocc\src\components\Pages\Dashboard\Profile" />
       <recent name="D:\Project\panel-roblocc\src\components\Pages\Dashboard\Pet99" />
-      <recent name="D:\Project\panel-roblocc\src\components\Pages" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -244,46 +250,9 @@
       <workItem from="1732766849461" duration="14098000" />
       <workItem from="1733308203083" duration="378000" />
       <workItem from="1733323152906" duration="1584000" />
-    </task>
-    <task id="LOCAL-00050" summary="[+] Pet 99 | Mail Box, Select mail detail (item/diamond/both)">
-      <option name="closed" value="true" />
-      <created>1708349610898</created>
-      <option name="number" value="00050" />
-      <option name="presentableId" value="LOCAL-00050" />
-      <option name="project" value="LOCAL" />
-      <updated>1708349610898</updated>
-    </task>
-    <task id="LOCAL-00051" summary="[*] Pet 99 | More Note">
-      <option name="closed" value="true" />
-      <created>1708351384882</created>
-      <option name="number" value="00051" />
-      <option name="presentableId" value="LOCAL-00051" />
-      <option name="project" value="LOCAL" />
-      <updated>1708351384882</updated>
-    </task>
-    <task id="LOCAL-00052" summary="[*] Pet 99 | More Whitelist">
-      <option name="closed" value="true" />
-      <created>1708353329786</created>
-      <option name="number" value="00052" />
-      <option name="presentableId" value="LOCAL-00052" />
-      <option name="project" value="LOCAL" />
-      <updated>1708353329786</updated>
-    </task>
-    <task id="LOCAL-00053" summary="[*] Pet 99 | Fixed bug">
-      <option name="closed" value="true" />
-      <created>1708354403196</created>
-      <option name="number" value="00053" />
-      <option name="presentableId" value="LOCAL-00053" />
-      <option name="project" value="LOCAL" />
-      <updated>1708354403196</updated>
-    </task>
-    <task id="LOCAL-00054" summary="[*] Pet 99 | Fixed Display Huge">
-      <option name="closed" value="true" />
-      <created>1708355553994</created>
-      <option name="number" value="00054" />
-      <option name="presentableId" value="LOCAL-00054" />
-      <option name="project" value="LOCAL" />
-      <updated>1708355553994</updated>
+      <workItem from="1733467060371" duration="3402000" />
+      <workItem from="1734028891430" duration="921000" />
+      <workItem from="1734089206136" duration="5783000" />
     </task>
     <task id="LOCAL-00055" summary="[+] Pet 99 | Online each note">
       <option name="closed" value="true" />
@@ -637,7 +606,47 @@
       <option name="project" value="LOCAL" />
       <updated>1732784612133</updated>
     </task>
-    <option name="localTasksCounter" value="99" />
+    <task id="LOCAL-00099" summary="[*] Fisch| remove log">
+      <option name="closed" value="true" />
+      <created>1733467252692</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1733467252692</updated>
+    </task>
+    <task id="LOCAL-00100" summary="[*] Fisch| Priority Rods while render">
+      <option name="closed" value="true" />
+      <created>1733470334514</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1733470334514</updated>
+    </task>
+    <task id="LOCAL-00101" summary="[*] Fisch| color total rod">
+      <option name="closed" value="true" />
+      <created>1733470551135</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1733470551135</updated>
+    </task>
+    <task id="LOCAL-00102" summary="[*] Fisch | added more rods">
+      <option name="closed" value="true" />
+      <created>1734029521987</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1734029521987</updated>
+    </task>
+    <task id="LOCAL-00103" summary="[*] Misc | Change some suck get data">
+      <option name="closed" value="true" />
+      <created>1734090266377</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1734090266378</updated>
+    </task>
+    <option name="localTasksCounter" value="104" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -655,10 +664,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[+] Whitelist | Manke" />
-    <MESSAGE value="[+] Pet 99 Mail | Added Diamond Above Amount" />
-    <MESSAGE value="[+] Important Notification | Close Web" />
-    <MESSAGE value="[+] Maintenance | maintenance pet99 / pet99-mailbox" />
     <MESSAGE value="[*] BF | Copy Full Data (All Fruit)" />
     <MESSAGE value="[*] Pet99 | Fixed due error" />
     <MESSAGE value="[*] Web | Noti Upgrade server" />
@@ -680,6 +685,10 @@
     <MESSAGE value="[*] Fisch| Mark Completed" />
     <MESSAGE value="[*] Fisch| Added count account after upload" />
     <MESSAGE value="[*] Fisch| remove log" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Fisch| remove log" />
+    <MESSAGE value="[*] Fisch| Priority Rods while render" />
+    <MESSAGE value="[*] Fisch| color total rod" />
+    <MESSAGE value="[*] Fisch | added more rods" />
+    <MESSAGE value="[*] Misc | Change some suck get data" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] Misc | Change some suck get data" />
   </component>
 </project>

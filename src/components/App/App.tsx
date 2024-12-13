@@ -38,7 +38,11 @@ import Ad from "../Pages/Dashboard/AnimeDefender/ad";
 import Av from "../Pages/Dashboard/AnimeValorant/av";
 import PetGo from "../Pages/Dashboard/PetGo/petgo";
 import Fisch from "../Pages/Dashboard/Fisch/Fisch";
+import Fisch_Completed from "../Pages/Dashboard/Fisch/FischCompleted";
 import KingLegacy from "../Pages/Dashboard/KingLegacy/KingLegacy";
+//
+
+import DetailFisch from "../Pages/Details/Fisch/showDetailFisch";
 
 //Admin
 import Admin from "../Pages/Admin/admin"
@@ -181,7 +185,6 @@ function App() {
                     <Routes>
                         <Route path="/" element={<Landing/>}/>
                         <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
-
                             <Route path="dashboard" element={<DashboardLayout/>}>
                                 <Route index element={<DashboardIndex/>}/>
                                 <Route path={"bloxfruit"} element={<BloxFruit/>}/>
@@ -214,6 +217,7 @@ function App() {
                                 <Route path={"fisch"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("fisch")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<Fisch/>} />
+                                    <Route path="completed-account" element={<Fisch_Completed/>} />
                                 </Route>
                                 <Route path={"vua-di-san"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("kl")}/>}>
                                     <Route index element={<Page404/>}/>
@@ -241,7 +245,7 @@ function App() {
                                 <Route path="*" element={<Page404/>}/>
                             </Route>
                         </Route>
-                        <Route path="/choida" element={<Choida/>}/>
+                        <Route path="account-detail/fisch/:Username" element={<DetailFisch/>}/>
                         <Route path="*" element={<Page404/>}/>
                     </Routes>
 
