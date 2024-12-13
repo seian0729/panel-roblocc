@@ -43,8 +43,13 @@ export async function getUnpaidInvoice() {
 }
 
 // Get data - gameid
-export async function getData(gameid: any){
-    const { data } = await axios.get(`data/getData?gameId=${gameid}`)
+export async function getData(gameId: any){
+    const { data } = await axios.get(`data/getData?gameId=${gameId}&isCompleted=0`)
+    return data
+}
+
+export async function getDataCompleted(gameId: any){
+    const { data } = await axios.get(`data/getData?gameId=${gameId}&isCompleted=1`)
     return data
 }
 
