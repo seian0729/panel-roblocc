@@ -15,7 +15,7 @@ const Landing: React.FC = () => {
   const userIsLogged = user.isSome();
 
   return (
-    <Layout style={{ background: 'linear-gradient(rgba(10, 10, 12, 0.9), rgba(10, 10, 12, 0.9)), url("https://cdn.discordapp.com/attachments/765845133308461077/1124247841305530448/p1.png") no-repeat center center fixed', WebkitBackgroundSize: 'cover', MozBackgroundSize: 'cover', OBackgroundSize: 'cover', backgroundSize: 'cover', animationName: 'cac', animationDuration: '10s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}>
+    <Layout style={{ background: 'linear-gradient(rgba(10, 10, 12, 0.9), rgba(10, 10, 12, 0.9)), url("https://panel.chimovo.com/static/media/%E3%81%A0%E3%81%84%E3%81%97%E3%81%8D%E3%82%85%E3%83%BC%E3%81%A0%E3%81%84%E3%81%97%E3%82%85%E3%81%8D_p1.9e42ff046f7339cd5384.png") no-repeat center center fixed', WebkitBackgroundSize: 'cover', MozBackgroundSize: 'cover', OBackgroundSize: 'cover', backgroundSize: 'cover', animationName: 'cac', animationDuration: '10s', animationTimingFunction: 'linear', animationIterationCount: 'infinite' }}>
       <Content>
         <div id="banner" className="banner">
           <Row justify="center" style={{ marginTop: 24 }} className="banner-title">

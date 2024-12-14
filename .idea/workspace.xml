@@ -4,13 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] Fisch | Completed Account - Show detail (deo biet de lam gi)">
-      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/data-overview/showCountRods.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/fisch.ts" afterDir="false" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] Fisch | Move some function to services, improved &quot;show count rod&quot; in data overview [mini component],">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/Fisch.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/FischCompleted.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Fisch/FischCompleted.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Details/Fisch/showDetailFisch.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Details/Fisch/showDetailFisch.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Lading/landing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Lading/landing.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,15 +249,7 @@
       <workItem from="1733467060371" duration="3402000" />
       <workItem from="1734028891430" duration="921000" />
       <workItem from="1734089206136" duration="9608000" />
-      <workItem from="1734150736652" duration="1094000" />
-    </task>
-    <task id="LOCAL-00056" summary="[*] Profile-Script | Pet 99">
-      <option name="closed" value="true" />
-      <created>1708458285366</created>
-      <option name="number" value="00056" />
-      <option name="presentableId" value="LOCAL-00056" />
-      <option name="project" value="LOCAL" />
-      <updated>1708458285367</updated>
+      <workItem from="1734150736652" duration="2055000" />
     </task>
     <task id="LOCAL-00057" summary="[+] Pet 99 | Release options all active account">
       <option name="closed" value="true" />
@@ -647,7 +635,15 @@
       <option name="project" value="LOCAL" />
       <updated>1734095357629</updated>
     </task>
-    <option name="localTasksCounter" value="105" />
+    <task id="LOCAL-00105" summary="[+] Fisch | Move some function to services, improved &quot;show count rod&quot; in data overview [mini component],">
+      <option name="closed" value="true" />
+      <created>1734152178031</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1734152178031</updated>
+    </task>
+    <option name="localTasksCounter" value="106" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -665,7 +661,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Pet99 | Fixed due error" />
     <MESSAGE value="[*] Web | Noti Upgrade server" />
     <MESSAGE value="[+] Pet99 | Fixed Header / Summary" />
     <MESSAGE value="[+] Pet99 | New notification &#10;[*] Pet99 - Mail | All active account =&gt; all account" />
@@ -690,6 +685,7 @@
     <MESSAGE value="[*] Fisch | added more rods" />
     <MESSAGE value="[*] Misc | Change some suck get data" />
     <MESSAGE value="[*] Fisch | Completed Account - Show detail (deo biet de lam gi)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] Fisch | Completed Account - Show detail (deo biet de lam gi)" />
+    <MESSAGE value="[+] Fisch | Move some function to services, improved &quot;show count rod&quot; in data overview [mini component]," />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] Fisch | Move some function to services, improved &quot;show count rod&quot; in data overview [mini component]," />
   </component>
 </project>
