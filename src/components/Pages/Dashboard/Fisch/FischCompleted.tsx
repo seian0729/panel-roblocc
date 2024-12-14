@@ -5,6 +5,11 @@ import {
     markCompleted,
     bulkMarkCompleted, getDataCompleted,
 } from "../../../../services/data";
+import {
+    listRodShow,
+    getIndexRod,
+    getColorRod
+} from "../../../../services/fisch"
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {useStore} from "../../../../state/storeHooks";
@@ -41,6 +46,7 @@ import {
 } from "@ant-design/icons";
 
 import {Export} from "../Export/export";
+import showCountRods from "./data-overview/showCountRods";
 
 
 const { Dragger } = Upload;
@@ -406,41 +412,6 @@ const Fisch_Completed: React.FC = () => {
         },
     ];
 
-    const colorRods: {[index: string]:any} = {
-        ['Phoenix Rod']: 'volcano',
-        ['Scurvy Rod']: 'yellow',
-        ['Aurora Rod'] : 'blue',
-        ['Trident Rod']: 'gold',
-        ['Rod Of The Depths']: 'magenta',
-        ['Sunken Rod']: 'green',
-        ['No-Life Rod']: 'error'
-    }
-
-    const getColorRod = (rodName: string) => {
-        if (colorRods[rodName] != undefined){
-            return colorRods[rodName]
-        }
-        else return "default"
-    }
-
-    const indexRods: {[index: string]:any} = {
-        ['Scurvy Rod']: 6,
-        ['Phoenix Rod']: 5,
-        ['Aurora Rod']: 4,
-        ['Trident Rod']: 3,
-        ['Rod Of The Depths']: 1,
-        ['Sunken Rod']: 2,
-        ['No-Life Rod']: 0
-    }
-
-    const getIndexRod = (rodName: string) => {
-        if (indexRods[rodName] != undefined){
-            return indexRods[rodName]
-        }
-        return 7
-    }
-
-
     const columnsData: ColumnsType<DataType> = [
         {
             title: 'Roblox Username',
@@ -490,7 +461,6 @@ const Fisch_Completed: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 const Rods = Description['Rods'];
-                const listRodShow = ['Aurora Rod','Trident Rod', 'Rod Of The Depths', 'Sunken Rod', 'No-Life Rod', 'Phoenix Rod', 'Scurvy Rod']
                 var listRender: any[] = [];
                 var tempListRender: any [] = [];
 
@@ -855,38 +825,9 @@ const Fisch_Completed: React.FC = () => {
 
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Data Overview"} size={"small"}>
-                    <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card>
-                                <Statistic
-                                    title="Trident"
-                                    value={getTotalTrident()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ffe28c'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card>
-                                <Statistic
-                                    title="Rod of the Depths"
-                                    value={getTotalRoD()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#e0529c'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card>
-                                <Statistic
-                                    title="No Life"
-                                    value={getTotalNoLife()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ff2020'}}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
+                    <Card bordered={false} title={"Data Overview"} size={"small"}>
+                        {showCountRods(dataApi)}
+                    </Card>
                 </Card>
 
             </Col>

@@ -6,6 +6,15 @@ import {
     markCompleted,
     bulkMarkCompleted,
 } from "../../../../services/data";
+
+import {
+    listRodShow,
+    getIndexRod,
+    getColorRod
+} from "../../../../services/fisch"
+
+import showCountRods from "./data-overview/showCountRods";
+
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {useStore} from "../../../../state/storeHooks";
@@ -316,48 +325,6 @@ const Fisch: React.FC = () => {
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
 
-    const getTotalTrident = () => {
-        var countTrident = 0
-        dataApi.forEach((item: DataType) => {
-            let Description = JSON.parse(item.Description)
-            const rods = Description['Rods']
-            rods.map((item: any, index: number) => {
-                if (item.search('Trident') > -1){
-                    countTrident++;
-                }
-            })
-        })
-        return countTrident
-    }
-
-    const getTotalRoD = () => {
-        var countRoD = 0
-        dataApi.forEach((item: DataType) => {
-            let Description = JSON.parse(item.Description)
-            const rods = Description['Rods']
-            rods.map((item: any, index: number) => {
-                if (item.search('Rod Of The Depths') > -1){
-                    countRoD++;
-                }
-            })
-        })
-        return countRoD
-    }
-
-    const getTotalNoLife = () => {
-        var countNoLifeRod = 0
-        dataApi.forEach((item: DataType) => {
-            let Description = JSON.parse(item.Description)
-            const rods = Description['Rods']
-            rods.map((item: any, index: number) => {
-                if (item.search('No-Life Rod') > -1){
-                    countNoLifeRod++;
-                }
-            })
-        })
-        return countNoLifeRod
-    }
-
     const showConfirm = () => {
         modalApi.confirm({
             title: `Do you want to DELETE ${selectedRowKeys.length} ACCOUNT`,
@@ -406,40 +373,6 @@ const Fisch: React.FC = () => {
             key: '4',
         },
     ];
-
-    const colorRods: {[index: string]:any} = {
-        ['Phoenix Rod']: 'volcano',
-        ['Scurvy Rod']: 'yellow',
-        ['Aurora Rod'] : 'blue',
-        ['Trident Rod']: 'gold',
-        ['Rod Of The Depths']: 'magenta',
-        ['Sunken Rod']: 'green',
-        ['No-Life Rod']: 'error'
-    }
-
-    const getColorRod = (rodName: string) => {
-        if (colorRods[rodName] != undefined){
-            return colorRods[rodName]
-        }
-        else return "default"
-    }
-
-    const indexRods: {[index: string]:any} = {
-        ['Scurvy Rod']: 6,
-        ['Phoenix Rod']: 5,
-        ['Aurora Rod']: 4,
-        ['Trident Rod']: 3,
-        ['Rod Of The Depths']: 1,
-        ['Sunken Rod']: 2,
-        ['No-Life Rod']: 0
-    }
-
-    const getIndexRod = (rodName: string) => {
-        if (indexRods[rodName] != undefined){
-            return indexRods[rodName]
-        }
-        return 4
-    }
 
 
     const columnsData: ColumnsType<DataType> = [
@@ -491,7 +424,6 @@ const Fisch: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 const Rods = Description['Rods'];
-                const listRodShow = ['Aurora Rod','Trident Rod', 'Rod Of The Depths', 'Sunken Rod', 'No-Life Rod', 'Phoenix Rod', 'Scurvy Rod']
                 var listRender: any[] = [];
                 var tempListRender: any [] = [];
 
@@ -856,45 +788,11 @@ const Fisch: React.FC = () => {
 
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Data Overview"} size={"small"}>
-                    <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card>
-                                <Statistic
-                                    title="Trident"
-                                    value={getTotalTrident()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ffe28c'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card>
-                                <Statistic
-                                    title="Rod of the Depths"
-                                    value={getTotalRoD()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#e0529c'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={8} xl={8}>
-                            <Card>
-                                <Statistic
-                                    title="No Life"
-                                    value={getTotalNoLife()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ff2020'}}
-                                />
-                            </Card>
-                        </Col>
-                    </Row>
+                    {showCountRods(dataApi)}
                 </Card>
-
             </Col>
         </Row>
         <Row>
-
-
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>
                 <Flex gap="small" justify={"flex-end"}>
                     <Dropdown menu={{ items }}>

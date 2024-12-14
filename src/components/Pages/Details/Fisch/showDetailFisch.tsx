@@ -2,6 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {
     getDataByUsernameAndGameId
 } from "../../../../services/data";
+import {
+    getIndexRod,
+    getColorRod
+} from "../../../../services/fisch"
 import { useParams } from "react-router"
 import {Card, Col, Result, Row, Tag} from "antd";
 import moment from "moment";
@@ -58,40 +62,6 @@ const DetailFisch: React.FC = () => {
                     Relic Enchant: {Inventory['Enchant Relic']}
                 </Tag> : "-"
         } </>
-    }
-
-    const colorRods: {[index: string]:any} = {
-        ['Phoenix Rod']: 'volcano',
-        ['Scurvy Rod']: 'yellow',
-        ['Aurora Rod'] : 'blue',
-        ['Trident Rod']: 'gold',
-        ['Rod Of The Depths']: 'magenta',
-        ['Sunken Rod']: 'green',
-        ['No-Life Rod']: 'error'
-    }
-
-    const getColorRod = (rodName: string) => {
-        if (colorRods[rodName] != undefined){
-            return colorRods[rodName]
-        }
-        else return "default"
-    }
-
-    const indexRods: {[index: string]:any} = {
-        ['Scurvy Rod']: 6,
-        ['Phoenix Rod']: 5,
-        ['Aurora Rod']: 4,
-        ['Trident Rod']: 3,
-        ['Rod Of The Depths']: 1,
-        ['Sunken Rod']: 2,
-        ['No-Life Rod']: 0
-    }
-
-    const getIndexRod = (rodName: string) => {
-        if (indexRods[rodName] != undefined){
-            return indexRods[rodName]
-        }
-        return 7
     }
 
     const getRod = () => {
