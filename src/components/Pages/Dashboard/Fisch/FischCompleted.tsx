@@ -825,11 +825,8 @@ const Fisch_Completed: React.FC = () => {
 
             <Col span={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Data Overview"} size={"small"}>
-                    <Card bordered={false} title={"Data Overview"} size={"small"}>
-                        {showCountRods(dataApi)}
-                    </Card>
+                    {showCountRods(dataApi)}
                 </Card>
-
             </Col>
         </Row>
         <Row>
