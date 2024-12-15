@@ -115,7 +115,7 @@ const BloxFruit: React.FC = () => {
 
     const mythicalItems = [
         'Cursed Dual Katana',
-        'Soul Guitar',
+        'Skull Guitar',
         'Mirror Fractal',
         'Valkyrie Helm',
         'Shark Anchor'
@@ -992,7 +992,7 @@ const BloxFruit: React.FC = () => {
 
                 const specialRenderShortname: any = {
                     ['Cursed Dual Katana']: 'CDK',
-                    ['Soul Guitar']: 'SG',
+                    ['Skull Guitar']: 'SG',
                     ['Mirror Fractal']: 'MF',
                     ['Valkyrie Helm']: 'VH',
                     ['Dragon']: 'Dragon',
