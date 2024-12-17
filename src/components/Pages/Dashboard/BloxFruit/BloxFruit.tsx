@@ -111,7 +111,7 @@ const BloxFruit: React.FC = () => {
 
     const [filteredSpecial, setFilteredSpecial] = useState(false)
 
-    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune','T-Rex']);
+    const [mythicalFruits, setMythicalFruits] = useState(['Leopard','Dragon','Dough','Mammoth','Kitsune','T-Rex','Gas']);
 
     const mythicalItems = [
         'Cursed Dual Katana',
@@ -1002,7 +1002,8 @@ const BloxFruit: React.FC = () => {
                     ['Kitsune']: 'Kitsune',
                     ['T-Rex']: 'T-Rex',
                     ['True Triple Katana']: 'TTK',
-                    ['Shark Anchor']: 'Shark Anchor'
+                    ['Shark Anchor']: 'Shark Anchor',
+                    ['Gas']: 'Gas'
                 }
                 
                 return (
