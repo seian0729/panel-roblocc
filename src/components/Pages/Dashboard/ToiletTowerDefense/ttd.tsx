@@ -208,6 +208,15 @@ const ToiletTowerDefense: React.FC = () => {
         return totalGems
     }
 
+    const getTotalCoins = () => {
+        let totalCoins = 0;
+        dataApi.forEach((item: DataType) => {
+            let Currencies = JSON.parse(item.Description)['Currencies']
+            totalCoins += Currencies['Coins']
+        })
+        return totalCoins
+    }
+
     const getTotalSpecialCurrency = () => {
         let totalSpecialCurrency = 0;
         dataApi.forEach((item: DataType) => {
@@ -522,22 +531,32 @@ const ToiletTowerDefense: React.FC = () => {
             </Col>
 
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Currencies Overview"} size={"small"}>
+                <Card bordered={false} title={"Currencies Overview 「ALL ACCOUNT」"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                             <Card>
                                 <Statistic
-                                    title="Total Gems (All account)"
+                                    title="Total Coins"
+                                    value={getTotalGems()}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#ffe28c'}}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                            <Card>
+                                <Statistic
+                                    title="Total Gems"
                                     value={getTotalGems()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#5487ff'}}
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                             <Card>
                                 <Statistic
-                                    title="Total Candy Cane (All account)"
+                                    title="Total Candy Cane"
                                     value={getTotalSpecialCurrency()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#ff6b6b'}}
