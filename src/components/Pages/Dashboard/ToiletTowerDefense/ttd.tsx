@@ -208,13 +208,13 @@ const ToiletTowerDefense: React.FC = () => {
         return totalGems
     }
 
-    const getTotalEggs = () => {
-        let totalEggs = 0;
+    const getTotalSpecialCurrency = () => {
+        let totalSpecialCurrency = 0;
         dataApi.forEach((item: DataType) => {
             let Currencies = JSON.parse(item.Description)['Currencies']
-            totalEggs += Currencies['Eggs_Easter2024']
+            totalSpecialCurrency += Currencies['CandyCanes_Christmas2024']
         })
-        return totalEggs
+        return totalSpecialCurrency
     }
 
     const hasSelected = selectedRowKeys.length > 0;
@@ -292,29 +292,18 @@ const ToiletTowerDefense: React.FC = () => {
         {
             title: "Event Currencies",
             dataIndex: "data",
-            children: [{
-                title: 'Eggs',
-                dataIndex: 'data-eggs',
-                key: "data-eggs",
-                render: (_, record) => {
-                    let Description = JSON.parse(record.Description)
-                    return <Tag color={"magenta"}>
-                        {new Intl.NumberFormat().format(Description['Currencies']['Eggs_Easter2024'])}
-                    </Tag>
-                },
-                sorter: (a: any, b: any) => JSON.parse(a.Description)['Currencies']['Eggs_Easter2024'] - JSON.parse(b.Description)['Currencies']['Eggs_Easter2024'],
-            },
+            children: [
                 {
-                    title: 'Clovers',
-                    dataIndex: 'data-clovers',
-                    key: "data-clovers",
+                    title: 'Candy Cane',
+                    dataIndex: 'data-candy-cane',
+                    key: "data-candy-cane",
                     render: (_, record) => {
                         let Description = JSON.parse(record.Description)
-                        return <Tag color={"lime"}>
-                            {new Intl.NumberFormat().format(Description['Currencies']['Clovers_StPatricks2024'])}
+                        return <Tag color={"red"}>
+                            {new Intl.NumberFormat().format(Description['Currencies']['CandyCanes_Christmas2024'])}
                         </Tag>
                     },
-                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Currencies']['Clovers_StPatricks2024'] - JSON.parse(b.Description)['Currencies']['Clovers_StPatricks2024'],
+                    sorter: (a: any, b: any) => JSON.parse(a.Description)['Currencies']['CandyCanes_Christmas2024'] - JSON.parse(b.Description)['Currencies']['CandyCanes_Christmas2024'],
                 },
             ]
         },
@@ -440,7 +429,7 @@ const ToiletTowerDefense: React.FC = () => {
         {contextHolder}
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Toilet Tower Defense</Divider>
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
@@ -532,19 +521,9 @@ const ToiletTowerDefense: React.FC = () => {
                 </Card>
             </Col>
 
-            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 6}}>
+            <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Currencies Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
-                            <Card>
-                                <Statistic
-                                    title="Total Eggs (All account)"
-                                    value={getTotalEggs()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#eeb1ff'}}
-                                />
-                            </Card>
-                        </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Card>
                                 <Statistic
@@ -552,7 +531,16 @@ const ToiletTowerDefense: React.FC = () => {
                                     value={getTotalGems()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#5487ff'}}
-                                    suffix={`(${new Intl.NumberFormat().format(getTotalEggs()/4)})`}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={12}>
+                            <Card>
+                                <Statistic
+                                    title="Total Candy Cane (All account)"
+                                    value={getTotalSpecialCurrency()}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#ff6b6b'}}
                                 />
                             </Card>
                         </Col>

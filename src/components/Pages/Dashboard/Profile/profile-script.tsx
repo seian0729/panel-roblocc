@@ -66,7 +66,7 @@ const toiletString = `getgenv().Setting = {
     DelayUpdate = 120,
     Note = '${username}'
 }
-loadstring(http_request({Url = 'https://cdn.chimovo.com/private/gia-lap-phong-thu-bon-cau/panel', Method = "GET"})['Body'])()`;
+loadstring(game:HttpGet('https://cdn.chimovo.com/private/gia-lap-phong-thu-bon-cau/panel'))()`;
 
 const adString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
