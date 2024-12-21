@@ -37,6 +37,7 @@ import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
 import {bulkDeleteData, getData, getTotalAccount, getDataLimit, deleteData} from "../../../../services/data";
+import {getRaceColor} from "../../../../services/bf";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps, SelectProps } from 'antd';
@@ -638,7 +639,6 @@ const BloxFruit: React.FC = () => {
                 return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
             },
         },
-        ,
         {
             title: 'Data',
             dataIndex: 'Data',
@@ -683,6 +683,60 @@ const BloxFruit: React.FC = () => {
                             <Tag color='orange' style={{margin: 4}}>
                                 {new Intl.NumberFormat().format(dataList.Level)}
                             </Tag>
+                        )
+                    }
+                },
+                {
+                    title: 'Race',
+                    dataIndex: 'race',
+                    filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+                        <div style={{padding: 8}}>
+                            <Input
+                                placeholder="Race DF"
+                                value={selectedKeys[0]}
+                                onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                                onPressEnter={() => confirm()}
+                                style={{width: 188, marginBottom: 8, display: 'block'}}
+                            />
+                            <Button
+                                type="primary"
+                                onClick={() => confirm()}
+                                style={{width: 90, marginRight: 8}}
+                            >
+                                Search
+                            </Button>
+                            <Button
+                                onClick={() => clearFilters?.()}
+                                style={{width: 90}}
+                            >
+                                Reset
+                            </Button>
+                        </div>
+                    ),
+                    filterIcon: (filtered: boolean) => (
+                        <SearchOutlined style={{color: filtered ? '#729ddc' : undefined}}/>
+                    ),
+                    onFilter: (value, record) => {
+                        let description = JSON.parse(record.Description);
+                        return (
+                            typeof description.Data.Race === 'string' &&
+                            typeof value === 'string' &&
+                            description.Data.Race.toLowerCase().includes(value.toLowerCase())
+                        );
+                    },
+                    render: (_, record) => {
+                        let description = JSON.parse(record.Description);
+                        let dataList = description.Data
+                        return (
+                            <>
+                                {
+                                    dataList.Race != undefined ? <Tag color={getRaceColor(dataList.Race)} style={{margin: 4}}>
+                                        {dataList.Race}
+                                    </Tag> : <>
+                                    -
+                                    </>
+                                }
+                            </>
                         )
                     }
                 },
@@ -832,51 +886,70 @@ const BloxFruit: React.FC = () => {
                             description.Data.DevilFruit.toLowerCase().includes(value.toLowerCase())
                         );
                     },
+                    sorter: (a: any, b: any) => {
+                        return JSON.parse(a.Description)['Awakened Abilities'].length - JSON.parse(b.Description)['Awakened Abilities'].length
+                    },
                     render: (_, record) => {
                         let description = JSON.parse(record.Description);
-                        return <Tag color={"geekblue"}>
-                        {
-                            description.Data.DevilFruit == '' ? "-" : description.Data.DevilFruit
+                        let awakened = description['Awakened Abilities'];
+                        const returnAwakened = () =>{
+                            if (awakened.includes('Awakened Abilities Data Not Found')){
+                                return "None"
+                            }
+
+                            if (awakened.includes('V'))
+                            {
+                                return "Full"
+                            }
+
+                            return awakened.length
+
                         }
-                        </Tag>
+                        return <>
+                            <Tag color={"geekblue"}>
+                                {
+                                    description.Data.DevilFruit == '' ? "-" : `${description.Data.DevilFruit} | ${returnAwakened()}`
+                                }
+                            </Tag>
+                        </>
         
                     },
                 },        
             ]
         },
 
-        {
-            title: 'Awakened',
-            dataIndex: 'awakened',
-            width: '15%',
-            sorter: (a: any, b: any) => JSON.parse(a.Description)['Awakened Abilities'].length - JSON.parse(b.Description)['Awakened Abilities'].length,
-            render: (_, record) => {
-                let description = JSON.parse(record.Description);
-                let awakened = description['Awakened Abilities'];
-                return (
-                    <>
-
-                        {
-                            awakened.includes('Awakened Abilities Data Not Found') ?
-                                <Text>-</Text> :
-                                awakened.includes('V') ?
-                                    <Tag color={"green"} key={'full'} style={{margin: 4}}>
-                                        {'Full'}
-                                    </Tag> :
-                                        awakened.map((key: any) => {
-                                            return (
-                                                <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 2}}>
-                                                    {key.length > 10 ? 'None' : key}
-                                                </Tag>
-                                            );
-                                        })
-                        }
-                    </>
-
-                )
-            }
-
-        },
+        // {
+        //     title: 'Awakened',
+        //     dataIndex: 'awakened',
+        //     width: '15%',
+        //     sorter: (a: any, b: any) => JSON.parse(a.Description)['Awakened Abilities'].length - JSON.parse(b.Description)['Awakened Abilities'].length,
+        //     render: (_, record) => {
+        //         let description = JSON.parse(record.Description);
+        //         let awakened = description['Awakened Abilities'];
+        //         return (
+        //             <>
+        //
+        //                 {
+        //                     awakened.includes('Awakened Abilities Data Not Found') ?
+        //                         <Text>-</Text> :
+        //                         awakened.includes('V') ?
+        //                             <Tag color={"green"} key={'full'} style={{margin: 4}}>
+        //                                 {'Full'}
+        //                             </Tag> :
+        //                                 awakened.map((key: any) => {
+        //                                     return (
+        //                                         <Tag color={key.length > 10 ? "red" : "green"} key={key} style={{margin: 2}}>
+        //                                             {key.length > 10 ? 'None' : key}
+        //                                         </Tag>
+        //                                     );
+        //                                 })
+        //                 }
+        //             </>
+        //
+        //         )
+        //     }
+        //
+        // },
         {
             title: 'Mythical - Items',
             dataIndex: 'special',
