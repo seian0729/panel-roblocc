@@ -536,8 +536,8 @@ const ToiletTowerDefense: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                             <Card>
                                 <Statistic
-                                    title="Total Coins"
-                                    value={getTotalGems()}
+                                    title="Total Coin"
+                                    value={getTotalCoins()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#ffe28c'}}
                                 />
@@ -546,7 +546,7 @@ const ToiletTowerDefense: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={8}>
                             <Card>
                                 <Statistic
-                                    title="Total Gems"
+                                    title="Total Gem"
                                     value={getTotalGems()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#5487ff'}}
