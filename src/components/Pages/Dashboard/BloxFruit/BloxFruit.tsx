@@ -1144,24 +1144,9 @@ const BloxFruit: React.FC = () => {
 
         },
         {
-            title: 'Last Update',
-            dataIndex: 'lastUpdate',
-            width: '10%',
-            render: (_, record) => {
-                return (
-                    <>
-                        {
-                            moment(record.updatedAt).fromNow()
-                        }
-                    </>
-                )
-            },
-            sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
-        },
-        {
             title: 'Status',
             dataIndex: 'accountStatus',
-            width: '10%',
+            width: '15%',
             filters: [
                 {
                     text: 'Active',
@@ -1174,92 +1159,21 @@ const BloxFruit: React.FC = () => {
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Active') {
-                    return moment().unix() - moment(record.updatedAt).unix() < 900
+                    return moment().unix() - moment(record.updatedAt).unix() < 300
                 } else if (value === 'Inactive') {
-                    return moment().unix() - moment(record.updatedAt).unix() >= 900
+                    return moment().unix() - moment(record.updatedAt).unix() >= 300
                 } else {
                     return false
                 }
 
             },
             render: (_, record) => {
-                let description = JSON.parse(record.Description);
-                const items: MenuProps['items'] = [
-                    {
-                        label: 'Dit khoi trai cay',
-                        key: '0',
-                        disabled: true
-                    },
-                    {
-                        type: 'divider',
-                    },
-                ];
-                if ('SeaHub BloxFruit' in description){
-                    let SeaHubBF = description['SeaHub BloxFruit'];
-                    if (typeof(SeaHubBF) == 'object' ) {
-                        const seaHubBFRender = Object.entries(SeaHubBF)
-                        seaHubBFRender.map((key) => {
-                            const labelKey = key[1]
-                            const labelKeyB: string = labelKey as string;
-                            if (moment().unix() - moment(record.updatedAt).unix() <= 900){
-                                items?.push(
-                                    {
-                                        key: key[0],
-                                        type: 'group',
-                                        label: key[0],
-                                        children: [
-                                            {
-                                                key: key[0],
-                                                label: labelKeyB,
-                                            },
-                                        ],
-                                    },
-                                )
-                            }
-                            else
-                                items?.push(
-                                    {
-                                        key: key[0],
-                                        type: 'group',
-                                        label: key[0],
-                                        children: [
-                                            {
-                                                key: key[0],
-                                                label: 'Inactive',
-                                                danger: true,
-                                            },
-                                        ],
-                                    },
-                                )
-
-                        })
-                    }
-
-                    return (
-                        <>
-                            <Dropdown menu={{ items }}>
-                                <Badge
-                                    status={moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'error' : 'success'}
-                                    text={
-                                        <Space>
-                                            {moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'Inactive' : 'Active'}
-                                            <DownOutlined />
-                                        </Space>
-                                    }/>
-                            </Dropdown>
-
-                        </>
-                    )
-                }
-                else {
-                    return (
-                        <>
-                            <Badge
-                                status={moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'error' : 'success'}
-                                text={moment().unix() - moment(record.updatedAt).unix() >= 900 ? 'Inactive' : 'Active'}/>
-                        </>
-                    )
-                }
+                return (
+                    <>
+                        <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
+                               text={moment(record.updatedAt).fromNow()}/>
+                    </>
+                )
             },
         },
         {
@@ -1273,7 +1187,7 @@ const BloxFruit: React.FC = () => {
                         value: record.Note,
                     })
 
-                    for (var index = 0; index < filtersNoteT.length; index++) {
+                    for (let index = 0; index < filtersNoteT.length; index++) {
                         if (!filtersNote.find(a => a.text === filtersNoteT[index].text)) {
                             filtersNote.push(filtersNoteT[index])
                         }

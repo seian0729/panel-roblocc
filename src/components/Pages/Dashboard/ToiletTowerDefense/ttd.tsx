@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import type {DrawerProps, TabsProps} from 'antd';
+import {DrawerProps, Input, TabsProps} from 'antd';
 import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
@@ -26,9 +26,10 @@ import {
     DeleteOutlined,
     DownOutlined,
     LineChartOutlined,
-    QuestionCircleOutlined,
+    QuestionCircleOutlined, SearchOutlined,
     UserOutlined
 } from "@ant-design/icons";
+import {getRaceColor} from "../../../../services/bf";
 const ToiletTowerDefense: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
@@ -226,6 +227,22 @@ const ToiletTowerDefense: React.FC = () => {
         return totalSpecialCurrency
     }
 
+    let selectedTroops = ['QuantumCameraman']
+    const getSpecialTroops = () =>{
+        let specialTroops = 0;
+        dataApi.forEach((item: DataType) => {
+            let troops = JSON.parse(item.Description)['Troops']
+            if (troops != undefined){
+                troops.map((item: any) =>{
+                    if(selectedTroops.includes(item['TroopName'])){
+                        specialTroops += item['Quantity']
+                    }
+                })
+            }
+        })
+        return specialTroops
+    }
+
     const hasSelected = selectedRowKeys.length > 0;
     interface DataType {
         UsernameRoblocc: string;
@@ -242,7 +259,7 @@ const ToiletTowerDefense: React.FC = () => {
         {
             title: 'Roblox Username',
             dataIndex: 'UsernameRoblocc',
-            width: '20%',
+            width: '10%',
             render: (_, record) => {
                 let UsernameRoblocc = record.UsernameRoblocc
                 // console.log(UsernameRoblocc.length/100*30, UsernameRoblocc.length)
@@ -317,24 +334,57 @@ const ToiletTowerDefense: React.FC = () => {
             ]
         },
         {
-            title: 'Last Update',
-            dataIndex: 'lastUpdate',
-            width: '15%',
+            title: 'Troops',
+            dataIndex: 'accountTroops',
+            width: '30%',
             render: (_, record) => {
+                let description = JSON.parse(record.Description);
+                let troopsList = description.Troops
                 return (
                     <>
                         {
-                            moment(record.updatedAt).fromNow()
+                            troopsList != undefined ? troopsList.map((item: any) =>{
+                                if (selectedTroops.includes(item['TroopName'])){
+                                    return <Tag style={{margin: 4}} color={'red'}>
+                                        {item['TroopName'].split(/(?=[A-Z])/).join(" ") + `「${new Intl.NumberFormat().format(item['Quantity'])}」`}
+                                    </Tag>
+                                }
+                            }) : <>
+                                -
+                            </>
                         }
                     </>
                 )
             },
-            sorter: (a, b) => moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
+            sorter: (a: any, b: any) => {
+                let descriptionA = JSON.parse(a.Description);
+                let descriptionB = JSON.parse(b.Description);
+                let troopsListA = descriptionA.Troops
+                let troopsListB = descriptionB.Troops
+
+                let countA = 0;
+                let countB = 0
+
+                if (troopsListA != undefined && troopsListB != undefined){
+                    troopsListA.map((item: any) => {
+                        if (selectedTroops.includes(item['TroopName'])) {
+                            countA += item['Quantity']
+                        }
+                    })
+
+                    troopsListB.map((item: any) => {
+                        if (selectedTroops.includes(item['TroopName'])) {
+                            countB += item['Quantity']
+                        }
+                    })
+                }
+                return countA - countB
+            }
         },
         {
             title: 'Status',
             dataIndex: 'accountStatus',
-            width: '10%',
+            width: '15%',
             filters: [
                 {
                     text: 'Active',
@@ -359,7 +409,7 @@ const ToiletTowerDefense: React.FC = () => {
                 return (
                     <>
                         <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'}
-                               text={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'Inactive' : 'Active'}/>
+                               text={moment(record.updatedAt).fromNow()}/>
                     </>
                 )
             },
@@ -367,7 +417,7 @@ const ToiletTowerDefense: React.FC = () => {
         {
             title: 'Note',
             dataIndex: 'Note',
-            width: '15%',
+            width: '10%',
             render: (_, record) => {
                 {
                     filtersNoteT.push({
@@ -533,7 +583,17 @@ const ToiletTowerDefense: React.FC = () => {
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 6}}>
                 <Card bordered={false} title={"Currencies Overview 「ALL ACCOUNT」"} size={"small"}>
                     <Row gutter={[12,12]}>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
+                            <Card>
+                                <Statistic
+                                    title={"Total Quantum Cameraman".toUpperCase()}
+                                    value={getSpecialTroops()}
+                                    prefix={<LineChartOutlined />}
+                                    valueStyle={{color: '#ff3434'}}
+                                />
+                            </Card>
+                        </Col>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
                                     title="Total Coin"
@@ -543,7 +603,7 @@ const ToiletTowerDefense: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
                                     title="Total Gem"
@@ -553,7 +613,7 @@ const ToiletTowerDefense: React.FC = () => {
                                 />
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={8}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
                                     title="Total Candy Cane"
