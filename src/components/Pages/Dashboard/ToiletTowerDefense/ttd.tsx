@@ -586,7 +586,7 @@ const ToiletTowerDefense: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
-                                    title={"Total Quantum Cameraman".toUpperCase()}
+                                    title={"Quantum Cameraman".toUpperCase()}
                                     value={getSpecialTroops()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#ff3434'}}
@@ -596,7 +596,7 @@ const ToiletTowerDefense: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
-                                    title="Total Coin"
+                                    title="Coin"
                                     value={getTotalCoins()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#ffe28c'}}
@@ -606,7 +606,7 @@ const ToiletTowerDefense: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
-                                    title="Total Gem"
+                                    title="Gem"
                                     value={getTotalGems()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#5487ff'}}
@@ -616,7 +616,7 @@ const ToiletTowerDefense: React.FC = () => {
                         <Col xs={24} sm={24} md={24} lg={24} xl={6}>
                             <Card>
                                 <Statistic
-                                    title="Total Candy Cane"
+                                    title="Candy Cane"
                                     value={getTotalSpecialCurrency()}
                                     prefix={<LineChartOutlined />}
                                     valueStyle={{color: '#ff6b6b'}}
