@@ -472,6 +472,9 @@ const BloxFruit: React.FC = () => {
                     let specaiCData = '';
                     let fullyCData = '';
 
+                    const specialFruit: any[] = [];
+                    const allMythicalFruit: any[] = [];
+
                     fullyCData += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
                     fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
                     fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
@@ -479,6 +482,10 @@ const BloxFruit: React.FC = () => {
                     bfData.map((key: any) => {
                         if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
                             specaiCData += key['Name'] + ' - '
+                            specialFruit.push(key['Name'])
+                        }
+                        if (key['Rarity'] == 4){
+                            allMythicalFruit.push(key['Name'])
                         }
                     })
 
@@ -514,7 +521,8 @@ const BloxFruit: React.FC = () => {
                         fullyCData + '/' +
                         itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - "+ itemDescript['Awakened Abilities']) + '/' +
                         fsText + '/' +
-                        specaiCData.substring(0, specaiCData.length - 2) + "\n"
+                        specaiCData.substring(0, specaiCData.length - 2) + '/' +
+                        `Mythical Fruits: ${allMythicalFruit.length - specialFruit.length}`+ "\n"
                 }
             })
 
@@ -1343,13 +1351,13 @@ const BloxFruit: React.FC = () => {
     ]
     dataApiSpecialFilter.forEach((item: DataType) => {
 
-        const itemDescript = JSON.parse(item.Description)
-        let fightingStyle = itemDescript['Fighting Style']
-        let bfData = itemDescript['Inventory']['Blox Fruit']
-        let sData = itemDescript['Inventory']['Sword']
-        let GData = itemDescript['Inventory']['Gun']
-        let MGata = itemDescript['Inventory']['Material']
-        let WGata = itemDescript['Inventory']['Wear']
+        const dataDescription = JSON.parse(item.Description)
+        let fightingStyle = dataDescription['Fighting Style']
+        let bfData = dataDescription['Inventory']['Blox Fruit']
+        let sData = dataDescription['Inventory']['Sword']
+        let GData = dataDescription['Inventory']['Gun']
+        let MGata = dataDescription['Inventory']['Material']
+        let WGata = dataDescription['Inventory']['Wear']
 
         let stringItemData = ""
 
@@ -1407,7 +1415,7 @@ const BloxFruit: React.FC = () => {
             item.Password,
             item.Cookie,
             `- Level: ${JSON.parse(item.Description).Data.Level} - Beli: ${JSON.parse(item.Description).Data.Beli} - Fragments: ${JSON.parse(item.Description).Data.Fragments}`,
-            itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']),
+            dataDescription.Data.DevilFruit + (dataDescription['Awakened Abilities'].includes("V") ? " - Full" : " - " + dataDescription['Awakened Abilities']),
             stringItemData.substring(0, stringItemData.length - 2),
             specialFruit.concat("").toString().substring(0,specialFruit.concat(" ").toString().length-2),
             `Mythical Fruits: ${allMythicalFruit.length - specialFruit.length}`
@@ -1460,6 +1468,39 @@ const BloxFruit: React.FC = () => {
 
                                     </Space>
 
+                                    {
+                                        whitelistAccounts.find((element) => element == username) != undefined ?
+                                            <div style={{marginBottom: 16}}>
+                                                <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
+                                                    <Space>
+                                                        <Button type="primary"
+                                                                onClick={copyDataHaveCookieAccount}
+                                                                disabled={getAmountAccountHaveCookie() === 0}
+                                                                loading={loadingCopyAccounntHaveCookie}>
+                                                            Copy Data Account
+                                                        </Button>
+                                                        <Popconfirm
+                                                            placement="bottom"
+                                                            title={'Are you sure to delete?'}
+                                                            description={`${getAmountAccountHaveCookie()} account`}
+                                                            onConfirm={deleteHaveCookieAccount}
+                                                            okText="Yes"
+                                                            cancelText="No"
+                                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                                        >
+                                                            <Button type="primary"
+                                                                    loading={loadingDeleteAccounntHaveCookie}
+                                                                    disabled={getAmountAccountHaveCookie() === 0}
+                                                                    danger>
+                                                                Delete Account
+                                                            </Button>
+                                                        </Popconfirm>
+                                                    </Space>
+                                                </Card>
+                                            </div>
+                                            :
+                                            <></>
+                                    }
 
                                 </div>
 
