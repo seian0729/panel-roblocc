@@ -42,6 +42,7 @@ import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
 import type { MenuProps, SelectProps } from 'antd';
 import {Export} from "../Export/export";
+import {RenderMythical} from "./mythical-data/render-mythical";
 
 const { Text } = Typography;
 const { Dragger } = Upload;
@@ -790,7 +791,7 @@ const BloxFruit: React.FC = () => {
                             value: '3-5'
                         },
                         {
-                            text: 'Godhuman',
+                            text: 'God',
                             value: 'God'
                         }
                     ],
@@ -826,7 +827,7 @@ const BloxFruit: React.FC = () => {
                             },
                         ];
         
-                        fsText = fightingStyle.length === 6 ? "Godhuman" : fightingStyle.length > 2 ? "3-5 Melee" : "0-2 Melee"
+                        fsText = fightingStyle.length === 6 ? "God" : fightingStyle.length > 2 ? "3-5" : "0-2"
                         fsColor = fightingStyle.length === 6 ? "blue" : fightingStyle.length > 2 ? "volcano" : "red"
         
         
@@ -960,9 +961,8 @@ const BloxFruit: React.FC = () => {
         //
         // },
         {
-            title: 'Mythical - Items',
+            title: 'Mythical - Item - Fruit',
             dataIndex: 'special',
-            width: '15%',
             filterIcon: () => (
                 <SearchOutlined style={{color: filteredSpecial ? '#729ddc' : undefined}}/>
             ),
@@ -1062,86 +1062,22 @@ const BloxFruit: React.FC = () => {
                 return objSortA.length - objSortB.length
 
             },
-            render: (_, record) => {
-                let description = JSON.parse(record.Description);
-                let bfData = description['Inventory']['Blox Fruit']
-                let sData = description['Inventory']['Sword']
-                let GData = description['Inventory']['Gun']
-                let MGata = description['Inventory']['Material']
-                let WGata = description['Inventory']['Wear']
-
-                const specialRender: any[] = [];
-
-                const specialRenderShortname: any = {
-                    ['Cursed Dual Katana']: 'CDK',
-                    ['Skull Guitar']: 'SG',
-                    ['Mirror Fractal']: 'MF',
-                    ['Valkyrie Helm']: 'VH',
-                    ['Dragon']: 'Dragon',
-                    ['Dough']: 'Dough',
-                    ['Leopard']: 'Leopard',
-                    ['Mammoth']: 'Mammoth',
-                    ['Kitsune']: 'Kitsune',
-                    ['T-Rex']: 'T-Rex',
-                    ['True Triple Katana']: 'TTK',
-                    ['Shark Anchor']: 'Shark Anchor',
-                    ['Gas']: 'Gas',
-                    ['Yeti']: 'Yeti',
+            children: [
+                {
+                    title: 'Item',
+                    width: "20%",
+                    render: (_, record) => {
+                        return <RenderMythical data={record} type={"Item"}/>
+                    },
+                },
+                {
+                    title: 'Fruit',
+                    width: "30%",
+                    render: (_, record) => {
+                        return <RenderMythical data={record} type={"Fruit"}/>
+                    },
                 }
-                
-                return (
-                    <>
-                        {bfData.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
-                                specialRender.push(key['Name'])
-                            }
-                        })}
-
-                        {sData.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                specialRender.push(key['Name'])
-                            }
-                        })}
-
-                        {GData.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                specialRender.push(key['Name'])
-                            }
-                        })}
-
-                        {MGata.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                specialRender.push(key['Name'])
-                            }
-                        })}
-
-                        {WGata.map((key: any) => {
-                            if (typeof (key) == 'object' && mythicalItems.indexOf(key.Name) !== -1) {
-                                specialRender.push(key.Name)
-                            }
-                        })}
-
-
-                        {
-
-                            specialRender.length == 0 ?
-                                <Text>-</Text>
-                                :
-                                specialRender.map((key: any) => {
-                                    return (
-                                        <Tag color="red" key={key} style={{margin: 4}}>
-                                            {specialRenderShortname[key]}
-                                        </Tag>
-                                    );
-                                })
-                        }
-
-
-                    </>
-
-                )
-            }
-
+            ],
         },
         {
             title: 'Status',
@@ -1222,97 +1158,12 @@ const BloxFruit: React.FC = () => {
                     {
                       label: <a onClick={() => {
                         //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                          navigator.clipboard.writeText(`${record.UsernameRoblocc}/${record.Password}`);
-                          messageApi.success(`Copied ${record.UsernameRoblocc}`)
-                    }}><CopyOutlined /> Copy username/password</a>,
-                      key: '1',
-                    },
-                    {
-                      label: <a onClick={() => {
-                        //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                          let text = ''
-                          const itemDescript = JSON.parse(record.Description)
-                          let dataList = itemDescript.Data
-                          let fightingStyle = itemDescript['Fighting Style']
-                          let bfData = itemDescript['Inventory']['Blox Fruit']
-                          let sData = itemDescript['Inventory']['Sword']
-                          let GData = itemDescript['Inventory']['Gun']
-                          let MGata = itemDescript['Inventory']['Material']
-                          let WGata = itemDescript['Inventory']['Wear']
-                          let specaiCData = '';
-                          let fullyCData = '';
-
-                          fullyCData += 'Level: ' + new Intl.NumberFormat().format(dataList.Level)
-                          fullyCData += ' - Fragments: ' + new Intl.NumberFormat().format(dataList.Fragments)
-                          fullyCData += ' - Beli: ' + new Intl.NumberFormat().format(dataList.Beli)
-
-                          bfData.map((key: any) => {
-                              if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
-                                  specaiCData += key['Name'] + ' - '
-                              }
-                          })
-
-                          sData.map((key: any) => {
-                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                  specaiCData += key['Name'] + ' - '
-                              }
-                          })
-
-                          GData.map((key: any) => {
-                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                  specaiCData += key['Name'] + ' - '
-                              }
-                          })
-
-                          MGata.map((key: any) => {
-                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                  specaiCData += key['Name'] + ' - '
-                              }
-                          })
-
-                          WGata.map((key: any) => {
-                              if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                                  specaiCData += key['Name'] + ' - '
-                              }
-                          })
-
-                          fightingStyle.map(() => {
-                              if (fightingStyle.length === 6) {
-                                  fsText = 'Godhuman';
-                              } else if (fightingStyle.length > 2) {
-                                  fsText = '3-5 Melee';
-                              } else {
-                                  fsText = '0-2 Melee';
-                              }
-                          })
-
-                          text +=
-                              record.UsernameRoblocc + '/' +
-                              record.Password + '/' +
-                              record.Cookie + '/' +
-                              fullyCData + '/' +
-                              itemDescript.Data['DevilFruit'] + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']) + '/' +
-                              fsText + '/' +
-                              specaiCData.substring(0, specaiCData.length - 2) + "\n"
-
-                          navigator.clipboard.writeText(text);
-                          messageApi.success(`Copied Data ${record.UsernameRoblocc}`)
-
-                    }}><CopyOutlined /> Copy full data</a>,
-                      key: '2',
-                    },
-                    {
-                      type: 'divider',
-                    },
-                    {
-                      label: <a onClick={() => {
-                        //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
                           deleteData(record.UsernameRoblocc).then((res) => {
                               messageApi.success(`Deleted account: ${record.UsernameRoblocc} !`);
                               refreshData()
                           })
                     }}><DeleteOutlined /> Delete Account</a>,
-                      key: '3',
+                      key: '1',
                       danger: true
                     },
                   ];
@@ -1488,7 +1339,7 @@ const BloxFruit: React.FC = () => {
     }
 
     const dataDefault = [
-        ['Username', 'Password', 'Cookie', 'Data', 'Fruit', 'Special'],
+        ['Username', 'Password', 'Cookie', 'Data', 'Fruit', 'Mythical Item', 'Mythical Fruit (Inventory)', 'Mythical Fruit (Trash)'],
     ]
     dataApiSpecialFilter.forEach((item: DataType) => {
 
@@ -1499,35 +1350,42 @@ const BloxFruit: React.FC = () => {
         let GData = itemDescript['Inventory']['Gun']
         let MGata = itemDescript['Inventory']['Material']
         let WGata = itemDescript['Inventory']['Wear']
-        let specaiCData = '';
+
+        let stringItemData = ""
+
+        const specialFruit: any[] = [];
+        const allMythicalFruit: any[] = [];
 
         bfData.map((key: any) => {
             if (typeof (key) == 'object' && mythicalFruits.indexOf(key['Name']) !== -1) {
-                specaiCData += key['Name'] + ' - '
+                specialFruit.push(key['Name'])
+            }
+            if (key['Rarity'] == 4){
+                allMythicalFruit.push(key['Name'])
             }
         })
 
         sData.map((key: any) => {
             if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                specaiCData += key['Name'] + ' - '
+                stringItemData += key['Name'] + ' - '
             }
         })
 
         GData.map((key: any) => {
             if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                specaiCData += key['Name'] + ' - '
+                stringItemData += key['Name'] + ' - '
             }
         })
 
         MGata.map((key: any) => {
             if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                specaiCData += key['Name'] + ' - '
+                stringItemData += key['Name'] + ' - '
             }
         })
 
         WGata.map((key: any) => {
             if (typeof (key) == 'object' && mythicalItems.indexOf(key['Name']) !== -1) {
-                specaiCData += key['Name'] + ' - '
+                stringItemData += key['Name'] + ' - '
             }
         })
 
@@ -1541,13 +1399,18 @@ const BloxFruit: React.FC = () => {
             }
         })
 
+
+
+
         dataDefault.push([
             item.UsernameRoblocc,
             item.Password,
             item.Cookie,
             `- Level: ${JSON.parse(item.Description).Data.Level} - Beli: ${JSON.parse(item.Description).Data.Beli} - Fragments: ${JSON.parse(item.Description).Data.Fragments}`,
             itemDescript.Data.DevilFruit + (itemDescript['Awakened Abilities'].includes("V") ? " - Full" : " - " + itemDescript['Awakened Abilities']),
-            specaiCData.substring(0, specaiCData.length - 2) + "\n"
+            stringItemData.substring(0, stringItemData.length - 2),
+            specialFruit.concat("").toString().substring(0,specialFruit.concat(" ").toString().length-2),
+            `Mythical Fruits: ${allMythicalFruit.length - specialFruit.length}`
         ])
     })
 
@@ -1599,41 +1462,6 @@ const BloxFruit: React.FC = () => {
 
 
                                 </div>
-
-                                {
-                                    whitelistAccounts.find((element) => element == username) != undefined ?
-                                        <div style={{marginBottom: 16}}>
-                                            <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
-                                                <Space>
-                                                    <Button type="primary"
-                                                            onClick={copyDataHaveCookieAccount}
-                                                            disabled={getAmountAccountHaveCookie() === 0}
-                                                            loading={loadingCopyAccounntHaveCookie}>
-                                                        Copy Data Account
-                                                    </Button>
-
-                                                    <Popconfirm
-                                                        placement="bottom"
-                                                        title={'Are you sure to delete?'}
-                                                        description={`${getAmountAccountHaveCookie()} account`}
-                                                        onConfirm={deleteHaveCookieAccount}
-                                                        okText="Yes"
-                                                        cancelText="No"
-                                                        icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                                    >
-                                                        <Button type="primary"
-                                                                loading={loadingDeleteAccounntHaveCookie}
-                                                                disabled={getAmountAccountHaveCookie() === 0}
-                                                                danger>
-                                                            Delete Account
-                                                        </Button>
-                                                    </Popconfirm>
-                                                </Space>
-                                            </Card>
-                                        </div>
-                                        :
-                                        <></>
-                                }
 
                                 <div>
                                     <Form>

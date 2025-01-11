@@ -7,7 +7,7 @@ import * as XLSX from "xlsx";
 import {saveAs} from "file-saver";
 
 
-export const Export = ({data, gameName} : any,) => {
+export const Export = ({data, gameName} : any) => {
 
     const [messageApi, contextHolder] = message.useMessage();
 
