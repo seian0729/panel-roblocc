@@ -1470,7 +1470,7 @@ const BloxFruit: React.FC = () => {
 
                                     {
                                         whitelistAccounts.find((element) => element == username) != undefined ?
-                                            <div style={{marginBottom: 16}}>
+                                            <div style={{marginTop: 16}}>
                                                 <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
                                                     <Space>
                                                         <Button type="primary"
@@ -1551,7 +1551,6 @@ const BloxFruit: React.FC = () => {
                                         <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                                             <Card size="small" hoverable={true}>
                                                 <Statistic
-                                                    title="Active Accounts"
                                                     value={getOnline()}
                                                     valueStyle={{color: '#6abe39'}}
                                                     prefix={<UserOutlined/>}
@@ -1561,7 +1560,6 @@ const BloxFruit: React.FC = () => {
                                         <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                                             <Card size="small" hoverable={true}>
                                                 <Statistic
-                                                    title="Inactive Accounts"
                                                     value={getOffline()}
                                                     valueStyle={{color: '#e84749'}}
                                                     prefix={<UserOutlined/>}
@@ -1571,7 +1569,6 @@ const BloxFruit: React.FC = () => {
                                         <Col xs={24} sm={24} md={24} lg={12} xl={8}>
                                             <Card size="small" hoverable={true}>
                                                 <Statistic
-                                                    title="Total Accounts"
                                                     value={getOffline() + getOnline()}
                                                     valueStyle={{color: '#535dff'}}
                                                     prefix={<UserOutlined/>}
