@@ -97,9 +97,6 @@ const BloxFruit: React.FC = () => {
     //Sort - Data
     const [dataValue, setDataValue] = useState('Level')
 
-    //Active
-    const [active, setActive] = useState(false);
-
     //whitelist account
     const whitelistAccounts = ["Hanei","k7ndz","huy8841","winyeubop"];
 
@@ -1149,43 +1146,6 @@ const BloxFruit: React.FC = () => {
             onFilter: (value: any, record: { Note: string; }) => record.Note.valueOf() === value,
             filterSearch: true,
         },
-        {
-            title: 'Action',
-            key: 'action',
-            width: '5%',
-            render: (_, record) => {
-                const items: MenuProps['items'] = [
-                    {
-                        label: `Username: ${record.UsernameRoblocc}`,
-                        key: '0',
-                        disabled: true
-                    },
-                    {
-                        type: 'divider',
-                      },
-                    {
-                      label: <a onClick={() => {
-                        //console.log(`Copied: ${record.UsernameRoblocc}/${record.Password}`)
-                          deleteData(record.UsernameRoblocc).then((res) => {
-                              messageApi.success(`Deleted account: ${record.UsernameRoblocc} !`);
-                              refreshData()
-                          })
-                    }}><DeleteOutlined /> Delete Account</a>,
-                      key: '1',
-                      danger: true
-                    },
-                  ];
-                  return(<Dropdown menu={{ items }} trigger={['click']}>
-                  <a onClick={(e) => e.preventDefault()}>
-                    <Space>
-                      Action
-                      <DownOutlined />
-                    </Space>
-                  </a>
-                </Dropdown>)
-            }
-            ,
-        }
     ];
 
     const fetchDataLimit = (page: number, pageSize: number) => {
@@ -1233,25 +1193,10 @@ const BloxFruit: React.FC = () => {
         }
     }, [newRender ? dataLimitApi : dataApi])
 
-    useEffect(() =>{
-        window.onfocus = function (ev) {
-            setActive(true)
-        };
-
-        window.onblur = function (ev) {
-            setActive(false)
-        };
-    })
-
     const AutoRefreshData = () => {
-        if(active){
-            refreshData()
-            messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 300000).fromNow() }`,10);
-            messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,60)
-        }
-        else{
-            messageApi.error('AFK Detected - Automatically Refresh Data has been disabled')
-        }
+        refreshData()
+        messageApi.success(`Automatically Refresh Data ${moment(Date.now() + 300000).fromNow() }`,10);
+        messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,60)
     }
 
     useEffect(() =>{
