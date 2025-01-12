@@ -187,7 +187,10 @@ function App() {
                         <Route element={<UserOnlyRoute userIsLogged={userIsLogged}/>}>
                             <Route path="dashboard" element={<DashboardLayout/>}>
                                 <Route index element={<DashboardIndex/>}/>
-                                <Route path={"bloxfruit"} element={<BloxFruit/>}/>
+                                <Route path={"blox-fruit"}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path={"tracking"} element={<BloxFruit/>}/>
+                                </Route>
                                 <Route path={"petx"} element={<PetX/>}/>
                                 <Route path={"pet99"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("pet99")}/>}>
                                     <Route index element={<Page404/>}/>

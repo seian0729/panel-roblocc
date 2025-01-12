@@ -24,7 +24,7 @@ const DashboardIndex: React.FC = () => {
                           hoverable
                           cover={<img style={{width: "100%"}} alt="example" src={bloxImg}/>}
                     >
-                        <Link to={"bloxfruit"}>
+                        <Link to={"blox-fruit/tracking"}>
                             <Button style={{width: "100%"}} type={"default"}> Blox Fruit </Button>
                         </Link>
                     </Card>

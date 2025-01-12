@@ -111,12 +111,20 @@ const DashboardLayout: React.FC = () => {
         getItem((<Link to="../../dashboard">
             <span>Dashboard</span>
         </Link>), ''),
-        getItem((<Link to="../../dashboard/bloxfruit">
-            <span>Blox Fruits</span>
-        </Link>), 'bloxfruit'),
         getItem((<Link to="../../dashboard/petx">
             <span>Pet Simulator X</span>
         </Link>), 'petx'),
+        getItem(
+            'Blox Fruit',
+            'bloxfruit',
+            null,
+            [
+                getItem((<Link to="../../dashboard/blox-fruit/tracking">
+                    <span>Tracking</span>
+                </Link>), 'blox-fruit/tracking'),
+            ]
+            ,
+            'group'),
     ]
 
 

@@ -4,11 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] TTD | Total">
-      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/mythical-data/render-mythical.tsx" afterDir="false" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[-] BF | Removed afk mode">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/Export/export.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/Export/export.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardIndex.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -257,39 +258,10 @@
       <workItem from="1734767020242" duration="2958000" />
       <workItem from="1736068385845" duration="559000" />
       <workItem from="1736069005240" duration="47000" />
-      <workItem from="1736587286662" duration="5243000" />
-    </task>
-    <task id="LOCAL-00062" summary="[*] Pet 99 | Fixed detect inactive/active account">
-      <option name="closed" value="true" />
-      <created>1709019501360</created>
-      <option name="number" value="00062" />
-      <option name="presentableId" value="LOCAL-00062" />
-      <option name="project" value="LOCAL" />
-      <updated>1709019501360</updated>
-    </task>
-    <task id="LOCAL-00063" summary="[*] Pet 99 | Fixed responsive on mb device">
-      <option name="closed" value="true" />
-      <created>1709097766944</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1709097766945</updated>
-    </task>
-    <task id="LOCAL-00064" summary="[+] Pet 99 | Last Updated">
-      <option name="closed" value="true" />
-      <created>1709272189652</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1709272189652</updated>
-    </task>
-    <task id="LOCAL-00065" summary="[+] Pet 99 | Format Number">
-      <option name="closed" value="true" />
-      <created>1709274655390</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1709274655390</updated>
+      <workItem from="1736587286662" duration="10270000" />
+      <workItem from="1736608878135" duration="650000" />
+      <workItem from="1736684797987" duration="2983000" />
+      <workItem from="1736706135472" duration="1101000" />
     </task>
     <task id="LOCAL-00066" summary="[+] Whitelist | Manke">
       <option name="closed" value="true" />
@@ -651,7 +623,39 @@
       <option name="project" value="LOCAL" />
       <updated>1736068782292</updated>
     </task>
-    <option name="localTasksCounter" value="111" />
+    <task id="LOCAL-00111" summary="[+] BF | Added count mythical (trash), improved render data [split item &amp; fruit]">
+      <option name="closed" value="true" />
+      <created>1736592719972</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1736592719972</updated>
+    </task>
+    <task id="LOCAL-00112" summary="[+] BF | Re-added Special Account Control">
+      <option name="closed" value="true" />
+      <created>1736606392038</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1736606392039</updated>
+    </task>
+    <task id="LOCAL-00113" summary="[+] BF | Re-added Special Account Control">
+      <option name="closed" value="true" />
+      <created>1736609456089</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1736609456090</updated>
+    </task>
+    <task id="LOCAL-00114" summary="[-] BF | Removed afk mode">
+      <option name="closed" value="true" />
+      <created>1736685338789</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1736685338791</updated>
+    </task>
+    <option name="localTasksCounter" value="115" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -669,9 +673,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Pet99 - Mail | Fixed again" />
-    <MESSAGE value="[+] TTD | Added" />
-    <MESSAGE value="[*] TTD | Update zaza" />
     <MESSAGE value="[*] PetGO" />
     <MESSAGE value="[+] Pet GO | Added Total Roll, Re-formated number value pet" />
     <MESSAGE value="[+] Pet GO | Fixed 50m+ / Huge , haven't test" />
@@ -694,6 +695,9 @@
     <MESSAGE value="[*] BF | Rename Skull Guitar" />
     <MESSAGE value="[+] BF | Added Gas" />
     <MESSAGE value="[*] TTD | Total" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] TTD | Total" />
+    <MESSAGE value="[+] BF | Added count mythical (trash), improved render data [split item &amp; fruit]" />
+    <MESSAGE value="[+] BF | Re-added Special Account Control" />
+    <MESSAGE value="[-] BF | Removed afk mode" />
+    <option name="LAST_COMMIT_MESSAGE" value="[-] BF | Removed afk mode" />
   </component>
 </project>

@@ -1,4 +1,4 @@
-import type {CollapseProps, TableProps, TabsProps, UploadProps} from 'antd';
+import type {UploadProps} from 'antd';
 import {
     Badge,
     Button,
@@ -18,14 +18,12 @@ import {
     Statistic,
     Table,
     Tag,
-    theme,
     Upload,
     Typography,
     Dropdown,
     Drawer
 } from 'antd';
 import {
-    CopyOutlined, DeleteOutlined, DownOutlined,
     ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
@@ -36,7 +34,7 @@ import {
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
 import React, {useEffect, useState} from "react";
 import type {ColumnsType} from 'antd/es/table';
-import {bulkDeleteData, getData, getTotalAccount, getDataLimit, deleteData} from "../../../../services/data";
+import {bulkDeleteData, getData} from "../../../../services/data";
 import {getRaceColor} from "../../../../services/bf";
 import moment from "moment";
 import {useStore} from "../../../../state/storeHooks";
@@ -50,14 +48,6 @@ const { Dragger } = Upload;
 
 const BloxFruit: React.FC = () => {
 
-    const {token} = theme.useToken();
-
-    const panelStyle = {
-        marginBottom: 10,
-        background: token.colorFillAlter,
-        borderRadius: token.borderRadiusLG,
-        border: 'none',
-    };
 
     const {user} = useStore(({app}) => app);
 
@@ -68,7 +58,6 @@ const BloxFruit: React.FC = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     // main loading
-    const [loadingSkeTable, sLoadingSkeTable] = useState(true);
     const [loadingTable, setLoadingTable] = useState(true);
 
     // loading
@@ -83,28 +72,13 @@ const BloxFruit: React.FC = () => {
 
     // data
     const [dataApi, setDataApi] = useState([]);
-    const [dataLimitApi, setDataLimitApi] = useState([]);
-    const [countAccount, setCountAccount] = useState(0)
     //dataSpecialFilter
     const [dataApiSpecialFilter, setDataApiSpecialFilter] = useState([]);
     const [specialFilter, setSpecialFilter] = useState([]);
 
-    // page pagination
-    const [totalPage, setTotalPage] = useState(1);
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
-
-    //Sort - Data
-    const [dataValue, setDataValue] = useState('Level')
-
     //whitelist account
     const whitelistAccounts = ["Hanei","k7ndz","huy8841","winyeubop"];
 
-
-
-    const handleData = (val: { value: any }) => {
-        setDataValue(val.value)
-    }
 
     //Filter Specical / Mythical Fruits
 
@@ -165,22 +139,12 @@ const BloxFruit: React.FC = () => {
 
     //Hidename
     const [hidename, setHidename] = useState(false)
-    //Render Method
-    const [newRender, setNewRender] = useState(false);
 
     const onChangeHidename = (e: CheckboxChangeEvent) => {
         setHidename(e.target.checked)
     };
 
-    const onChangeRender = (e: CheckboxChangeEvent) => {
-        setNewRender(e.target.checked)
-    };
-
-    const [dataChartNote, setDataChartNote] = useState([]);
-
-
     //Online - Offline
-    let ngu
 
     const refreshData = () => {
         setLoadingReload(true);
@@ -189,10 +153,6 @@ const BloxFruit: React.FC = () => {
         setTimeout(() => {
             getData(994732206).then((res) => {
                 setDataApi(res.data);
-            })
-
-            getTotalAccount().then((res) => {
-                setCountAccount(res.data)
             })
             messageApi.success('Refresh Success <3');
             setSelectedRowKeys([]);
@@ -204,7 +164,7 @@ const BloxFruit: React.FC = () => {
     const bulkDeleteAccount = () => {
         setLoadingDelete(true);
         setTimeout(() => {
-            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
+            bulkDeleteData(selectedRowKeys as string[]).then(() => {
                 //console.log(res);
             })
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
@@ -214,12 +174,8 @@ const BloxFruit: React.FC = () => {
         }, 1000);
     };
 
-    const disabledFunction = () => {
-        messageApi.error('This function not available')
-    }
-
     const getOnline = () => {
-        var temp = 0
+        let temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
             if (moment().unix() - update <= 900) {
@@ -257,7 +213,7 @@ const BloxFruit: React.FC = () => {
     }
 
     const getOffline = () => {
-        var temp = 0
+        let temp = 0
         dataApi.forEach((item: DataType) => {
             const update = moment(item.updatedAt).unix()
             if (moment().unix() - update > 900) {
@@ -265,24 +221,6 @@ const BloxFruit: React.FC = () => {
             }
         })
         return temp
-    }
-
-    const copyData = () => {
-        setLoadingCopy(true);
-        // ajax request after empty completing
-        setTimeout(() => {
-            let text = '';
-
-            dataApiSpecialFilter.forEach((item: DataType) => {
-                // if item in selectedRowKeys
-                if (selectedRowKeys.includes(item.UsernameRoblocc)) {
-                    text += item.UsernameRoblocc + '/' + item.Password + '/' + item.Cookie + '\n';
-                }
-            })
-            messageApi.success(`Copied ${selectedRowKeys.length} account into clipboard <3`);
-            setSelectedRowKeys([]);
-            setLoadingCopy(false);
-        }, 500)
     }
 
     const copyFullyData = () => {
@@ -538,7 +476,7 @@ const BloxFruit: React.FC = () => {
             }
         })
         setLoadingDeleteAccounntHaveCookie(true);
-        bulkDeleteData(tempListAccount).then((res) => {
+        bulkDeleteData(tempListAccount).then(() => {
             setTimeout(() => {
                 messageApi.success(`Deleted: ${getAmountAccountHaveCookie()} account !`);
                 setLoadingDeleteAccounntHaveCookie(false);
@@ -599,8 +537,7 @@ const BloxFruit: React.FC = () => {
     
         const found = map.find((x) => Math.abs(num) >= x.threshold);
         if (found) {
-            const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
-            return formatted;
+            return (num / found.threshold).toFixed(precision) + found.suffix;
         }
     
         return num;
@@ -630,10 +567,6 @@ const BloxFruit: React.FC = () => {
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
-
-    const handleChange: TableProps<DataType>['onChange'] = (filters, sorter) => {
-        // console.log('Various parameters', filters, sorter);
-    };
 
     // @ts-ignore
     const columns: ColumnsType<DataType> = [
@@ -856,7 +789,6 @@ const BloxFruit: React.FC = () => {
                                             <Tag color={fsColor}>{fsText}</Tag>
                                         </Dropdown>
                                 }
-        
         
                             </>
                         )
@@ -1087,7 +1019,7 @@ const BloxFruit: React.FC = () => {
         {
             title: 'Status',
             dataIndex: 'accountStatus',
-            width: '15%',
+            width: '20%',
             filters: [
                 {
                     text: 'Active',
@@ -1108,6 +1040,7 @@ const BloxFruit: React.FC = () => {
                 }
 
             },
+            sorter: (a: any, b: any) =>  moment(a.updatedAt).unix() - moment(b.updatedAt).unix(),
             render: (_, record) => {
                 return (
                     <>
@@ -1148,50 +1081,19 @@ const BloxFruit: React.FC = () => {
         },
     ];
 
-    const fetchDataLimit = (page: number, pageSize: number) => {
-        // console.log(`page: ${page} pageSize: ${pageSize}`)
-        if (newRender) {
-            setLoadingTable(true)
-        }
-        getDataLimit(994732206,page,pageSize).then((res) => {
-            setTotalPage(res.totalData)
-            setDataLimitApi(res.data)
-            if (newRender) {
-                setLoadingTable(false)
-                sLoadingSkeTable(false)
-            }
-        })
-    }
-
     // copy all value in the array
 
     useEffect(() => {
         getData(994732206).then((res) => {
             setDataApi(res.data);
             setLoadingTable(false)
-            sLoadingSkeTable(false)
             messageApi.success('Data has been loaded')
         })
     }, [])
 
     useEffect(() => {
-        getTotalAccount().then((res) => {
-            setCountAccount(res.data)
-        })
-    }, [])
-
-    useEffect(() => {
-        fetchDataLimit(1, 10)
-    },[pageSize])
-
-    useEffect(() => {
-        if (newRender) {
-            setDataApiSpecialFilter(dataLimitApi)
-        }
-        else{
-            setDataApiSpecialFilter(dataApi)
-        }
-    }, [newRender ? dataLimitApi : dataApi])
+        setDataApiSpecialFilter(dataApi)
+    }, [dataApi])
 
     const AutoRefreshData = () => {
         refreshData()
@@ -1273,8 +1175,6 @@ const BloxFruit: React.FC = () => {
         setSpecialFilter(value)
     }
 
-    const limitacc = Number(user.unwrap().limitacc);
-
     const [modal, ModalcontextHolder] = Modal.useModal();
 
     const openModal = () => {
@@ -1351,9 +1251,6 @@ const BloxFruit: React.FC = () => {
                 fsText = '0-2 Melee';
             }
         })
-
-
-
 
         dataDefault.push([
             item.UsernameRoblocc,
@@ -1534,21 +1431,12 @@ const BloxFruit: React.FC = () => {
                                     scroll={{x: true}}
                                     bordered
                                     pagination={{
-                                        total: newRender ? totalPage : dataApiSpecialFilter.length,
+                                        total: dataApiSpecialFilter.length,
                                         pageSizeOptions: [10, 50, 100, 500, 1000, 2000, 5000],
                                         showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} accounts`,
                                         position: ['topCenter'],
                                         defaultPageSize: 10,
                                         showSizeChanger: true,
-                                        onChange: (page, pageSize) => {
-                                            if (newRender) {
-                                                fetchDataLimit(page, pageSize)
-                                            }
-                                            else {
-                                                setPage(page);
-                                                setPageSize(pageSize);
-                                            }
-                                        },
                                     }}
                                 />
                                 <FloatButton.BackTop/>
