@@ -1315,7 +1315,7 @@ const BloxFruit: React.FC = () => {
         {
             pathImg: God,
             type: 'Melee',
-            itemName: null
+            itemName: 'God'
         },
         {
             pathImg: CDK,
@@ -1509,7 +1509,7 @@ const BloxFruit: React.FC = () => {
                                         <Row gutter={[16, 16]}>
                                             {
                                                 dataItemRender.map((key) =>{
-                                                    return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalItem(key['type'], key['itemName'])} />
+                                                    return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalItem(key['type'], key['itemName'])} itemName={key['itemName']} />
                                                 })
                                             }
                                         </Row>
@@ -1518,7 +1518,7 @@ const BloxFruit: React.FC = () => {
                                         <Row gutter={[16, 16]}>
                                             {
                                                 dataFruitRender.map((key) =>{
-                                                    return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalItem('Blox Fruit', key['itemName'])} />
+                                                    return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalItem('Blox Fruit', key['itemName'])} itemName={key['itemName']} />
                                                 })
                                             }
                                         </Row>
