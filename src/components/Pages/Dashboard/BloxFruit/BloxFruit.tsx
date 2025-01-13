@@ -1,4 +1,4 @@
-import type {UploadProps} from 'antd';
+import React, {useEffect, useState} from "react";
 import {
     Badge,
     Button,
@@ -15,35 +15,55 @@ import {
     Row,
     Select,
     Space,
-    Statistic,
     Table,
     Tag,
     Upload,
     Typography,
     Dropdown,
-    Drawer
+    Drawer,
 } from 'antd';
+import type { MenuProps, SelectProps } from 'antd';
+import type {ColumnsType} from 'antd/es/table';
+import {UploadProps} from 'antd';
 import {
     ExclamationCircleOutlined, InboxOutlined,
     QuestionCircleOutlined,
     SearchOutlined,
-    UserOutlined,
 } from '@ant-design/icons';
 
-
 import type {CheckboxChangeEvent} from 'antd/es/checkbox';
-import React, {useEffect, useState} from "react";
-import type {ColumnsType} from 'antd/es/table';
+
+// img
+// item
+import God from "../../../../assets/bloxfruit/item/Godhuman.webp"
+import CDK from "../../../../assets/bloxfruit/item/Cursed_Dual_Katana.webp"
+import SG from "../../../../assets/bloxfruit/item/Skull_Guitar.webp"
+import SharkAnchor from "../../../../assets/bloxfruit/item/Shark_Anchor.webp"
+import TTK from "../../../../assets/bloxfruit/item/True_Triple_Katana.webp"
+import VH from "../../../../assets/bloxfruit/item/Valkyrie_Helm.webp"
+import MF from "../../../../assets/bloxfruit/item/Mirror_Fractal.webp"
+// fruit
+import TRex from "../../../../assets/bloxfruit/fruits/T-RexFruit.webp"
+import Dough from "../../../../assets/bloxfruit/fruits/DoughFruit.webp"
+import Gas from "../../../../assets/bloxfruit/fruits/GasFruit.webp"
+import Leo from "../../../../assets/bloxfruit/fruits/LeopardFruit.webp"
+import Yeti from "../../../../assets/bloxfruit/fruits/YetiFruit.webp"
+import Kit from "../../../../assets/bloxfruit/fruits/KitsuneFruit.webp"
+import Dragon from "../../../../assets/bloxfruit/fruits/DragonFruit.webp"
+
+import moment from "moment";
+
+import {useStore} from "../../../../state/storeHooks";
+
 import {bulkDeleteData, getData} from "../../../../services/data";
 import {getRaceColor} from "../../../../services/bf";
-import moment from "moment";
-import {useStore} from "../../../../state/storeHooks";
-import type { MenuProps, SelectProps } from 'antd';
 import {Export} from "../Export/export";
-import {RenderMythical} from "./mythical-data/render-mythical";
+import {RenderMythical} from "./render-data/render-mythical";
+import {RenderDataCount} from "./render-data/render-count-data"
 
 const { Text } = Typography;
 const { Dragger } = Upload;
+
 
 
 const BloxFruit: React.FC = () => {
@@ -52,6 +72,8 @@ const BloxFruit: React.FC = () => {
     const {user} = useStore(({app}) => app);
 
     const {username} = user.unwrap();
+
+    const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -485,6 +507,30 @@ const BloxFruit: React.FC = () => {
         })
     }
 
+    // get count item
+
+    const getTotalItem = (itemType: string, itemName: string | null) => {
+        let tempItem = 0
+        dataApi.forEach((item: DataType) => {
+            const dataDescription = JSON.parse(item.Description);
+            switch (itemType){
+                case "Melee": {
+                    let fightingStyle = dataDescription['Fighting Style']
+                    if (fightingStyle.length == 6){
+                        tempItem++
+                    }
+                    break
+                }
+                default: {
+                    let itemData = dataDescription['Inventory'][itemType]
+                    if (itemData.some((itemFind: any) => itemFind['Name'] == itemName)){
+                        tempItem++
+                    }
+                }
+            }
+        })
+        return new Intl.NumberFormat().format(tempItem)
+    }
 
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         //console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -524,8 +570,6 @@ const BloxFruit: React.FC = () => {
         },
     }
 
-    const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
-
     function formatNumber(num: number, precision: number) {
         const map = [
             {suffix: 'T', threshold: 1e12},
@@ -534,12 +578,12 @@ const BloxFruit: React.FC = () => {
             {suffix: 'K', threshold: 1e3},
             {suffix: '', threshold: 1},
         ];
-    
+
         const found = map.find((x) => Math.abs(num) >= x.threshold);
         if (found) {
             return (num / found.threshold).toFixed(precision) + found.suffix;
         }
-    
+
         return num;
     }
 
@@ -599,7 +643,7 @@ const BloxFruit: React.FC = () => {
                         {
                             text: 'Level 2550',
                             value: '2550',
-        
+
                         },
                         {
                             text: '1000-1500',
@@ -736,7 +780,7 @@ const BloxFruit: React.FC = () => {
                     onFilter: (value: any, record) => {
                         let description = JSON.parse(record.Description);
                         let fsList = description['Fighting Style']
-        
+
                         if (value === 'God') {
                             return fsList.length === 6
                         } else if (value === '3-5') {
@@ -746,7 +790,7 @@ const BloxFruit: React.FC = () => {
                         } else {
                             return false
                         }
-        
+
                     },
                     sorter: (a: any, b: any) => {
                         return JSON.parse(a.Description)['Fighting Style'].length - JSON.parse(b.Description)['Fighting Style'].length
@@ -764,14 +808,14 @@ const BloxFruit: React.FC = () => {
                                 type: 'divider',
                             },
                         ];
-        
+
                         fsText = fightingStyle.length === 6 ? "God" : fightingStyle.length > 2 ? "3-5" : "0-2"
                         fsColor = fightingStyle.length === 6 ? "blue" : fightingStyle.length > 2 ? "volcano" : "red"
-        
-        
+
+
                         return (
                             <>
-        
+
                                 {
                                     fightingStyle.map((str: string, index: number) => {
                                             items?.push({
@@ -781,7 +825,7 @@ const BloxFruit: React.FC = () => {
                                         }
                                     )
                                 }
-        
+
                                 {
                                     fightingStyle.includes('Fighting Style Data Not Found') == true ?
                                         <Text>-</Text> :
@@ -789,12 +833,12 @@ const BloxFruit: React.FC = () => {
                                             <Tag color={fsColor}>{fsText}</Tag>
                                         </Dropdown>
                                 }
-        
+
                             </>
                         )
                     },
                 },
-        
+
                 {
                     title: 'DF',
                     dataIndex: 'df',
@@ -859,9 +903,9 @@ const BloxFruit: React.FC = () => {
                                 }
                             </Tag>
                         </>
-        
+
                     },
-                },        
+                },
             ]
         },
 
@@ -1192,7 +1236,7 @@ const BloxFruit: React.FC = () => {
     }
 
     const dataDefault = [
-        ['Username', 'Password', 'Cookie', 'Data', 'Fruit', 'Mythical Item', 'Mythical Fruit (Inventory)', 'Mythical Fruit (Trash)'],
+        ['Username', 'Password', 'Cookie', 'Data', 'Melee', 'Fruit', 'Mythical Item', 'Mythical Fruit (Inventory)', 'Mythical Fruit (Trash)'],
     ]
     dataApiSpecialFilter.forEach((item: DataType) => {
 
@@ -1244,7 +1288,7 @@ const BloxFruit: React.FC = () => {
 
         fightingStyle.map(() => {
             if (fightingStyle.length === 6) {
-                fsText = 'Godhuman';
+                fsText = 'God';
             } else if (fightingStyle.length > 2) {
                 fsText = '3-5 Melee';
             } else {
@@ -1256,13 +1300,85 @@ const BloxFruit: React.FC = () => {
             item.UsernameRoblocc,
             item.Password,
             item.Cookie,
-            `- Level: ${JSON.parse(item.Description).Data.Level} - Beli: ${JSON.parse(item.Description).Data.Beli} - Fragments: ${JSON.parse(item.Description).Data.Fragments}`,
+            `Level: ${JSON.parse(item.Description).Data.Level} 
+            - Beli: ${JSON.parse(item.Description).Data.Beli} 
+            - Fragments: ${JSON.parse(item.Description).Data.Fragments}`,
+            fsText,
             dataDescription.Data.DevilFruit + (dataDescription['Awakened Abilities'].includes("V") ? " - Full" : " - " + dataDescription['Awakened Abilities']),
             stringItemData.substring(0, stringItemData.length - 2),
             specialFruit.concat("").toString().substring(0,specialFruit.concat(" ").toString().length-2),
             `Mythical Fruits: ${allMythicalFruit.length - specialFruit.length}`
         ])
     })
+
+    const dataItemRender = [
+        {
+            pathImg: God,
+            type: 'Melee',
+            itemName: null
+        },
+        {
+            pathImg: CDK,
+            type: 'Sword',
+            itemName: 'Cursed Dual Katana'
+        },
+        {
+            pathImg: SG,
+            type: 'Gun',
+            itemName: 'Skull Guitar'
+        },
+        {
+            pathImg: SharkAnchor,
+            type: 'Sword',
+            itemName: 'Shark Anchor'
+        },
+        {
+            pathImg: TTK,
+            type: 'Sword',
+            itemName: 'True Triple Katana'
+        },
+        {
+            pathImg: VH,
+            type: 'Wear',
+            itemName: 'Valkyrie Helm'
+        },
+        {
+            pathImg: MF,
+            type: 'Material',
+            itemName: 'Mirror Fractal'
+        }
+    ]
+
+    const dataFruitRender = [
+        {
+            pathImg: TRex,
+            itemName: 'T-Rex'
+        },
+        {
+            pathImg: Dough,
+            itemName: 'Dough'
+        },
+        {
+            pathImg: Gas,
+            itemName: 'Gas'
+        },
+        {
+            pathImg: Leo,
+            itemName: 'Leopard'
+        },
+        {
+            pathImg: Yeti,
+            itemName: 'Yeti'
+        },
+        {
+            pathImg: Kit,
+            itemName: 'Kitsune'
+        },
+        {
+            pathImg: Dragon,
+            itemName: 'Dragon'
+        },
+    ]
 
 
     return (
@@ -1273,8 +1389,8 @@ const BloxFruit: React.FC = () => {
             <Row justify={'start'}>
                 <Divider orientation="left">Roblocc Panel - Blox Fruit</Divider>
                 <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 12}}>
-                    <Row>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
+                    <Row gutter={[12,12]}>
+                        <Col xs={24} sm={24} md={24} lg={24} xl={10}>
                             <Card size="small" title="Account Control" extra={
                                 <Export data={dataDefault} gameName = {"BF"} />
                             }>
@@ -1309,41 +1425,6 @@ const BloxFruit: React.FC = () => {
                                         </span>
 
                                     </Space>
-
-                                    {
-                                        whitelistAccounts.find((element) => element == username) != undefined ?
-                                            <div style={{marginTop: 16}}>
-                                                <Card size={'small'} title={"Special Account Control"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} account </Tag>}>
-                                                    <Space>
-                                                        <Button type="primary"
-                                                                onClick={copyDataHaveCookieAccount}
-                                                                disabled={getAmountAccountHaveCookie() === 0}
-                                                                loading={loadingCopyAccounntHaveCookie}>
-                                                            Copy Data Account
-                                                        </Button>
-                                                        <Popconfirm
-                                                            placement="bottom"
-                                                            title={'Are you sure to delete?'}
-                                                            description={`${getAmountAccountHaveCookie()} account`}
-                                                            onConfirm={deleteHaveCookieAccount}
-                                                            okText="Yes"
-                                                            cancelText="No"
-                                                            icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
-                                                        >
-                                                            <Button type="primary"
-                                                                    loading={loadingDeleteAccounntHaveCookie}
-                                                                    disabled={getAmountAccountHaveCookie() === 0}
-                                                                    danger>
-                                                                Delete Account
-                                                            </Button>
-                                                        </Popconfirm>
-                                                    </Space>
-                                                </Card>
-                                            </div>
-                                            :
-                                            <></>
-                                    }
-
                                 </div>
 
                                 <div>
@@ -1386,38 +1467,62 @@ const BloxFruit: React.FC = () => {
                                 }
 
                             </Card>
+                            {
+                                whitelistAccounts.find((element) => element == username) != undefined ?
+                                    <div style={{marginTop: 16}}>
+                                        <Card size={'small'} title={"Account Control 「WIP」"} extra={<Tag color={getAmountAccountHaveCookie() > 0 ? 'green' : 'red'}> {getAmountAccountHaveCookie()} </Tag>}>
+                                            <Space>
+                                                <Button type="primary"
+                                                        onClick={copyDataHaveCookieAccount}
+                                                        disabled={getAmountAccountHaveCookie() === 0}
+                                                        loading={loadingCopyAccounntHaveCookie}>
+                                                    Copy Data Account
+                                                </Button>
+                                                <Popconfirm
+                                                    placement="bottom"
+                                                    title={'Are you sure to delete?'}
+                                                    description={`${getAmountAccountHaveCookie()} account`}
+                                                    onConfirm={deleteHaveCookieAccount}
+                                                    okText="Yes"
+                                                    cancelText="No"
+                                                    icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                                >
+                                                    <Button type="primary"
+                                                            loading={loadingDeleteAccounntHaveCookie}
+                                                            disabled={getAmountAccountHaveCookie() === 0}
+                                                            danger>
+                                                        Delete Account
+                                                    </Button>
+                                                </Popconfirm>
+                                            </Space>
+                                        </Card>
+                                    </div>
+                                    :
+                                    <></>
+                            }
                         </Col>
-                            <Col xs={24} sm={24} md={24} lg={24} xl={12} style={{padding: 12}}>
-                                <Card size="small" title="Accounts Status">
-                                    <Row gutter={[16, 16]}>
-                                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                            <Card size="small" hoverable={true}>
-                                                <Statistic
-                                                    value={getOnline()}
-                                                    valueStyle={{color: '#6abe39'}}
-                                                    prefix={<UserOutlined/>}
-                                                />
-                                            </Card>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                            <Card size="small" hoverable={true}>
-                                                <Statistic
-                                                    value={getOffline()}
-                                                    valueStyle={{color: '#e84749'}}
-                                                    prefix={<UserOutlined/>}
-                                                />
-                                            </Card>
-                                        </Col>
-                                        <Col xs={24} sm={24} md={24} lg={12} xl={8}>
-                                            <Card size="small" hoverable={true}>
-                                                <Statistic
-                                                    value={getOffline() + getOnline()}
-                                                    valueStyle={{color: '#535dff'}}
-                                                    prefix={<UserOutlined/>}
-                                                />
-                                            </Card>
-                                        </Col>
-                                    </Row>
+                            <Col xs={24} sm={24} md={24} lg={24} xl={14}>
+                                <Card size="small" title="Account Data「TOTAL ACCOUNT」" extra={<Tag color={'green'}>
+                                    {`${getOnline()} / ${getOnline() + getOffline()}`}
+                                </Tag>}>
+                                    <Card size={"small"} bordered={false} title={"Inventory"}>
+                                        <Row gutter={[16, 16]}>
+                                            {
+                                                dataItemRender.map((key) =>{
+                                                    return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalItem(key['type'], key['itemName'])} />
+                                                })
+                                            }
+                                        </Row>
+                                    </Card>
+                                    <Card size={"small"} bordered={false} title={"Fruit"}>
+                                        <Row gutter={[16, 16]}>
+                                            {
+                                                dataFruitRender.map((key) =>{
+                                                    return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalItem('Blox Fruit', key['itemName'])} />
+                                                })
+                                            }
+                                        </Row>
+                                    </Card>
                                 </Card>
                             </Col>
                             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{paddingTop: 32}}>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { useStore } from '../../../state/storeHooks';
 
-import img from '../../../img/だいしきゅーだいしゅき_p1.png';
+import img from '../../../assets/thumbnail/だいしきゅーだいしゅき_p1.png';
 
 const { Title, Paragraph } = Typography;
 

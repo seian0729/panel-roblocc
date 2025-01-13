@@ -1,7 +1,7 @@
 import {Button, Card, Col, Row} from "antd";
-import bloxImg from "../../../img/bloxshut.png";
+import bloxImg from "../../../assets/thumbnail/bloxshut.png";
 import {Link} from "react-router-dom";
-import psxImg from "../../../img/psx.png";
+import psxImg from "../../../assets/thumbnail/psx.png";
 import React from "react";
 import {useStore} from "../../../state/storeHooks";
 const DashboardIndex: React.FC = () => {
@@ -63,7 +63,7 @@ const DashboardIndex: React.FC = () => {
                         <Col>
                             <Card title="Blade Ball"
                                   hoverable
-                                  cover={<img style={{width: 225}} alt="example" src={bladeballImg}/>}
+                                  cover={<assets style={{width: 225}} alt="example" src={bladeballImg}/>}
                             >
                                 <Link to={"bladeball"}>
                                     <Button style={{width: "100%"}} type={"default"}> Blade Ball </Button>
