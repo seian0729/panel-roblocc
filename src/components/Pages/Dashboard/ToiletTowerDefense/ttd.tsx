@@ -344,8 +344,8 @@ const ToiletTowerDefense: React.FC = () => {
             ]
         },
         {
-            title: 'Troops',
-            dataIndex: 'accountTroops',
+            title: 'Units',
+            dataIndex: 'accountUnits',
             width: '30%',
             render: (_, record) => {
                 let description = JSON.parse(record.Description);
