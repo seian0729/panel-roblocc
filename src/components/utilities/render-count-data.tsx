@@ -10,7 +10,7 @@ export const RenderDataCount = ({imgItem, amountItem, itemName}: any) => {
                                 <Avatar src={imgItem} shape={"square"} />
 
                         }
-                        title={<div style={{marginTop: 2}}>{amountItem}</div>}
+                        title={<div style={{marginTop: 2}}>{new Intl.NumberFormat().format(amountItem)}</div>}
                     />
                 </Card>
             </Tooltip>

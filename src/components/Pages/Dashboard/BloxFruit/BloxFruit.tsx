@@ -59,7 +59,7 @@ import {bulkDeleteData, getData} from "../../../../services/data";
 import {getRaceColor} from "../../../../services/bf";
 import {Export} from "../Export/export";
 import {RenderMythical} from "./render-data/render-mythical";
-import {RenderDataCount} from "./render-data/render-count-data"
+import {RenderDataCount} from "../../../utilities/render-count-data"
 
 const { Text } = Typography;
 const { Dragger } = Upload;

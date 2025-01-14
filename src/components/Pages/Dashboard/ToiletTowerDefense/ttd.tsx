@@ -1,9 +1,7 @@
 import React, {useEffect, useState} from "react";
-import {DrawerProps, Input, TabsProps} from 'antd';
-import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
+import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
-import {useStore} from "../../../../state/storeHooks";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {
     Badge,
@@ -12,24 +10,30 @@ import {
     Checkbox,
     Col,
     Divider, Drawer, Dropdown,
-    Form, MenuProps,
+    MenuProps,
     message,
     Popconfirm,
     Row,
     Space,
     Statistic,
     Table,
-    Tabs, Tag
+     Tag
 } from "antd";
 import {
-    BankOutlined,
     DeleteOutlined,
     DownOutlined,
     LineChartOutlined,
     QuestionCircleOutlined, SearchOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {getRaceColor} from "../../../../services/bf";
+import {RenderDataCount} from "../../../utilities/render-count-data";
+//img
+import coins from "../../../../assets/ttd/currencies/coins.webp";
+import gems from "../../../../assets/ttd/currencies/gems.webp";
+//unit
+import QuantumCameraman from "../../../../assets/ttd/units/QuantumCameraman.webp";
+import MythicTitan from "../../../../assets/ttd/units/MythicTitan.webp";
+
 const ToiletTowerDefense: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
@@ -200,41 +204,23 @@ const ToiletTowerDefense: React.FC = () => {
         return temp
     }
 
-    const getTotalGems = () => {
+    const getTotalCurrency = (currencyName: string) => {
         let totalGems = 0;
         dataApi.forEach((item: DataType) => {
             let Currencies = JSON.parse(item.Description)['Currencies']
-            totalGems += Currencies['Gems']
+            totalGems += Currencies[`${currencyName}s`]
         })
         return totalGems
     }
 
-    const getTotalCoins = () => {
-        let totalCoins = 0;
-        dataApi.forEach((item: DataType) => {
-            let Currencies = JSON.parse(item.Description)['Currencies']
-            totalCoins += Currencies['Coins']
-        })
-        return totalCoins
-    }
-
-    const getTotalSpecialCurrency = () => {
-        let totalSpecialCurrency = 0;
-        dataApi.forEach((item: DataType) => {
-            let Currencies = JSON.parse(item.Description)['Currencies']
-            totalSpecialCurrency += Currencies['CandyCanes_Christmas2024']
-        })
-        return totalSpecialCurrency
-    }
-
-    let selectedTroops = ['QuantumCameraman']
-    const getSpecialTroops = () =>{
+    let selectedTroops = ['QuantumCameraman','MysticalTitan']
+    const getSpecialUnit = (unitName: string) =>{
         let specialTroops = 0;
         dataApi.forEach((item: DataType) => {
             let troops = JSON.parse(item.Description)['Troops']
             if (troops != undefined){
                 troops.map((item: any) =>{
-                    if(selectedTroops.includes(item['TroopName'])){
+                    if(item['TroopName'] == unitName){
                         specialTroops += item['Quantity']
                     }
                 })
@@ -251,6 +237,30 @@ const ToiletTowerDefense: React.FC = () => {
         updatedAt: string;
         accountStatus: string;
     }
+
+    const currenciesRender = [
+        {
+            pathImg: coins,
+            itemName: "Coin"
+        },
+        {
+            pathImg: gems,
+            itemName: "Gem"
+        }
+    ]
+
+    const unitsRender = [
+        {
+            pathImg: QuantumCameraman,
+            itemName: 'QuantumCameraman',
+            displayName: 'Quantum Cameraman'
+        },
+        {
+            pathImg: MythicTitan,
+            itemName: 'MysticalTitan',
+            displayName: 'Mystical Titan'
+        }
+    ]
 
     const filtersNote: any [] = [];
     const filtersNoteT: any [] = [];
@@ -581,48 +591,70 @@ const ToiletTowerDefense: React.FC = () => {
             </Col>
 
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Currencies Overview 「ALL ACCOUNT」"} size={"small"}>
+                <Card title={"Data Overview 「ALL ACCOUNT」"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title={"Quantum Cameraman".toUpperCase()}
-                                    value={getSpecialTroops()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ff3434'}}
-                                />
+                            <Card size={"small"} bordered={false} title={"Currencies"}>
+                                <Row gutter={[16, 16]}>
+                                    {
+                                        currenciesRender.map((key) =>{
+                                            return <RenderDataCount imgItem={key['pathImg']} amountItem={getTotalCurrency(key['itemName'])} itemName={key['itemName']} />
+                                        })
+                                    }
+                                </Row>
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Coin"
-                                    value={getTotalCoins()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ffe28c'}}
-                                />
+                        <Col xs={24} sm={24} md={24} lg={24} xl={18}>
+                            <Card size={"small"} bordered={false} title={"Units"}>
+                                <Row gutter={[16, 16]}>
+                                    {
+                                        unitsRender.map((key) =>{
+                                            return <RenderDataCount imgItem={key['pathImg']} amountItem={getSpecialUnit(key['itemName'])} itemName={key['displayName']} />
+                                        })
+                                    }
+                                </Row>
                             </Card>
                         </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Gem"
-                                    value={getTotalGems()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#5487ff'}}
-                                />
-                            </Card>
-                        </Col>
-                        <Col xs={24} sm={24} md={24} lg={24} xl={6}>
-                            <Card>
-                                <Statistic
-                                    title="Candy Cane"
-                                    value={getTotalSpecialCurrency()}
-                                    prefix={<LineChartOutlined />}
-                                    valueStyle={{color: '#ff6b6b'}}
-                                />
-                            </Card>
-                        </Col>
+                        {/*<Col xs={24} sm={24} md={24} lg={24} xl={6}>*/}
+                        {/*    <Card>*/}
+                        {/*        <Statistic*/}
+                        {/*            title={"Quantum Cameraman".toUpperCase()}*/}
+                        {/*            value={getSpecialTroops()}*/}
+                        {/*            prefix={<LineChartOutlined />}*/}
+                        {/*            valueStyle={{color: '#ff3434'}}*/}
+                        {/*        />*/}
+                        {/*    </Card>*/}
+                        {/*</Col>*/}
+                        {/*<Col xs={24} sm={24} md={24} lg={24} xl={6}>*/}
+                        {/*    <Card>*/}
+                        {/*        <Statistic*/}
+                        {/*            title="Coin"*/}
+                        {/*            value={getTotalCoins()}*/}
+                        {/*            prefix={<LineChartOutlined />}*/}
+                        {/*            valueStyle={{color: '#ffe28c'}}*/}
+                        {/*        />*/}
+                        {/*    </Card>*/}
+                        {/*</Col>*/}
+                        {/*<Col xs={24} sm={24} md={24} lg={24} xl={6}>*/}
+                        {/*    <Card>*/}
+                        {/*        <Statistic*/}
+                        {/*            title="Gem"*/}
+                        {/*            value={getTotalGems()}*/}
+                        {/*            prefix={<LineChartOutlined />}*/}
+                        {/*            valueStyle={{color: '#5487ff'}}*/}
+                        {/*        />*/}
+                        {/*    </Card>*/}
+                        {/*</Col>*/}
+                        {/*<Col xs={24} sm={24} md={24} lg={24} xl={6}>*/}
+                        {/*    <Card>*/}
+                        {/*        <Statistic*/}
+                        {/*            title="Candy Cane"*/}
+                        {/*            value={getTotalSpecialCurrency()}*/}
+                        {/*            prefix={<LineChartOutlined />}*/}
+                        {/*            valueStyle={{color: '#ff6b6b'}}*/}
+                        {/*        />*/}
+                        {/*    </Card>*/}
+                        {/*</Col>*/}
                     </Row>
                 </Card>
 
