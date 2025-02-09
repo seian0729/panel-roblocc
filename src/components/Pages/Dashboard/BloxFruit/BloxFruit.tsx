@@ -99,7 +99,7 @@ const BloxFruit: React.FC = () => {
     const [specialFilter, setSpecialFilter] = useState([]);
 
     //whitelist account
-    const whitelistAccounts = ["Hanei","k7ndz","huy8841","winyeubop","k7ndz2","huy84811"];
+    const whitelistAccounts = ["Hanei","k7ndz","huy8841","winyeubop","k7ndz2","huy84811","trang123"];
 
 
     //Filter Specical / Mythical Fruits
