@@ -4,15 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] BF | Tooltip (data)">
-      <change afterPath="$PROJECT_DIR$/src/assets/ttd/currencies/coins.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/ttd/currencies/gems.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/ttd/units/MythicTitan.webp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/assets/ttd/units/QuantumCameraman.webp" afterDir="false" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] render-count-data.tsx | fixed render ngu lon">
+      <change afterPath="$PROJECT_DIR$/src/assets/bloxfruit/fruits/GravityFruit.webp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/render-data/render-count-data.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/utilities/render-count-data.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/ToiletTowerDefense/ttd.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/ToiletTowerDefense/ttd.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -67,7 +62,7 @@
     "WebServerToolWindowFactoryState": "false",
     "git-widget-placeholder": "master",
     "js.last.introduce.type": "LET",
-    "last_opened_file_path": "E:/Projectt/panel-roblocc/src/assets/ttd/troops",
+    "last_opened_file_path": "E:/Projectt/panel-roblocc/src/assets/bloxfruit/fruits",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -80,9 +75,9 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Projectt\panel-roblocc\src\assets\bloxfruit\fruits" />
       <recent name="E:\Projectt\panel-roblocc\src\assets\ttd\troops" />
       <recent name="E:\Projectt\panel-roblocc\src\assets\ttd\currencies" />
-      <recent name="E:\Projectt\panel-roblocc\src\assets\bloxfruit\fruits" />
       <recent name="E:\Projectt\panel-roblocc\src\assets\bloxfruit" />
       <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Dashboard\Fisch" />
     </key>
@@ -272,47 +267,13 @@
       <workItem from="1736755756319" duration="10515000" />
       <workItem from="1736783859674" duration="3255000" />
       <workItem from="1736847272157" duration="420000" />
-      <workItem from="1736847710642" duration="1038000" />
-    </task>
-    <task id="LOCAL-00069" summary="[+] Maintenance | maintenance pet99 / pet99-mailbox">
-      <option name="closed" value="true" />
-      <created>1709795293257</created>
-      <option name="number" value="00069" />
-      <option name="presentableId" value="LOCAL-00069" />
-      <option name="project" value="LOCAL" />
-      <updated>1709795293257</updated>
-    </task>
-    <task id="LOCAL-00070" summary="[*] Pet99 | Fixed due error">
-      <option name="closed" value="true" />
-      <created>1709797043437</created>
-      <option name="number" value="00070" />
-      <option name="presentableId" value="LOCAL-00070" />
-      <option name="project" value="LOCAL" />
-      <updated>1709797043437</updated>
-    </task>
-    <task id="LOCAL-00071" summary="[*] BF | Copy Full Data (All Fruit)">
-      <option name="closed" value="true" />
-      <created>1709809781385</created>
-      <option name="number" value="00071" />
-      <option name="presentableId" value="LOCAL-00071" />
-      <option name="project" value="LOCAL" />
-      <updated>1709809781385</updated>
-    </task>
-    <task id="LOCAL-00072" summary="[*] Pet99 | Fixed due error">
-      <option name="closed" value="true" />
-      <created>1709826509069</created>
-      <option name="number" value="00072" />
-      <option name="presentableId" value="LOCAL-00072" />
-      <option name="project" value="LOCAL" />
-      <updated>1709826509069</updated>
-    </task>
-    <task id="LOCAL-00073" summary="[*] Web | Noti Upgrade server">
-      <option name="closed" value="true" />
-      <created>1710401001433</created>
-      <option name="number" value="00073" />
-      <option name="presentableId" value="LOCAL-00073" />
-      <option name="project" value="LOCAL" />
-      <updated>1710401001433</updated>
+      <workItem from="1736847710642" duration="1917000" />
+      <workItem from="1737351035750" duration="6148000" />
+      <workItem from="1740488223976" duration="595000" />
+      <workItem from="1740738562353" duration="16000" />
+      <workItem from="1740818652543" duration="603000" />
+      <workItem from="1743158126555" duration="224000" />
+      <workItem from="1744964851306" duration="411000" />
     </task>
     <task id="LOCAL-00074" summary="[*] Web | Noti Upgrade server">
       <option name="closed" value="true" />
@@ -666,7 +627,47 @@
       <option name="project" value="LOCAL" />
       <updated>1736784302662</updated>
     </task>
-    <option name="localTasksCounter" value="118" />
+    <task id="LOCAL-00118" summary="[+] TTD | Display Data">
+      <option name="closed" value="true" />
+      <created>1736848929556</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1736848929556</updated>
+    </task>
+    <task id="LOCAL-00119" summary="[*] TTD | Troops -&gt; units">
+      <option name="closed" value="true" />
+      <created>1736848978465</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1736848978465</updated>
+    </task>
+    <task id="LOCAL-00120" summary="[+] BF | acc clone ky`">
+      <option name="closed" value="true" />
+      <created>1737351094404</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1737351094405</updated>
+    </task>
+    <task id="LOCAL-00121" summary="[+] BF | acc clone ky`">
+      <option name="closed" value="true" />
+      <created>1737363587788</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1737363587788</updated>
+    </task>
+    <task id="LOCAL-00122" summary="[*] render-count-data.tsx | fixed render ngu lon">
+      <option name="closed" value="true" />
+      <created>1737375678622</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1737375678622</updated>
+    </task>
+    <option name="localTasksCounter" value="123" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -684,10 +685,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[+] Fisch, Added" />
-    <MESSAGE value="[+] Fisch, Added relic" />
-    <MESSAGE value="[+] Fisch, fixed script" />
-    <MESSAGE value="[+] Fisch, special copy" />
     <MESSAGE value="[*] BF/Fisch/AV | Improved Upload Account&#10;[*] Fisch | Improved action" />
     <MESSAGE value="[*] Fisch| Mark Completed" />
     <MESSAGE value="[*] Fisch| Added count account after upload" />
@@ -709,6 +706,10 @@
     <MESSAGE value="[*] App | Change link bf, BF | Added sort status (by updated time)" />
     <MESSAGE value="[+] BF | Small update (display data)" />
     <MESSAGE value="[+] BF | Tooltip (data)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] BF | Tooltip (data)" />
+    <MESSAGE value="[+] TTD | Display Data" />
+    <MESSAGE value="[*] TTD | Troops -&gt; units" />
+    <MESSAGE value="[+] BF | acc clone ky`" />
+    <MESSAGE value="[*] render-count-data.tsx | fixed render ngu lon" />
+    <option name="LAST_COMMIT_MESSAGE" value="[*] render-count-data.tsx | fixed render ngu lon" />
   </component>
 </project>

@@ -20,7 +20,8 @@ export const RenderMythical = ({data, type}: any) => {
         'Kitsune',
         'T-Rex',
         'Gas',
-        'Yeti'
+        'Yeti',
+        'Gravity'
     ]);
 
     const mythicalItems = [

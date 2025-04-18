@@ -50,6 +50,7 @@ import Leo from "../../../../assets/bloxfruit/fruits/LeopardFruit.webp"
 import Yeti from "../../../../assets/bloxfruit/fruits/YetiFruit.webp"
 import Kit from "../../../../assets/bloxfruit/fruits/KitsuneFruit.webp"
 import Dragon from "../../../../assets/bloxfruit/fruits/DragonFruit.webp"
+import Gravity from "../../../../assets/bloxfruit/fruits/GravityFruit.webp"
 
 import moment from "moment";
 
@@ -114,7 +115,8 @@ const BloxFruit: React.FC = () => {
         'Kitsune',
         'T-Rex',
         'Gas',
-        'Yeti'
+        'Yeti',
+        'Gravity'
     ]);
 
     const mythicalItems = [
@@ -1055,6 +1057,7 @@ const BloxFruit: React.FC = () => {
                     title: 'Fruit',
                     width: "30%",
                     render: (_, record) => {
+                        console.log(record.Description)
                         return <RenderMythical data={record} type={"Fruit"}/>
                     },
                 }
@@ -1377,6 +1380,10 @@ const BloxFruit: React.FC = () => {
         {
             pathImg: Dragon,
             itemName: 'Dragon'
+        },
+        {
+            pathImg: Gravity,
+            itemName: 'Gravity'
         },
     ]
 
