@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[*] render-count-data.tsx | fixed render ngu lon">
-      <change afterPath="$PROJECT_DIR$/src/assets/bloxfruit/fruits/GravityFruit.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] BF | Added Gravity" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -273,15 +269,7 @@
       <workItem from="1740738562353" duration="16000" />
       <workItem from="1740818652543" duration="603000" />
       <workItem from="1743158126555" duration="224000" />
-      <workItem from="1744964851306" duration="411000" />
-    </task>
-    <task id="LOCAL-00074" summary="[*] Web | Noti Upgrade server">
-      <option name="closed" value="true" />
-      <created>1710401056178</created>
-      <option name="number" value="00074" />
-      <option name="presentableId" value="LOCAL-00074" />
-      <option name="project" value="LOCAL" />
-      <updated>1710401056178</updated>
+      <workItem from="1744964851306" duration="538000" />
     </task>
     <task id="LOCAL-00075" summary="[+] Pet99 | Fixed Header / Summary">
       <option name="closed" value="true" />
@@ -667,7 +655,15 @@
       <option name="project" value="LOCAL" />
       <updated>1737375678622</updated>
     </task>
-    <option name="localTasksCounter" value="123" />
+    <task id="LOCAL-00123" summary="[+] BF | Added Gravity">
+      <option name="closed" value="true" />
+      <created>1744965359996</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1744965359996</updated>
+    </task>
+    <option name="localTasksCounter" value="124" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -685,7 +681,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] BF/Fisch/AV | Improved Upload Account&#10;[*] Fisch | Improved action" />
     <MESSAGE value="[*] Fisch| Mark Completed" />
     <MESSAGE value="[*] Fisch| Added count account after upload" />
     <MESSAGE value="[*] Fisch| remove log" />
@@ -710,6 +705,7 @@
     <MESSAGE value="[*] TTD | Troops -&gt; units" />
     <MESSAGE value="[+] BF | acc clone ky`" />
     <MESSAGE value="[*] render-count-data.tsx | fixed render ngu lon" />
-    <option name="LAST_COMMIT_MESSAGE" value="[*] render-count-data.tsx | fixed render ngu lon" />
+    <MESSAGE value="[+] BF | Added Gravity" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] BF | Added Gravity" />
   </component>
 </project>

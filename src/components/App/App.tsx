@@ -179,6 +179,8 @@ function App() {
 
                 }
 
+                <Alert message="THÔNG BÁO QUAN TRỌNG" banner description="Vào ngày 3/5 (tức chưa đến 1 tuần) server hết hạn đồng nghĩa web này sẽ đóng mãi mãi, domain sẽ hết hạn vào cuối tháng 5, xin cám ơn tất cả anh em đã sử dụng website này <3 [SEIAN - 2025/04/27]" type="error" showIcon />
+
 
                 <Layout.Content>
 
