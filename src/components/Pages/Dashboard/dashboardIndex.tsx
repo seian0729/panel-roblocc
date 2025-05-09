@@ -1,9 +1,11 @@
+import {useEffect} from 'react'
 import {Button, Card, Col, Row} from "antd";
 import bloxImg from "../../../assets/thumbnail/bloxshut.png";
 import {Link} from "react-router-dom";
 import psxImg from "../../../assets/thumbnail/psx.png";
 import React from "react";
 import {useStore} from "../../../state/storeHooks";
+
 const DashboardIndex: React.FC = () => {
 
     const {user} = useStore(({app}) => app);
@@ -15,6 +17,10 @@ const DashboardIndex: React.FC = () => {
     const checkAccess = (accessVal: string) => {
         return decodeAccess.find((element: any) => element == accessVal) != undefined
     }
+    
+    useEffect(() => {
+        document.title = 'Chimovo - Dashboard'
+    }, []);
 
     return(
         <div style={{color: "white", marginTop: 12}}>

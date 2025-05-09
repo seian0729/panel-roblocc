@@ -124,6 +124,7 @@ const ToiletTowerDefense: React.FC = () => {
             setLoadingReload(false);
             setLoadingTable(false)
         })
+        document.title = 'Chimovo - TTD'
     },[])
 
     const AutoRefreshData = () => {
@@ -499,7 +500,7 @@ const ToiletTowerDefense: React.FC = () => {
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Toilet Tower Defense</Divider>
             <Col xs={24} sm={24} md={24} lg={24} xl={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Account Overview"} size={"small"}>
+                <Card variant="borderless" title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Card size="small" title="Account Control">
@@ -594,7 +595,7 @@ const ToiletTowerDefense: React.FC = () => {
                 <Card title={"Data Overview 「ALL ACCOUNT」"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={6}>
-                            <Card size={"small"} bordered={false} title={"Currencies"}>
+                            <Card size={"small"} variant="borderless" title={"Currencies"}>
                                 <Row gutter={[16, 16]}>
                                     {
                                         currenciesRender.map((key) =>{
@@ -605,7 +606,7 @@ const ToiletTowerDefense: React.FC = () => {
                             </Card>
                         </Col>
                         <Col xs={24} sm={24} md={24} lg={24} xl={18}>
-                            <Card size={"small"} bordered={false} title={"Units"}>
+                            <Card size={"small"} variant="borderless" title={"Units"}>
                                 <Row gutter={[16, 16]}>
                                     {
                                         unitsRender.map((key) =>{

@@ -106,17 +106,17 @@ const DetailFisch: React.FC = () => {
                         } </Tag>}>
                             <Row gutter={16}>
                                 <Col xs={4}>
-                                    <Card title={"Account Info"} size={"small"} bordered={false}>
+                                    <Card title={"Account Info"} size={"small"} variant="borderless">
                                         {getInfo()}
                                     </Card>
                                 </Col>
                                 <Col xs={4}>
-                                    <Card title={"Inventory Info"} size={"small"} bordered={false}>
+                                    <Card title={"Inventory Info"} size={"small"} variant="borderless">
                                         {getInventory()}
                                     </Card>
                                 </Col>
                                 <Col xs={16}>
-                                    <Card title={"Rod Info"} size={"small"} bordered={false}>
+                                    <Card title={"Rod Info"} size={"small"} variant="borderless">
                                         {getRod()}
                                     </Card>
                                 </Col>

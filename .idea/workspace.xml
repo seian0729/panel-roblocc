@@ -4,7 +4,23 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] BF | Added Gravity" />
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] APP | IMPORTANT ANNOUNCEMENT">
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/Egg.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/Multi_Egg.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/currencies/Coins.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/currencies/Gems.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/currencies/Tickets.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/secret/King_Doggy.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/secret/Luminosity.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/secret/Mech_Robot.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/assets/bgsi/secret/The_Overlord.webp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BubbleGumSimInfinity/BubbleGumSimInfinity.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/services/bsgiPetData.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/App/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/dashboardLayout.tsx" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -51,38 +67,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "js.last.introduce.type": "LET",
-    "last_opened_file_path": "E:/Projectt/panel-roblocc/src/assets/bloxfruit/fruits",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "yarn",
-    "settings.editor.selected.configurable": "configurable.group.appearance",
-    "ts.external.directory.path": "E:\\Projectt\\panel-roblocc\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.last.introduce.type&quot;: &quot;LET&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Projectt/panel-roblocc/src/assets/bgsi/currencies&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;yarn&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;E:\\Projectt\\panel-roblocc\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\Projectt\panel-roblocc\src\assets\bgsi\currencies" />
+      <recent name="E:\Projectt\panel-roblocc\src\assets\bgsi\secret" />
+      <recent name="E:\Projectt\panel-roblocc\src\assets\bgsi" />
       <recent name="E:\Projectt\panel-roblocc\src\assets\bloxfruit\fruits" />
       <recent name="E:\Projectt\panel-roblocc\src\assets\ttd\troops" />
-      <recent name="E:\Projectt\panel-roblocc\src\assets\ttd\currencies" />
-      <recent name="E:\Projectt\panel-roblocc\src\assets\bloxfruit" />
-      <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Dashboard\Fisch" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\Projectt\panel-roblocc\src\assets\bgsi" />
+      <recent name="E:\Projectt\panel-roblocc\src\assets\bgsi\secret" />
       <recent name="E:\Projectt\panel-roblocc\src\components\utilities" />
       <recent name="E:\Projectt\panel-roblocc\src\assets\bloxfruit\item" />
       <recent name="E:\Projectt\panel-roblocc\src\asset\thumbnail" />
-      <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Details\Fisch" />
-      <recent name="E:\Projectt\panel-roblocc\src\components\Pages\Details" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -270,14 +287,11 @@
       <workItem from="1740818652543" duration="603000" />
       <workItem from="1743158126555" duration="224000" />
       <workItem from="1744964851306" duration="538000" />
-    </task>
-    <task id="LOCAL-00075" summary="[+] Pet99 | Fixed Header / Summary">
-      <option name="closed" value="true" />
-      <created>1710402499785</created>
-      <option name="number" value="00075" />
-      <option name="presentableId" value="LOCAL-00075" />
-      <option name="project" value="LOCAL" />
-      <updated>1710402499785</updated>
+      <workItem from="1745764269821" duration="1546000" />
+      <workItem from="1746189821522" duration="15000" />
+      <workItem from="1746442183072" duration="11527000" />
+      <workItem from="1746514212862" duration="553000" />
+      <workItem from="1746518428113" duration="251000" />
     </task>
     <task id="LOCAL-00076" summary="[+] Pet99 | New notification &#10;[*] Pet99 - Mail | All active account =&gt; all account">
       <option name="closed" value="true" />
@@ -663,7 +677,15 @@
       <option name="project" value="LOCAL" />
       <updated>1744965359996</updated>
     </task>
-    <option name="localTasksCounter" value="124" />
+    <task id="LOCAL-00124" summary="[+] APP | IMPORTANT ANNOUNCEMENT">
+      <option name="closed" value="true" />
+      <created>1745764826959</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1745764826959</updated>
+    </task>
+    <option name="localTasksCounter" value="125" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -681,7 +703,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Fisch| Mark Completed" />
     <MESSAGE value="[*] Fisch| Added count account after upload" />
     <MESSAGE value="[*] Fisch| remove log" />
     <MESSAGE value="[*] Fisch| Priority Rods while render" />
@@ -706,6 +727,7 @@
     <MESSAGE value="[+] BF | acc clone ky`" />
     <MESSAGE value="[*] render-count-data.tsx | fixed render ngu lon" />
     <MESSAGE value="[+] BF | Added Gravity" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] BF | Added Gravity" />
+    <MESSAGE value="[+] APP | IMPORTANT ANNOUNCEMENT" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] APP | IMPORTANT ANNOUNCEMENT" />
   </component>
 </project>

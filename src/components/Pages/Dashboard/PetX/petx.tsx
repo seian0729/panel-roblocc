@@ -485,6 +485,7 @@ const PetX: React.FC = () => {
             setLoadingTable(false)
             sLoadingSkeTable(false)
         })
+        document.title = 'Chimovo - Pet X'
     }, [])
 
     useEffect(() => {

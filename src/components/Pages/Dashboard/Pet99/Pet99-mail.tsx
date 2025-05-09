@@ -201,6 +201,7 @@ const Pet99Mail: React.FC = () => {
         }).finally(() => {
             messageApi.success('All data has been loaded');
         })
+        document.title = 'Chimovo - Pet Simulator 99 (Mail)'
     },[])
     const refreshMail = () => {
         setLoadingBtnMail(true)

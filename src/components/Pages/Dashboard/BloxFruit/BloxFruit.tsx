@@ -1057,7 +1057,6 @@ const BloxFruit: React.FC = () => {
                     title: 'Fruit',
                     width: "30%",
                     render: (_, record) => {
-                        console.log(record.Description)
                         return <RenderMythical data={record} type={"Fruit"}/>
                     },
                 }
@@ -1136,6 +1135,7 @@ const BloxFruit: React.FC = () => {
             setLoadingTable(false)
             messageApi.success('Data has been loaded')
         })
+        document.title = 'Chimovo - Blox Fruit'
     }, [])
 
     useEffect(() => {
@@ -1404,7 +1404,7 @@ const BloxFruit: React.FC = () => {
 
                                 <div style={{marginBottom: 16}}>
                                     <Space wrap>
-                                    <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
+                                        <Button type="primary" onClick={refreshData} loading={loadingReload}>Refresh</Button>
                                         <Button type="primary"
                                                 onClick={openModal}
                                                 disabled={!hasSelected} loading={loadingCopy}>Copy
@@ -1512,7 +1512,7 @@ const BloxFruit: React.FC = () => {
                                 <Card size="small" title="Account Data「TOTAL ACCOUNT」" extra={<Tag color={'green'}>
                                     {`${getOnline()} / ${getOnline() + getOffline()}`}
                                 </Tag>}>
-                                    <Card size={"small"} bordered={false} title={"Inventory"}>
+                                    <Card size={"small"} variant="borderless" title={"Inventory"}>
                                         <Row gutter={[16, 16]}>
                                             {
                                                 dataItemRender.map((key) =>{
@@ -1521,7 +1521,7 @@ const BloxFruit: React.FC = () => {
                                             }
                                         </Row>
                                     </Card>
-                                    <Card size={"small"} bordered={false} title={"Fruit"}>
+                                    <Card size={"small"} variant="borderless" title={"Fruit"}>
                                         <Row gutter={[16, 16]}>
                                             {
                                                 dataFruitRender.map((key) =>{

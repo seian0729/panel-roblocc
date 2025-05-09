@@ -17,10 +17,14 @@ import {
     message,
     notification,
     Tag,
-    Tooltip, Modal
+    Tooltip, 
+    Modal,
+    Row,
+    Col,
+    Button
 } from 'antd';
 import type {MenuProps} from 'antd';
-import {Link, Outlet, useLocation, useNavigate, useParams} from 'react-router-dom';
+import {Link, Outlet, useLocation, useNavigate} from 'react-router-dom';
 import {logoutFromApp} from "../../../types/user";
 import {useStore} from "../../../state/storeHooks";
 import './dashboard.css'
@@ -32,7 +36,6 @@ type MenuItem = Required<MenuProps>['items'][number];
 
 const {Header, Sider, Content} = Layout;
 const {Text} = Typography;
-let tempCountNoti = 0
 
 const DashboardLayout: React.FC = () => {
 
@@ -41,10 +44,6 @@ const DashboardLayout: React.FC = () => {
     const [modal, contextHolderModal] = Modal.useModal();
 
     const [apiNotification, contextHolder] = notification.useNotification();
-
-    const [currentKey, setCurrentKey] = useState()
-
-    let params = useParams()
 
     const {user} = useStore(({app}) => app);
 
@@ -57,6 +56,8 @@ const DashboardLayout: React.FC = () => {
     const decodeAccess = JSON.parse(access);
 
     const [countNoti, setCountNoti] = useState(0);
+
+    const [isHover, setIsHover] = useState(false);
 
     const checkAccess = (accessVal: string) => {
         return decodeAccess.find((element: any) => element == accessVal) != undefined
@@ -111,25 +112,25 @@ const DashboardLayout: React.FC = () => {
         getItem((<Link to="../../dashboard">
             <span>Dashboard</span>
         </Link>), ''),
-        getItem((<Link to="../../dashboard/petx">
-            <span>Pet Simulator X</span>
-        </Link>), 'petx'),
-        getItem(
-            'Blox Fruit',
-            'bloxfruit',
-            null,
-            [
-                getItem((<Link to="../../dashboard/blox-fruit/tracking">
-                    <span>Tracking</span>
-                </Link>), 'blox-fruit/tracking'),
-            ]
-            ,
-            'group'),
     ]
+
+    if (checkAccess("bgsi")){
+        dashboardItems.push(getItem(
+            'Bubble Gum Sim Inf',
+            'bgsi',
+            null,
+            [getItem((
+                <Link to={"bubble-gum-simulator-infinity/tracking"}>
+                    Tracking
+                </Link>
+            ),"bubble-gum-simulator-infinity/tracking")],
+            'group')
+        )
+    }
 
 
     // console user in user
-    const items: MenuProps['items'] = [
+    const itemsMenu: MenuProps['items'] = [
         user.match({
             none: () => {
                 return getItem((<Link to="/login">
@@ -147,6 +148,32 @@ const DashboardLayout: React.FC = () => {
             }
         })
 
+    ];
+
+    const itemsUser: MenuProps['items'] = [
+        getItem((
+            <Link to="user/script">
+                <span>Script</span>
+            </Link>
+        ),"user/script", <FileOutlined />),
+        getItem((
+            <Button icon={<UserOutlined/>}>
+                {username}
+            </Button>
+        ),"sida",null,[
+            getItem((
+                <Link to="user/profile">
+                    <span>Profile</span>
+                </Link>
+            ),"user/profile", <UserOutlined/>),
+            getItem((
+                <Link to="user/transactions">
+                    <span>Transactions</span>
+                </Link>
+            ),"user/transactions", <HistoryOutlined/>),
+            getItem((<span onClick={logout}>Logout</span>), "logout", <LogoutOutlined/>)
+        ]),
+        
     ];
 
     // logout button
@@ -240,6 +267,18 @@ const DashboardLayout: React.FC = () => {
                 </Link>
             ),"pet99/mail"),
         ]
+
+        dashboardItems.push(getItem(
+            'Blox Fruit',
+            'bloxfruit',
+            null,
+            [
+                getItem((<Link to="../../dashboard/blox-fruit/tracking">
+                    <span>Tracking</span>
+                </Link>), 'blox-fruit/tracking'),
+            ]
+        ,
+        'group'))
 
         if (checkAccess("pet99")){
             dashboardItems.push(getItem(
@@ -342,31 +381,9 @@ const DashboardLayout: React.FC = () => {
 
     }
 
-    dashboardItems.push(getItem(
-        'User',
-        'profile',
-        null,
-        [
-            getItem((
-                <Link to="user/profile">
-                    <span>Profile</span>
-                </Link>
-            ),"user/profile", <UserOutlined/>),
-            getItem((
-                <Link to="user/script">
-                    <span>Script</span>
-                </Link>
-            ),"user/script", <FileOutlined />),
-            getItem((
-                <Link to="user/transactions">
-                    <span>Transactions</span>
-                </Link>
-            ),"user/transactions", <HistoryOutlined/>),
-            getItem((<span onClick={logout}>Logout</span>), "logout", <LogoutOutlined/>)
-        ],
-        'group')
-    )
-
+    dashboardItems.push(getItem((<Link to="../../dashboard/petx">
+        <span>Pet Simulator X</span>
+    </Link>), 'petx'))
 
 
     let myPath = useLocation().pathname.replace('/', '');
@@ -386,6 +403,25 @@ const DashboardLayout: React.FC = () => {
     const {
         token: {colorBgContainer},
     } = theme.useToken();
+
+    const handleMouseEnter = () => {
+        setIsHover(true);
+    };
+
+    const handleMouseLeave = () => {
+        setIsHover(false);
+    };
+
+    const siderStyle: React.CSSProperties = {
+        overflow: isHover ? 'auto' : 'hidden',
+        height: '100vh',
+        position: 'sticky',
+        insetInlineStart: 0,
+        top: 0,
+        bottom: 0,
+        background: "rgb(24, 24, 24)", 
+        color: "white",
+    };
 
 
     useEffect(() => {
@@ -432,8 +468,6 @@ const DashboardLayout: React.FC = () => {
         }
     }
 
-
-
     return (
         <>
             {contextHolderModal}
@@ -442,7 +476,10 @@ const DashboardLayout: React.FC = () => {
             <Layout style={{ minHeight: "100vh" }}>
             <Sider trigger={null} collapsible collapsed={collapsed}
                    collapsedWidth="0"
-                   style={{background: "rgb(24, 24, 24)", color: "white"}}>
+                   style={siderStyle}
+                   onMouseEnter={handleMouseEnter}
+                    onMouseLeave={handleMouseLeave}
+                   >
                 <div style={{textAlign: "center", padding: 12}}>
                     <Text strong={true} style={{padding: 6}}>CHIMOVO</Text>
                 </div>
@@ -452,16 +489,24 @@ const DashboardLayout: React.FC = () => {
                     defaultOpenKeys={['dashboard']}
                     onClick={onClick}
                     selectedKeys={[current]}
-                    items={items}
+                    items={itemsMenu}
                 />
             </Sider>
 
             <Layout className="site-layout">
-                <Header style={{padding: 0, background: colorBgContainer}}>
-                    {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-                        className: 'trigger',
-                        onClick: () => setCollapsed(!collapsed),
-                    })}
+                <Header style={{paddingLeft:0, paddingRight: 12, background: colorBgContainer}}>
+                    
+                    <Row justify={"space-between"}>
+                        <Col>
+                            {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
+                                className: 'trigger',
+                                onClick: () => setCollapsed(!collapsed),
+                            })}
+                        </Col>
+                        <Col>
+                            <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsUser} />
+                        </Col>
+                    </Row>
                 </Header>
                 <Content
                     style={{

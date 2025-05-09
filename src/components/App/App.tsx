@@ -21,8 +21,6 @@ import Page404 from "../Pages/Results/404/404"
 import Page500 from '../Pages/Results/500/500';
 import Maintenance from "../Pages/Results/Maintenance/Maintenance";
 
-import Choida from '../Pages/Choida/app';
-
 
 //DashboardLayout
 import DashboardLayout from "../Pages/Dashboard/dashboardLayout"
@@ -40,6 +38,7 @@ import PetGo from "../Pages/Dashboard/PetGo/petgo";
 import Fisch from "../Pages/Dashboard/Fisch/Fisch";
 import Fisch_Completed from "../Pages/Dashboard/Fisch/FischCompleted";
 import KingLegacy from "../Pages/Dashboard/KingLegacy/KingLegacy";
+import BubbleGumSimInfinity from "../Pages/Dashboard/BubbleGumSimInfinity/BubbleGumSimInfinity"
 //
 
 import DetailFisch from "../Pages/Details/Fisch/showDetailFisch";
@@ -179,9 +178,6 @@ function App() {
 
                 }
 
-                <Alert message="THÔNG BÁO QUAN TRỌNG" banner description="Vào ngày 3/5 (tức chưa đến 1 tuần) server hết hạn đồng nghĩa web này sẽ đóng mãi mãi, domain sẽ hết hạn vào cuối tháng 5, xin cám ơn tất cả anh em đã sử dụng website này <3 [SEIAN - 2025/04/27]" type="error" showIcon />
-
-
                 <Layout.Content>
 
                     <Routes>
@@ -227,6 +223,10 @@ function App() {
                                 <Route path={"vua-di-san"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("kl")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<KingLegacy/>} />
+                                </Route>
+                                <Route path={"bubble-gum-simulator-infinity"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("bgsi")}/>}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<BubbleGumSimInfinity/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>

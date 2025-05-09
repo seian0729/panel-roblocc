@@ -1,9 +1,8 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Alert, Button, Col, Collapse, Divider, message, Row, Space} from "antd";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {atomOneDark} from "react-syntax-highlighter/dist/cjs/styles/hljs";
 import {useStore} from "../../../../state/storeHooks";
-
 
 const ProfileScript: React.FC = () => {
     const {user} = useStore(({app}) => app);
@@ -20,6 +19,12 @@ const ProfileScript: React.FC = () => {
 
     const [messageApi, contextHolder] = message.useMessage();
     const [title, setTitle] = useState('Info')
+
+    
+    useEffect(() => {
+        document.title = 'Chimovo - Profile (Script)'
+    })
+
 
     const bloxfruitString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
@@ -95,6 +100,13 @@ const fischString = `getgenv().Setting = {
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/heads/master/cc-panel.lua'))()`;
+
+const bgsiString = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120,
+    Note = '${username}'
+}
+loadstring(game:HttpGet('https://cdn.chimovo.com/private/bgsi/client.lua'))()`;
 
 
     const copyScript = (scriptname: string, script: string) => {
@@ -265,7 +277,24 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/hea
                             : <></>
 
                     }
-                </>,
+                    {
+                        checkAccess("bgsi") ? <Collapse bordered={false} items={[{
+                                key: '11',
+                                label: 'BGS Infinity',
+                                children: <>
+                                    <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                        {bgsiString}
+                                    </SyntaxHighlighter>
+                                    <Button type={"default"}
+                                            onClick={() => copyScript('BGS Infinity', bgsiString)}>
+                                        Copy Script
+                                    </Button>
+                                </>
+                            }]} style={{marginTop: 6}}/>
+                            : <></>
+
+                    }
+                </>
             </Col>
         </Row>
     </div>

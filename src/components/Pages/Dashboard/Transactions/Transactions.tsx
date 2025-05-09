@@ -14,6 +14,7 @@ const Transactions: React.FC = () => {
             setTransactions(res.data)
             setLoadingTable(false)
         })
+        document.title = 'Chimovo - Transactions'
     }, []);
 
     interface DataType {

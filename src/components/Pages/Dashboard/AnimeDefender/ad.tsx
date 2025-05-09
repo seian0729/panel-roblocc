@@ -120,6 +120,7 @@ const AnimeDefender: React.FC = () => {
             setLoadingReload(false);
             setLoadingTable(false)
         })
+        document.title = 'Chimovo - Anime Defender'
     },[])
 
     const AutoRefreshData = () => {
@@ -495,7 +496,7 @@ const AnimeDefender: React.FC = () => {
         <Row justify={'start'}>
             <Divider orientation="left">Roblocc Panel - Anime Defenders</Divider>
             <Col span={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Account Overview"} size={"small"}>
+                <Card variant="borderless" title={"Account Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={24} xl={12}>
                             <Card size="small" title="Account Control">
@@ -586,7 +587,7 @@ const AnimeDefender: React.FC = () => {
             </Col>
 
             <Col span={24} style={{padding: 6}}>
-                <Card bordered={false} title={"Data Overview"} size={"small"}>
+                <Card variant="borderless" title={"Data Overview"} size={"small"}>
                     <Row gutter={[12,12]}>
                         <Col xs={24} sm={24} md={24} lg={6} xl={6}>
                             <Card>

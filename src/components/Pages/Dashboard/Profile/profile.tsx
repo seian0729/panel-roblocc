@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     Button,
     Col,
@@ -14,10 +14,14 @@ import {useStore} from "../../../../state/storeHooks";
 import moment from "moment";
 
 
+
 const Profile: React.FC = () => {
     const {user} = useStore(({app}) => app);
     const {id, username, role, siginKey, dateExpired} = user.unwrap();
     const [ showKey, setShowKey ] = useState(false)
+    useEffect(() => {
+        document.title = 'Chimovo - Profile'
+    })
     const data = [
         {
             key: 1,
