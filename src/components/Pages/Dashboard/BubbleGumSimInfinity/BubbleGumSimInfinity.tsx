@@ -599,6 +599,17 @@ const BubbleGumSimInfinity: React.FC = () => {
         document.title = 'Chimovo - Bubble Gum Simulator Infinity'
     }, []);
 
+    const AutoRefreshData = () => {
+        refreshData()
+        messageApi.success(`Next refresh ${moment(Date.now() + 60000).fromNow() }`,10);
+        messageApi.info(`Last Updated - ${moment(Date.now()).calendar()}`,15)
+    }
+
+    useEffect(() =>{
+        const intervalId = setInterval(AutoRefreshData, 60000);
+        return () => clearInterval(intervalId);
+    })
+
     return (
         <>
             {contextHolder}
