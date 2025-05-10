@@ -24,6 +24,8 @@ import bsgiPetDataJson from "../../../../services/bsgiPetData.json"
 //css
 import cardStyle from "./card.module.css"
 
+const errorIMG = 'https://tr.rbxcdn.com/180DAY-32c9eb0c14f4cf3e4fb1664ae8fa8b31/256/256/Image/Webp/noFilter'
+
 //json data pet
 type bsgiPetDataType = {
     [key: string]: any
@@ -360,7 +362,9 @@ const BubbleGumSimInfinity: React.FC = () => {
         let totalEggsPerMin = 0
         dataApi.forEach((item: DataType) => {
             let Farming = JSON.parse(item.Description)['Farming']
-            totalEggsPerMin += isNaN((Farming['Hatches'] - Farming['oldHatches']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Hatches'] - Farming['oldHatches']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+            if (moment().unix() - moment(item.updatedAt).unix() <= 300){
+                totalEggsPerMin += isNaN((Farming['Hatches'] - Farming['oldHatches']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 1 : (Farming['Hatches'] - Farming['oldHatches']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+            }
         })
         return totalEggsPerMin
     }
@@ -722,7 +726,10 @@ const BubbleGumSimInfinity: React.FC = () => {
                                                         prefix={
                                                             <Avatar
                                                                 size={{ xs: 24, sm: 32, md: 40, xl: 64 }}
-                                                                src={bsgiPetData[petName]['Normal']}
+                                                                src={bsgiPetData[petName] != undefined ? 
+                                                                    bsgiPetData[petName]['Normal'] :
+                                                                    errorIMG
+                                                                }
                                                                 shape="square"
                                                             />
                                                         }
@@ -742,10 +749,10 @@ const BubbleGumSimInfinity: React.FC = () => {
                             <Space>
                                 <>
                                 <UserOutlined /> 
-                                {`${getOnline() + getOffline()} Account`}
+                                {`${new Intl.NumberFormat().format(getOnline() + getOffline())} Account`}
                                 </>
                                 <Tag color={'green'}>
-                                    {`${getOnline()}`}
+                                    {new Intl.NumberFormat().format(getOnline())}
                                 </Tag> 
                             </Space>
                         } 
@@ -1010,10 +1017,10 @@ const BubbleGumSimInfinity: React.FC = () => {
                                                 justifyContent: 'center'
                                             }}>
                                                 <img alt={`img - ${item['name']}`} 
-                                                src={bsgiPetData[item['name']][
+                                                src={bsgiPetData[item['name']] != undefined ? (bsgiPetData[item['name']][
                                                 item['isMythic'] && item['isShiny'] ? 'MythicShiny'
                                                 : item['isMythic'] ? 'Mythic' : item['isShiny'] ? 'Shiny' : 'Normal'
-                                                ]} 
+                                                ]) : errorIMG} 
                                                 style={{
                                                     aspectRatio: 1,
                                                     height: 80,
