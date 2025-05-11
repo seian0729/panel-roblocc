@@ -57,7 +57,14 @@ const BubbleGumSimInfinity: React.FC = () => {
 
     const [hidename, setHidename] = useState(false)
 
-    const secretRenderList = ['King Doggy', 'The Overlord', 'Luminosity', 'Mech Robot']
+    const secretRenderList = ['Luminosity','Lord Shock', 'Prophet', 'Wolflord', 'Queen Kitty', 'D0GGY1337']
+
+    const getLengthSecPet = () =>{
+        if (24/secretRenderList.length < 4){
+            return 4
+        } 
+        return 24/secretRenderList.length
+    }
 
     const onChangeHidename = (e: CheckboxChangeEvent) => {
         setHidename(e.target.checked)
@@ -624,7 +631,7 @@ const BubbleGumSimInfinity: React.FC = () => {
                         size="small"
                         title="Total Account Data"
                         >
-                        <Card size={"small"} variant="borderless" title={"📅 Data"}>
+                        <Card size={"small"} variant="borderless" title={"Data"}>
                             <Row gutter={[12,12]}>
                                 <Col span={24} sm={12} md={8} xl={4}>
                                     <Card size={"small"}>
@@ -713,12 +720,12 @@ const BubbleGumSimInfinity: React.FC = () => {
                                 </Col>
                             </Row>
                         </Card>
-                        <Card size={"small"} variant="borderless" title={"🐰 Pets"} key={'pet'}>
+                        <Card size={"small"} variant="borderless" title={"Pets"} key={'pet'}>
                             <Row gutter={[12,12]}>
                                 {
                                     secretRenderList.map((petName: string) => {
                                         return (
-                                            <Col span={24} xs={12} sm={12} md={6} xl={6} key={petName}>
+                                            <Col span={24} xs={12} sm={12} md={getLengthSecPet()} xl={getLengthSecPet()} key={petName}>
                                                 <Card size={"small"} >
                                                     <Statistic
                                                         title={petName}
