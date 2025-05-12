@@ -197,10 +197,12 @@ const BubbleGumSimInfinity: React.FC = () => {
     }
 
     const handleModalOk = () => {
+        setModalPetDataFilter([])
         setIsPetModalOpen(false);
     };
     
     const handleModalCancel = () => {
+        setModalPetDataFilter([])
         setIsPetModalOpen(false);
     };
 
@@ -221,28 +223,25 @@ const BubbleGumSimInfinity: React.FC = () => {
     const getPetsAllAccount = (typePet: string | null) => {
         let PetsWithOwner:any = []
         dataApi.forEach((item: any) => {
-            if (selectedRowKeys.includes(item.UsernameRoblocc)) {
-                const Pets = JSON.parse(item['Description'])['Pets']
-                Pets.forEach((pet: any) => {
-                    if (typePet){
-                        if (pet['rarity'] == typePet) {
-                            PetsWithOwner.push({
-                                ...{
-                                    owner: item['UsernameRoblocc']
-                                },...pet
-                            })
-                        }
-                    }
-                    else{
+        const Pets = JSON.parse(item['Description'])['Pets']
+            Pets.forEach((pet: any) => {
+                if (typePet){
+                    if (pet['rarity'] == typePet) {
                         PetsWithOwner.push({
                             ...{
                                 owner: item['UsernameRoblocc']
                             },...pet
                         })
                     }
-                });
-            }
-            
+                }
+                else{
+                    PetsWithOwner.push({
+                        ...{
+                            owner: item['UsernameRoblocc']
+                        },...pet
+                    })
+                }
+            });
         })
         return PetsWithOwner
     }
@@ -784,9 +783,18 @@ const BubbleGumSimInfinity: React.FC = () => {
                                     type="primary"
                                     icon={<FileSearchOutlined />}
                                     onClick={() => openPetModal('ALL ACCOUNT', getPetsAllAccount(null))}
-                                    disabled={!hasSelected} 
                                     >
-                                    {`Show Pets ${selectedRowKeys.length} Account`}
+                                    {`Show Pets All Account`}
+                                </Button>  
+                                <Button 
+                                    color="red" 
+                                    variant="filled" 
+                                    size="small" 
+                                    type="primary"
+                                    icon={<FileSearchOutlined />}
+                                    onClick={() => openPetModal('ALL ACCOUNT', getPetsAllAccount('Secret'))}
+                                    >
+                                    {`Show Secret Pets All Account`}
                                 </Button>  
                                 {/* <Button 
                                     color="red" 
