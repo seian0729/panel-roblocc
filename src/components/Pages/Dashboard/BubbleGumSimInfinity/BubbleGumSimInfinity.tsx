@@ -2,16 +2,12 @@ import React, {useEffect, useRef, useState} from "react";
 import moment from 'moment';
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {Avatar, Button, Card, Checkbox, Col, Divider, Empty, Input, InputNumber, List, message, Modal, Popconfirm, Row, Select, Space, Statistic, Table, Tag, Typography} from "antd";
-import {DeleteOutlined, FileSearchOutlined, FilterOutlined, QuestionCircleOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UserOutlined} from "@ant-design/icons";
+import {CopyOutlined, DeleteOutlined, FileSearchOutlined, FilterOutlined, QuestionCircleOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UserOutlined} from "@ant-design/icons";
 import type {ColumnsType} from 'antd/es/table';
-import type { GetProps } from 'antd';
 import type { InputNumberProps } from 'antd';
-
 //components
-import {Export} from "../Export/export";
 
 import {bulkDeleteData, getData} from "../../../../services/data";
-import {useStore} from "../../../../state/storeHooks";
 //assets
 import Egg from "../../../../assets/bgsi/Egg.webp"
 import Multi_Egg from "../../../../assets/bgsi/Multi_Egg.webp"
@@ -246,6 +242,16 @@ const BubbleGumSimInfinity: React.FC = () => {
         return PetsWithOwner
     }
 
+    const copyUserHaveSec = () =>{
+        let stringData = ''
+        const allSecretPet = getPetsAllAccount('Secret')
+        allSecretPet.forEach((pet: petDataType) =>{
+            stringData += `${pet.owner} / x${pet.amount | 1} ${pet.name} \n` 
+        })
+        navigator.clipboard.writeText(stringData);
+        messageApi.success(`Copied ${allSecretPet.length} pets into clipboard <3`);
+    }
+
     function formatNumber(num: number, precision: number) {
         const map = [
             {suffix: 'T', threshold: 1e12},
@@ -322,6 +328,7 @@ const BubbleGumSimInfinity: React.FC = () => {
     }
 
     interface petDataType {
+        owner: string,
         name: string,
         rarity: string,
         isShiny: boolean,
@@ -775,7 +782,17 @@ const BubbleGumSimInfinity: React.FC = () => {
                         
                         }>
                         <Row justify={'end'} style={{marginBottom: 12}}>
-                            <Space wrap>      
+                            <Space wrap>     
+                                <Button 
+                                    color="red" 
+                                    variant="filled" 
+                                    size="small" 
+                                    type="primary"
+                                    icon={<CopyOutlined />}
+                                    onClick={copyUserHaveSec}
+                                    >
+                                    {`Copy Username (Secret)`}
+                                </Button>  
                                 <Button 
                                     color="green" 
                                     variant="filled" 
@@ -784,7 +801,7 @@ const BubbleGumSimInfinity: React.FC = () => {
                                     icon={<FileSearchOutlined />}
                                     onClick={() => openPetModal('ALL ACCOUNT', getPetsAllAccount(null))}
                                     >
-                                    {`Show Pets All Account`}
+                                    {`Show Pets`}
                                 </Button>  
                                 <Button 
                                     color="red" 
@@ -794,19 +811,8 @@ const BubbleGumSimInfinity: React.FC = () => {
                                     icon={<FileSearchOutlined />}
                                     onClick={() => openPetModal('ALL ACCOUNT', getPetsAllAccount('Secret'))}
                                     >
-                                    {`Show Secret Pets All Account`}
+                                    {`Show Secret Pets`}
                                 </Button>  
-                                {/* <Button 
-                                    color="red" 
-                                    variant="filled" 
-                                    size="small" 
-                                    type="primary"
-                                    icon={<FileSearchOutlined />}
-                                    onClick={() => openPetModal('ALL ACCOUNT', getPetsAllAccount('Secret'))}
-                                    disabled={!hasSelected} 
-                                    >
-                                    {`Show Secret Pets ${selectedRowKeys.length} Account`}
-                                </Button>     */}
                                 <Popconfirm
                                     placement="bottom"
                                     title={'Are you sure to delete?'}
@@ -833,16 +839,6 @@ const BubbleGumSimInfinity: React.FC = () => {
                                         }
                                     </Button>
                                 </Popconfirm>
-                                <Button 
-                                    type="primary"  
-                                    size={"small"} 
-                                    icon={<TableOutlined />}
-                                    onClick={() => {
-                                        setOpenNoteDrawer(true)
-                                    }}
-                                >
-                                    Note Active
-                                </Button>
                                 <Checkbox onChange={onChangeHidename}>
                                     Hide Name (optional)*
                                 </Checkbox>
