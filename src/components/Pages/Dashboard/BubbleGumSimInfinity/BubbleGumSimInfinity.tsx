@@ -476,7 +476,7 @@ const BubbleGumSimInfinity: React.FC = () => {
             sorter: (a: any, b: any) => JSON.parse(a.Description).Farming['Hatches'] - JSON.parse(b.Description).Farming['Hatches'],
         },
         {
-            title: 'Hatche / Min',
+            title: 'Hatches / Min',
             dataIndex: 'Descriptions',
             width: '10%',
             render: (_, record) => {
@@ -485,6 +485,12 @@ const BubbleGumSimInfinity: React.FC = () => {
                     {Math.round(isNaN((Farming['Hatches'] - Farming['oldHatches']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Hatches'] - Farming['oldHatches']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60))}
                 </Tag>
             },
+            sorter: (a: DataType, b: DataType) =>{
+                const farmingA = JSON.parse(a.Description)['Farming']
+                const farmingB = JSON.parse(b.Description)['Farming']
+                return Math.round(isNaN((farmingA['Hatches'] - farmingA['oldHatches']) / Math.floor((farmingA['UTC'] - farmingA['oldUTC'])/60)) ? 0 : (farmingA['Hatches'] - farmingA['oldHatches']) / Math.floor((farmingA['UTC'] 
+                    - farmingA['oldUTC'])/60)) - Math.round(isNaN((farmingB['Hatches'] - farmingB['oldHatches']) / Math.floor((farmingB['UTC'] - farmingB['oldUTC'])/60)) ? 0 : (farmingB['Hatches'] - farmingB['oldHatches']) / Math.floor((farmingB['UTC'] - farmingB['oldUTC'])/60))
+            }
         },
         {
             title: 'Mastery',
