@@ -53,7 +53,7 @@ const BubbleGumSimInfinity: React.FC = () => {
 
     const [hidename, setHidename] = useState(false)
 
-    const secretRenderList = ['Luminosity','Lord Shock', 'Prophet', 'Wolflord', 'Queen Kitty', 'D0GGY1337']
+    const secretRenderList = ['Luminosity','Lord Shock', 'Prophet','Queen Kitty','Royal Guardian', 'Hyperwave Kitty']
 
     const getLengthSecPet = () =>{
         if (24/secretRenderList.length < 4){
