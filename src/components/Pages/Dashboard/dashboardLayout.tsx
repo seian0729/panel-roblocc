@@ -498,13 +498,13 @@ const DashboardLayout: React.FC = () => {
                 <Header style={{paddingLeft:0, paddingRight: 12, background: colorBgContainer}}>
                     
                     <Row justify={"space-between"}>
-                        <Col>
+                        <Col xxl={20} xl={19} lg={18} md={18}>
                             {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
                                 className: 'trigger',
                                 onClick: () => setCollapsed(!collapsed),
                             })}
                         </Col>
-                        <Col>
+                        <Col flex={"auto"}>
                             <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={itemsUser} />
                         </Col>
                     </Row>
