@@ -108,6 +108,13 @@ const bgsiString = `getgenv().Setting = {
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/bgsi/client.lua'))()`;
 
+const haingonString = `getgenv().Setting = {
+    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120,
+    Note = '${username}'
+}
+loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/heads/master/client-2ngon.lua'))()`;
+
 
     const copyScript = (scriptname: string, script: string) => {
         navigator.clipboard.writeText(script);

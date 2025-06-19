@@ -114,6 +114,18 @@ const DashboardLayout: React.FC = () => {
         </Link>), ''),
     ]
 
+    dashboardItems.push(getItem(
+        'Steal A Brainrot',
+        'steal-a-brainrot',
+        null,
+        [getItem((
+            <Link to={"steal-a-brainrot/tracking"}>
+                Tracking
+            </Link>
+        ),"steal-a-brainrot/tracking")],
+        'group')
+    )
+
     if (checkAccess("bgsi")){
         dashboardItems.push(getItem(
             'Bubble Gum Sim Inf',

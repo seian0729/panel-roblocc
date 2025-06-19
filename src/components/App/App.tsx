@@ -39,6 +39,7 @@ import Fisch from "../Pages/Dashboard/Fisch/Fisch";
 import Fisch_Completed from "../Pages/Dashboard/Fisch/FischCompleted";
 import KingLegacy from "../Pages/Dashboard/KingLegacy/KingLegacy";
 import BubbleGumSimInfinity from "../Pages/Dashboard/BubbleGumSimInfinity/BubbleGumSimInfinity"
+import StealABranrot from '../Pages/Dashboard/StealaBrainrot/StealaBrainrot';
 //
 
 import DetailFisch from "../Pages/Details/Fisch/showDetailFisch";
@@ -227,6 +228,10 @@ function App() {
                                 <Route path={"bubble-gum-simulator-infinity"} element={<PageAccessOnlyRoute userIsWhitelisted={checkAccess("bgsi")}/>}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<BubbleGumSimInfinity/>} />
+                                </Route>
+                                <Route path={"steal-a-brainrot"}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<StealABranrot/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>
