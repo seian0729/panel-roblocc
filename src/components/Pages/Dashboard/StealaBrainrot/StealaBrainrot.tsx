@@ -311,7 +311,7 @@ const StealABranrot: React.FC = () => {
     return (
         <>
             {contextHolder}
-            <Divider orientation="left">Roblocc Panel - 2 Ngon Simulator</Divider>
+            <Divider orientation="left">Roblocc Panel - Giả lập 2 ngón</Divider>
             <Row gutter={[12,12]}>
                 <Col span={24}>
                     <Card 

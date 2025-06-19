@@ -301,6 +301,19 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/hea
                             : <></>
 
                     }
+                    <Collapse bordered={false} items={[{
+                        key: '12',
+                        label: 'Giả lập 2 ngón',
+                        children: <>
+                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                {haingonString}
+                            </SyntaxHighlighter>
+                            <Button type={"default"}
+                                    onClick={() => copyScript('Giả lập 2 ngón', haingonString)}>
+                                Copy Script
+                            </Button>
+                        </>
+                    }]} style={{marginTop: 6}}/>
                 </>
             </Col>
         </Row>
