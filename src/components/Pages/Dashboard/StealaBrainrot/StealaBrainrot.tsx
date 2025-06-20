@@ -161,13 +161,16 @@ const StealABranrot: React.FC = () => {
             render: (_, record) => {
                 const Pets = JSON.parse(record.Description)['Pets']
 
-                 return (
-                    <Tag 
-                        color="error" 
-                    >
-                        {`${Pets.length} Secret`}
-                    </Tag>
-                )
+                if (Pets) {
+                    return (
+                        <Tag 
+                            color="error" 
+                        >
+                            {`${Pets.length} Secret`}
+                        </Tag>
+                    )
+                }
+                return '-'
             }
         },
         {
@@ -225,7 +228,7 @@ const StealABranrot: React.FC = () => {
         let totalPets = 0
         dataApi.forEach((item: DataType) => {
             const Pets = JSON.parse(item.Description)['Pets']
-            totalPets += Pets.length || 0
+            totalPets += Pets && Pets.length || 0
         })
         return totalPets
     }
@@ -234,7 +237,7 @@ const StealABranrot: React.FC = () => {
         let pets = 0
         dataApi.forEach((item: DataType) => {
             const Pets = JSON.parse(item.Description)['Pets']
-            if (Pets.length > 0){
+            if (Pets && Pets.length > 0){
                 Pets.forEach((item: string) => {
                     if (item == petName){
                         pets++
@@ -253,7 +256,7 @@ const StealABranrot: React.FC = () => {
                 [key: string]: any
             }
             let pets: petDataType = {}
-            if (Pets.length > 0){
+            if (Pets && Pets.length > 0){
                 Pets.forEach((item_: string) => {
                     if (filterdSecret.includes(item_)){
                         if(!pets[item_ + item.UsernameRoblocc]){
@@ -265,12 +268,12 @@ const StealABranrot: React.FC = () => {
                         else pets[item_ + item.UsernameRoblocc]['amount']++
                     }
                 })
+                let petstr = ''
+                Object.keys(pets).forEach(key => {
+                    petstr += `${pets[key]['amount']}x ${pets[key]['name']}, `
+                });
+                str += `${item.UsernameRoblocc}: ${petstr.substring(0, petstr.length - 2)} \n`
             }
-            let petstr = ''
-            Object.keys(pets).forEach(key => {
-                petstr += `${pets[key]['amount']}x ${pets[key]['name']} `
-            });
-            str += `${item.UsernameRoblocc}: ${petstr} \n`
         })
         navigator.clipboard.writeText(str);
         messageApi.success(`Copied secret pets into clipboard <3`);
@@ -289,7 +292,7 @@ const StealABranrot: React.FC = () => {
         let totalPetName:any [] = []
         dataApi.forEach((item: DataType) => {
             const Pets = JSON.parse(item.Description)['Pets']
-            if (Pets.length > 0){
+            if (Pets && Pets.length > 0){
                 Pets.forEach((item: string) => {
                     if (!totalPetName.includes(item)){
                         totalPetName.push(item)
