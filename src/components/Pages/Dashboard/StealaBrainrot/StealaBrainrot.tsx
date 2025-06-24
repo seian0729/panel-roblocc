@@ -129,6 +129,26 @@ const StealABranrot: React.FC = () => {
             title: 'Account',
             dataIndex: 'UsernameRoblocc',
             width: '15%',
+            filters: [
+                {
+                    text: 'Active',
+                    value: 'Active',
+                },
+                {
+                    text: 'Inactive',
+                    value: 'Inactive',
+                },
+            ],
+            onFilter: (value: any, record) => {
+                if (value === 'Active') {
+                    return moment().unix() - moment(record.updatedAt).unix() < 300
+                } else if (value === 'Inactive') {
+                    return moment().unix() - moment(record.updatedAt).unix() >= 300
+                } else {
+                    return false
+                }
+
+            },
             render: (_, record) => {
                 let UsernameRoblocc = record.UsernameRoblocc
                 // console.log(UsernameRoblocc.length/100*30, UsernameRoblocc.length)
@@ -151,23 +171,64 @@ const StealABranrot: React.FC = () => {
                 )
             },
             sorter: (a, b) => {
-                return a.UsernameRoblocc.localeCompare(b.UsernameRoblocc)
+                return moment(a.updatedAt).unix() - moment(b.updatedAt).unix()
             },
         },
         {
             title: 'Pet',
             dataIndex: 'Pet',
             width: '70%',
+            filters: [
+                {
+                    text: 'Rainbow',
+                    value: 'Rainbow',
+                },
+                {
+                    text: 'Diamond',
+                    value: 'Diamond',
+                },
+                {
+                    text: 'Gold',
+                    value: 'Gold',
+                },
+            ],
+            onFilter: (value: any, record) => {
+                const Pets = JSON.parse(record.Description)['Pets']
+                return Pets?.find((valuePet: string) => {
+                    return valuePet.match(/\[(.*?)\]/)?.[1] === value
+                })
+            },
+            sorter: (a, b) => {
+                const petA = JSON.parse(a.Description)['Pets']
+                const petB = JSON.parse(b.Description)['Pets']
+                return petA?.length - petB?.length
+            },
             render: (_, record) => {
                 const Pets = JSON.parse(record.Description)['Pets']
 
+                const getTagColor = (petName: string) => {
+                    const mutation = petName.match(/\[(.*?)\]/)?.[1]
+                        if (mutation){
+                            switch (mutation) {
+                                case 'Rainbow':
+                                    return 'error'
+                                case 'Diamond':
+                                    return 'blue'
+                                case 'Gold':
+                                    return 'gold'
+                            }
+                        }
+                        return 'default'
+                }
+            
+
                 if (Pets) {
                     return (
-                        <Tag 
-                            color="error" 
-                        >
-                            {`${Pets.length} Secret`}
-                        </Tag>
+                        Pets.map((pet: string, index: number) => {
+                            return <Tag key={`${pet}-${index}`} color={getTagColor(pet)}>
+                                { pet }
+                            </Tag>
+                        })
                     )
                 }
                 return '-'
