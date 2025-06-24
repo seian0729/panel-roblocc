@@ -37,12 +37,21 @@ const StealABranrot: React.FC = () => {
     const secretRenderList = [
         'Graipuss Medussi',
         'La Vacca Saturno Saturnita',
-        'Los Tralaleritos'
+        'Los Tralaleritos',
+        '[Gold] Graipuss Medussi',
+        '[Gold] La Vacca Saturno Saturnita',
+        '[Gold] Los Tralaleritos',
+        '[Diamond] Graipuss Medussi',
+        '[Diamond] La Vacca Saturno Saturnita',
+        '[Diamond] Los Tralaleritos',
+        '[Rainbow] Graipuss Medussi',
+        '[Rainbow] La Vacca Saturno Saturnita',
+        '[Rainbow] Los Tralaleritos'
     ]
 
     const getLengthSecPet = () =>{
-        if (24/secretRenderList.length < 4){
-            return 4
+        if (24/secretRenderList.length < 8){
+            return 8
         } 
         return 24/secretRenderList.length
     }
@@ -306,7 +315,13 @@ const StealABranrot: React.FC = () => {
                 })
             }
         })
-        return pets
+        return pets == 0 ? '-' : pets
+    }
+
+    const getColorSecretPetByName = (petName: string) => {
+        switch (petName.match(/\[(.*?)\]/)?.[1]) {
+        }
+
     }
 
     const copyTotalSecret = () =>{
@@ -396,8 +411,11 @@ const StealABranrot: React.FC = () => {
                                 {
                                     secretRenderList.map((petName: string) => {
                                         return (<Col span={24} xs={12} sm={12} md={getLengthSecPet()} key={petName}>
-                                            <Card size={"small"} >
-                                                <Statistic title={petName} value={getTotalSecretPetByName(petName)}/>
+                                            <Card size={"small"}>
+                                                <Statistic 
+                                                    title={petName} 
+                                                    value={getTotalSecretPetByName(petName)}
+                                                />
                                             </Card>
                                         </Col>)
                                     })
