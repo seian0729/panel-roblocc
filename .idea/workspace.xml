@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] APP | IMPORTANT ANNOUNCEMENT">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] gia lap 2 ngon | added new pet, trait">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/StealaBrainrot/StealaBrainrot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/StealaBrainrot/StealaBrainrot.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -279,15 +279,7 @@
       <workItem from="1746442183072" duration="11527000" />
       <workItem from="1746514212862" duration="553000" />
       <workItem from="1746518428113" duration="251000" />
-      <workItem from="1751299588034" duration="349000" />
-    </task>
-    <task id="LOCAL-00076" summary="[+] Pet99 | New notification &#10;[*] Pet99 - Mail | All active account =&gt; all account">
-      <option name="closed" value="true" />
-      <created>1710515945075</created>
-      <option name="number" value="00076" />
-      <option name="presentableId" value="LOCAL-00076" />
-      <option name="project" value="LOCAL" />
-      <updated>1710515945076</updated>
+      <workItem from="1751299588034" duration="1148000" />
     </task>
     <task id="LOCAL-00077" summary="[*] Pet99 - Mail | Fixed suck">
       <option name="closed" value="true" />
@@ -673,7 +665,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745764826959</updated>
     </task>
-    <option name="localTasksCounter" value="125" />
+    <task id="LOCAL-00125" summary="[+] gia lap 2 ngon | added new pet, trait">
+      <option name="closed" value="true" />
+      <created>1751300214153</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1751300214154</updated>
+    </task>
+    <option name="localTasksCounter" value="126" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -691,7 +691,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Fisch| Added count account after upload" />
     <MESSAGE value="[*] Fisch| remove log" />
     <MESSAGE value="[*] Fisch| Priority Rods while render" />
     <MESSAGE value="[*] Fisch| color total rod" />
@@ -716,6 +715,7 @@
     <MESSAGE value="[*] render-count-data.tsx | fixed render ngu lon" />
     <MESSAGE value="[+] BF | Added Gravity" />
     <MESSAGE value="[+] APP | IMPORTANT ANNOUNCEMENT" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] APP | IMPORTANT ANNOUNCEMENT" />
+    <MESSAGE value="[+] gia lap 2 ngon | added new pet, trait" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] gia lap 2 ngon | added new pet, trait" />
   </component>
 </project>

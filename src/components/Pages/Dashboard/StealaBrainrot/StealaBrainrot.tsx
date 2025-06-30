@@ -1,8 +1,38 @@
 
 import React, {useEffect, useState} from "react";
 import moment from "moment";
-import { Badge, Button, Card, Checkbox, Col, Divider, Dropdown, MenuProps, message, Modal, Popconfirm, Row, Select, SelectProps, Space, Statistic, Table, Tag, Typography } from "antd";
-import { CopyOutlined, DeleteOutlined, DownOutlined, FileSearchOutlined, QuestionCircleOutlined, ReloadOutlined, UserOutlined } from "@ant-design/icons";
+import {
+    Badge,
+    Button,
+    Card,
+    Checkbox,
+    Col,
+    Divider,
+    Dropdown,
+    Input,
+    MenuProps,
+    message,
+    Modal,
+    Popconfirm,
+    Row,
+    Select,
+    SelectProps,
+    Space,
+    Statistic,
+    Table,
+    Tag,
+    Typography
+} from "antd";
+import {
+    CopyOutlined,
+    DeleteOutlined,
+    DownOutlined,
+    FileSearchOutlined,
+    QuestionCircleOutlined,
+    ReloadOutlined,
+    SearchOutlined,
+    UserOutlined
+} from "@ant-design/icons";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import type {ColumnsType} from 'antd/es/table';
 import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
@@ -191,24 +221,40 @@ const StealABranrot: React.FC = () => {
             title: 'Pet',
             dataIndex: 'Pet',
             width: '70%',
-            filters: [
-                {
-                    text: 'Rainbow',
-                    value: 'Rainbow',
-                },
-                {
-                    text: 'Diamond',
-                    value: 'Diamond',
-                },
-                {
-                    text: 'Gold',
-                    value: 'Gold',
-                },
-            ],
+            filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+                <div style={{padding: 8}}>
+                    <Input
+                        placeholder="Pet name... (include trait, mutation)"
+                        value={selectedKeys[0]}
+                        onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                        onPressEnter={() => confirm()}
+                        style={{marginBottom: 8}}
+                    />
+                    <Button
+                        type="primary"
+                        onClick={() => confirm()}
+                        style={{width: 90, marginRight: 8}}
+                    >
+                        Search
+                    </Button>
+                    <Button
+                        onClick={() => clearFilters?.()}
+                        style={{width: 90}}
+                    >
+                        Reset
+                    </Button>
+                </div>
+            ),
+            filterIcon: (filtered: boolean) => (
+                <SearchOutlined style={{color: filtered ? '#729ddc' : undefined}}/>
+            ),
             onFilter: (value: any, record) => {
                 const Pets = JSON.parse(record.Description)['Pets']
                 return Pets?.find((valuePet: string) => {
-                    return valuePet.match(/\[(.*?)\]/)?.[1] === value
+                    return (
+                        typeof value === 'string' &&
+                        valuePet.toLowerCase().includes(value.toLowerCase())
+                    )
                 })
             },
             sorter: (a, b) => {
