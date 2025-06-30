@@ -38,20 +38,24 @@ const StealABranrot: React.FC = () => {
         'Graipuss Medussi',
         'La Vacca Saturno Saturnita',
         'Los Tralaleritos',
+        'La Grande Combinasion',
         '[Gold] Graipuss Medussi',
         '[Gold] La Vacca Saturno Saturnita',
         '[Gold] Los Tralaleritos',
+        '[Gold] La Grande Combinasion',
         '[Diamond] Graipuss Medussi',
         '[Diamond] La Vacca Saturno Saturnita',
         '[Diamond] Los Tralaleritos',
+        '[Diamond] La Grande Combinasion',
         '[Rainbow] Graipuss Medussi',
         '[Rainbow] La Vacca Saturno Saturnita',
-        '[Rainbow] Los Tralaleritos'
+        '[Rainbow] Los Tralaleritos',
+        '[Rainbow] La Grande Combinasion',
     ]
 
     const getLengthSecPet = () =>{
-        if (24/secretRenderList.length < 8){
-            return 8
+        if (24/secretRenderList.length < 6){
+            return 6
         } 
         return 24/secretRenderList.length
     }
@@ -309,6 +313,9 @@ const StealABranrot: React.FC = () => {
             const Pets = JSON.parse(item.Description)['Pets']
             if (Pets && Pets.length > 0){
                 Pets.forEach((item: string) => {
+                    if (item.includes('- ')){
+                        item = item.split('- ')[1]
+                    }
                     if (item == petName){
                         pets++
                     }
@@ -410,7 +417,7 @@ const StealABranrot: React.FC = () => {
                             <Row gutter={[12,12]}>
                                 {
                                     secretRenderList.map((petName: string) => {
-                                        return (<Col span={24} xs={12} sm={12} md={getLengthSecPet()} key={petName}>
+                                        return (<Col span={24} xs={12} sm={12} xl={getLengthSecPet()} key={petName}>
                                             <Card size={"small"}>
                                                 <Statistic 
                                                     title={petName} 
