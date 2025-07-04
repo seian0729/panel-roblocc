@@ -51,7 +51,7 @@ const StealABranrot: React.FC = () => {
     // loading
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [loadingReload, setLoadingReload] = useState(false);
-    const [loadingCopy, setLoadingCopy] = useState(false);
+    const [loadingBulkDelete, setLoadingBulkDelete] = useState(false);
 
     // data api
     const [dataApi, setDataApi] = useState([]);
@@ -107,19 +107,36 @@ const StealABranrot: React.FC = () => {
         })
     }
 
-    const bulkDeleteAccount = () => {
+    const bulkDeleteSelectedAccount = () => {
         setLoadingDelete(true);
-        setTimeout(() => {
-            bulkDeleteData(selectedRowKeys as string[]).then(() => {
-                //console.log(res);
-            })
+        bulkDeleteData(selectedRowKeys as string[]).then(() => {
             messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
             setSelectedRowKeys([]);
-            setLoadingDelete(false);
-            refreshData()
-        }, 1000);
+            setTimeout(() => {
+                setLoadingDelete(false);
+                refreshData()
+            }, 500)
+        })
     };
-    
+
+    const bulkDeleteAccount = () => {
+        let tempListAccount: string[] = []
+        dataApi.forEach((item: DataType) =>{
+            tempListAccount.push(item.UsernameRoblocc)
+        })
+        setLoadingBulkDelete(true);
+        bulkDeleteData(tempListAccount).then(() => {
+            messageApi.success(`Deleted: ${tempListAccount.length} account !`);
+            setSelectedRowKeys([]);
+        }).catch((err) =>{
+            messageApi.error('Something went wrong, contact Seian')
+        }).finally(() =>{
+            setTimeout(() => {
+                setLoadingBulkDelete(false);
+                refreshData()
+            }, 500)
+        })
+    }
     const getOnline = () => {
         let temp = 0
         dataApi.forEach((item: DataType) => {
@@ -514,12 +531,32 @@ const StealABranrot: React.FC = () => {
                                     onClick={showCopyModal}
                                     >
                                     {`Copy Username (Secret)`}
-                                </Button>  
+                                </Button>
                                 <Popconfirm
                                     placement="bottom"
                                     title={'Are you sure to delete?'}
-                                    description={`${selectedRowKeys.length} account`}
+                                    description={`${dataApi.length} account(s) will be deleted permanently from database, can't rollback`}
                                     onConfirm={bulkDeleteAccount}
+                                    okText="Yes"
+                                    cancelText="No"
+                                    icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
+                                >
+                                    <Button
+                                        type="primary"
+                                        loading={loadingBulkDelete}
+                                        disabled={dataApi.length < 1}
+                                        danger
+                                        size={"small"}
+                                        icon={<DeleteOutlined />}
+                                    >
+                                        DELETE ALL ACCOUNT
+                                    </Button>
+                                </Popconfirm>
+                                <Popconfirm
+                                    placement="bottom"
+                                    title={'Are you sure to delete?'}
+                                    description={`${selectedRowKeys.length} account(s) will be deleted permanently from database, can't rollback`}
+                                    onConfirm={bulkDeleteSelectedAccount}
                                     okText="Yes"
                                     cancelText="No"
                                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
@@ -535,8 +572,8 @@ const StealABranrot: React.FC = () => {
                                     >
                                         {
                                             selectedRowKeys.length > 0 
-                                            &&  `Delete ${selectedRowKeys.length} Account` 
-                                            || 'Delete Account'
+                                            &&  `Delete ${selectedRowKeys.length} Selected Account`
+                                            || 'Delete Selected Account'
 
                                         }
                                     </Button>
