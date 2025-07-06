@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] gia lap 2 ngon | added new pet, trait">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] gia lap 2 ngon | added bulk delete (loi coca)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/StealaBrainrot/StealaBrainrot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/StealaBrainrot/StealaBrainrot.tsx" afterDir="false" />
     </list>
@@ -279,23 +279,11 @@
       <workItem from="1746442183072" duration="11527000" />
       <workItem from="1746514212862" duration="553000" />
       <workItem from="1746518428113" duration="251000" />
-      <workItem from="1751299588034" duration="1148000" />
-    </task>
-    <task id="LOCAL-00077" summary="[*] Pet99 - Mail | Fixed suck">
-      <option name="closed" value="true" />
-      <created>1710516170840</created>
-      <option name="number" value="00077" />
-      <option name="presentableId" value="LOCAL-00077" />
-      <option name="project" value="LOCAL" />
-      <updated>1710516170840</updated>
-    </task>
-    <task id="LOCAL-00078" summary="[*] Pet99 - Mail | Fixed bug">
-      <option name="closed" value="true" />
-      <created>1710517413648</created>
-      <option name="number" value="00078" />
-      <option name="presentableId" value="LOCAL-00078" />
-      <option name="project" value="LOCAL" />
-      <updated>1710517413648</updated>
+      <workItem from="1751299588034" duration="2608000" />
+      <workItem from="1751475979694" duration="43000" />
+      <workItem from="1751642375225" duration="3378000" />
+      <workItem from="1751732208935" duration="1002000" />
+      <workItem from="1751816720581" duration="2829000" />
     </task>
     <task id="LOCAL-00079" summary="[*] Pet99 - Mail | Fixed again">
       <option name="closed" value="true" />
@@ -673,7 +661,23 @@
       <option name="project" value="LOCAL" />
       <updated>1751300214154</updated>
     </task>
-    <option name="localTasksCounter" value="126" />
+    <task id="LOCAL-00126" summary="[*] gia lap 2 ngon | change search mutation into name">
+      <option name="closed" value="true" />
+      <created>1751300940649</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1751300940651</updated>
+    </task>
+    <task id="LOCAL-00127" summary="[+] gia lap 2 ngon | added bulk delete (loi coca)">
+      <option name="closed" value="true" />
+      <created>1751643606651</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1751643606651</updated>
+    </task>
+    <option name="localTasksCounter" value="128" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -691,8 +695,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Fisch| remove log" />
-    <MESSAGE value="[*] Fisch| Priority Rods while render" />
     <MESSAGE value="[*] Fisch| color total rod" />
     <MESSAGE value="[*] Fisch | added more rods" />
     <MESSAGE value="[*] Misc | Change some suck get data" />
@@ -716,6 +718,8 @@
     <MESSAGE value="[+] BF | Added Gravity" />
     <MESSAGE value="[+] APP | IMPORTANT ANNOUNCEMENT" />
     <MESSAGE value="[+] gia lap 2 ngon | added new pet, trait" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] gia lap 2 ngon | added new pet, trait" />
+    <MESSAGE value="[*] gia lap 2 ngon | change search mutation into name" />
+    <MESSAGE value="[+] gia lap 2 ngon | added bulk delete (loi coca)" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] gia lap 2 ngon | added bulk delete (loi coca)" />
   </component>
 </project>

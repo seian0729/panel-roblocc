@@ -1,4 +1,3 @@
-
 import React, {useEffect, useState} from "react";
 import moment from "moment";
 import {
@@ -6,7 +5,7 @@ import {
     Button,
     Card,
     Checkbox,
-    Col,
+    Col, Collapse,
     Divider,
     Dropdown,
     Input,
@@ -24,10 +23,10 @@ import {
     Typography
 } from "antd";
 import {
+    CaretRightOutlined,
     CopyOutlined,
     DeleteOutlined,
     DownOutlined,
-    FileSearchOutlined,
     QuestionCircleOutlined,
     ReloadOutlined,
     SearchOutlined,
@@ -36,6 +35,7 @@ import {
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import type {ColumnsType} from 'antd/es/table';
 import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
+import {CollapseProps} from "antd/lib";
 
 const StealABranrot: React.FC = () => {
 
@@ -64,28 +64,67 @@ const StealABranrot: React.FC = () => {
 
     const [hidename, setHidename] = useState(false)
 
-    const secretRenderList = [
+    const secrets = [
         'Graipuss Medussi',
         'La Vacca Saturno Saturnita',
         'Los Tralaleritos',
         'La Grande Combinasion',
-        '[Gold] Graipuss Medussi',
-        '[Gold] La Vacca Saturno Saturnita',
-        '[Gold] Los Tralaleritos',
-        '[Gold] La Grande Combinasion',
-        '[Diamond] Graipuss Medussi',
-        '[Diamond] La Vacca Saturno Saturnita',
-        '[Diamond] Los Tralaleritos',
-        '[Diamond] La Grande Combinasion',
-        '[Rainbow] Graipuss Medussi',
-        '[Rainbow] La Vacca Saturno Saturnita',
-        '[Rainbow] Los Tralaleritos',
-        '[Rainbow] La Grande Combinasion',
+        'Garama and Madundung'
     ]
+
+    const mutations = [
+        'Candy',
+        'Gold',
+        'Diamond',
+        'Rainbow',
+    ]
+
+    function getSecretList(secrets: string[], mutations: string[]): string[] {
+        const combinedResults: string[] = [];
+
+        // Duyệt qua từng "secret"
+        for (const secret of secrets) {
+            // Với mỗi "secret", duyệt qua từng "mutation"
+            for (const mutation of mutations) {
+                // Nối "mutation" và "secret" và thêm vào mảng kết quả
+                combinedResults.push(`[${mutation}] ${secret}`);
+            }
+        }
+
+        return combinedResults;
+    }
+
+    function groupSecretsByKey(secrets: string[], mutations: string[]): { [key: string]: string[] } {
+        // Sử dụng một đối tượng để nhóm các secret theo key (mutation hoặc 'normal')
+        const groupedResults: { [key: string]: string[] } = {};
+
+        // Bước 1: Thêm các secret không có mutation vào key 'normal'
+        // Đảm bảo key 'normal' tồn tại và được sắp xếp
+        groupedResults['Normal'] = [...secrets].sort(); // Sao chép và sắp xếp ngay lập tức
+
+        // Bước 2: Thêm các cặp [mutation] secret vào các key tương ứng
+        for (const mutation of mutations) {
+            // Đảm bảo mỗi mutation có một mảng trống nếu chưa tồn tại
+            if (!groupedResults[mutation]) {
+                groupedResults[mutation] = [];
+            }
+            for (const secret of secrets) {
+                groupedResults[mutation].push(`[${mutation}] ${secret}`);
+            }
+            // Sắp xếp các secret bên trong mỗi nhóm mutation
+            groupedResults[mutation].sort();
+        }
+
+        return groupedResults;
+    }
+
+    const secretRenderList = getSecretList(secrets, mutations)
+
+    const groupSecretRenderList = groupSecretsByKey(secrets, mutations)
 
     const getLengthSecPet = () =>{
         if (24/secretRenderList.length < 6){
-            return 6
+            return 8
         } 
         return 24/secretRenderList.length
     }
@@ -301,7 +340,7 @@ const StealABranrot: React.FC = () => {
                 if (Pets) {
                     return (
                         Pets.map((pet: string, index: number) => {
-                            return <Tag key={`${pet}-${index}`} color={getTagColor(pet)}>
+                            return <Tag key={`${pet}-${index}`} color={getTagColor(pet)} style={{margin: 4}}>
                                 { pet }
                             </Tag>
                         })
@@ -454,7 +493,54 @@ const StealABranrot: React.FC = () => {
             })
         })
         setOptionsSecret(options)
-    }, [dataApi]) 
+    }, [dataApi])
+
+    let petCollapseItem = [
+        {
+            key: 'normal',
+            label: 'Normal',
+            children: <>
+                <Row gutter={[12,12]}>
+                    {
+                        groupSecretRenderList['Normal'].map((petName: string) => {
+                            return (<Col span={24} xs={12} sm={12} xl={getLengthSecPet()} key={petName}>
+                                <Card size={"small"}>
+                                    <Statistic
+                                        title={petName}
+                                        value={getTotalSecretPetByName(petName)}
+                                    />
+                                </Card>
+                            </Col>)
+                        })
+                    }
+                </Row>
+            </>
+        },
+    ]
+
+    mutations.map((mutation: string) => {
+        petCollapseItem.push({
+            key: mutation,
+            label: mutation,
+            children: <>
+                <Row gutter={[12,12]}>
+                    {
+                        groupSecretRenderList[mutation].map((petName: string) => {
+                            return (<Col span={24} xs={12} sm={12} xl={getLengthSecPet()} key={petName}>
+                                <Card size={"small"}>
+                                    <Statistic
+                                        title={petName}
+                                        value={getTotalSecretPetByName(petName)}
+                                    />
+                                </Card>
+                            </Col>)
+                        })
+                    }
+                </Row>
+            </>
+        },)
+
+    })
 
 
     return (
@@ -476,22 +562,16 @@ const StealABranrot: React.FC = () => {
                                 </Col>
                             </Row>
                         </Card>
-                         <Card size={"small"} variant="borderless" title={"Pets"} key={'pet'}>
-                            <Row gutter={[12,12]}>
-                                {
-                                    secretRenderList.map((petName: string) => {
-                                        return (<Col span={24} xs={12} sm={12} xl={getLengthSecPet()} key={petName}>
-                                            <Card size={"small"}>
-                                                <Statistic 
-                                                    title={petName} 
-                                                    value={getTotalSecretPetByName(petName)}
-                                                />
-                                            </Card>
-                                        </Col>)
-                                    })
-                                }
-                            </Row>
-                         </Card>
+                        <Card size={"small"} variant="borderless" title={"Pets"}>
+                            <Collapse
+                                items={petCollapseItem}
+                                bordered={false}
+                                size={"small"}
+                                defaultActiveKey={'normal'}
+                                style={{background: "transparent"}}
+                                expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
+                            />
+                        </Card>
                     </Card>
                 </Col>
 
