@@ -427,12 +427,6 @@ const StealABranrot: React.FC = () => {
         return pets == 0 ? '-' : pets
     }
 
-    const getColorSecretPetByName = (petName: string) => {
-        switch (petName.match(/\[(.*?)\]/)?.[1]) {
-        }
-
-    }
-
     const copyTotalSecret = () =>{
         let str = ''
         dataApi.forEach((item: DataType) => {
@@ -462,6 +456,17 @@ const StealABranrot: React.FC = () => {
         })
         navigator.clipboard.writeText(str);
         messageApi.success(`Copied secret pets into clipboard <3`);
+    }
+
+    const copySelectedAccount = () => {
+        let str = ''
+        dataApi.forEach((item: DataType) => {
+            if (selectedRowKeys.includes(item.UsernameRoblocc)) {
+                str += `${item.UsernameRoblocc} \n`
+            }
+        })
+        navigator.clipboard.writeText(str.substring(0, str.length - 2));
+        messageApi.success(`Copied ${selectedRowKeys.length} Username into clipboard <3`);
     }
 
     const handleChangeFiltered = (value: string[]) => {
@@ -601,7 +606,16 @@ const StealABranrot: React.FC = () => {
                         
                         }>
                         <Row justify={'end'} style={{marginBottom: 12}}>
-                            <Space wrap>     
+                            <Space wrap>
+                                <Button
+                                    size='small'
+                                    icon={<CopyOutlined />}
+                                    onClick={copySelectedAccount}
+                                    disabled={selectedRowKeys.length == 0}
+                                    type="primary"
+                                >
+                                    {`Copy ${selectedRowKeys.length == 0 && 'selected' || selectedRowKeys.length} username account`}
+                                </Button>
                                 <Button 
                                     color="red" 
                                     variant="filled" 
@@ -651,10 +665,7 @@ const StealABranrot: React.FC = () => {
                                         icon={<DeleteOutlined />}
                                     >
                                         {
-                                            selectedRowKeys.length > 0 
-                                            &&  `Delete ${selectedRowKeys.length} Selected Account`
-                                            || 'Delete Selected Account'
-
+                                            `Delete ${selectedRowKeys.length == 0 && 'selected' || selectedRowKeys.length} account`
                                         }
                                     </Button>
                                 </Popconfirm>
