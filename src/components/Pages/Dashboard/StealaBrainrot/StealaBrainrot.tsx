@@ -69,7 +69,8 @@ const StealABranrot: React.FC = () => {
         'La Vacca Saturno Saturnita',
         'Los Tralaleritos',
         'La Grande Combinasion',
-        'Garama and Madundung'
+        'Garama and Madundung',
+        'Chimpanzini Spiderini'
     ]
 
     const mutations = [
@@ -81,12 +82,8 @@ const StealABranrot: React.FC = () => {
 
     function getSecretList(secrets: string[], mutations: string[]): string[] {
         const combinedResults: string[] = [];
-
-        // Duyệt qua từng "secret"
         for (const secret of secrets) {
-            // Với mỗi "secret", duyệt qua từng "mutation"
             for (const mutation of mutations) {
-                // Nối "mutation" và "secret" và thêm vào mảng kết quả
                 combinedResults.push(`[${mutation}] ${secret}`);
             }
         }
@@ -95,23 +92,17 @@ const StealABranrot: React.FC = () => {
     }
 
     function groupSecretsByKey(secrets: string[], mutations: string[]): { [key: string]: string[] } {
-        // Sử dụng một đối tượng để nhóm các secret theo key (mutation hoặc 'normal')
         const groupedResults: { [key: string]: string[] } = {};
 
-        // Bước 1: Thêm các secret không có mutation vào key 'normal'
-        // Đảm bảo key 'normal' tồn tại và được sắp xếp
-        groupedResults['Normal'] = [...secrets].sort(); // Sao chép và sắp xếp ngay lập tức
+        groupedResults['Normal'] = [...secrets].sort();
 
-        // Bước 2: Thêm các cặp [mutation] secret vào các key tương ứng
         for (const mutation of mutations) {
-            // Đảm bảo mỗi mutation có một mảng trống nếu chưa tồn tại
             if (!groupedResults[mutation]) {
                 groupedResults[mutation] = [];
             }
             for (const secret of secrets) {
                 groupedResults[mutation].push(`[${mutation}] ${secret}`);
             }
-            // Sắp xếp các secret bên trong mỗi nhóm mutation
             groupedResults[mutation].sort();
         }
 
@@ -125,7 +116,7 @@ const StealABranrot: React.FC = () => {
     const getLengthSecPet = () =>{
         if (24/secretRenderList.length < 6){
             return 8
-        } 
+        }
         return 24/secretRenderList.length
     }
 
@@ -186,7 +177,7 @@ const StealABranrot: React.FC = () => {
         })
         return temp
     }
-    
+
     const getOffline = () => {
         let temp = 0
         dataApi.forEach((item: DataType) => {
@@ -197,12 +188,12 @@ const StealABranrot: React.FC = () => {
         })
         return temp
     }
-    
+
     const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
         //console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
-    
+
     const rowSelection = {
         disable: true,
         selectedRowKeys,
@@ -210,7 +201,7 @@ const StealABranrot: React.FC = () => {
 
     };
     const hasSelected = selectedRowKeys.length > 0;
- 
+
     interface DataType {
         UID: number;
         UsernameRoblocc: string;
@@ -222,7 +213,7 @@ const StealABranrot: React.FC = () => {
         Cookie: string;
     }
 
-    
+
     const columns: ColumnsType<DataType> = [
         {
             title: 'Account',
@@ -254,14 +245,14 @@ const StealABranrot: React.FC = () => {
                 return (
                     <Space direction="vertical">
                         <Badge status={moment().unix() - moment(record.updatedAt).unix() >= 300 ? 'error' : 'success'} text={
-                            !hidename ? UsernameRoblocc : 
+                            !hidename ? UsernameRoblocc :
                             (UsernameRoblocc.substring(0, UsernameRoblocc.length / 100 * 30) + "*".repeat(UsernameRoblocc.length - UsernameRoblocc.length / 100 * 30))}
                         >
                         </Badge>
 
                         <Text type="secondary">
                             <Text type="secondary" strong>
-                                {record.Note + ' - '}   
+                                {record.Note + ' - '}
                             </Text>
                              {moment(record.updatedAt).fromNow()}
                         </Text>
@@ -335,7 +326,7 @@ const StealABranrot: React.FC = () => {
                         }
                         return 'default'
                 }
-            
+
 
                 if (Pets) {
                     return (
@@ -399,8 +390,8 @@ const StealABranrot: React.FC = () => {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
-    
-    const getTotalSecretPets = () => { 
+
+    const getTotalSecretPets = () => {
         let totalPets = 0
         dataApi.forEach((item: DataType) => {
             const Pets = JSON.parse(item.Description)['Pets']
@@ -554,7 +545,7 @@ const StealABranrot: React.FC = () => {
             <Divider orientation="left">Roblocc Panel - Giả lập 2 ngón</Divider>
             <Row gutter={[12,12]}>
                 <Col span={24}>
-                    <Card 
+                    <Card
                         title="Total Account Data"
                         size='small'
                     >
@@ -581,29 +572,29 @@ const StealABranrot: React.FC = () => {
                 </Col>
 
                 <Col span={24}>
-                    <Card size="small" 
+                    <Card size="small"
                         title={
                             <Space>
                                 <>
-                                <UserOutlined /> 
+                                <UserOutlined />
                                 {`${new Intl.NumberFormat().format(getOnline() + getOffline())} Account`}
                                 </>
                                 <Tag color={'green'}>
                                     {new Intl.NumberFormat().format(getOnline())}
-                                </Tag> 
+                                </Tag>
                             </Space>
-                        } 
+                        }
                         extra={
-                            <Button 
-                                type="primary" 
-                                onClick={refreshData} 
+                            <Button
+                                type="primary"
+                                onClick={refreshData}
                                 size={"small"}
                                 loading={loadingReload}
                                 icon={<ReloadOutlined />}
                             >
                                 Refresh
                             </Button>
-                        
+
                         }>
                         <Row justify={'end'} style={{marginBottom: 12}}>
                             <Space wrap>
@@ -616,10 +607,10 @@ const StealABranrot: React.FC = () => {
                                 >
                                     {`Copy ${selectedRowKeys.length == 0 && 'selected' || selectedRowKeys.length} username account`}
                                 </Button>
-                                <Button 
-                                    color="red" 
-                                    variant="filled" 
-                                    size="small" 
+                                <Button
+                                    color="red"
+                                    variant="filled"
+                                    size="small"
                                     type="primary"
                                     icon={<CopyOutlined />}
                                     onClick={showCopyModal}
@@ -656,11 +647,11 @@ const StealABranrot: React.FC = () => {
                                     icon={<QuestionCircleOutlined style={{color: 'red'}}/>}
                                     disabled={!hasSelected}
                                 >
-                                    <Button 
-                                        type="primary" 
-                                        disabled={!hasSelected} 
-                                        loading={loadingDelete} 
-                                        danger 
+                                    <Button
+                                        type="primary"
+                                        disabled={!hasSelected}
+                                        loading={loadingDelete}
+                                        danger
                                         size={"small"}
                                         icon={<DeleteOutlined />}
                                     >
