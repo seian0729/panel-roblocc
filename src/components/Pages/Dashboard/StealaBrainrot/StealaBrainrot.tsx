@@ -71,7 +71,8 @@ const StealABranrot: React.FC = () => {
         'La Grande Combinasion',
         'Garama and Madundung',
         'Chimpanzini Spiderini',
-        'Las Tralaleritas'
+        'Las Tralaleritas',
+        'Chicleteira Bicicleteira'
     ]
 
     const mutations = [
