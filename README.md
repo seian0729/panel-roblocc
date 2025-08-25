@@ -1,4 +1,4 @@
-# ChimOvo Roblox Panel - Frontend Only
+# ChimOvO Roblox Panel - Frontend Only
 
 This project was build with [Create React App](https://github.com/facebook/create-react-app) and [Ant Design](https://ant.design).
 
