@@ -15,6 +15,8 @@ Development
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+Test Account: fe_test/fe_test_1234
+
 Build
 ### `npm run build` or `yarn run build`
 
