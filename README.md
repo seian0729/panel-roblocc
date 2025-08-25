@@ -7,7 +7,7 @@ This project was build with [Create React App](https://github.com/facebook/creat
 In the project directory, you can run:
 
 Install module
-### `npm install` or `yarn install`
+### `npm install` or `yarn`
 
 Development
 ### `npm start` or `yarn start`
