@@ -6,8 +6,8 @@ import {
     List,
     message,
     Row,
-    Space,
-    Tag, Tooltip,
+    Tag,
+    Tooltip,
     Typography
 } from 'antd';
 import {useStore} from "../../../../state/storeHooks";
@@ -48,17 +48,7 @@ const Profile: React.FC = () => {
             key: 4,
             title: 'Tags',
             value: <>
-                {
-                    username == 'Hanei' ? <>
-                        <Space size={[0, 8]} wrap>
-                            <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
-                            <Tag color={'volcano'}>Developer</Tag>
-                            <Tag color={'magenta'}>Tester</Tag>
-                            <Tag color={'orange'}>Lifetime Access</Tag>
-                        </Space>
-                    </> : <Tag color={role == 'Admin' ? 'red' : 'blue' }>{role}</Tag>
-                }
-
+                <Tag color={role === 'Admin' ? 'red' : 'blue' }>{role}</Tag>
             </>
         },
         {
@@ -68,16 +58,16 @@ const Profile: React.FC = () => {
                 <Typography>
                         <pre>
                             {
-                                siginKey == '' ? 'Undefined' : showKey ? siginKey : ("*".repeat(siginKey.length))
+                                siginKey === '' ? 'Undefined' : showKey ? siginKey : ("*".repeat(siginKey.length))
                             }
                         </pre>
                 </Typography>
                 <Button onClick={() => {
 
                     setTimeout(() => {
-                        if (siginKey == '')
+                        if (siginKey === '')
                         {
-                            messageApi.error(`You don't have key`)
+                            messageApi.error(`You don't have any key`)
                         }
                         else {
                             navigator.clipboard.writeText(siginKey);
@@ -96,47 +86,7 @@ const Profile: React.FC = () => {
         },
     ];
 
-    const bloxfruitString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 300,
-    Note = '${username}'
-}
-loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
-
-    const bloxfruitStringTrigon = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `"${siginKey}"` : id},
-    DelayUpdate = 300,
-    Note = "${username}"
-}
-loadstring(game:HttpGet("https://raw.githubusercontent.com/chimnguu/ngu/master/bulularchive.lua"))()`;
-
-    const petxString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 60,
-    Note = '${username}'
-}
-loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))()`;
-
-    const bladeBallString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 120,
-    Note = '${username}'
-}
-loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
-
-    const pet99String = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 60,
-    Note = '${username}',
-    ['Inventory'] = {
-        'Magic Shard'
-    }
-}
-loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/pet99'))()`;
-
     const [messageApi, contextHolder] = message.useMessage();
-    const [title, setTitle] = useState('Info')
-
     return <div>
         {contextHolder}
         <Row style={{padding: 12}}>

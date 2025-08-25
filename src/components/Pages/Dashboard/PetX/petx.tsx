@@ -23,7 +23,6 @@ import {
 } from 'antd'
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {
-    deleteData,
     bulkDeleteData,
     getData,
     getOrder,

@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
 import {
-    Alert,
     Badge,
     Button,
     Card,
@@ -8,7 +7,8 @@ import {
     Col,
     Divider, Drawer, Dropdown,
     FloatButton,
-    Form, MenuProps, message,
+    MenuProps,
+    message,
     Popconfirm,
     Row,
     Space,
@@ -22,34 +22,13 @@ import {
     UserOutlined,
     GoldOutlined
 } from "@ant-design/icons";
-import {useStore} from "../../../../state/storeHooks";
 import moment from 'moment';
 import {ColumnsType} from "antd/es/table";
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import formatDuration from "format-duration";
-import CountUp from "react-countup";
 
-function formatNumber(num: number, precision: number) {
-    const map = [
-        {suffix: 'T', threshold: 1e12},
-        {suffix: 'B', threshold: 1e9},
-        {suffix: 'M', threshold: 1e6},
-        {suffix: 'K', threshold: 1e3},
-        {suffix: '', threshold: 1},
-    ];
-
-    const found = map.find((x) => Math.abs(num) >= x.threshold);
-    if (found) {
-        const formatted = (num / found.threshold).toFixed(precision) + found.suffix;
-        return formatted;
-    }
-
-    return num;
-}
 const Pet99: React.FC = () => {
-
-    const {user} = useStore(({app}) => app);
 
     const [messageApi, contextHolder] = message.useMessage();
 
@@ -69,10 +48,6 @@ const Pet99: React.FC = () => {
     //
 
     const [openNoteDrawer, setOpenNoteDrawer] = useState(false);
-
-    // Diamond Static
-    const [totalDiamond, setTotalDiamond] = useState(0);
-    const [totalDiamondPerMinute, setTotalDiamondPerMinute] = useState(0);
 
     interface DataType {
         Id: number
@@ -112,16 +87,16 @@ const Pet99: React.FC = () => {
                 let Description = JSON.parse(record.Description)
                 const colorPetTier = ['default','gold','red']
                 const subName = ['','Golden','Rainbow']
-                if (typeof  Description['Huge'] != "boolean" &&  Description['Huge'] != undefined){
+                if (typeof  Description['Huge'] !== "boolean" &&  Description['Huge'] !== undefined){
                     //console.log(Description['Huge'])
                     return (
                         <>
                             {
-                                Description['Huge'] == undefined ? <> - </> :
+                                Description['Huge'] === undefined ? <> - </> :
                                     Description['Huge'].map((key: any) => {
                                         return (
                                             <Tag color={colorPetTier[key['pt']]} key={record.UsernameRoblocc+key['Name']} style={{margin: 4}}>
-                                                {(key['pt'] != undefined ? subName[key['pt']] + " " : " ") + key['Name']}
+                                                {(key['pt'] !== undefined ? subName[key['pt']] + " " : " ") + key['Name']}
                                             </Tag>
                                         );
                                     })
@@ -434,36 +409,36 @@ const Pet99: React.FC = () => {
         return totalDiamond
     }
 
-    const getTotalDiamondPerHour = () => {
-        let diamondPerMin = 0
-        dataApi.forEach((item: DataType) => {
-            let Farming = JSON.parse(item.Description)['Farming']
-
-            if (moment().unix() - moment(item.updatedAt).unix() <= 300){
-
-                diamondPerMin += isNaN((Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
-
-            }
-        })
-        return diamondPerMin * 60
-    }
+    // const getTotalDiamondPerHour = () => {
+    //     let diamondPerMin = 0
+    //     dataApi.forEach((item: DataType) => {
+    //         let Farming = JSON.parse(item.Description)['Farming']
+    //
+    //         if (moment().unix() - moment(item.updatedAt).unix() <= 300){
+    //
+    //             diamondPerMin += isNaN((Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)) ? 0 : (Farming['Diamonds'] - Farming['oldDiamond']) / Math.floor((Farming['UTC'] - Farming['oldUTC'])/60)
+    //
+    //         }
+    //     })
+    //     return diamondPerMin * 60
+    // }
 
     const getTotalHugePets = (typeFiltered: string) => {
         let totalHugePets = 0;
         dataApi.forEach((item: DataType) => {
             let Pets = JSON.parse(item.Description)['Huge']
-            if (typeof  Pets != "boolean" && Pets != undefined){
+            if (typeof  Pets !== "boolean" && Pets !== undefined){
                 Pets.forEach((pet: any) => {
-                    if (typeFiltered == "Normal"){
+                    if (typeFiltered === "Normal"){
                         totalHugePets++
                     }
-                    if (typeFiltered == "Gold"){
-                        if (pet['pt'] == 1){
+                    if (typeFiltered === "Gold"){
+                        if (pet['pt'] === 1){
                             totalHugePets++
                         }
                     }
-                    if (typeFiltered == "Rainbow"){
-                        if (pet['pt'] == 2){
+                    if (typeFiltered === "Rainbow"){
+                        if (pet['pt'] === 2){
                             totalHugePets++
                         }
                     }
@@ -472,8 +447,6 @@ const Pet99: React.FC = () => {
         })
         return totalHugePets
     }
-
-    const formatter = (value: number) => <CountUp end={value} separator=","/>;
 
     return (<div>
         {contextHolder}
@@ -661,7 +634,7 @@ const Pet99: React.FC = () => {
                             }
 
                             let Inventory = JSON.parse(record.Description)['Inventory']
-                            if (typeof Inventory != "boolean" && Inventory != undefined) {
+                            if (typeof Inventory !== "boolean" && Inventory !== undefined) {
                                 Inventory.map((key: any) => {
                                     const itemName = key['Name'];
                                     if (!tempInventory.find((key) => key['Name'] === itemName)){
@@ -674,7 +647,7 @@ const Pet99: React.FC = () => {
 
                         dataApi.forEach(({Description}) => {
                             let Inventory = JSON.parse(Description)['Inventory']
-                            if (typeof Inventory != "boolean" && Inventory != undefined) {
+                            if (typeof Inventory !== "boolean" && Inventory !== undefined) {
                                 Inventory.map((key: any) => {
                                     const itemName = key['Name'];
                                     const itemCount = key['Count'];
@@ -695,7 +668,7 @@ const Pet99: React.FC = () => {
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={3}>
                                         <Tag color={"red"}>
-                                            {timeElapsed == 0 && countAccount == 0 ? "-" : formatDuration(1000 * (timeElapsed / countAccount))}
+                                            {timeElapsed === 0 && countAccount === 0 ? "-" : formatDuration(1000 * (timeElapsed / countAccount))}
                                         </Tag>
                                     </Table.Summary.Cell>
                                     <Table.Summary.Cell index={4}>-</Table.Summary.Cell>

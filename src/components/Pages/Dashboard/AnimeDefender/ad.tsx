@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import type {DrawerProps, TabsProps} from 'antd';
-import {bulkDeleteData, deleteData, getData, getOrder} from "../../../../services/data";
+import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
 import moment from "moment/moment";
 import {ColumnsType} from "antd/es/table";
 import {useStore} from "../../../../state/storeHooks";
@@ -11,7 +10,6 @@ import {
     Card,
     Checkbox,
     Col,
-    Descriptions,
     Divider, Drawer, Dropdown,
     MenuProps,
     message,
@@ -323,7 +321,7 @@ const AnimeDefender: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return <Tag color={"red"}>
-                    {new Intl.NumberFormat().format(Description['Items']['Risky Dice'] == undefined ? 0 : Description['Items']['Risky Dice'])}
+                    {new Intl.NumberFormat().format(Description['Items']['Risky Dice'] === undefined ? 0 : Description['Items']['Risky Dice'])}
                 </Tag>
             },
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Risky Dice'] - JSON.parse(b.Description)['Items']['Risky Dice'],
@@ -335,7 +333,7 @@ const AnimeDefender: React.FC = () => {
             render: (_, record) => {
                 let Description = JSON.parse(record.Description)
                 return <Tag color={"blue"}>
-                    {new Intl.NumberFormat().format(Description['Items']['Frost Bind'] == undefined ? 0 : Description['Items']['Frost Bind'])}
+                    {new Intl.NumberFormat().format(Description['Items']['Frost Bind'] === undefined ? 0 : Description['Items']['Frost Bind'])}
                 </Tag>
             },
             sorter: (a: any, b: any) => JSON.parse(a.Description)['Items']['Frost Bind'] - JSON.parse(b.Description)['Items']['Frost Bind'],

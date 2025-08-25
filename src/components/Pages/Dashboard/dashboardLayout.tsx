@@ -60,7 +60,7 @@ const DashboardLayout: React.FC = () => {
     const [isHover, setIsHover] = useState(false);
 
     const checkAccess = (accessVal: string) => {
-        return decodeAccess.find((element: any) => element == accessVal) != undefined
+        return decodeAccess.find((element: any) => element === accessVal) !== undefined
     }
 
     function getItem(
@@ -468,7 +468,7 @@ const DashboardLayout: React.FC = () => {
     },[])
 
     {
-        if (unpaidInvoice.length > 0 && countNoti == 0) {
+        if (unpaidInvoice.length > 0 && countNoti === 0) {
             setCountNoti(1)
             modal.warning({
                 title:'User have an unpaid invoice',

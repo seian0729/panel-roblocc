@@ -32,12 +32,9 @@
     "moment-duration-format": "^2.3.2",
     "moment-timezone": "^0.5.43",
     "ramda": "^0.28.0",
-    "rc-queue-anim": "^2.0.0",
-    "rc-scroll-anim": "^2.7.6",
     "rc-tween-one": "^3.0.6",
     "react": "^18.2.0",
-    "react-animated-number": "^0.4.4",
-    "react-countup": "^6.5.0",
+    "react-countup": "^6.5.3",
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.18.0",
     "react-redux": "^8.0.5",
@@ -50,7 +47,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "GENERATE_SOURCEMAP=false react-scripts build",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

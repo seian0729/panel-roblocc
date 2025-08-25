@@ -238,7 +238,7 @@ const AnimeValorant: React.FC = () => {
         dataApi.forEach((item: DataType) => {
             let Description = JSON.parse(item.Description)
 
-            if(Description['TraitRerolls'] != undefined && Description['TraitRerolls'] != null){
+            if(Description['TraitRerolls'] !== undefined && Description['TraitRerolls'] !== null){
                 totalCrystals += Description['TraitRerolls']
             }
 

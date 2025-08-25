@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Alert, Button, Col, Collapse, Divider, message, Row, Space} from "antd";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import {atomOneDark} from "react-syntax-highlighter/dist/cjs/styles/hljs";
@@ -13,13 +13,11 @@ const ProfileScript: React.FC = () => {
     const decodeAccess = JSON.parse(access);
 
     const checkAccess = (accessVal: string) => {
-        return decodeAccess.find((element: any) => element == accessVal) != undefined
+        return decodeAccess.find((element: any) => element === accessVal) !== undefined
     }
 
 
     const [messageApi, contextHolder] = message.useMessage();
-    const [title, setTitle] = useState('Info')
-
     
     useEffect(() => {
         document.title = 'Chimovo - Profile (Script)'
@@ -27,35 +25,28 @@ const ProfileScript: React.FC = () => {
 
 
     const bloxfruitString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 300,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
 
     const bloxfruitStringAll = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `"${siginKey}"` : id},
+    UID = ${siginKey !== '' ? `"${siginKey}"` : id},
     DelayUpdate = 300,
     Note = "${username}"
 }
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/blocc-trai-cay/panelv1', Method = "GET"})['Body'])()`;
 
     const petxString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 60,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/nuoi-thu-cung/panel'))()`;
 
-    const bladeBallString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
-    DelayUpdate = 120,
-    Note = '${username}'
-}
-loadstring(game:HttpGet('https://cdn.chimovo.com/private/banh-kiem/panel'))()`;
-
     const pet99String = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 60,
     Note = '${username}',
     ['Inventory'] = {
@@ -67,49 +58,49 @@ repeat wait() spawn(function()
 end) wait(60) until HaneiDesu`;
 
 const toiletString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/gia-lap-phong-thu-bon-cau/client.lua'))()`;
 
 const adString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/anime-phong-thu/client.lua', Method = "GET"})['Body'])()`;
 
 const avString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/anime-valorant/client.lua', Method = "GET"})['Body'])()`;
 
 const pgString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/pet-go/client.lua', Method = "GET"})['Body'])()`;
 
 const fischString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/cc-panel.lua'))()`;
 
 const bgsiString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/bgsi/client.lua'))()`;
 
 const haingonString = `getgenv().Setting = {
-    UID = ${siginKey != '' ? `'${siginKey}'` : id},
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
     Note = '${username}'
 }

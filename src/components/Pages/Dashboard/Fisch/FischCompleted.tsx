@@ -40,7 +40,6 @@ import {
     CopyOutlined,
     DeleteOutlined,
     DownOutlined, ExclamationCircleFilled, InboxOutlined,
-    LineChartOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
@@ -69,7 +68,6 @@ const Fisch_Completed: React.FC = () => {
 
     //data
     const [dataApi, setDataApi] = useState([]);
-
 
     //Hidename
     const [hidename, setHidename] = useState(false)

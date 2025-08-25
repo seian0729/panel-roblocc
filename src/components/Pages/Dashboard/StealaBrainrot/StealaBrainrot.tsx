@@ -35,7 +35,6 @@ import {
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import type {ColumnsType} from 'antd/es/table';
 import {bulkDeleteData, deleteData, getData} from "../../../../services/data";
-import {CollapseProps} from "antd/lib";
 
 const StealABranrot: React.FC = () => {
 
@@ -411,13 +410,13 @@ const StealABranrot: React.FC = () => {
                     if (item.includes('- ')){
                         item = item.split('- ')[1]
                     }
-                    if (item == petName){
+                    if (item === petName){
                         pets++
                     }
                 })
             }
         })
-        return pets == 0 ? '-' : pets
+        return pets === 0 ? '-' : pets
     }
 
     const copyTotalSecret = () =>{
@@ -604,10 +603,10 @@ const StealABranrot: React.FC = () => {
                                     size='small'
                                     icon={<CopyOutlined />}
                                     onClick={copySelectedAccount}
-                                    disabled={selectedRowKeys.length == 0}
+                                    disabled={selectedRowKeys.length === 0}
                                     type="primary"
                                 >
-                                    {`Copy ${selectedRowKeys.length == 0 && 'selected' || selectedRowKeys.length} username account`}
+                                    {`Copy ${selectedRowKeys.length === 0 && 'selected' || selectedRowKeys.length} username account`}
                                 </Button>
                                 <Button
                                     color="red"
@@ -658,7 +657,7 @@ const StealABranrot: React.FC = () => {
                                         icon={<DeleteOutlined />}
                                     >
                                         {
-                                            `Delete ${selectedRowKeys.length == 0 && 'selected' || selectedRowKeys.length} account`
+                                            `Delete ${selectedRowKeys.length === 0 && 'selected' || selectedRowKeys.length} account`
                                         }
                                     </Button>
                                 </Popconfirm>

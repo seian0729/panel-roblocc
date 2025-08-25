@@ -15,7 +15,7 @@ const DashboardIndex: React.FC = () => {
     const decodeAccess = JSON.parse(access);
 
     const checkAccess = (accessVal: string) => {
-        return decodeAccess.find((element: any) => element == accessVal) != undefined
+        return decodeAccess.find((element: any) => element === accessVal) !== undefined
     }
     
     useEffect(() => {

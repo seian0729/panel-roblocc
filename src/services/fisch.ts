@@ -36,14 +36,14 @@ const listRodShow = [
 
 
 export function getIndexRod(rodName: string){
-    if (indexRods[rodName] != undefined){
+    if (indexRods[rodName] !== undefined){
         return indexRods[rodName]
     }
     return indexRods.length + 1
 }
 
 export function getColorRod(rodName: string)  {
-    if (colorRods[rodName] != undefined){
+    if (colorRods[rodName] !== undefined){
         return colorRods[rodName]
     }
     else return "default"

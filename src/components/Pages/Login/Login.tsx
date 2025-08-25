@@ -2,8 +2,7 @@ import React, {useState} from 'react';
 import {Row, 
     Col, 
     Button, 
-    message, 
-    notification, 
+    message,
     Form, 
     Input, 
     Divider, 
@@ -11,25 +10,19 @@ import {Row,
     Modal
 } from 'antd';
 import type { TabsProps } from 'antd';
-import {CloseCircleOutlined, CheckCircleOutlined, UserOutlined, LockOutlined} from '@ant-design/icons';
-import {useStoreWithInitializer} from "../../../state/storeHooks";
-import {dispatchOnCall, store} from "../../../state/store";
-import {initializeLogin, LoginState, updateErrors, updateField} from "./Login.slice";
+import {UserOutlined, LockOutlined} from '@ant-design/icons';
+import {store} from "../../../state/store";
+import {LoginState, updateErrors, updateField} from "./Login.slice";
 import {login, loginKey} from "../../../services/data";
 import {loadUserIntoApp} from "../../../types/user";
 
 
 export function Login() {
-    const [apiNotification, contextHolder] = notification.useNotification();
-
     const [modal, modalContextHolder] = Modal.useModal();
 
     const [messageApi, messContextHolder] = message.useMessage();
 
     const [loadingLogin, setLoadingLogin] = useState(false);
-
-    const {errors, loginIn, user} = useStoreWithInitializer(({login}) => login, dispatchOnCall(initializeLogin()));
-
 
     const items: TabsProps['items'] = [
         {
@@ -109,7 +102,6 @@ export function Login() {
 
     return (
         <div>
-            {contextHolder}
             {messContextHolder}
             {modalContextHolder}
             <Row justify="center" style={{display: "flex", alignItems: "center", justifyContent:"center", minHeight:"calc(100vh - 100px)"}}>

@@ -7,7 +7,6 @@ import {
     Row,
     message,
     Typography,
-    List,
     Form,
     Input,
     Button,
@@ -29,43 +28,43 @@ import {getData, createPet99Mail, getAllMail, createBulkPet99Mail} from "../../.
 import {ColumnsType} from "antd/es/table";
 import moment from "moment";
 
-function AccountData(account: any) {
-    const usernameRoblocc = account['UsernameRoblocc']
-    const Description = JSON.parse(account['Description'])
-    const {Inventory} = Description
-    const {Huge} = Description
-    const {Diamonds} =  Description['Farming']
-    const data = [];
-
-    if (Inventory != undefined){
-        Inventory.map((key: any) => {
-            data.push({
-                key: usernameRoblocc+key.Name,
-                title: key.Name,
-                value: new Intl.NumberFormat().format(key.Count),
-            })
-        })
-    }
-
-    data.push({
-        key: usernameRoblocc+"Diamonds",
-        title: 'Diamonds',
-        value: new Intl.NumberFormat().format(Diamonds),
-    })
-
-    return <List
-        itemLayout="horizontal"
-        dataSource={data}
-        renderItem={(item, index) => (
-            <List.Item>
-                <List.Item.Meta
-                    title={item.title}
-                    description={item.value}
-                />
-            </List.Item>
-        )}
-    />
-}
+// function AccountData(account: any) {
+//     const usernameRoblocc = account['UsernameRoblocc']
+//     const Description = JSON.parse(account['Description'])
+//     const {Inventory} = Description
+//     const {Huge} = Description
+//     const {Diamonds} =  Description['Farming']
+//     const data = [];
+//
+//     if (Inventory !== undefined){
+//         Inventory.map((key: any) => {
+//             data.push({
+//                 key: usernameRoblocc+key.Name,
+//                 title: key.Name,
+//                 value: new Intl.NumberFormat().format(key.Count),
+//             })
+//         })
+//     }
+//
+//     data.push({
+//         key: usernameRoblocc+"Diamonds",
+//         title: 'Diamonds',
+//         value: new Intl.NumberFormat().format(Diamonds),
+//     })
+//
+//     return <List
+//         itemLayout="horizontal"
+//         dataSource={data}
+//         renderItem={(item, index) => (
+//             <List.Item>
+//                 <List.Item.Meta
+//                     title={item.title}
+//                     description={item.value}
+//                 />
+//             </List.Item>
+//         )}
+//     />
+// }
 
 const Pet99Mail: React.FC = () => {
     const { Text } = Typography;
@@ -243,18 +242,18 @@ const Pet99Mail: React.FC = () => {
 
     const handleChange = (value: string) => {
         setUsername(value)
-        if (value != "ALL ACCOUNT") {
+        if (value !== "ALL ACCOUNT") {
             const tempSendData = []
-            const data = dataApi.find((key) => key['UsernameRoblocc'] == value)
-            if (data != undefined) {
+            const data = dataApi.find((key) => key['UsernameRoblocc'] === value)
+            if (data !== undefined) {
                 setDataAccount(data)
                 const Description = JSON.parse(data['Description'])
                 const {Diamonds} = Description['Farming']
                 const {Inventory} = Description
-                if (typeSend == "Both"){
-                    if (Inventory != undefined) {
+                if (typeSend === "Both"){
+                    if (Inventory !== undefined) {
                         Inventory.map((key: any) => {
-                            if (key.Count != 0) {
+                            if (key.Count !== 0) {
                                 tempSendData.push({
                                     item: {id: key.Name},
                                     quantity: key.Count
@@ -269,10 +268,10 @@ const Pet99Mail: React.FC = () => {
                         })
                     }
                 }
-                else if (typeSend == 'Items'){
-                    if (Inventory != undefined) {
+                else if (typeSend === 'Items'){
+                    if (Inventory !== undefined) {
                         Inventory.map((key: any) => {
-                            if (key.Count != 0) {
+                            if (key.Count !== 0) {
                                 tempSendData.push({
                                     item: {id: key.Name},
                                     quantity: key.Count
@@ -290,7 +289,7 @@ const Pet99Mail: React.FC = () => {
                     }
                 }
 
-                if (tempSendData.length == 0){
+                if (tempSendData.length === 0){
                     messageApi.error(`Not enough diamond, because u set Above ${diamondAboveAmount}`)
                 }
 
@@ -311,10 +310,10 @@ const Pet99Mail: React.FC = () => {
                 const Description = JSON.parse(key['Description'])
                 const {Diamonds} = Description['Farming']
                 const {Inventory} = Description
-                if (typeSend == "Both"){
-                    if (Inventory != undefined) {
+                if (typeSend === "Both"){
+                    if (Inventory !== undefined) {
                         Inventory.map((key: any) => {
-                            if (key.Count != 0) {
+                            if (key.Count !== 0) {
                                 tempSendAccountData.push({
                                     item: {id: key.Name},
                                     quantity: key.Count
@@ -327,10 +326,10 @@ const Pet99Mail: React.FC = () => {
                         quantity: Diamonds - ((tempSendAccountData.length * 10000) + 10000)
                     })
                 }
-                else if (typeSend == 'Items'){
-                    if (Inventory != undefined) {
+                else if (typeSend === 'Items'){
+                    if (Inventory !== undefined) {
                         Inventory.map((key: any) => {
-                            if (key.Count != 0) {
+                            if (key.Count !== 0) {
                                 tempSendAccountData.push({
                                     item: {id: key.Name},
                                     quantity: key.Count
@@ -412,7 +411,7 @@ const Pet99Mail: React.FC = () => {
                     render: (_, record) => {
                         const {message} = JSON.parse(record['details'])
                         return(
-                            message == "" || message == undefined ? "-" : <Tag>
+                            message === "" || message === undefined ? "-" : <Tag>
                                 { message}
                             </Tag>
                         )
@@ -540,7 +539,7 @@ const Pet99Mail: React.FC = () => {
                                                 />
                                             </Form.Item>
                                             {
-                                                username != "ALL ACCOUNT" ?
+                                                username !== "ALL ACCOUNT" ?
                                                     <Form.Item shouldUpdate style={{ marginBottom: "6px" }}>
                                                         {() => (
                                                             <Button
@@ -624,7 +623,7 @@ const Pet99Mail: React.FC = () => {
                                     options={options}
                                     showSearch={true}
                                     placeholder={"Select your account"}
-                                    disabled={usernameR == ""}
+                                    disabled={usernameR === ""}
                                 />
                             </Card>
                         </Col>
@@ -654,7 +653,7 @@ const Pet99Mail: React.FC = () => {
                                             min={0}
                                             max={10000000}
                                             onChange={onChangeSlider}
-                                            value={typeof diamondAboveAmount === 'number' ? diamondAboveAmount : 0}
+                                            value={diamondAboveAmount}
                                         />
                                     </Col>
                                     <Col span={4}>

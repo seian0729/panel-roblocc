@@ -11,7 +11,9 @@ import {
     Card,
     Checkbox,
     Col,
-    Divider, Drawer, Dropdown, Form,
+    Divider,
+    Drawer,
+    Dropdown,
     MenuProps,
     message,
     Popconfirm,
@@ -22,15 +24,11 @@ import {
     Tag
 } from "antd";
 import {
-    CopyOutlined,
     DeleteOutlined,
-    DownOutlined, InboxOutlined,
-    LineChartOutlined,
+    DownOutlined,
     QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {Export} from "../Export/export";
-
 const PetGo: React.FC = () => {
     //message
     const [messageApi, contextHolder] = message.useMessage();
@@ -43,7 +41,6 @@ const PetGo: React.FC = () => {
 
     //loading
     const [loadingReload, setLoadingReload] = useState(false);
-    const [loadingCopy, setLoadingCopy] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
 
     //data
@@ -136,20 +133,6 @@ const PetGo: React.FC = () => {
         return () => clearInterval(intervalId);
     })
 
-    //Delete account
-
-    const deleteAccount = () => {
-        setLoadingDelete(true);
-        setTimeout(() => {
-            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
-                //console.log(res);
-            })
-            messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
-            setSelectedRowKeys([]);
-            setLoadingDelete(false);
-            refreshData()
-        }, 1000);
-    };
 
     // Get Online - Offline
 

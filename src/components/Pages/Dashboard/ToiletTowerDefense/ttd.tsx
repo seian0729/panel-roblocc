@@ -22,8 +22,7 @@ import {
 import {
     DeleteOutlined,
     DownOutlined,
-    LineChartOutlined,
-    QuestionCircleOutlined, SearchOutlined,
+    QuestionCircleOutlined,
     UserOutlined
 } from "@ant-design/icons";
 import {RenderDataCount} from "../../../utilities/render-count-data";
@@ -42,20 +41,14 @@ const ToiletTowerDefense: React.FC = () => {
     const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
 
     // main loading
-    const [loadingSkeTable, sLoadingSkeTable] = useState(true);
     const [loadingTable, setLoadingTable] = useState(true);
 
     //loading
     const [loadingReload, setLoadingReload] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
-    const [loadingCopy, setLoadingCopy] = useState(false);
 
     //data
     const [dataApi, setDataApi] = useState([]);
-
-    // page pagination
-    const [page, setPage] = useState(1);
-    const [pageSize, setPageSize] = useState(10);
 
     //Hidename
     const [hidename, setHidename] = useState(false)
@@ -140,19 +133,6 @@ const ToiletTowerDefense: React.FC = () => {
 
     //Delete account
 
-    const deleteAccount = () => {
-        setLoadingDelete(true);
-        setTimeout(() => {
-            bulkDeleteData(selectedRowKeys as string[]).then((res) => {
-                //console.log(res);
-            })
-            messageApi.success(`Deleted: ${selectedRowKeys.length} account !`);
-            setSelectedRowKeys([]);
-            setLoadingDelete(false);
-            refreshData()
-        }, 1000);
-    };
-
     // Get Online - Offline
 
     interface DrawerProps {
@@ -219,9 +199,9 @@ const ToiletTowerDefense: React.FC = () => {
         let specialTroops = 0;
         dataApi.forEach((item: DataType) => {
             let troops = JSON.parse(item.Description)['Troops']
-            if (troops != undefined){
+            if (troops !== undefined){
                 troops.map((item: any) =>{
-                    if(item['TroopName'] == unitName){
+                    if(item['TroopName'] === unitName){
                         specialTroops += item['Quantity']
                     }
                 })
@@ -354,7 +334,7 @@ const ToiletTowerDefense: React.FC = () => {
                 return (
                     <>
                         {
-                            troopsList != undefined ? troopsList.map((item: any) =>{
+                            troopsList !== undefined ? troopsList.map((item: any) =>{
                                 if (selectedTroops.includes(item['TroopName'])){
                                     return <Tag style={{margin: 4}} color={'red'}>
                                         {item['TroopName'].split(/(?=[A-Z])/).join(" ") + `「${new Intl.NumberFormat().format(item['Quantity'])}」`}
@@ -376,7 +356,7 @@ const ToiletTowerDefense: React.FC = () => {
                 let countA = 0;
                 let countB = 0
 
-                if (troopsListA != undefined && troopsListB != undefined){
+                if (troopsListA !== undefined && troopsListB !== undefined){
                     troopsListA.map((item: any) => {
                         if (selectedTroops.includes(item['TroopName'])) {
                             countA += item['Quantity']

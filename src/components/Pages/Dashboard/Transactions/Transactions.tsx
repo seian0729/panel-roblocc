@@ -92,8 +92,8 @@ const Transactions: React.FC = () => {
             key:"Status",
             render: (_: any, record) => {
                 //console.log(typeof record.status)
-                return <Tag style={{marginLeft: 4}} color={record.status == '1' ? 'green' : 'red'}>
-                    {record.status == '1' ? 'Paid' : 'Unpaid'}
+                return <Tag style={{marginLeft: 4}} color={record.status === '1' ? 'green' : 'red'}>
+                    {record.status === '1' ? 'Paid' : 'Unpaid'}
                 </Tag>
             },
             filters: [
@@ -108,9 +108,9 @@ const Transactions: React.FC = () => {
             ],
             onFilter: (value: any, record) => {
                 if (value === 'Paid') {
-                    return record.status == "1"
+                    return record.status === "1"
                 } else if (value === 'Unpaid') {
-                    return record.status == "0"
+                    return record.status === "0"
                 } else {
                     return false
                 }

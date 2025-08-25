@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {Link, useLocation} from 'react-router-dom';
-import {Typography, Col, Layout, Menu, Row, theme, Button, message} from 'antd';
+import {Typography, Col, Layout, Menu, theme, Button, message} from 'antd';
 import {
     LogoutOutlined,
 } from '@ant-design/icons';

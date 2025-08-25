@@ -1,5 +1,5 @@
 import React from 'react';
-import {Alert, ConfigProvider, Layout, MenuProps, message, Row, Spin, theme} from 'antd';
+import {ConfigProvider, Layout, MenuProps, message, Row, Spin, theme} from 'antd';
 import {Link, Navigate, Outlet, Route, RouteProps, Routes} from 'react-router-dom';
 
 import './App.css';
@@ -19,7 +19,6 @@ import {Login} from "../Pages/Login/Login";
 
 import Page404 from "../Pages/Results/404/404"
 import Page500 from '../Pages/Results/500/500';
-import Maintenance from "../Pages/Results/Maintenance/Maintenance";
 
 
 //DashboardLayout
@@ -86,7 +85,7 @@ function App() {
     const decodeAccess = JSON.parse(access);
 
     const checkAccess = (accessVal: string) => {
-        return decodeAccess.find((element: any) => element == accessVal) != undefined
+        return decodeAccess.find((element: any) => element === accessVal) !== undefined
     }
 
     if (loading) {
@@ -174,7 +173,7 @@ function App() {
             <Layout style={{minHeight: "100vh"}}>
 
                 {
-                    userIsLogged && window.location.pathname != '/' ?
+                    userIsLogged && window.location.pathname !== '/' ?
                         "" : <LandingHeader/>
 
                 }
