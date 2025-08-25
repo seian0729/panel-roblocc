@@ -1424,6 +1424,7 @@ const BloxFruit: React.FC = () => {
                                                 Delete Account
                                             </Button>
                                         </Popconfirm>
+                                        
                                         <Button type="primary" onClick={() => {
                                             setOpenNoteDrawer(true)
                                         }}>Note Active</Button>

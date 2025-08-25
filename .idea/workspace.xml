@@ -4,9 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] gia lap 2 ngon | added bulk delete (loi coca)">
+    <list default="true" id="5f572e4d-5291-47ae-800a-6619fe12122a" name="Changes" comment="[+] gia lap 2 ngon | added new pet">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/StealaBrainrot/StealaBrainrot.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/StealaBrainrot/StealaBrainrot.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Pages/Dashboard/BloxFruit/BloxFruit.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -283,47 +285,14 @@
       <workItem from="1751475979694" duration="43000" />
       <workItem from="1751642375225" duration="3378000" />
       <workItem from="1751732208935" duration="1002000" />
-      <workItem from="1751816720581" duration="2829000" />
-    </task>
-    <task id="LOCAL-00079" summary="[*] Pet99 - Mail | Fixed again">
-      <option name="closed" value="true" />
-      <created>1710517757097</created>
-      <option name="number" value="00079" />
-      <option name="presentableId" value="LOCAL-00079" />
-      <option name="project" value="LOCAL" />
-      <updated>1710517757097</updated>
-    </task>
-    <task id="LOCAL-00080" summary="[+] TTD | Added">
-      <option name="closed" value="true" />
-      <created>1711463027111</created>
-      <option name="number" value="00080" />
-      <option name="presentableId" value="LOCAL-00080" />
-      <option name="project" value="LOCAL" />
-      <updated>1711463027111</updated>
-    </task>
-    <task id="LOCAL-00081" summary="[+] TTD | Added">
-      <option name="closed" value="true" />
-      <created>1711463163955</created>
-      <option name="number" value="00081" />
-      <option name="presentableId" value="LOCAL-00081" />
-      <option name="project" value="LOCAL" />
-      <updated>1711463163956</updated>
-    </task>
-    <task id="LOCAL-00082" summary="[*] TTD | Update zaza">
-      <option name="closed" value="true" />
-      <created>1711463663636</created>
-      <option name="number" value="00082" />
-      <option name="presentableId" value="LOCAL-00082" />
-      <option name="project" value="LOCAL" />
-      <updated>1711463663636</updated>
-    </task>
-    <task id="LOCAL-00083" summary="[*] TTD | Update zaza">
-      <option name="closed" value="true" />
-      <created>1711465470104</created>
-      <option name="number" value="00083" />
-      <option name="presentableId" value="LOCAL-00083" />
-      <option name="project" value="LOCAL" />
-      <updated>1711465470104</updated>
+      <workItem from="1751816720581" duration="2923000" />
+      <workItem from="1752249790528" duration="1247000" />
+      <workItem from="1752344410915" duration="276000" />
+      <workItem from="1752490629102" duration="755000" />
+      <workItem from="1754494929889" duration="4188000" />
+      <workItem from="1754585671855" duration="903000" />
+      <workItem from="1755355383719" duration="2185000" />
+      <workItem from="1755446754725" duration="526000" />
     </task>
     <task id="LOCAL-00084" summary="[*] PetGO">
       <option name="closed" value="true" />
@@ -677,7 +646,47 @@
       <option name="project" value="LOCAL" />
       <updated>1751643606651</updated>
     </task>
-    <option name="localTasksCounter" value="128" />
+    <task id="LOCAL-00128" summary="[+] gia lap 2 ngon | added new pet + mutation, improved total pet">
+      <option name="closed" value="true" />
+      <created>1751819602638</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1751819602638</updated>
+    </task>
+    <task id="LOCAL-00129" summary="[+] gia lap 2 ngon | added copy username">
+      <option name="closed" value="true" />
+      <created>1752250962305</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1752250962305</updated>
+    </task>
+    <task id="LOCAL-00130" summary="[+] gia lap 2 ngon | added new pet">
+      <option name="closed" value="true" />
+      <created>1752344655361</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1752344655362</updated>
+    </task>
+    <task id="LOCAL-00131" summary="[+] gia lap 2 ngon | added new pet">
+      <option name="closed" value="true" />
+      <created>1752490655087</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1752490655087</updated>
+    </task>
+    <task id="LOCAL-00132" summary="[+] gia lap 2 ngon | added new pet">
+      <option name="closed" value="true" />
+      <created>1754494950547</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1754494950548</updated>
+    </task>
+    <option name="localTasksCounter" value="133" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -695,9 +704,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="[*] Fisch| color total rod" />
-    <MESSAGE value="[*] Fisch | added more rods" />
-    <MESSAGE value="[*] Misc | Change some suck get data" />
     <MESSAGE value="[*] Fisch | Completed Account - Show detail (deo biet de lam gi)" />
     <MESSAGE value="[+] Fisch | Move some function to services, improved &quot;show count rod&quot; in data overview [mini component]," />
     <MESSAGE value="* hehe" />
@@ -720,6 +726,9 @@
     <MESSAGE value="[+] gia lap 2 ngon | added new pet, trait" />
     <MESSAGE value="[*] gia lap 2 ngon | change search mutation into name" />
     <MESSAGE value="[+] gia lap 2 ngon | added bulk delete (loi coca)" />
-    <option name="LAST_COMMIT_MESSAGE" value="[+] gia lap 2 ngon | added bulk delete (loi coca)" />
+    <MESSAGE value="[+] gia lap 2 ngon | added new pet + mutation, improved total pet" />
+    <MESSAGE value="[+] gia lap 2 ngon | added copy username" />
+    <MESSAGE value="[+] gia lap 2 ngon | added new pet" />
+    <option name="LAST_COMMIT_MESSAGE" value="[+] gia lap 2 ngon | added new pet" />
   </component>
 </project>

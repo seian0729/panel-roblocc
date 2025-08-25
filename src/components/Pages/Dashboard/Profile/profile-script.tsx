@@ -99,7 +99,7 @@ const fischString = `getgenv().Setting = {
     DelayUpdate = 120,
     Note = '${username}'
 }
-loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/heads/master/cc-panel.lua'))()`;
+loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/cc-panel.lua'))()`;
 
 const bgsiString = `getgenv().Setting = {
     UID = ${siginKey != '' ? `'${siginKey}'` : id},
@@ -113,7 +113,7 @@ const haingonString = `getgenv().Setting = {
     DelayUpdate = 120,
     Note = '${username}'
 }
-loadstring(game:HttpGet('https://raw.githubusercontent.com/chimnguu/ngu/refs/heads/master/client-2ngon.lua'))()`;
+loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/client-2ngon.lua'))()`;
 
 
     const copyScript = (scriptname: string, script: string) => {
