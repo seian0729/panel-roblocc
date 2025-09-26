@@ -106,6 +106,13 @@ const haingonString = `getgenv().Setting = {
 }
 loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/client-2ngon.lua'))()`;
 
+const pvbString = `getgenv().Setting = {
+    UID = ${siginKey !== '' ? `'${siginKey}'` : id},
+    DelayUpdate = 120,
+    Note = '${username}'
+}
+loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/client-pvb.lua'))()`;
+
 
     const copyScript = (scriptname: string, script: string) => {
         navigator.clipboard.writeText(script);
@@ -301,6 +308,20 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/he
                             </SyntaxHighlighter>
                             <Button type={"default"}
                                     onClick={() => copyScript('Giả lập 2 ngón', haingonString)}>
+                                Copy Script
+                            </Button>
+                        </>
+                    }]} style={{marginTop: 6}}/>
+
+                    <Collapse bordered={false} items={[{
+                        key: '13',
+                        label: 'Đặt cây với thối não',
+                        children: <>
+                            <SyntaxHighlighter language="lua" style={atomOneDark} customStyle={{borderRadius: 6}}>
+                                {pvbString}
+                            </SyntaxHighlighter>
+                            <Button type={"default"}
+                                    onClick={() => copyScript('Đặt cây với thối não', pvbString)}>
                                 Copy Script
                             </Button>
                         </>

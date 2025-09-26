@@ -115,6 +115,18 @@ const DashboardLayout: React.FC = () => {
     ]
 
     dashboardItems.push(getItem(
+        'Plants Vs Brainrots',
+        'plants-vs-brainrot',
+        null,
+        [getItem((
+            <Link to={"plants-vs-brainrot/tracking"}>
+                Tracking
+            </Link>
+        ),"plants-vs-brainrot/tracking")],
+        'group')
+    )
+
+    dashboardItems.push(getItem(
         'Steal A Brainrot',
         'steal-a-brainrot',
         null,

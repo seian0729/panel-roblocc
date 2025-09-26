@@ -52,6 +52,7 @@ import Landing from "../Pages/Lading/landing";
 import LandingHeader from "../Pages/Lading/headerLanding";
 import {DashboardOutlined, LogoutOutlined, ProfileOutlined, TableOutlined, UserOutlined,} from "@ant-design/icons";
 import Register from "../Pages/Register/register";
+import PlantsVsBrainrots from "../Pages/Dashboard/PlantsVsBrainrots/PlantsVsBrainrots";
 
 //Theme ne
 const tokenTheme = {
@@ -231,6 +232,10 @@ function App() {
                                 <Route path={"steal-a-brainrot"}>
                                     <Route index element={<Page404/>}/>
                                     <Route path="tracking" element={<StealABranrot/>} />
+                                </Route>
+                                <Route path={"plants-vs-brainrot"}>
+                                    <Route index element={<Page404/>}/>
+                                    <Route path="tracking" element={<PlantsVsBrainrots/>} />
                                 </Route>
                                 <Route path={"user"}>
                                     <Route index element={<Page404/>}/>
