@@ -29,6 +29,7 @@ const ProfileScript: React.FC = () => {
     DelayUpdate = 300,
     Note = '${username}'
 }
+API_V2 = true -- false
 loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'))()`;
 
     const bloxfruitStringAll = `getgenv().Setting = {
@@ -36,6 +37,7 @@ loadstring(game:HttpGet('https://cdn.chimovo.com/private/blocc-trai-cay/panelv1'
     DelayUpdate = 300,
     Note = "${username}"
 }
+API_V2 = true -- false
 loadstring(http_request({Url = 'https://cdn.chimovo.com/private/blocc-trai-cay/panelv1', Method = "GET"})['Body'])()`;
 
     const petxString = `getgenv().Setting = {
@@ -109,7 +111,12 @@ loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/he
 const pvbString = `getgenv().Setting = {
     UID = ${siginKey !== '' ? `'${siginKey}'` : id},
     DelayUpdate = 120,
-    Note = '${username}'
+    Note = '${username}',
+    Rarity = {
+        'Mythical,
+        'Godly',
+        'Secret',
+    }
 }
 loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/client-pvb.lua'))()`;
 
