@@ -106,6 +106,7 @@ const haingonString = `getgenv().Setting = {
     DelayUpdate = 120,
     Note = '${username}'
 }
+API_V2 = true -- false
 loadstring(game:HttpGet('https://raw.githubusercontent.com/seian0729/ngu/refs/heads/master/client-2ngon.lua'))()`;
 
 const pvbString = `getgenv().Setting = {
@@ -113,7 +114,7 @@ const pvbString = `getgenv().Setting = {
     DelayUpdate = 120,
     Note = '${username}',
     Rarity = {
-        'Mythical,
+        'Mythical',
         'Godly',
         'Secret',
     }
